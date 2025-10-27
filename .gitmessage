@@ -1,0 +1,20 @@
+# <type>(<scope>): <summary> [#ArtifactID]
+# Example: fix(api/auth): handle token expiry gracefully [#82]
+
+# ---
+# BODY:
+# - Explain what changed and why.
+# - Reference other related artifacts.
+# - Keep lines under 100 chars.
+
+# FOOTER:
+# - Optional co-authors or related refs.
+#
+# Co-authored-by: teammate@ninjainfosys.com
+#
+# ---
+# Allowed types: feat, fix, chore, docs, refactor, style, test, ci, infra
+# Examples:
+#   feat(ui/header): add language selector [#21]
+#   fix(go/cache): prevent race condition [#72]
+#   infra(k8s): update cluster autoscaler [#88]

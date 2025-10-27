@@ -1,0 +1,71 @@
+"use client"
+
+import { useState, useEffect, useRef } from "react"
+import { Search, X } from "lucide-react"
+
+interface SearchOverlayProps {
+  isOpen: boolean
+  onClose: () => void
+  language: "en" | "ne"
+}
+
+export default function SearchOverlay({ isOpen, onClose, language }: SearchOverlayProps) {
+  const [query, setQuery] = useState("")
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const placeholder = language === "en" ? "Search perspectives, ideas, and cases…" : "दृष्टिकोण, विचार, केसहरू खोज्नुहोस्…"
+
+  useEffect(() => {
+    if (isOpen) {
+      inputRef.current?.focus()
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "unset"
+      setQuery("")
+    }
+  }, [isOpen])
+
+  if (!isOpen) return null
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] bg-ni-ink/95 backdrop-blur-md flex items-start justify-center pt-32 animate-fadeIn"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Search"
+    >
+      <div className="w-full max-w-3xl px-6">
+        <div className="relative">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-ni-paper/40" size={24} />
+          <input
+            ref={inputRef}
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={placeholder}
+            className="w-full pl-14 pr-14 py-6 bg-ni-graphite/50 border border-ni-paper/20 rounded-lg text-2xl text-ni-paper placeholder:text-ni-paper/40 focus:outline-none focus:border-ni-accent"
+            aria-label="Search input"
+          />
+          <button
+            onClick={onClose}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-ni-paper/60 hover:text-ni-paper transition-colors"
+            aria-label="Close search"
+            style={{ minWidth: "44px", minHeight: "44px" }}
+          >
+            <X size={24} />
+          </button>
+        </div>
+
+        {query && (
+          <div className="mt-8 text-ni-paper/60 text-center">
+            <p className="text-sm">
+              {language === "en"
+                ? "Search functionality would filter insights, practices, and case studies here."
+                : "खोज कार्यक्षमताले यहाँ इनसाइट्स, प्रयासहरू, र केस स्टडीहरू फिल्टर गर्नेछ।"}
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
