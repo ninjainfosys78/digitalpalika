@@ -26,18 +26,18 @@ A production-ready, fully static landing site for Ninja Infosys, a global consul
 
 ### Development
 
-\`\`\`bash
+```bash
 npm install
 npm run dev
-\`\`\`
+```
 
 Open [http://localhost:3000](http://localhost:3000) to view the site.
 
 ### Build for Production
 
-\`\`\`bash
+```bash
 npm run build
-\`\`\`
+```
 
 This generates a static export in the `out/` directory.
 
@@ -53,7 +53,7 @@ The site is fully static and requires no serverless functions or environment var
 
 ## Project Structure
 
-\`\`\`
+```
 ├── app/
 │   ├── layout.tsx          # Root layout with metadata
 │   ├── page.tsx            # Main homepage
@@ -76,7 +76,7 @@ The site is fully static and requires no serverless functions or environment var
 │   ├── sitemap.xml         # SEO sitemap
 │   └── robots.txt          # Search engine directives
 └── README.md
-\`\`\`
+```
 
 ## Design System
 
