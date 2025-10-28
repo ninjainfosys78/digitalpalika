@@ -39,32 +39,6 @@ This generates a static export in the `out/` directory.
 
 The site is fully static and requires no serverless functions or environment variables.
 
-## Project Structure
-
-```
-├── app/
-│   ├── layout.tsx          # Root layout with metadata
-│   ├── page.tsx            # Main homepage
-│   └── globals.css         # Global styles and design tokens
-├── components/
-│   ├── header.tsx          # Sticky header with navigation
-│   ├── hero.tsx            # Hero section with abstract animation
-│   ├── insights-rail.tsx   # Editorial insights cards
-│   ├── taxonomy.tsx        # Practices/Industries taxonomy
-│   ├── case-spotlight.tsx  # Featured case study
-│   ├── perspective-block.tsx # Leadership note
-│   ├── careers-teaser.tsx  # Careers section
-│   ├── global-cta.tsx      # Contact CTA
-│   ├── footer.tsx          # Site footer
-│   ├── search-overlay.tsx  # Full-screen search
-│   ├── offices-modal.tsx   # Office locations modal
-│   ├── cookie-banner.tsx   # Cookie consent
-│   └── announcement-bar.tsx # Dismissible announcement
-├── public/
-│   ├── sitemap.xml         # SEO sitemap
-│   └── robots.txt          # Search engine directives
-└── README.md
-```
 
 ## Design System
 
