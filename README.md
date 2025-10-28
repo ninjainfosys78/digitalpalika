@@ -2,18 +2,6 @@
 
 A production-ready, fully static landing site for Ninja Infosys, a global consulting company. Built with Next.js, TypeScript, and Tailwind CSS v4.
 
-## Features
-
-- ✅ Fully static (no SSR, no server functions) — ready for Cloudflare Pages
-- ✅ Bilingual support (English/Nepali) with language toggle
-- ✅ WCAG 2.2 AA accessibility compliance
-- ✅ SEO optimized with meta tags, sitemap, and robots.txt
-- ✅ Sophisticated editorial design with subtle animations
-- ✅ Client-side search functionality
-- ✅ Responsive and mobile-first
-- ✅ Cookie consent banner
-- ✅ Keyboard shortcuts (/ for search, Esc to close)
-
 ## Tech Stack
 
 - **Framework**: Next.js 15 (static export)
@@ -51,32 +39,6 @@ This generates a static export in the `out/` directory.
 
 The site is fully static and requires no serverless functions or environment variables.
 
-## Project Structure
-
-```
-├── app/
-│   ├── layout.tsx          # Root layout with metadata
-│   ├── page.tsx            # Main homepage
-│   └── globals.css         # Global styles and design tokens
-├── components/
-│   ├── header.tsx          # Sticky header with navigation
-│   ├── hero.tsx            # Hero section with abstract animation
-│   ├── insights-rail.tsx   # Editorial insights cards
-│   ├── taxonomy.tsx        # Practices/Industries taxonomy
-│   ├── case-spotlight.tsx  # Featured case study
-│   ├── perspective-block.tsx # Leadership note
-│   ├── careers-teaser.tsx  # Careers section
-│   ├── global-cta.tsx      # Contact CTA
-│   ├── footer.tsx          # Site footer
-│   ├── search-overlay.tsx  # Full-screen search
-│   ├── offices-modal.tsx   # Office locations modal
-│   ├── cookie-banner.tsx   # Cookie consent
-│   └── announcement-bar.tsx # Dismissible announcement
-├── public/
-│   ├── sitemap.xml         # SEO sitemap
-│   └── robots.txt          # Search engine directives
-└── README.md
-```
 
 ## Design System
 
