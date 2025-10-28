@@ -2,18 +2,6 @@
 
 A production-ready, fully static landing site for Ninja Infosys, a global consulting company. Built with Next.js, TypeScript, and Tailwind CSS v4.
 
-## Features
-
-- ✅ Fully static (no SSR, no server functions) — ready for Cloudflare Pages
-- ✅ Bilingual support (English/Nepali) with language toggle
-- ✅ WCAG 2.2 AA accessibility compliance
-- ✅ SEO optimized with meta tags, sitemap, and robots.txt
-- ✅ Sophisticated editorial design with subtle animations
-- ✅ Client-side search functionality
-- ✅ Responsive and mobile-first
-- ✅ Cookie consent banner
-- ✅ Keyboard shortcuts (/ for search, Esc to close)
-
 ## Tech Stack
 
 - **Framework**: Next.js 15 (static export)
