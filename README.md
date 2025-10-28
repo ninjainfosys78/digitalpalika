@@ -36,9 +36,9 @@ This generates a static export in the `out/` directory.
    - Build command: `npm run build`
    - Build output directory: `out`
 3. **Deploy**
+4. **Observe**
 
 The site is fully static and requires no serverless functions or environment variables.
-
 
 ## Design System
 
