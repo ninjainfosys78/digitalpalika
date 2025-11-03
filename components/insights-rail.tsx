@@ -71,18 +71,29 @@ export default function InsightsRail({ language }: InsightsRailProps) {
         }
 
   return (
-    <section id="insights" className="py-16 sm:py-15 md:py-17 lg:py-20 bg-ni-paper" aria-labelledby="insights-title">
+    <section
+      id="insights"
+      className="py-16 sm:py-15 md:py-17 lg:py-20"
+      style={{
+        background: "#000000", // original color-bg
+      }}
+      aria-labelledby="insights-title"
+    >
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 sm:mb-16 gap-4">
           <h2
             id="insights-title"
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-semibold text-ni-ink"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-semibold"
+            style={{ color: "#e3e3e3", fontSize: "32px", lineHeight: "40px" }} // force 32px title
           >
             {content.title}
           </h2>
           <a
             href="#insights"
-            className="hidden md:flex items-center gap-2 text-sm text-ni-accent hover:text-ni-accent-2 transition-colors group flex-shrink-0"
+            className="hidden md:flex items-center gap-2 text-sm transition-colors group flex-shrink-0"
+            style={{ color: "#d52020" }} // original color-primary
+            onMouseOver={(e) => (e.currentTarget.style.color = "#141414")}
+            onMouseOut={(e) => (e.currentTarget.style.color = "#d52020")}
           >
             {content.viewAll}
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -94,10 +105,13 @@ export default function InsightsRail({ language }: InsightsRailProps) {
             <article key={idx} className={`group cursor-pointer ${idx === 0 ? "md:col-span-2 md:row-span-2" : ""}`}>
               <a
                 href={insight.url}
-                className="block h-full bg-white border border-ni-graphite/10 rounded-2px overflow-hidden hover:border-ni-accent/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                className="block h-full rounded-2px overflow-hidden transition-all duration-300 hover:-translate-y-1"
+                style={{
+                  background: "#141414", // original color-secondary
+                  boxShadow: "0 2px 8px 0 #14141422",
+                }}
               >
-                {/* Image */}
-                <div className="relative overflow-hidden bg-ni-graphite/5">
+                <div className="relative overflow-hidden" style={{ background: "#d520200d" }}>
                   <img
                     src={insight.image || "/placeholder.svg"}
                     alt=""
@@ -105,32 +119,35 @@ export default function InsightsRail({ language }: InsightsRailProps) {
                       idx === 0 ? "h-[280px] sm:h-[350px] md:h-[400px]" : "h-[200px] sm:h-[240px]"
                     }`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ni-ink/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, #14141488, transparent)" }} />
                 </div>
 
                 <div className={`p-5 sm:p-6 ${idx === 0 ? "md:p-8" : ""}`}>
                   <div className="flex items-center gap-3 mb-3 sm:mb-4">
-                    <span className="text-xs font-semibold text-ni-accent uppercase tracking-wider">
+                    <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#d52020" }}>
                       {insight.kicker}
                     </span>
-                    <span className="flex items-center gap-1 text-xs text-ni-slate">
+                    <span className="flex items-center gap-1 text-xs" style={{ color: "#e3e3e3" }}>
                       <Clock size={12} />
                       {insight.readTime}
                     </span>
                   </div>
-
                   <h3
-                    className={`font-heading font-semibold text-ni-ink mb-2 sm:mb-3 text-balance group-hover:text-ni-accent transition-colors ${
+                    className={`font-heading font-semibold mb-2 sm:mb-3 text-balance group-hover:text-[#e3e3e3] transition-colors ${
                       idx === 0 ? "text-xl sm:text-2xl md:text-3xl" : "text-lg sm:text-xl"
                     }`}
+                    style={{ color: "#e3e3e3" }}
                   >
                     {insight.title}
                   </h3>
-
-                  <p className="text-sm text-ni-slate leading-relaxed text-pretty line-clamp-3">{insight.deck}</p>
-
-                  {/* Read more indicator */}
-                  <div className="flex items-center gap-2 mt-3 sm:mt-4 text-ni-accent text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                  <p className="text-sm leading-relaxed text-pretty line-clamp-3" style={{ color: "#e3e3e3" }}>{insight.deck}</p>
+                  <div
+                    className="flex items-center gap-2 mt-3 sm:mt-4 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{
+                      color: "#d52020",
+                      textDecoration: "underline",
+                    }}
+                  >
                     Read more
                     <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -143,7 +160,10 @@ export default function InsightsRail({ language }: InsightsRailProps) {
         <div className="mt-8 sm:mt-12 text-center md:hidden">
           <a
             href="#insights"
-            className="inline-flex items-center gap-2 text-sm text-ni-accent hover:text-ni-accent-2 transition-colors"
+            className="inline-flex items-center gap-2 text-sm transition-colors"
+            style={{ color: "#d52020" }}
+            onMouseOver={(e) => (e.currentTarget.style.color = "#782121")}
+            onMouseOut={(e) => (e.currentTarget.style.color = "#d52020")}
           >
             {content.viewAll}
             <ArrowRight size={16} />
