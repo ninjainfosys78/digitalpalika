@@ -34,22 +34,28 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
       }`}
       aria-label="Hero section"
     >
-      {/* red arc gradient on right - non-interactive, behind content */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 z-0"
-        style={{
-          width: "900px",
-          height: "900px",
-          background:
-            "radial-gradient(circle at 85% 75%, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 45%, rgba(213,32,32,0.95) 46%, rgba(213,32,32,0.6) 55%, rgba(213,32,32,0.25) 65%, rgba(0,0,0,0) 80%)",
-          borderRadius: "50%",
-          filter: "blur(60px)",
-          transform: "translateX(12%)",
-          mixBlendMode: "normal",
-          opacity: 1,
-        }}
-      />
+      {/* red arc gradient on right */}
+      {showContent && (
+        /* layered red arc: inner band (sharp) + outer glow (soft) — pushed further right so arc originates fully from screen edge */
+        <div
+          aria-hidden
+          className="pointer-events-none absolute right-0 z-0"
+          style={{
+            width: "700px",
+            height: "700px",
+            // narrow, high-contrast red band for a sharper arc
+            background:
+              "radial-gradient(circle at 85% 85%, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 60%, rgba(213,32,32,0.98) 61%, rgba(213,32,32,0.92) 64%, rgba(213,32,32,0.45) 67%, rgba(0,0,0,0) 72%)",
+            borderRadius: "50%",
+            filter: "blur(28px)", // less blur → sharper edge
+            transform: "translateX(12%)",
+            top: "12%", // push arc slightly down
+            position: "absolute",
+            mixBlendMode: "normal",
+            opacity: 1,
+          }}
+        />
+      )}
 
       {/* subtle grid overlay */}
       <div className="absolute inset-0 opacity-[0.02]">
@@ -76,7 +82,6 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
                   id="cta-title"
                   className="text-balance tracking-tight max-w-full"
                   style={{
-                    /* remove fontFamily/fontWeight so globals handle typography */
                     fontSize: "64px",
                     lineHeight: "64px",
                     letterSpacing: "-2px",
@@ -96,7 +101,6 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
                 <p
                   className="text-pretty"
                   style={{
-                    /* remove fontFamily here (was "'IBM Plex Sans',") */
                     fontWeight: 400,
                     fontStyle: "normal",
                     fontSize: "24px",
@@ -113,13 +117,12 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
 
                 <div
                   className="flex flex-wrap gap-4"
-                  style={{ marginTop: "32px" /* moved buttons a bit up: text-button spacing-32 */ }}
+                  style={{ marginTop: "32px"}}
                 >
                   <Link
                     href="/contact"
                     className="inline-flex items-center justify-between px-8 py-4 w-auto sm:w-[220px]"
                     style={{
-                      /* remove inline font stack so globals.css controls exact IBM Plex rendering */
                       fontSize: "20px",
                       background: "#d52020",
                       color: "#e3e3e3",
@@ -136,7 +139,6 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
                     href="/work"
                     className="inline-flex items-center justify-between px-8 py-4 w-auto sm:w-[220px] group"
                     style={{
-                      /* removed broken trailing-comma fontFamily */
                       fontSize: "20px",
                       background: "#141414",
                       color: "#e3e3e3",
