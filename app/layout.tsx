@@ -1,6 +1,21 @@
 import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
+import { IBM_Plex_Sans, Source_Serif_4 } from "next/font/google"
+
+const ibm = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["300","400","500","600"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const serif = Source_Serif_4({
+  subsets: ["latin"],
+  weight: ["300","400","600"],
+  variable: "--font-heading",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Ninja Infosys — Global Consulting",
@@ -26,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="antialiased">
+    <html lang="en" className={`${ibm.variable} ${serif.variable}`}>
       <body>{children}</body>
     </html>
   )
