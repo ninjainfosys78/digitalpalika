@@ -20,7 +20,7 @@ build:
   stage: build
   image: node:${NODE_VERSION}-alpine
   tags:
-    - doit-suryabinayak-nepal
+    - numanode
   before_script:
     - echo "Installing dependencies..."
     - npm ci --cache .npm --prefer-offline --no-audit
@@ -47,7 +47,7 @@ deploy:preview:
   stage: deploy
   image: node:${NODE_VERSION}-alpine
   tags:
-    - doit-suryabinayak-nepal
+    - numanode
   dependencies:
     - build
   before_script:
@@ -81,7 +81,7 @@ deploy:production:
   stage: deploy
   image: node:${NODE_VERSION}-alpine
   tags:
-    - doit-suryabinayak-nepal
+    - numanode
   dependencies:
     - build
   before_script:
@@ -111,7 +111,7 @@ stop:preview:
   stage: deploy
   image: alpine:latest
   tags:
-    - doit-suryabinayak-nepal
+    - numanode
   script:
     - echo "Preview environment cleanup"
     - echo "Branch ${CI_COMMIT_REF_NAME} has been merged/deleted"
