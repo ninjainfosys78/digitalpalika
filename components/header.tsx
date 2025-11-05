@@ -10,7 +10,7 @@ type Lang = "en" | "ne"
 
 interface HeaderProps {
   language: Lang
-  onLanguageChange: (lang: Lang) => void
+  onLanguageChange?: (lang: Lang) => void
 }
 
 const DATA = {
@@ -301,7 +301,7 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
 
           <div className="ml-auto flex items-center gap-5 flex-none">
             <button
-              onClick={() => onLanguageChange(language === "en" ? "ne" : "en")}
+              onClick={() => onLanguageChange?.(language === "en" ? "ne" : "en")}
               className="w-10 h-10 flex items-center justify-center shrink-0 text-white/70 hover:text-white transition-colors"
               aria-label={`Switch to ${language === "en" ? "Nepali" : "English"}`}
               title={language === "en" ? "Switch to Nepali" : "Switch to English"}
