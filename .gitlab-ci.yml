@@ -23,25 +23,17 @@ build:
     - numanode
   before_script:
     - echo "Installing dependencies..."
-    - npm ci --cache .npm --prefer-offline --no-audit
+    - npm ci --cache .npm --prefer-offline --no-audit --legacy-peer-deps
   script:
     - echo "Building Next.js project..."
-    - echo "Project ninja-infosys/landing-page"
-    - echo "Commit ${CI_COMMIT_SHORT_SHA}"
-    - echo "Branch ${CI_COMMIT_REF_NAME}"
     - npm run build
-    - echo "Build complete! Checking output..."
     - ls -la ${BUILD_DIR}/
-    - du -sh ${BUILD_DIR}/
   artifacts:
     paths:
       - ${BUILD_DIR}/
     expire_in: 1 day
-    when: on_success
   only:
     - branches
-    - merge_requests
-    - tags
 
 deploy:preview:
   stage: deploy
@@ -51,31 +43,16 @@ deploy:preview:
   dependencies:
     - build
   before_script:
-    - echo "Installing Wrangler CLI..."
     - npm install -g wrangler@latest
-    - wrangler --version
   script:
-    - echo "Deploying preview environment..."
-    - echo "Project ${PROJECT_NAME}"
-    - echo "Branch ${CI_COMMIT_REF_NAME}"
-    - echo "Commit ${CI_COMMIT_SHORT_SHA}"
-    - wrangler pages deploy ${BUILD_DIR} --project-name=${PROJECT_NAME} --branch=${CI_COMMIT_REF_NAME} --commit-hash=${CI_COMMIT_SHA} --commit-message="${CI_COMMIT_MESSAGE}"
-    - export PREVIEW_URL="${CI_COMMIT_SHORT_SHA}.preview.ninjainfosys.com"
-    - echo "=========================================="
-    - echo "Preview Deployed Successfully!"
-    - echo "=========================================="
-    - echo "Preview URL https://${PREVIEW_URL}"
-    - echo "Branch ${CI_COMMIT_REF_NAME}"
-    - echo "Commit ${CI_COMMIT_SHORT_SHA}"
-    - echo "=========================================="
+    - echo "Deploying preview..."
+    - wrangler pages deploy ${BUILD_DIR} --project-name=${PROJECT_NAME} --branch=${CI_COMMIT_REF_NAME} --commit-hash=${CI_COMMIT_SHA}
+    - echo "Preview URL https://${CI_COMMIT_SHORT_SHA}.preview.ninjainfosys.com"
   environment:
     name: preview/$CI_COMMIT_REF_SLUG
     url: https://${CI_COMMIT_SHORT_SHA}.preview.ninjainfosys.com
-    on_stop: stop:preview
-    auto_stop_in: 7 days
   rules:
     - if: $CI_COMMIT_BRANCH && $CI_COMMIT_BRANCH != "main" && $CI_COMMIT_BRANCH != "master"
-      when: on_success
 
 deploy:production:
   stage: deploy
@@ -85,41 +62,13 @@ deploy:production:
   dependencies:
     - build
   before_script:
-    - echo "Installing Wrangler CLI..."
     - npm install -g wrangler@latest
-    - wrangler --version
   script:
-    - echo "Deploying to PRODUCTION..."
-    - echo "Project ${PROJECT_NAME}"
-    - echo "Commit ${CI_COMMIT_SHA}"
-    - wrangler pages deploy ${BUILD_DIR} --project-name=${PROJECT_NAME} --branch=main --commit-hash=${CI_COMMIT_SHA} --commit-message="${CI_COMMIT_MESSAGE}"
-    - echo "=========================================="
-    - echo "Production Deployed Successfully!"
-    - echo "=========================================="
+    - echo "Deploying to production..."
+    - wrangler pages deploy ${BUILD_DIR} --project-name=${PROJECT_NAME} --branch=main
     - echo "Live at https://ninjainfosys.com"
-    - echo "Pages URL https://${PROJECT_NAME}.pages.dev"
-    - echo "Commit ${CI_COMMIT_SHA}"
-    - echo "=========================================="
   environment:
     name: production
     url: https://ninjainfosys.com
   rules:
     - if: $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master"
-      when: on_success
-
-stop:preview:
-  stage: deploy
-  image: alpine:latest
-  tags:
-    - numanode
-  script:
-    - echo "Preview environment cleanup"
-    - echo "Branch ${CI_COMMIT_REF_NAME} has been merged/deleted"
-    - echo "Cloudflare will automatically archive old deployments"
-  environment:
-    name: preview/$CI_COMMIT_REF_SLUG
-    action: stop
-  rules:
-    - if: $CI_COMMIT_BRANCH && $CI_COMMIT_BRANCH != "main" && $CI_COMMIT_BRANCH != "master"
-      when: manual
-  allow_failure: true
