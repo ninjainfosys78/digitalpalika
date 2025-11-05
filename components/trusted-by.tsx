@@ -1,53 +1,307 @@
 "use client";
 
+// small runtime diagnostics to help debug marquee animation on some machines
+import { useEffect, useState, useRef } from "react";
+
+// trusted items: put your images in public/logos/ with the filenames below
+const trustedList = {
+  en: [
+    { name: "Kathmandu Metropolitan City", img: "/kathamndu-mahanagarpalika.png" },
+    { name: "Pokhara Metropolitan City", img: "/pokhara-mahanagarpalika.png" },
+    { name: "LB Mall & Company", img: "/LB-mall.png" },
+    { name: "ISRC", img: "/isrc.png" },
+    { name: "Vumi Engineering Consortium", img: "/vumi-engineering.png" },
+    { name: "Phonepay", img: "/fone-pay.png" },
+    { name: "Aakash SMS", img: "/aakash-sms.png" },
+    { name: "Prabhu Bank", img: "/prabhu-bank.png" },
+    { name: "Government of Nepal", img: "/nepal-sarkar.png" },
+  ],
+  // Nepali labels reuse the same image files (change if you have different assets)
+  ne: [
+    { name: "काठमाडौं महानगरपालिका", img: "/logos/kathmandu-metropolitan-city.png" },
+    { name: "पोखरा महानगरपालिका", img: "/logos/pokhara-metropolitan-city.png" },
+    { name: "एलबी मल्ल एण्ड कम्पनी", img: "/logos/lb-mall-company.png" },
+    { name: "आईएसआरसी", img: "/logos/isrc.png" },
+    { name: "भूमि इन्जिनियरिङ कन्सोर्टियम", img: "/logos/vumi-engineering-consortium.png" },
+    { name: "फोनपे", img: "/logos/phonepay.png" },
+    { name: "आकाश एसएमएस", img: "/logos/aakash-sms.png" },
+    { name: "प्रभु बैंक", img: "/logos/prabhu-bank.png" },
+    { name: "नेपाल सरकार", img: "/logos/government-of-nepal.png" },
+  ],
+};
+
 interface TrustedByProps {
   language: "en" | "ne";
 }
 
-const trustedList = {
-  en: [
-    "Kathmandu Metropolitan City",
-    "Pokhara Metropolitan City",
-    "LB Mall & Company",
-    "ISRC",
-    "Vumi Engineering Consortium",
-    "Phonepay",
-    "Aakash SMS",
-    "Prabhu Bank",
-    "Government of Nepal",
-  ],
-  ne: [
-    "काठमाडौं महानगरपालिका",
-    "पोखरा महानगरपालिका",
-    "एलबी मल्ल एण्ड कम्पनी",
-    "आईएसआरसी",
-    "भूमि इन्जिनियरिङ कन्सोर्टियम",
-    "फोनपे",
-    "आकाश एसएमएस",
-    "प्रभु बैंक",
-    "नेपाल सरकार",
-  ],
-};
-
 export default function TrustedBy({ language }: TrustedByProps) {
+  const list = trustedList[language]; // array of { name, img }
+  const [dbg, setDbg] = useState({
+    innerWidth: 0,
+    parentWidth: 0,
+    animationName: "",
+    animationPlayState: "",
+    reducedMotion: false,
+  });
+
+  // ref for the marquee container so JS can animate if needed
+  const marqueeRootRef = useRef<HTMLElement | null>(null)
+  // (removed manual force toggle) - fallback will run automatically if CSS animation is unavailable
+
   return (
-    <section className="text-ni-paper py-10">
+    <section
+      className="pt-0 pb-10"
+      style={{ background: "#000000", marginTop: "-32px", position: "relative", zIndex: 5 }} /* pulled up to overlap hero and remove gap */
+    >
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
-        <h3 className="text-3xl sm:text-4xl font-bold mb-2 text-left text-black">
-          {language === "ne" ? "विश्वास गर्नेहरू" : "Trusted By"}
-        </h3>
-        <div className="mb-8"></div>
-        <div className="flex flex-wrap gap-x-10 gap-y-4 items-center">
-          {trustedList[language].map((name) => (
-            <span
-              key={name}
-              className="text-lg md:text-xl font-semibold text-black opacity-80 whitespace-nowrap"
-            >
-              {name}
-            </span>
-          ))}
+
+        {/* animated marquee: two identical groups inside a moving container for a continuous loop */}
+        <div
+          ref={marqueeRootRef as any}
+          className="marquee mt-6"
+          aria-hidden={false}
+          aria-label={language === "ne" ? "विश्वास गर्ने लोगोहरू" : "Trusted logos"}
+        >
+          <div className="marquee__inner" role="presentation">
+            {/* first group */}
+            <div className="marquee__group" aria-hidden="true">
+              {list.map((item, idx) => (
+                <div className="marquee__item" key={`g1-${item.img}-${idx}`}>
+                  <img
+                    src={item.img}
+                    alt={item.name}
+                    onError={(e) => {
+                      const el = e.currentTarget as HTMLImageElement;
+                      el.style.display = "none";
+                      const parent = el.parentElement;
+                      if (parent) {
+                        const fb = parent.querySelector(".trusted-fallback") as HTMLElement | null;
+                        if (fb) fb.style.display = "block";
+                      }
+                    }}
+                    style={{ height: 56, width: "auto", objectFit: "contain", display: "block" }}
+                  />
+                  <div className="trusted-fallback" style={{ display: "none", color: "#e3e3e3", textAlign: "center" }}>
+                    {item.name}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* second identical group for seamless loop */}
+            <div className="marquee__group" aria-hidden="true">
+              {list.map((item, idx) => (
+                <div className="marquee__item" key={`g2-${item.img}-${idx}`}>
+                  <img
+                    src={item.img}
+                    alt={item.name}
+                    onError={(e) => {
+                      const el = e.currentTarget as HTMLImageElement;
+                      el.style.display = "none";
+                      const parent = el.parentElement;
+                      if (parent) {
+                        const fb = parent.querySelector(".trusted-fallback") as HTMLElement | null;
+                        if (fb) fb.style.display = "block";
+                      }
+                    }}
+                    style={{ height: 56, width: "auto", objectFit: "contain", display: "block" }}
+                  />
+                  <div className="trusted-fallback" style={{ display: "none", color: "#e3e3e3", textAlign: "center" }}>
+                    {item.name}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
+
+        {/* debug overlay (kept in DOM but hidden) */}
+        <div
+          id="trusted-by-debug"
+          style={{
+            display: "none", // hidden on site; remove this line to show overlay during debugging
+            position: "absolute",
+            right: 8,
+            top: 8,
+            zIndex: 60,
+            background: "rgba(0,0,0,0.6)",
+            color: "#fff",
+            fontSize: 12,
+            padding: "6px 8px",
+            borderRadius: 6,
+            pointerEvents: "none",
+            lineHeight: "1.2",
+          }}
+          aria-hidden="true"
+        >
+          <DebugInfo dbg={dbg} />
+        </div>
+
+        {/* runtime measurement script (hooks) */}
+        <MarqueeDebugger setDbg={setDbg} marqueeRootRef={marqueeRootRef} />
+
+        {/* marquee CSS */}
+        <style>{`
+          .marquee {
+            overflow: hidden;
+            width: 100%;
+          }
+
+          /* Keep everything on a single line to prevent wrapping/overlap */
+          .marquee__inner {
+            display: flex;
+            flex-wrap: nowrap;           /* prevent wrapping */
+            align-items: center;
+            /* animate from 0 to -50% to slide one full group width */
+            animation: marquee-scroll 18s linear infinite;
+            will-change: transform;
+            transform: translate3d(0,0,0);
+          }
+
+          /* Each group must stay inline and not shrink */
+          .marquee__group {
+            display: flex;
+            gap: 24px;                   /* slightly smaller gap to avoid crowding */
+            align-items: center;
+            flex: 0 0 auto;              /* do not shrink or grow */
+            white-space: nowrap;         /* ensure no internal wrapping */
+          }
+
+          .marquee__item {
+            flex: 0 0 auto;              /* preserve intrinsic size */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 120px;           /* comfortable minimum */
+            padding: 6px 8px;           /* tighter padding */
+            box-sizing: border-box;
+          }
+
+          /* Ensure images don't overflow their item and stay block-level */
+          .marquee__item img {
+            display: block;
+            height: 56px;
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
+          }
+
+          .marquee:hover .marquee__inner,
+          .marquee:focus-within .marquee__inner {
+            animation-play-state: paused;
+          }
+
+          @keyframes marquee-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+
+          @media (max-width: 640px) {
+            .marquee__group { gap: 12px; }
+            .marquee__item { min-width: 90px; padding: 6px 6px; }
+            .marquee__inner { animation-duration: 26s; }
+          }
+        `}</style>
+
+        {/* removed small spacer to eliminate gap */}
       </div>
+
+      {/* removed marquee CSS since list is now static horizontal */}
     </section>
   );
+}
+
+// small component to render debug info
+function DebugInfo({ dbg }: { dbg: any }) {
+  return (
+    <div>
+      <div>inner: {Math.round(dbg.innerWidth)}px</div>
+      <div>parent: {Math.round(dbg.parentWidth)}px</div>
+      <div>anim: {dbg.animationName || "—"}</div>
+      <div>state: {dbg.animationPlayState || "—"}</div>
+      <div>reduced: {dbg.reducedMotion ? "yes" : "no"}</div>
+    </div>
+  )
+}
+
+// hook-like helper component (keeps file client-side)
+function MarqueeDebugger({
+  setDbg,
+  marqueeRootRef,
+}: {
+  setDbg: (v: any) => void
+  marqueeRootRef?: React.RefObject<HTMLElement | null>
+}) {
+  useEffect(() => {
+    let rafId: number | null = null
+
+    const update = () => {
+      const inner = document.querySelector(".marquee__inner") as HTMLElement | null
+      const parent = inner?.parentElement as HTMLElement | null
+      const computed = inner ? getComputedStyle(inner) : null
+      const animationName = computed ? computed.animationName : ""
+      const animationPlayState = computed ? computed.animationPlayState : ""
+      const innerW = inner ? inner.getBoundingClientRect().width : 0
+      const parentW = parent ? parent.getBoundingClientRect().width : 0
+      const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      setDbg({
+        innerWidth: innerW,
+        parentWidth: parentW,
+        animationName,
+        animationPlayState,
+        reducedMotion,
+      })
+      console.log("TrustedBy debug:", { innerW, parentW, animationName, animationPlayState, reducedMotion })
+
+      // Decide if we must use JS fallback:
+      // - browser/OS requested reduced-motion
+      // - computed animation is paused or not present
+      // - or track width is less/equal than container (so CSS translate may appear static)
+      const needJSFallback =
+        reducedMotion ||
+        animationPlayState === "paused" ||
+        animationName === "none" ||
+        (innerW && parentW && innerW <= parentW + 1)
+
+      if (!inner) return
+
+      if (!needJSFallback) {
+        // ensure CSS animation is active
+        inner.style.animation = "marquee-scroll 18s linear infinite"
+        inner.style.transform = ""
+        if (rafId) {
+          cancelAnimationFrame(rafId)
+          rafId = null
+        }
+        return
+      }
+
+      // Use JS rAF fallback to animate
+      inner.style.animation = "none"
+      const groupWidth = inner.scrollWidth / 2 || 0
+      if (!groupWidth) return
+      const speed = 50 // px per second (adjust speed)
+      let start = performance.now()
+
+      const step = (time: number) => {
+        const elapsed = (time - start) / 1000
+        const shift = (elapsed * speed) % groupWidth
+        inner.style.transform = `translateX(-${shift}px)`
+        rafId = requestAnimationFrame(step)
+      }
+      if (!rafId) rafId = requestAnimationFrame(step)
+    }
+
+    update()
+    window.addEventListener("resize", update)
+    const obs = new MutationObserver(update)
+    const root = marqueeRootRef?.current ?? document.querySelector(".marquee")
+    if (root) obs.observe(root, { childList: true, subtree: true })
+    return () => {
+      window.removeEventListener("resize", update)
+      obs.disconnect()
+      if (rafId) cancelAnimationFrame(rafId)
+    }
+  }, [setDbg, marqueeRootRef])
+  return null
 }

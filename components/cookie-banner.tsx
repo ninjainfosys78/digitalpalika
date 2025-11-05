@@ -45,23 +45,23 @@ export default function CookieBanner({ language }: CookieBannerProps) {
 
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-50 bg-ni-graphite text-ni-paper p-6 shadow-lg animate-slideUp"
+      className="fixed bottom-0 left-0 right-0 z-50 bg-[#000000] text-ni-paper animate-slideUp"
       role="region"
       aria-label="Cookie consent"
     >
-      <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-sm text-ni-paper/80 flex-1">{content.message}</p>
-        <div className="flex gap-3">
+      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 py-6 flex flex-row items-center justify-between gap-4">
+        <p className="text-sm text-ni-paper/80 flex-1 mr-4">{content.message}</p>
+        <div className="flex items-center gap-3">
           <button
             onClick={handleDecline}
-            className="px-6 py-2 border border-ni-paper/20 text-ni-paper text-sm font-medium rounded hover:bg-ni-paper/10 transition-colors"
+            className="px-6 py-2 border bg-[#141414] border-ni-paper/20 text-ni-paper text-sm font-medium transition-colors"
             style={{ minHeight: "44px" }}
           >
             {content.decline}
           </button>
           <button
             onClick={handleAccept}
-            className="px-6 py-2 bg-ni-accent text-white text-sm font-medium rounded hover:bg-ni-accent-2 transition-colors"
+            className="px-6 py-2 bg-[#d52027] text-white text-sm font-medium transition-colors"
             style={{ minHeight: "44px" }}
           >
             {content.accept}

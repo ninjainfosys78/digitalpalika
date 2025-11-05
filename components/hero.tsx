@@ -16,92 +16,79 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
       ? {
           title: "Turning Intent into Infrastructure",
           deck: "We move beyond plans, designing and building the systems that make them work.",
-          cta: "Explore our work",
-          cta2: "Schedule a call",
+          cta: "Contact Us",
+          cta2: "Explore",
         }
       : {
           title: "इरादालाई पूर्वाधारमा परिणत गर्दै",
           deck: "हामी योजनाहरू भन्दा पर जान्छौं, तिनीहरूलाई काम गर्ने प्रणालीहरू डिजाइन र निर्माण गर्दै।",
-          cta: "हाम्रो काम हेर्नुहोस्",
+          cta: "अन्वेषण गर्नुहोस्",
           cta2: "कल तालिका बनाउनुहोस्",
         }
 
   return (
     <section
       id="hero"
-      className={
-        `relative min-h-screen flex items-center justify-center overflow-hidden bg-ni-ink ${
-          backgroundOnly ? "" : "text-ni-paper"
-        }`
-      }
+      className={`relative min-h-screen flex items-center justify-center overflow-hidden bg-black ${
+        backgroundOnly ? "" : "text-[#e3e3e3]"
+      }`}
       aria-label="Hero section"
     >
-      <div className="absolute inset-0 opacity-10">
+      {showContent && (
         <div
-          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-ni-accent rounded-2px blur-[120px] animate-float"
-          style={{ animationDuration: "8s" }}
+          aria-hidden
+          className="pointer-events-none absolute right-0 z-0 w-[700px] h-[700px] rounded-full blur-[28px] translate-x-[12%] top-[12%] mix-blend-normal opacity-100 bg-[radial-gradient(circle_at_85%_85%,rgba(0,0,0,0)_0%,rgba(0,0,0,0)_60%,rgba(213,32,32,0.98)_61%,rgba(213,32,32,0.92)_64%,rgba(213,32,32,0.45)_67%,rgba(0,0,0,0)_72%)]"
         />
-        <div
-          className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-ni-accent-2 rounded-2px blur-[120px] animate-float"
-          style={{ animationDuration: "10s", animationDelay: "2s" }}
-        />
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-ni-accent/50 rounded-2px blur-[100px] animate-float"
-          style={{ animationDuration: "12s", animationDelay: "4s" }}
-        />
-      </div>
+      )}
 
       <div className="absolute inset-0 opacity-[0.02]">
-        <div
-          className="w-full h-full"
-          style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: "50px 50px",
-          }}
-        />
+        <div className="w-full h-full bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] [background-size:50px_50px]" />
       </div>
 
       {backgroundOnly ? (
-        // when used as background only, render children directly and don't add extra padding/text color
         children
       ) : (
-        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 text-center py-20 sm:py-28 lg:py-32">
-          {children ? (
-            children
-          ) : showContent ? (
-            <>
-              <h1 className="text-6xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl font-heading font-bold mb-8 sm:mb-12 py-12 text-balance leading-[1.1] tracking-tight">
-                {content.title}
-              </h1>
-
-              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-ni-paper/80 mb-10 sm:mb-16 lg:mb-20 max-w-6xl mx-auto text-pretty leading-relaxed font-light">
-                {content.deck}
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-6xl mx-auto mt-6 sm:mt-4 lg:mt-6 py-12">
-                <Link
-                  href="/work"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-ni-accent text-white text-base font-semibold rounded-2px hover:bg-ni-accent-2 transition-all hover:gap-3 group shadow-lg shadow-ni-accent/20 w-full sm:w-auto sm:flex-1 sm:max-w-[240px]"
+        <div className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 2xl:px-16 text-left py-28 sm:py-32 lg:py-36">
+          <div className="max-w-[860px]">
+            {children ? (
+              children
+            ) : showContent ? (
+              <>
+                <h1
+                  id="cta-title"
+                  className="text-balance tracking-tight max-w-[640px] w-full break-words mb-[5px] text-[64px] leading-[64px] [-letter-spacing:2px] text-[#e3e3e3]"
                 >
-                  {content.cta}
-                  <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
-                </Link>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-white/10 text-white text-base font-semibold rounded-2px hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/20 w-full sm:w-auto sm:flex-1 sm:max-w-[240px]"
-                >
-                  {content.cta2}
-                </Link>
-              </div>
-            </>
-          ) : null}
+                  {content.title}
+                </h1>
+
+                <p className="text-pretty font-normal text-[24px] leading-[35.8px] text-[#e3e3e3]/80 max-w-[640px] w-full">
+                  {content.deck}
+                </p>
+
+                <div className="flex flex-wrap gap-4 mt-8">
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center justify-between px-8 py-4 w-auto sm:w-[220px] text-[20px] bg-[#d52020] text-[#e3e3e3] rounded-none font-semibold shadow-[0_4px_24px_0_#d5202033]"
+                  >
+                    <span className="whitespace-nowrap text-left">{content.cta}</span>
+                    <span aria-hidden className="w-5" />
+                  </Link>
+
+                  <Link
+                    href="/work"
+                    className="inline-flex items-center justify-between px-8 py-4 w-auto sm:w-[220px] group text-[20px] bg-[#141414] text-[#e3e3e3] rounded-none font-semibold"
+                  >
+                    <span className="whitespace-nowrap text-left">{content.cta2}</span>
+                    <span className="flex items-center">
+                      <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </Link>
+                </div>
+              </>
+            ) : null}
+          </div>
         </div>
       )}
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 animate-bounce">
-        <div className="w-px h-12 sm:h-16 bg-gradient-to-b from-ni-paper/40 to-transparent" />
-      </div>
     </section>
   )
 }
