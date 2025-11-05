@@ -4,7 +4,7 @@ stages:
 
 variables:
   NODE_VERSION: "20"
-  PROJECT_NAME: "ninjainfosys"
+  PROJECT_NAME: "ninja-landing"
   BUILD_DIR: "out"
   NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"
   NEXT_TELEMETRY_DISABLED: "1"
