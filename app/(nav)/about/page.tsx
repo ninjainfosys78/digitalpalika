@@ -28,7 +28,7 @@ export default function AboutPage() {
           heroTitle: "ABOUT US",
           brand: "NINJA INFOSYS",
           whoDesc: "Ninja Infosys is an IT technical solution provider. Our dedicated technical professionals offer our clients services in the field of IT Consultancy, Software Development, Web/Mobile Application Development, Project-based solutions and IT System Maintenance. Our mission from the very first day has been to establish professional relationship with our clients, to provide effective and reliable information technology solutions for their need.",
-          coreTitle: "OUR CORE",
+          coreTitle: "Our Core",
           // feature cards under "Who we are"
           features: [
             { icon: Handshake, title: "Collaboration", desc: "Working closely with partners" },
@@ -186,8 +186,8 @@ export default function AboutPage() {
               </div>
               <div className="md:col-span-6 md:h-[420px] flex flex-col justify-center gap-6">
                 {/* nudge title slightly up */}
-                <h2 className="text-2xl lg:text-3xl font-heading font-semibold text-left -mt-3 lg:-mt-4">{content.who}</h2>
-                 <p className="mt-0 text-slate-200 leading-relaxed">
+                <h2 className="text-[32px] font-heading font-semibold text-left -mt-3 lg:-mt-4">{content.who}</h2>
+                <p className="mt-0 text-slate-200 leading-relaxed">
                    {content.whoDesc}
                  </p>
 
@@ -213,7 +213,7 @@ export default function AboutPage() {
         <section className="relative z-10 bg-black">
            <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-16">
              <div className="mt-2 mb-3">
-               <h2 className="mt-2 text-3xl sm:text-4xl font-heading font-semibold text-left">{content.coreTitle}</h2>
+               <h2 className="mt-2 text-[32px] font-heading font-semibold text-left">{content.coreTitle}</h2>
              </div>
 
    <div className="mt-8 grid gap-6 md:grid-cols-12">
@@ -237,9 +237,8 @@ export default function AboutPage() {
  
          {/* STORY / TIMELINE */}
          <section id="our-story" className="relative z-10 scroll-mt-28">
-
           <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-12 lg:py-16">
-            <h2 className="text-2xl lg:text-3xl font-heading font-semibold text-left">
+            <h2 className="text-[32px] font-heading font-semibold text-left">
               {content.storyTitle}
             </h2>
 
@@ -287,5 +286,3 @@ export default function AboutPage() {
      </>
    )
  }
-
- 
