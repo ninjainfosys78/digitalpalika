@@ -104,13 +104,16 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
       hoverTimer.current = null
     }, delay)
   }
+
   const nav = DATA[language].items
 
   const DesktopLink = ({ href, label, isActive, onClick }: any) => (
     <Link
       href={href}
       onClick={onClick}
-      className={`text-sm transition-colors relative group ${isActive ? "text-white" : "text-white/70 hover:text-white"}`}
+      className={`text-sm transition-colors relative group font-ibm-plex-sans ${
+        isActive ? "text-white" : "text-white/70 hover:text-white"
+      }`}
     >
       {label}
       <span className="pointer-events-none absolute -bottom-1 left-1/2 w-0 h-px bg-[#d52020] transition-all duration-200 group-hover:w-full group-hover:left-0" />
@@ -118,33 +121,14 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
   )
 
   const MobileLink = ({ href, label, onClick }: any) => (
-    <Link href={href} onClick={onClick} className="text-base text-white/85 hover:text-white transition-colors py-2">
+    <Link
+      href={href}
+      onClick={onClick}
+      className="text-base text-white/85 hover:text-white transition-colors py-2 font-ibm-plex-sans"
+    >
       {label}
     </Link>
   )
-
-  const FeaturedCard = ({ card, onClick, variant = "desktop" }: any) => {
-    if (variant === "mobile") {
-      return (
-        <Link key={card.heading} href={card.href} onClick={onClick} className="block px-2 py-2 text-sm text-white/95">
-          <div className="font-medium">{card.heading}</div>
-          <div className="text-xs text-white/70">{card.copy}</div>
-        </Link>
-      )
-    }
-
-    return (
-      <Link
-        key={card.heading}
-        href={card.href}
-        onClick={onClick}
-        className="group block rounded-md p-3 transition-colors bg-transparent"
-      >
-        <div className="font-semibold text-white group-hover:text-[#d52020]">{card.heading}</div>
-        <p className="mt-1 text-xs text-white/75 leading-tight">{card.copy}</p>
-      </Link>
-    )
-  }
 
   useEffect(() => {
     const onEsc = (e: KeyboardEvent) => {
@@ -225,7 +209,7 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
                 >
                   <button
                     type="button"
-                    className="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors"
+                    className="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors font-ibm-plex-sans"
                     aria-haspopup="menu"
                     aria-expanded={open}
                     onClick={() => setOpenMega(open ? null : k)}
@@ -237,32 +221,34 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
                   {open && (
                     <div
                       role="menu"
-                      className="fixed left-1/2 -translate-x-1/2 top-16 w-[min(90vw,1100px)] rounded-md border border-white/10 bg-black text-white shadow-2xl ring-1 ring-black/5 p-6"
+                      className="fixed left-1/2 -translate-x-1/2 top-16 w-[min(90vw,1100px)] border border-white/10 bg-black text-white shadow-2xl ring-1 ring-black/5 p-10 rounded-none"
                       onMouseEnter={() => clearHoverTimer()}
                       onMouseLeave={() => scheduleClose()}
                     >
-                      <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                        <div className="text-sm font-semibold tracking-wide text-white">{item.title}</div>
+                      <div className="flex items-center justify-between pb-6 border-b border-white/10">
+                        <div className="text-base font-semibold tracking-wide text-white font-source-serif-pro">
+                          {item.title}
+                        </div>
                         <Link
                           href={exploreHref}
                           onClick={closeAllMenus}
-                          className="inline-flex items-center gap-2 text-sm text-[#d52020]"
+                          className="inline-flex items-center gap-2 text-sm text-[#a0a0a0] hover:text-white transition-colors font-ibm-plex-sans"
                         >
                           {language === "en" ? "Explore all" : "सबै हेर्नुहोस्"}
                           <ArrowRight size={16} />
                         </Link>
                       </div>
 
-                      <div className="pt-6 grid grid-cols-1 md:grid-cols-[1.2fr_1.2fr_0.9fr] gap-8">
-                        <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
-                          <div className="space-y-3">
-                            <ul className="space-y-2">
+                      <div className="pt-8 grid grid-cols-1 md:grid-cols-[1.2fr_1.2fr_0.9fr] gap-10">
+                        <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-10">
+                          <div className="space-y-4">
+                            <ul className="space-y-3">
                               {item.cols[0].map((it: any) => (
                                 <li key={it.href}>
                                   <Link
                                     href={it.href}
                                     onClick={closeAllMenus}
-                                    className="text-sm relative group inline-block text-white/95"
+                                    className="text-sm relative group inline-block text-white/95 font-ibm-plex-sans"
                                   >
                                     <span className="block">{it.label}</span>
                                     <span className="pointer-events-none absolute -bottom-1 left-1/2 w-0 h-px bg-[#d52020] transition-all duration-200 group-hover:w-full group-hover:left-0" />
@@ -272,14 +258,14 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
                             </ul>
                           </div>
 
-                          <div className="space-y-3">
-                            <ul className="space-y-2">
+                          <div className="space-y-4">
+                            <ul className="space-y-3">
                               {item.cols[1].map((it: any) => (
                                 <li key={it.href}>
                                   <Link
                                     href={it.href}
                                     onClick={closeAllMenus}
-                                    className="text-sm relative group inline-block text-white/95"
+                                    className="text-sm relative group inline-block text-white/95 font-ibm-plex-sans"
                                   >
                                     <span className="block">{it.label}</span>
                                     <span className="pointer-events-none absolute -bottom-1 left-1/2 w-0 h-px bg-[#d52020] transition-all duration-200 group-hover:w-full group-hover:left-0" />
@@ -290,14 +276,19 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
                           </div>
                         </div>
 
-                        <div className="hidden md:block pl-6 border-l border-white/10">
-                          <div className="text-xs font-semibold tracking-wider text-white/70 uppercase mb-3">
-                            {item.featured.title}
-                          </div>
-                          <div className="space-y-4">
-                            {item.featured.cards.map((c: any) =>
-                              FeaturedCard({ card: c, onClick: closeAllMenus, variant: "desktop" })
-                            )}
+                        <div className="hidden md:flex flex-col pl-8 border-l border-white/25">
+                          <div className="flex flex-col space-y-2 mt-3">
+                            <div className="text-xs font-semibold tracking-wider text-white/70 uppercase font-ibm-plex-sans">
+                              {item.featured.title}
+                            </div>
+                            {item.featured.cards.map((c: any) => (
+                              <Link key={c.heading} href={c.href} onClick={closeAllMenus}>
+                                <div className="font-semibold text-white leading-tight pb-1 font-source-serif-pro">
+                                  {c.heading}
+                                </div>
+                                <p className="text-sm text-[#a0a0a0] leading-tight font-ibm-plex-sans">{c.copy}</p>
+                              </Link>
+                            ))}
                           </div>
                         </div>
                       </div>
@@ -337,60 +328,6 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
           </div>
         </div>
       </div>
-
-      {mobileOpen && (
-        <div className="lg:hidden bg-black/95 backdrop-blur-md border-t border-black/10">
-          <nav className="max-w-[1600px] mx-auto px-6 py-6 flex flex-col gap-2" aria-label="Mobile navigation">
-            {nav.map((item: any) => {
-              if (item.type === "link") {
-                return <MobileLink key={item.href} href={item.href} label={item.label} onClick={closeAllMenus} />
-              }
-              const k = item.key as string
-              const open = !!mobileMenus[k]
-              return (
-                <div key={k} className="border-t border-black/10 pt-3">
-                  <button
-                    className="w-full flex items-center justify-between text-base text-white/90 py-2"
-                    onClick={() => setMobileMenus((m) => ({ ...m, [k]: !open }))}
-                    aria-expanded={open}
-                  >
-                    <span>{item.label}</span>
-                    <ChevronDown size={18} className={`transition-transform ${open ? "rotate-180" : ""}`} />
-                  </button>
-
-                  {open && (
-                    <div className="mt-1 pl-2">
-                      <div className="grid grid-cols-1 gap-1">
-                        {[...item.cols[0], ...item.cols[1]].map((c: any) => (
-                          <Link
-                            key={c.href}
-                            href={c.href}
-                            className="py-2 text-white/80 hover:text-white"
-                            onClick={closeAllMenus}
-                          >
-                            {c.label}
-                          </Link>
-                        ))}
-                      </div>
-
-                      <div className="mt-3 border-t border-black/10 pt-3">
-                        <div className="text-xs font-semibold tracking-wider text-white/60 uppercase mb-2">
-                          {item.featured.title}
-                        </div>
-                        <div className="space-y-2">
-                          {item.featured.cards.map((c: any) =>
-                            FeaturedCard({ card: c, onClick: closeAllMenus, variant: "mobile" })
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-          </nav>
-        </div>
-      )}
     </header>
   )
 }
