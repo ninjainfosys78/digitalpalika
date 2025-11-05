@@ -49,10 +49,8 @@ export default function TrustedBy({ language }: TrustedByProps) {
   // (removed manual force toggle) - fallback will run automatically if CSS animation is unavailable
 
   return (
-    <section
-      className="pt-0 pb-10"
-      style={{ background: "#000000", marginTop: "-32px", position: "relative", zIndex: 5 }} /* pulled up to overlap hero and remove gap */
-    >
+    <section className="pt-0 pb-10 bg-black -mt-8 relative z-[5]">
+      {/* pulled up to overlap hero and remove gap */}
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
 
         {/* animated marquee: two identical groups inside a moving container for a continuous loop */}
@@ -72,16 +70,17 @@ export default function TrustedBy({ language }: TrustedByProps) {
                     alt={item.name}
                     onError={(e) => {
                       const el = e.currentTarget as HTMLImageElement;
-                      el.style.display = "none";
+                      // use Tailwind utility class toggles instead of direct style writes
+                      el.classList.add("hidden");
                       const parent = el.parentElement;
                       if (parent) {
                         const fb = parent.querySelector(".trusted-fallback") as HTMLElement | null;
-                        if (fb) fb.style.display = "block";
+                        if (fb) fb.classList.remove("hidden");
                       }
                     }}
-                    style={{ height: 56, width: "auto", objectFit: "contain", display: "block" }}
+                    className="h-14 w-auto object-contain block"
                   />
-                  <div className="trusted-fallback" style={{ display: "none", color: "#e3e3e3", textAlign: "center" }}>
+                  <div className="trusted-fallback hidden text-gray-300 text-center">
                     {item.name}
                   </div>
                 </div>
@@ -97,16 +96,16 @@ export default function TrustedBy({ language }: TrustedByProps) {
                     alt={item.name}
                     onError={(e) => {
                       const el = e.currentTarget as HTMLImageElement;
-                      el.style.display = "none";
+                      el.classList.add("hidden");
                       const parent = el.parentElement;
                       if (parent) {
                         const fb = parent.querySelector(".trusted-fallback") as HTMLElement | null;
-                        if (fb) fb.style.display = "block";
+                        if (fb) fb.classList.remove("hidden");
                       }
                     }}
-                    style={{ height: 56, width: "auto", objectFit: "contain", display: "block" }}
+                    className="h-14 w-auto object-contain block"
                   />
-                  <div className="trusted-fallback" style={{ display: "none", color: "#e3e3e3", textAlign: "center" }}>
+                  <div className="trusted-fallback hidden text-gray-300 text-center">
                     {item.name}
                   </div>
                 </div>
@@ -118,20 +117,7 @@ export default function TrustedBy({ language }: TrustedByProps) {
         {/* debug overlay (kept in DOM but hidden) */}
         <div
           id="trusted-by-debug"
-          style={{
-            display: "none", // hidden on site; remove this line to show overlay during debugging
-            position: "absolute",
-            right: 8,
-            top: 8,
-            zIndex: 60,
-            background: "rgba(0,0,0,0.6)",
-            color: "#fff",
-            fontSize: 12,
-            padding: "6px 8px",
-            borderRadius: 6,
-            pointerEvents: "none",
-            lineHeight: "1.2",
-          }}
+          className="hidden absolute right-2 top-2 z-[60] bg-black/60 text-white text-xs px-2 py-1 rounded-md pointer-events-none leading-[1.2]"
           aria-hidden="true"
         >
           <DebugInfo dbg={dbg} />
@@ -145,18 +131,24 @@ export default function TrustedBy({ language }: TrustedByProps) {
           .marquee {
             overflow: hidden;
             width: 100%;
+            position: relative; /* keep overlays/fades positioned relative to the bar */
+            /* mask on the non-animated parent keeps the fade fixed while inner content moves */
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+                    mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
           }
-
-          /* Keep everything on a single line to prevent wrapping/overlap */
-          .marquee__inner {
-            display: flex;
-            flex-wrap: nowrap;           /* prevent wrapping */
-            align-items: center;
-            /* animate from 0 to -50% to slide one full group width */
-            animation: marquee-scroll 18s linear infinite;
-            will-change: transform;
-            transform: translate3d(0,0,0);
-          }
+ 
+           /* Keep everything on a single line to prevent wrapping/overlap */
+           .marquee__inner {
+             display: flex;
+             flex-wrap: nowrap;           /* prevent wrapping */
+             align-items: center;
+             /* animate from 0 to -50% to slide one full group width */
+             animation: marquee-scroll 18s linear infinite;
+             animation-timing-function: linear;
+             will-change: transform;
+             transform: translate3d(0,0,0);
+            /* no mask here — mask lives on the parent so it doesn't move with the animation */
+           }
 
           /* Each group must stay inline and not shrink */
           .marquee__group {
@@ -167,6 +159,8 @@ export default function TrustedBy({ language }: TrustedByProps) {
             white-space: nowrap;         /* ensure no internal wrapping */
           }
 
+          /* Add small transitions on the items so they feel smoother when coming/going.
+             These transitions are subtle and won't affect the primary CSS translate animation. */
           .marquee__item {
             flex: 0 0 auto;              /* preserve intrinsic size */
             display: inline-flex;
@@ -175,15 +169,21 @@ export default function TrustedBy({ language }: TrustedByProps) {
             min-width: 120px;           /* comfortable minimum */
             padding: 6px 8px;           /* tighter padding */
             box-sizing: border-box;
+            transition: transform 220ms ease, opacity 220ms ease;
+            will-change: transform, opacity;
+            opacity: 1;
           }
 
-          /* Ensure images don't overflow their item and stay block-level */
+          /* Ensure images don't overflow their item and stay block-level.
+             Use a small transition on opacity/transform to make them feel smoother. */
           .marquee__item img {
             display: block;
             height: 56px;
             width: auto;
             max-width: 100%;
             object-fit: contain;
+            transition: opacity 300ms ease, transform 300ms ease;
+            will-change: opacity, transform;
           }
 
           .marquee:hover .marquee__inner,
