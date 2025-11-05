@@ -98,11 +98,7 @@ export default function CareersPage() {
         </section>
       </main>
       <GlobalCTA language={language} onOfficesOpen={() => setOfficesOpen(true)} />
-      <OfficesModal
-        isOpen={officesOpen}
-        onClose={() => setOfficesOpen(false)}
-        language={language}
-      />
+
       <Footer language={language} />
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} language={language} />
     </>
