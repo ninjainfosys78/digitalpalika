@@ -89,9 +89,9 @@ export default function HomePage() {
       {/* Main content */}
   <main id="main-content" className="sharp-edges">
         <Hero language={language} />
+        <TrustedBy language={language} />
         <InsightsRail language={language} />
         <Testimonials language={language} />
-        <TrustedBy language={language} />
         <GlobalCTA
           language={language}
           onOfficesOpen={() => setOfficesOpen(true)}
