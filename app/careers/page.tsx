@@ -5,6 +5,10 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import SearchOverlay from "@/components/search-overlay";
 import Link from "next/link";
+import GlobalCTA from "@/components/global-cta"
+import OfficesModal from "@/components/offices-modal"
+
+
 
 export default function CareersPage() {
   const [language, setLanguage] = useState<"en" | "ne">("en");
@@ -93,6 +97,8 @@ export default function CareersPage() {
           </div>
         </section>
       </main>
+      <GlobalCTA language={language} onOfficesOpen={() => setOfficesOpen(true)} />
+
       <Footer language={language} />
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} language={language} />
     </>
