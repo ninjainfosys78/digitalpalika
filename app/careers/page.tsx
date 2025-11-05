@@ -13,6 +13,7 @@ import OfficesModal from "@/components/offices-modal"
 export default function CareersPage() {
   const [language, setLanguage] = useState<"en" | "ne">("en");
   const [searchOpen, setSearchOpen] = useState(false);
+  const [officesOpen, setOfficesOpen] = useState(false);
 
   const content = {
     en: { hero: { kicker: "LIFE AT NINJA INFOSYS", title: "Careers" } },
@@ -101,6 +102,12 @@ export default function CareersPage() {
 
       <Footer language={language} />
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} language={language} />
+
+      <OfficesModal
+        isOpen={officesOpen}
+        onClose={() => setOfficesOpen(false)}
+        language={language}
+      />
     </>
   );
 }
