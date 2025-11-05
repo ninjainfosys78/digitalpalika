@@ -23,7 +23,7 @@ build:
     - numanode
   before_script:
     - echo "Installing dependencies..."
-    - npm ci --cache .npm --prefer-offline --no-audit --legacy-peer-deps
+    - npm install --cache .npm --prefer-offline --no-audit --legacy-peer-deps
   script:
     - echo "Building Next.js project..."
     - npm run build
