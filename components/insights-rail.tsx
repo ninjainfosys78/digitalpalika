@@ -94,7 +94,7 @@ export default function InsightsRail({ language }: InsightsRailProps) {
                   <img
                     src={insight.image || "/placeholder.svg"}
                     alt=""
-                    className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 ${
+                    className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 grayscale ${
                       idx === 0 ? "h-[280px] sm:h-[350px] md:h-[400px]" : "h-[200px] sm:h-[240px]"
                     }`}
                   />
