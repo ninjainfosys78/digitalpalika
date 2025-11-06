@@ -70,13 +70,13 @@ export default function InsightsRail({ language }: InsightsRailProps) {
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 sm:mb-16 gap-4">
           <h2
             id="insights-title"
-            className="text-[32px] leading-10 sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-[#e3e3e3]"
+            className="text-[32px] leading-10 font-semibold text-[#e3e3e3]"
           >
             {content.title}
           </h2>
           <a
-            href="#insights"
-            className="hidden md:flex items-center gap-2 text-sm transition-colors flex-shrink-0 text-[#d52020] hover:text-neutral-900 group"
+            href="blogs"
+            className="hidden md:flex items-center gap-2 text-sm transition-colors flex-shrink-0 text-[#e3e3e3] hover:text-neutral-900 group"
           >
             {content.viewAll}
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
