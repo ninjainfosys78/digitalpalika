@@ -5,7 +5,6 @@ import Link from "next/link"
 import { Search, PenTool, Code, RefreshCw, ChevronDown } from "lucide-react"
 
 import Header from "@/components/header"
-import AnnouncementBar from "@/components/announcement-bar"
 import GlobalCTA from "@/components/global-cta"
 import SearchOverlay from "@/components/search-overlay"
 import OfficesModal from "@/components/offices-modal"
@@ -178,7 +177,6 @@ export default function WorkPage() {
   return (
     <>
       <Header language={language} onLanguageChange={setLanguage} />
-      <AnnouncementBar language={language} />
 
       <main className="relative bg-[#000000] text-[#e3e3e3]">
         <section className="relative z-10">

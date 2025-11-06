@@ -13,7 +13,6 @@ import {
 
 import Link from "next/link"
 import Header from "@/components/header"
-import AnnouncementBar from "@/components/announcement-bar"
 import Footer from "@/components/footer"
 import Testimonials from "@/components/testimonials"
 import GlobalCTA from "@/components/global-cta"
@@ -96,7 +95,6 @@ export default function AboutPage() {
   return (
     <>
       <Header language={language} onLanguageChange={setLanguage} />
-      <AnnouncementBar language={language} />
 
       <main className="relative bg-black text-[#f3f3f3e6]">
         <section className="relative z-10">
