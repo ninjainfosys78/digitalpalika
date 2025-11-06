@@ -49,7 +49,7 @@ export default function TrustedBy({ language }: TrustedByProps) {
   // (removed manual force toggle) - fallback will run automatically if CSS animation is unavailable
 
   return (
-    <section className="pt-0 pb-10 bg-black -mt-8 relative z-[5]">
+    <section className="pt-6 pb-10 bg-black -mt-8 relative z-[5]">
       {/* pulled up to overlap hero and remove gap */}
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
 

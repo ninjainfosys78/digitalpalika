@@ -22,14 +22,14 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
       : {
           title: "इरादालाई पूर्वाधारमा परिणत गर्दै",
           deck: "हामी योजनाहरू भन्दा पर जान्छौं, तिनीहरूलाई काम गर्ने प्रणालीहरू डिजाइन र निर्माण गर्दै।",
-          cta: "अन्वेषण गर्नुहोस्",
-          cta2: "कल तालिका बनाउनुहोस्",
+          cta: "सम्पर्क गर्नुहोस्",
+          cta2: "अन्वेषण",
         }
 
   return (
     <section
       id="hero"
-      className={`relative min-h-screen flex items-center justify-center overflow-hidden bg-black ${
+      className={`relative h-screen flex items-center justify-center overflow-hidden bg-black ${
         backgroundOnly ? "" : "text-[#e3e3e3]"
       }`}
       aria-label="Hero section"
@@ -48,7 +48,7 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
       {backgroundOnly ? (
         children
       ) : (
-        <div className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 2xl:px-16 text-left py-28 sm:py-32 lg:py-36">
+        <div className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 2xl:px-16 text-left py-0">
           <div className="max-w-[860px]">
             {children ? (
               children
@@ -56,7 +56,7 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
               <>
                 <h1
                   id="cta-title"
-                  className="text-balance tracking-tight max-w-[640px] w-full break-words mb-[5px] text-[64px] leading-[64px] [-letter-spacing:2px] text-[#e3e3e3]"
+                  className="text-balance tracking-tight max-w-[640px] w-full break-words mb-2 text-[64px] leading-[64px] [-letter-spacing:2px] text-[#e3e3e3]"
                 >
                   {content.title}
                 </h1>
