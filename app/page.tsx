@@ -5,7 +5,6 @@ import Head from "next/head"
 
 import Header from "@/components/header"
 import Hero from "@/components/hero"
-import AnnouncementBar from "@/components/announcement-bar"
 import InsightsRail from "@/components/insights-rail"
 import Testimonials from "@/components/testimonials"
 import TrustedBy from "@/components/trusted-by"
@@ -83,8 +82,6 @@ export default function HomePage() {
         language={language}
         onLanguageChange={setLanguage}
       />
-
-      <AnnouncementBar language={language} />
 
       {/* Main content */}
   <main id="main-content" className="sharp-edges">

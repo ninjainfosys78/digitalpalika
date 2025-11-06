@@ -1,9 +1,7 @@
 "use client";
 
-// small runtime diagnostics to help debug marquee animation on some machines
 import { useEffect, useState, useRef } from "react";
 
-// trusted items: put your images in public/logos/ with the filenames below
 const trustedList = {
   en: [
     { name: "Kathmandu Metropolitan City", img: "/kathamndu-mahanagarpalika.png" },
@@ -16,17 +14,16 @@ const trustedList = {
     { name: "Prabhu Bank", img: "/prabhu-bank.png" },
     { name: "Government of Nepal", img: "/nepal-sarkar.png" },
   ],
-  // Nepali labels reuse the same image files (change if you have different assets)
   ne: [
-    { name: "काठमाडौं महानगरपालिका", img: "/logos/kathmandu-metropolitan-city.png" },
-    { name: "पोखरा महानगरपालिका", img: "/logos/pokhara-metropolitan-city.png" },
-    { name: "एलबी मल्ल एण्ड कम्पनी", img: "/logos/lb-mall-company.png" },
-    { name: "आईएसआरसी", img: "/logos/isrc.png" },
-    { name: "भूमि इन्जिनियरिङ कन्सोर्टियम", img: "/logos/vumi-engineering-consortium.png" },
-    { name: "फोनपे", img: "/logos/phonepay.png" },
-    { name: "आकाश एसएमएस", img: "/logos/aakash-sms.png" },
-    { name: "प्रभु बैंक", img: "/logos/prabhu-bank.png" },
-    { name: "नेपाल सरकार", img: "/logos/government-of-nepal.png" },
+    { name: "काठमाडौं महानगरपालिका", img: "/kathamndu-mahanagarpalika.png" },
+    { name: "पोखरा महानगरपालिका", img: "/pokhara-mahanagarpalika.png" },
+    { name: "एलबी मल्ल एण्ड कम्पनी", img: "/LB-mall.png" },
+    { name: "आईएसआरसी", img: "/isrc.png" },
+    { name: "भूमि इन्जिनियरिङ कन्सोर्टियम", img: "/vumi-engineering.png" },
+    { name: "फोनपे", img: "/fone-pay.png" },
+    { name: "आकाश एसएमएस", img: "/aakash-sms.png" },
+    { name: "प्रभु बैंक", img: "/prabhu-bank.png" },
+    { name: "नेपाल सरकार", img: "/nepal-sarkar.png" },
   ],
 };
 
@@ -49,7 +46,7 @@ export default function TrustedBy({ language }: TrustedByProps) {
   // (removed manual force toggle) - fallback will run automatically if CSS animation is unavailable
 
   return (
-    <section className="pt-0 pb-10 bg-black -mt-8 relative z-[5]">
+    <section className="pt-6 pb-10 bg-black -mt-8 relative z-[5]">
       {/* pulled up to overlap hero and remove gap */}
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
 
