@@ -6,7 +6,6 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { ChevronDown } from "lucide-react"
 
 import Header from "@/components/header"
-import AnnouncementBar from "@/components/announcement-bar"
 import GlobalCTA from "@/components/global-cta"
 import SearchOverlay from "@/components/search-overlay"
 import OfficesModal from "@/components/offices-modal"
@@ -135,7 +134,6 @@ export default function SolutionsPage() {
   return (
     <>
       <Header language={language} onLanguageChange={setLanguage} />
-      <AnnouncementBar language={language} />
 
       <main className="relative bg-black text-white">
         <section className="relative z-10">

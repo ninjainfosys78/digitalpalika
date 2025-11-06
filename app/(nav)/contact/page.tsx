@@ -4,7 +4,6 @@ import { useState } from "react"
 import Link from "next/link"
 
 import Header from "@/components/header"
-import AnnouncementBar from "@/components/announcement-bar"
 import Footer from "@/components/footer"
 import SearchOverlay from "@/components/search-overlay"
 
@@ -70,7 +69,6 @@ export default function ContactPage() {
   return (
     <>
       <Header language={language} onLanguageChange={setLanguage} />
-      <AnnouncementBar language={language} />
 
       <section className="relative min-h-screen bg-black text-[#e3e3e3] pt-16" aria-label="Contact section">
         <div className="max-w-[1600px] mx-auto px-6 sm:px-8">
