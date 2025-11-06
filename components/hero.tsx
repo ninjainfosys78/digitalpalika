@@ -34,21 +34,22 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
       }`}
       aria-label="Hero section"
     >
-      {showContent && (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute right-0 z-0 w-[700px] h-[700px] rounded-full blur-[28px] translate-x-[12%] top-[12%] mix-blend-normal opacity-100 bg-[radial-gradient(circle_at_85%_85%,rgba(0,0,0,0)_0%,rgba(0,0,0,0)_60%,rgba(213,32,32,0.98)_61%,rgba(213,32,32,0.92)_64%,rgba(213,32,32,0.45)_67%,rgba(0,0,0,0)_72%)]"
-        />
-      )}
-
       <div className="absolute inset-0 opacity-[0.02]">
-        <div className="w-full h-full bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] [background-size:50px_50px]" />
+        <div className="h-full w-full bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] [background-size:50px_50px]" />
+      </div>
+
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-0 w-1/2">
+        <div className="plasma-wrapper">
+          <div className="gradient gradient-1" />
+          <div className="gradient gradient-2" />
+          <div className="gradient gradient-3" />
+        </div>
       </div>
 
       {backgroundOnly ? (
         children
       ) : (
-        <div className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 2xl:px-16 text-left py-28 sm:py-32 lg:py-36">
+        <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 text-left sm:px-8 lg:px-12 2xl:px-16 py-28 sm:py-32 lg:py-36">
           <div className="max-w-[860px]">
             {children ? (
               children
@@ -56,19 +57,19 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
               <>
                 <h1
                   id="cta-title"
-                  className="text-balance tracking-tight max-w-[640px] w-full break-words mb-[5px] text-[64px] leading-[64px] [-letter-spacing:2px] text-[#e3e3e3]"
+                  className="text-balance mb-[5px] w-full max-w-[640px] break-words text-[64px] leading-[64px] [-letter-spacing:2px] text-[#e3e3e3]"
                 >
                   {content.title}
                 </h1>
 
-                <p className="text-pretty font-normal text-[24px] leading-[35.8px] text-[#e3e3e3]/80 max-w-[640px] w-full">
+                <p className="text-pretty max-w-[640px] w-full text-[24px] leading-[35.8px] text-[#e3e3e3]/80">
                   {content.deck}
                 </p>
 
-                <div className="flex flex-wrap gap-4 mt-8">
+                <div className="mt-8 flex flex-wrap gap-4">
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-between px-8 py-4 w-auto sm:w-[220px] text-[20px] bg-[#d52020] text-[#e3e3e3] rounded-none font-semibold shadow-[0_4px_24px_0_#d5202033]"
+                    className="inline-flex w-auto items-center justify-between bg-[#d52020] px-8 py-4 text-[20px] font-semibold text-[#e3e3e3] shadow-[0_4px_24px_0_#d5202033]"
                   >
                     <span className="whitespace-nowrap text-left">{content.cta}</span>
                     <span aria-hidden className="w-5" />
@@ -76,7 +77,7 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
 
                   <Link
                     href="/work"
-                    className="inline-flex items-center justify-between px-8 py-4 w-auto sm:w-[220px] group text-[20px] bg-[#141414] text-[#e3e3e3] rounded-none font-semibold"
+                    className="group inline-flex w-auto items-center justify-between bg-[#141414] px-8 py-4 text-[20px] font-semibold text-[#e3e3e3]"
                   >
                     <span className="whitespace-nowrap text-left">{content.cta2}</span>
                     <span className="flex items-center">
@@ -89,6 +90,110 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
           </div>
         </div>
       )}
+
+      <style jsx global>{`
+        .plasma-wrapper {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          filter: blur(150px);
+        }
+        .gradient {
+          position: absolute;
+          border-radius: 100%;
+          opacity: 0.6;
+          mix-blend-mode: screen;
+          animation-iteration-count: infinite;
+          animation-timing-function: cubic-bezier(0.1, 0, 0.9, 1);
+        }
+        .gradient-1 {
+          background: rgb(213, 32, 32);
+          width: 700px;
+          height: 700px;
+          animation-duration: 11s;
+          opacity: 0.7;
+          left: 60%;
+          top: 40%;
+          z-index: -2;
+          animation-name: animation-gradient-1;
+        }
+        .gradient-2 {
+          background: rgb(213, 32, 32);
+          width: 600px;
+          height: 600px;
+          animation-duration: 16s;
+          opacity: 0.16;
+          left: 40%;
+          top: 60%;
+          z-index: -1;
+          animation-name: animation-gradient-2;
+        }
+        .gradient-3 {
+          background: rgb(29, 27, 27);
+          width: 500px;
+          height: 500px;
+          animation-duration: 11s;
+          opacity: 0.77;
+          left: 50%;
+          top: 50%;
+          z-index: -3;
+          animation-name: animation-gradient-3;
+        }
+        @keyframes animation-gradient-1 {
+          0% {
+            transform: translateY(-50%) translateX(-50%) rotate(-20deg) translateX(20%);
+          }
+          25% {
+            transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(80deg) translateX(30%);
+          }
+          50% {
+            transform: translateY(-50%) translateX(-50%) rotate(180deg) translateX(25%);
+          }
+          75% {
+            transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(240deg) translateX(15%);
+          }
+          100% {
+            transform: translateY(-50%) translateX(-50%) rotate(340deg) translateX(20%);
+          }
+        }
+        @keyframes animation-gradient-2 {
+          0% {
+            transform: translateY(-50%) translateX(-50%) rotate(40deg) translateX(-20%);
+          }
+          25% {
+            transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(110deg) translateX(-5%);
+          }
+          50% {
+            transform: translateY(-50%) translateX(-50%) rotate(210deg) translateX(-35%);
+          }
+          75% {
+            transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(300deg) translateX(-10%);
+          }
+          100% {
+            transform: translateY(-50%) translateX(-50%) rotate(400deg) translateX(-20%);
+          }
+        }
+        @keyframes animation-gradient-3 {
+          0% {
+            transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%);
+          }
+          20% {
+            transform: translateY(-50%) translateX(-50%) translateX(20%) translateY(-30%);
+          }
+          40% {
+            transform: translateY(-50%) translateX(-50%) translateX(-25%) translateY(-15%);
+          }
+          60% {
+            transform: translateY(-50%) translateX(-50%) translateX(30%) translateY(20%);
+          }
+          80% {
+            transform: translateY(-50%) translateX(-50%) translateX(5%) translateY(35%);
+          }
+          100% {
+            transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%);
+          }
+        }
+      `}</style>
     </section>
   )
 }
