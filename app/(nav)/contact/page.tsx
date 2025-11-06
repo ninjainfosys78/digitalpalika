@@ -92,26 +92,26 @@ export default function ContactPage() {
                     <label className="block">
                       <span className="block text-sm text-gray-300 mb-2">{t.firstName} <span className="text-[#d52020]">*</span></span>
                       <input name="firstName" type="text" required placeholder={t.firstName}
-                        className="w-full bg-transparent text-white placeholder-gray-500 outline-none border-b border-white/20 py-2" />
+                        className="w-full bg-transparent text-white placeholder:text-ni-paper/60 outline-none border-b border-white/20 py-2" />
                     </label>
 
                     <label className="block">
                       <span className="block text-sm text-gray-300 mb-2">{t.lastName} <span className="text-[#d52020]">*</span></span>
                       <input name="lastName" type="text" required placeholder={t.lastName}
-                        className="w-full bg-transparent text-white placeholder-gray-500 outline-none border-b border-white/20 py-2" />
+                        className="w-full bg-transparent text-white placeholder:text-ni-paper/60 outline-none border-b border-white/20 py-2" />
                     </label>
                   </div>
 
                   <label className="block">
                     <span className="block text-sm text-gray-300 mb-2">{t.email} <span className="text-[#d52020]">*</span></span>
                     <input name="email" type="email" required placeholder="you@example.com"
-                      className="w-full bg-transparent text-white placeholder-gray-500 outline-none border-b border-white/20 py-2" />
+                      className="w-full bg-transparent text-white placeholder:text-ni-paper/60 outline-none border-b border-white/20 py-2" />
                   </label>
 
                   <label className="block">
                     <span className="block text-sm text-gray-300 mb-2">{t.message}</span>
                     <textarea name="message" rows={3} placeholder={t.message}
-                      className="w-full bg-transparent text-white placeholder-gray-500 outline-none border-b border-white/20 py-2 resize-none h-20" />
+                      className="w-full bg-transparent text-white placeholder:text-ni-paper/60 outline-none border-b border-white/20 py-2 resize-none h-20" />
                   </label>
 
                   <label className="flex items-start gap-3 text-sm text-gray-300">
