@@ -5,7 +5,6 @@ import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 
 import Header from "@/components/header"
-import AnnouncementBar from "@/components/announcement-bar"
 import GlobalCTA from "@/components/global-cta"
 import SearchOverlay from "@/components/search-overlay"
 import OfficesModal from "@/components/offices-modal"
@@ -486,7 +485,6 @@ export default function ServicesPage() {
   return (
     <>
       <Header language={language} onLanguageChange={setLanguage} />
-      <AnnouncementBar language={language} />
 
       <main className="relative bg-white text-[#0B0D12]">
         <section className="relative z-10">

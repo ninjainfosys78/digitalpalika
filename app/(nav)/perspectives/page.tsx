@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Header from "@/components/header"
-import AnnouncementBar from "@/components/announcement-bar"
 import Footer from "@/components/footer"
 import SearchOverlay from "@/components/search-overlay"
 import Link from "next/link"
@@ -105,7 +104,6 @@ export default function PerspectivesPage() {
         onLanguageChange={setLanguage}
         
       />
-      <AnnouncementBar language={language} />
 
       <main className="bg-white text-ni-ink">
         {/* KEEP: generous spacer for fixed header */}

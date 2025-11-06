@@ -22,14 +22,14 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
       : {
           title: "इरादालाई पूर्वाधारमा परिणत गर्दै",
           deck: "हामी योजनाहरू भन्दा पर जान्छौं, तिनीहरूलाई काम गर्ने प्रणालीहरू डिजाइन र निर्माण गर्दै।",
-          cta: "अन्वेषण गर्नुहोस्",
-          cta2: "कल तालिका बनाउनुहोस्",
+          cta: "सम्पर्क गर्नुहोस्",
+          cta2: "अन्वेषण",
         }
 
   return (
     <section
       id="hero"
-      className={`relative min-h-screen flex items-center justify-center overflow-hidden bg-black ${
+      className={`relative h-screen flex items-center justify-center overflow-hidden bg-black ${
         backgroundOnly ? "" : "text-[#e3e3e3]"
       }`}
       aria-label="Hero section"
