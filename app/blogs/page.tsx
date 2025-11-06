@@ -23,13 +23,7 @@ export default function BlogsPage() {
             <div className="absolute inset-0 bg-black/60" />
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
               <div className="max-w-[1200px] text-left">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/80">
-                  Blog
-                </p>
-                <h1 className="mt-4 text-5xl font-heading font-semibold text-white sm:text-6xl">
-                  Insights
-                </h1>
-                <nav aria-label="Breadcrumb" className="mt-4 text-sm text-white/80">
+                <nav aria-label="Breadcrumb" className="mt-0 text-sm text-white/80">
                   <ol className="flex items-center gap-3">
                     <li>
                       <Link href="/" className="font-medium tracking-wide hover:text-[#e3e3e3]">
@@ -50,6 +44,10 @@ export default function BlogsPage() {
                     <li className="font-medium tracking-wide">Blog</li>
                   </ol>
                 </nav>
+
+                <h1 className="pt-4 text-5xl font-heading font-semibold text-white sm:text-6xl">
+                  Insights
+                </h1>
               </div>
             </div>
           </div>

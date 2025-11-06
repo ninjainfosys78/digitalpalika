@@ -104,27 +104,24 @@ export default function AboutPage() {
             <div className="absolute inset-0 bg-cover bg-center bg-fixed filter grayscale bg-[url('/about.jpg')]"></div>
             <div className="absolute inset-0 bg-black/65" />
 
-            <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
+              <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
               <div className="max-w-[1600px] text-left">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#f3f3f3e6]">
-                  <span>{content.who}</span>
-                </p>
-                <h1 className="mt-4 text-5xl font-heading font-semibold text-[#f3f3f3e6] sm:text-6xl text-left">
+                <nav aria-label="Breadcrumb" className="mt-0 text-sm text-[#f3f3f3e6]">
+                  <ol className="flex items-center gap-3">
+                    <li>
+                      <Link href="/" className="font-medium tracking-wide hover:text-[#f3f3f3e6]">{content.brand}</Link>
+                    </li>
+                    <li aria-hidden className="inline-flex items-center">
+                      <svg viewBox="0 0 24 24" className="h-5 w-5 text-[#f3f3f3e6]" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6" /></svg>
+                    </li>
+                    <li className="font-medium tracking-wide">{content.heroTitle}</li>
+                  </ol>
+                </nav>
+
+                <h1 className="pt-4 text-5xl font-heading font-semibold text-[#f3f3f3e6] sm:text-6xl text-left">
                    {content.heroTitle}
                  </h1>
                </div>
-
-              <nav aria-label="Breadcrumb" className="mt-4 text-sm text-[#f3f3f3e6]">
-                <ol className="flex items-center gap-3">
-                  <li>
-                    <Link href="/" className="font-medium tracking-wide hover:text-[#f3f3f3e6]">{content.brand}</Link>
-                  </li>
-                  <li aria-hidden className="inline-flex items-center">
-                    <svg viewBox="0 0 24 24" className="h-5 w-5 text-[#f3f3f3e6]" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6" /></svg>
-                  </li>
-                  <li className="font-medium tracking-wide">{content.heroTitle}</li>
-                </ol>
-              </nav>
             </div>
           </div>
         </section>

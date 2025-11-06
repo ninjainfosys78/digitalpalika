@@ -54,13 +54,7 @@ export default function CareersPage() {
             <div className="absolute inset-0 bg-black/65" />
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12 flex items-center min-h-[70vh]">
               <div className="max-w-[1200px] text-left">
-                <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-white/80">
-                  {t.hero.kicker}
-                </p>
-                <h1 className="mt-3 text-4xl sm:text-6xl font-heading font-semibold text-white">
-                  {t.hero.title}
-                </h1>
-                <nav aria-label="Breadcrumb" className="mt-4 text-sm text-white/80">
+                <nav aria-label="Breadcrumb" className="mt-0 text-sm text-white/80">
                   <ol className="flex items-center gap-3">
                     <li>
                       <Link href="/" className="font-medium tracking-wide hover:text-white">
@@ -81,6 +75,10 @@ export default function CareersPage() {
                     <li className="font-medium tracking-wide">{t.hero.title}</li>
                   </ol>
                 </nav>
+
+                <h1 className="pt-4 text-4xl sm:text-6xl font-heading font-semibold text-white">
+                  {t.hero.title}
+                </h1>
               </div>
             </div>
           </div>

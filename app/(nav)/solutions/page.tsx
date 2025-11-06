@@ -144,12 +144,7 @@ export default function SolutionsPage() {
             <div className="absolute inset-0 bg-black/70" />
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
               <div className="max-w-[1200px] text-left">
-                <h1 className="mt-0 text-5xl font-heading font-semibold text-white sm:text-6xl">
-                  {active ? detail?.pageTitle : language === "en" ? "Industry we serve" : "हामीले सेवा दिने उद्योग"}
-                </h1>
-              </div>
-
-              <nav aria-label="Breadcrumb" className="mt-4 text-sm text-white/80">
+                <nav aria-label="Breadcrumb" className="mt-0 text-sm text-white/80">
                 <ol className="flex items-center gap-3">
                   <li>
                     <Link href="/" className="font-medium tracking-wide hover:text-white">NINJA INFOSYS</Link>
@@ -172,6 +167,11 @@ export default function SolutionsPage() {
                   )}
                 </ol>
               </nav>
+
+                <h1 className="pt-4 text-5xl font-heading font-semibold text-white sm:text-6xl">
+                  {active ? detail?.pageTitle : language === "en" ? "Industry we serve" : "हामीले सेवा दिने उद्योग"}
+                </h1>
+              </div>
             </div>
           </div>
         </section>
