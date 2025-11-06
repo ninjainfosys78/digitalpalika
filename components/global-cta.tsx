@@ -36,11 +36,11 @@ export default function GlobalCTA({ language, onOfficesOpen }: GlobalCTAProps) {
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 text-left relative z-10">
         <h2
           id="cta-title"
-          className="text-[36px] sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight text-left text-[#e3e3e3] pt-7"
+          className="text-[32px] font-bold mb-4 sm:mb-6 leading-tight text-left text-[#e3e3e3] pt-7"
         >
           {content.title}
         </h2>
-        <p className="text-[22px] sm:text-xl md:text-2xl mb-6 sm:mb-8 lg:mb-8 leading-relaxed text-left text-[#e3e3e3] py-7">
+        <p className="text-[20px] mb-6 sm:mb-8 lg:mb-8 leading-relaxed text-left text-white/70 py-7">
           {content.subtitle}
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 sm:mb-10">
@@ -73,7 +73,7 @@ export default function GlobalCTA({ language, onOfficesOpen }: GlobalCTAProps) {
               <MapPin size={20} />
               <span>{content.ctaOffice}</span>
             </span>
-          </button>
+          </a>
         </div>
       </div>
     </section>
