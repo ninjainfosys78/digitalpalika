@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { Linkedin, Twitter, Facebook, Phone, Smartphone, Mail, MapPin } from "lucide-react"
 
 interface FooterProps {
@@ -73,13 +72,12 @@ export default function Footer({ language }: FooterProps) {
           <div>
             <Link href="/#hero" className="inline-block">
               <div className="flex items-center gap-3 mb-3">
-                <Image
-                  src="/ninja-infosys-logo.png"
+                <img
+                  src="https://cdn.ninjainfosys.com/brand/ninja-infosys/logo/ninja-infosys-logo.svg"
                   alt="Ninja Infosys logo"
                   width={48}
                   height={48}
-                  className="h-8 sm:h-10 w-auto"
-                  priority
+                  className="h-8 sm:h-10 w-auto object-contain"
                 />
                 <h2 className="text-2xl font-bold">NINJA INFOSYS</h2>
               </div>

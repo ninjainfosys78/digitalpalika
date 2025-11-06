@@ -6,7 +6,6 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { ChevronDown } from "lucide-react"
 
 import Header from "@/components/header"
-import AnnouncementBar from "@/components/announcement-bar"
 import GlobalCTA from "@/components/global-cta"
 import SearchOverlay from "@/components/search-overlay"
 import OfficesModal from "@/components/offices-modal"
@@ -235,7 +234,6 @@ export default function SolutionsPage() {
   return (
     <>
       <Header language={language} onLanguageChange={setLanguage} />
-      <AnnouncementBar language={language} />
 
       <main className="relative bg-black text-white">
         <section className="relative z-10">
@@ -244,12 +242,7 @@ export default function SolutionsPage() {
             <div className="absolute inset-0 bg-black/70" />
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
               <div className="max-w-[1200px] text-left">
-                <h1 className="mt-0 text-5xl font-heading font-semibold text-white sm:text-6xl">
-                  {active ? detail?.pageTitle : language === "en" ? "Industry we serve" : "हामीले सेवा दिने उद्योग"}
-                </h1>
-              </div>
-
-              <nav aria-label="Breadcrumb" className="mt-4 text-sm text-white/80">
+                <nav aria-label="Breadcrumb" className="mt-0 text-sm text-white/80">
                 <ol className="flex items-center gap-3">
                   <li>
                     <Link href="/" className="font-medium tracking-wide hover:text-white">NINJA INFOSYS</Link>
@@ -272,6 +265,11 @@ export default function SolutionsPage() {
                   )}
                 </ol>
               </nav>
+
+                <h1 className="pt-4 text-5xl font-heading font-semibold text-white sm:text-6xl">
+                  {active ? detail?.pageTitle : language === "en" ? "Industry we serve" : "हामीले सेवा दिने उद्योग"}
+                </h1>
+              </div>
             </div>
           </div>
         </section>
@@ -284,7 +282,7 @@ export default function SolutionsPage() {
                   <button
                     key={key}
                     onClick={() => activate(key)}
-                    className="text-left group relative block select-none overflow-hidden w-full rounded-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.55)] hover:ring-8 hover:ring-white"
+                    className={`text-left group relative block select-none overflow-hidden w-full rounded-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.55)] hover:ring-8 hover:ring-white ${(["gov","edu","health","fin","corp"] as Key[]).includes(key) ? "cursor-pointer" : ""}`}
                   >
                     <div className="relative aspect-[16/10] overflow-hidden">
                       <img src={img} alt={title[language]} className="h-full w-full object-cover grayscale" />
