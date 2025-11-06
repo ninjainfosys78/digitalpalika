@@ -7,7 +7,7 @@ import Header from "@/components/header"
 import AnnouncementBar from "@/components/announcement-bar"
 import Footer from "@/components/footer"
 import SearchOverlay from "@/components/search-overlay"
-import Hero from "@/components/hero"
+
 
 export default function ContactPage() {
   const [language, setLanguage] = useState<"en" | "ne">("en")
@@ -16,22 +16,38 @@ export default function ContactPage() {
   const t =
     language === "en"
       ? {
-          formTitle: "Send us an inquiry",
-          name: "Name",
+          title: "Ninja Infosys",
+          formTitle: "Interested in Learning More?",
+          firstName: "First name",
+          lastName: "Last name",
           email: "Email",
           message: "Message",
           required: "*",
-          send: "Send inquiry",
+          agreeLabel: "I agree to receive other communications from Ninja Infosys.",
+          send: "Submit",
+          locationHeading: "Our Location",
+          city: "Kathmandu",
+          addressLine1: "Anamnagar, Kathmandu 44600",
+          phone: "01-555051203",
+          getDirection: "Get Direction →",
           mapTitle: "Where to find us",
           mapCaption: "Ninja Infosys, Anamnagar, Kathmandu, Nepal",
         }
       : {
-          formTitle: "हामीलाई सोधपुछ पठाउनुहोस्",
-          name: "नाम",
+          title: "निन्जा इन्फोसिस",
+          formTitle: "थप जानकारी चाहनुहुन्छ?",
+          firstName: "पहिलो नाम",
+          lastName: "थर",
           email: "इमेल",
           message: "सन्देश",
           required: "*",
-          send: "अनुरोध पठाउनुहोस्",
+          agreeLabel: "म Ninja Infosys बाट अन्य सञ्चार प्राप्त गर्न सहमत छु।",
+          send: "पठाउनुहोस्",
+          locationHeading: "हाम्रो स्थान",
+          city: "काठमाडौं",
+          addressLine1: "अनामनगर, काठमाडौं ४४६००",
+          phone: "०१-५५५०५१२०३",
+          getDirection: "दिशा प्राप्त गर्नुहोस् →",
           mapTitle: "हामी कहाँ छौं",
           mapCaption: "निन्जा इन्फोसिस, अनामनगर, काठमाडौं, नेपाल",
         }
@@ -40,9 +56,11 @@ export default function ContactPage() {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
     const payload = {
-      name: String(fd.get("name") || ""),
+      firstName: String(fd.get("firstName") || ""),
+      lastName: String(fd.get("lastName") || ""),
       email: String(fd.get("email") || ""),
       message: String(fd.get("message") || ""),
+      consent: Boolean(fd.get("consent")),
     }
     console.log("Inquiry:", payload)
     alert(language === "en" ? "Thanks! We’ll get back to you shortly." : "धन्यवाद! हामी छिट्टै सम्पर्क गर्नेछौं।")
@@ -51,64 +69,58 @@ export default function ContactPage() {
 
   return (
     <>
-      <Header language={language} onLanguageChange={setLanguage}  />
+      <Header language={language} onLanguageChange={setLanguage} />
       <AnnouncementBar language={language} />
 
-  <Hero language={language} showContent={false}>
-    <div className="relative z-10 max-w-[1200px] mx-auto px-6 ">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            {/* Left: inquiry form inside white square-edge card */}
-            <div>
-              <div className="bg-white rounded-none p-8 shadow">
-                <div className="mb-7">
-                  <h2 className="text-2xl sm:text-3xl font-heading font-semibold text-[#0B0D12] text-start mb-4">{t.formTitle}</h2>
+      <section className="relative min-h-screen bg-black text-[#e3e3e3] pt-16" aria-label="Contact section">
+        <div className="max-w-[1600px] mx-auto px-6 sm:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-[560px_1fr] items-stretch gap-0">
+            <div className="pr-8 flex flex-col h-[620px]">
+              <div className="max-w-[560px] flex flex-col h-full pt-10">
+                <div className="mb-6 text-[20px] leading-[1] text-[--color-foreground]">
+                  {t.title}
                 </div>
-                <form onSubmit={onSubmit} className="grid gap-5">
+
+                <h2 className="font-heading text-white leading-tight mb-8 font-source-serif">
+                  <span className="block text-[40px] md:text-[64px] leading-[0.95]">{t.formTitle}</span>
+                </h2>
+
+                <div className="w-24 h-px bg-white/20 mb-8" />
+
+                <form onSubmit={onSubmit} className="flex flex-col gap-4 h-full">
+                  <div className="grid grid-cols-2 gap-x-6">
+                    <label className="block">
+                      <span className="block text-sm text-gray-300 mb-2">{t.firstName} <span className="text-[#d52020]">*</span></span>
+                      <input name="firstName" type="text" required placeholder={t.firstName}
+                        className="w-full bg-transparent text-white placeholder-gray-500 outline-none border-b border-white/20 py-2" />
+                    </label>
+
+                    <label className="block">
+                      <span className="block text-sm text-gray-300 mb-2">{t.lastName} <span className="text-[#d52020]">*</span></span>
+                      <input name="lastName" type="text" required placeholder={t.lastName}
+                        className="w-full bg-transparent text-white placeholder-gray-500 outline-none border-b border-white/20 py-2" />
+                    </label>
+                  </div>
+
                   <label className="block">
-                    <span className="mb-2 block text-sm text-gray-700 text-start">{t.name}</span>
-                    <input
-                      name="name"
-                      type="text"
-                      autoComplete="name"
-                      className="w-full  border border-gray-200 bg-white px-2 py-2 text-black placeholder-gray-400 outline-none transition-colors duration-150 hover:border-ni-accent hover:text-ni-accent focus:border-ni-accent focus:text-ni-accent"
-                      placeholder={t.name}
-                    />
+                    <span className="block text-sm text-gray-300 mb-2">{t.email} <span className="text-[#d52020]">*</span></span>
+                    <input name="email" type="email" required placeholder="you@example.com"
+                      className="w-full bg-transparent text-white placeholder-gray-500 outline-none border-b border-white/20 py-2" />
                   </label>
 
                   <label className="block">
-                    <span className="mb-2 block text-sm text-gray-700 text-start">
-                      {t.email}
-                      <span className="text-ni-accent">{t.required}</span>
-                    </span>
-                    <input
-                      name="email"
-                      type="email"
-                      required
-                      autoComplete="email"
-                      className="w-full border border-gray-200 bg-white px-2 py-2 text-black placeholder-gray-400 outline-none transition-colors duration-150 hover:border-ni-accent hover:text-ni-accent focus:border-ni-accent focus:text-ni-accent"
-                      placeholder="you@example.com"
-                    />
+                    <span className="block text-sm text-gray-300 mb-2">{t.message}</span>
+                    <textarea name="message" rows={3} placeholder={t.message}
+                      className="w-full bg-transparent text-white placeholder-gray-500 outline-none border-b border-white/20 py-2 resize-none h-20" />
                   </label>
 
-                  <label className="block">
-                    <span className="mb-2 block text-sm text-gray-700 text-start">
-                      {t.message}
-                      <span className="text-ni-accent">{t.required}</span>
-                    </span>
-                    <textarea
-                      name="message"
-                      required
-                      rows={8}
-                      className="w-full  border border-gray-200 bg-white px-2 py-2 text-black placeholder-gray-400 outline-none transition-colors duration-150 hover:border-ni-accent hover:text-ni-accent focus:border-ni-accent focus:text-ni-accent"
-                      placeholder={t.message}
-                    />
+                  <label className="flex items-start gap-3 text-sm text-gray-300">
+                    <input name="consent" type="checkbox" className="w-4 h-4 accent-[#d52020] mt-1" />
+                    <span className="text-sm">{t.agreeLabel}</span>
                   </label>
 
-                  <div className="pt-2">
-                    <button
-                      type="submit"
-                      className="inline-flex items-center justify-center  bg-ni-accent px-4 py-2 font-semibold text-white transition-colors hover:bg-ni-accent-2"
-                    >
+                  <div className="mt-auto">
+                    <button type="submit" className="inline-flex items-center justify-center bg-[#d52020] px-6 py-3 font-semibold text-white hover:opacity-95 transition">
                       {t.send}
                     </button>
                   </div>
@@ -116,24 +128,40 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Right: map  */}
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-heading font-semibold text-white text-start mb-4">{t.mapTitle}</h2>
-              <div className="mt-3 mb-5">
-                <p className="text- text-start text-gray-300">{t.mapCaption}</p>
-              </div>
-              <div className="overflow-hidden rounded-none border border-gray-200">
-                <iframe
-                  title="Anamnagar map"
-                  src={"https://www.google.com/maps?q=Anamnagar%20Kathmandu%20Nepal&output=embed"}
-                  style={{ width: '100%', height: '420px', border: 0 }}
-                  loading="lazy"
-                />
+            <div className="hidden md:block">
+              <div className="h-[620px] w-full overflow-hidden" aria-hidden>
+                <div className="h-full w-full contact-clip">
+                  <img src="/contact.png" alt="" className="w-full h-full object-cover object-right" />
+                </div>
               </div>
             </div>
           </div>
-      </div>
-  </Hero>
+
+          <div className="mt-12">
+            <h2 className="text-3xl md:text-4xl font-heading font-semibold text-white mb-2">{t.locationHeading}</h2>
+            <p className="text-sm text-gray-400 mb-6">{t.mapCaption || "Ninja Infosys, Anamnagar, Kathmandu, Nepal"}</p>
+
+            <div className="mb-6">
+              <Link
+                href="https://www.google.com/maps?q=Anamnagar%20Kathmandu%20Nepal"
+                className="inline-flex items-center gap-2 text-sm text-white/90"
+              >
+                <span>{t.getDirection}</span>
+                <span aria-hidden className="text-white/60">↗</span>
+              </Link>
+            </div>
+
+            <div className="mt-6 w-full">
+              <iframe
+                title={t.mapTitle || "Anamnagar map"}
+                src={"https://www.google.com/maps?q=Anamnagar%20Kathmandu%20Nepal&output=embed"}
+                className="w-full h-[380px] md:h-[420px] block"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} language={language} />
       <Footer language={language} />
