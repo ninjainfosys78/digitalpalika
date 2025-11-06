@@ -32,6 +32,11 @@ export const metadata: Metadata = {
     description: "A global consulting company shaping decisive outcomes in complex environments.",
     images: ["/assets/og/og-default.jpg"],
   },
+  icons: {
+    icon: "https://cdn.ninjainfosys.com/brand/ninja-infosys/favicon/favicon.ico",
+    shortcut: "https://cdn.ninjainfosys.com/brand/ninja-infosys/favicon/favicon.ico",
+    apple: "https://cdn.ninjainfosys.com/brand/ninja-infosys/logo/ninja-infosys-logo.svg",
+  },
     generator: 'v0.app'
 }
 

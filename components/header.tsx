@@ -165,13 +165,12 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 2xl:px-16">
         <div className="relative h-20 flex items-center flex-nowrap">
           <Link href="/" className="flex-none inline-flex items-center" aria-label="Ninja Infosys home">
-            <Image
-              src="/ninja-infosys-logo.png"
+            <img
+              src="https://cdn.ninjainfosys.com/brand/ninja-infosys/logo/ninja-infosys-logo.svg"
               alt="Ninja Infosys"
               width={48}
               height={48}
-              className="h-8 sm:h-10 w-auto"
-              priority
+              className="h-8 sm:h-10 w-auto object-contain"
             />
             <span className="sr-only">NINJA INFOSYS</span>
           </Link>
