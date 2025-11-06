@@ -61,8 +61,9 @@ const DATA = {
         featured: {
           title: "विशेष",
           cards: [
-            { heading: "फिनटेक प्लेटफर्म", copy: "KYC, जोखिम, मिलान, PCI-रेडी।", href: "/solutions?cat=fin" },
-            { heading: "सार्वजनिक क्षेत्र", copy: "नागरिक सेवा, खुला डेटा, सुरक्षित कार्यप्रवाह।", href: "/solutions?cat=gov" },
+            { heading: "हाम्रो काम",
+              copy: "हामीले विभिन्न उद्योगहरूमा सफल परियोजनाहरू अन्वेषण गर्नुहोस्।",
+              href: "/work" },
           ],
         },
         cols: [
@@ -119,15 +120,6 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
     </Link>
   )
 
-  const MobileLink = ({ href, label, onClick }: any) => (
-    <Link
-      href={href}
-      onClick={onClick}
-      className="text-base text-white/85 hover:text-white transition-colors py-2 font-ibm-plex-sans"
-    >
-      {label}
-    </Link>
-  )
 
   useEffect(() => {
     const onEsc = (e: KeyboardEvent) => {
@@ -213,7 +205,7 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
                     onClick={() => setOpenMega(open ? null : k)}
                   >
                     {item.label}
-                    <ChevronDown size={16} className={`transition-transform ${open ? "rotate-180" : ""}`} />
+                    <ChevronDown size={16} className={`transition-transform ${open ? "rotate-180" : ""} cursor-pointer`} />
                   </button>
 
                   {open && (
@@ -224,7 +216,7 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
                       onMouseLeave={() => scheduleClose()}
                     >
                       <div className="flex items-center justify-between pb-6 border-b border-white/10">
-                        <div className="text-base font-semibold tracking-wide text-white font-source-serif-pro">
+                        <div className="text-base font-semibold tracking-wide text-white font-source-serif-4">
                           {item.title}
                         </div>
                         <Link
@@ -280,8 +272,13 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
                               {item.featured.title}
                             </div>
                             {item.featured.cards.map((c: any) => (
-                              <Link key={c.heading} href={c.href} onClick={closeAllMenus}>
-                                <div className="font-semibold text-white leading-tight pb-1 font-source-serif-pro">
+                              <Link
+                                key={c.heading}
+                                href={c.href}
+                                onClick={closeAllMenus}
+                                className="group inline-block"
+                              >
+                                <div className="font-semibold text-white group-hover:text-white/70 transition-colors leading-tight pb-1 font-source-serif-pro">
                                   {c.heading}
                                 </div>
                                 <p className="text-sm text-gray-400 leading-tight font-ibm-plex-sans">{c.copy}</p>
