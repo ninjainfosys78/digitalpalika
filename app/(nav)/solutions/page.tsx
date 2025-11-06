@@ -184,7 +184,7 @@ export default function SolutionsPage() {
                   <button
                     key={key}
                     onClick={() => activate(key)}
-                    className="text-left group relative block select-none overflow-hidden w-full rounded-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.55)] hover:ring-8 hover:ring-white"
+                    className={`text-left group relative block select-none overflow-hidden w-full rounded-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.55)] hover:ring-8 hover:ring-white ${(["gov","edu","health","fin","corp"] as Key[]).includes(key) ? "cursor-pointer" : ""}`}
                   >
                     <div className="relative aspect-[16/10] overflow-hidden">
                       <img src={img} alt={title} className="h-full w-full object-cover grayscale" />

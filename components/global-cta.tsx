@@ -46,7 +46,7 @@ export default function GlobalCTA({ language, onOfficesOpen }: GlobalCTAProps) {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 sm:mb-10">
           <a
             href="/contact"
-            className="w-full inline-flex items-center justify-between px-6 py-4 text-base font-semibold transition-all group shadow-lg bg-[#d52020] text-white shadow-[0_4px_24px_0_#d5202033]"
+            className="w-full inline-flex items-center justify-between px-6 py-4 text-base font-semibold transition-all group shadow-lg bg-[#d52020] text-white shadow-[0_4px_24px_0_#d5202033] cursor-pointer"
           >
             <span className="text-left">{content.ctaPrimary}</span>
             <ArrowRight
@@ -57,7 +57,7 @@ export default function GlobalCTA({ language, onOfficesOpen }: GlobalCTAProps) {
 
           <a
             href="/contact"
-            className="w-full inline-flex items-center justify-between px-6 py-4 border-2 text-base font-semibold transition-colors border-[#141414] text-[#e3e3e3] bg-[#141414]"
+            className="w-full inline-flex items-center justify-between px-6 py-4 border-2 text-base font-semibold transition-colors border-[#141414] text-[#e3e3e3] bg-[#141414] cursor-pointer"
           >
             <span className="flex items-center gap-3">
               <Mail size={20} />
@@ -65,9 +65,9 @@ export default function GlobalCTA({ language, onOfficesOpen }: GlobalCTAProps) {
             </span>
           </a>
 
-          <a
-            href="/contact"
-            className="w-full inline-flex items-center justify-between px-6 py-4 border-2 text-base font-semibold transition-colors border-[#141414] text-[#e3e3e3] bg-[#141414]"
+          <button
+            onClick={onOfficesOpen}
+            className="w-full inline-flex items-center justify-between px-6 py-4 border-2 text-base font-semibold transition-colors border-[#141414] text-[#e3e3e3] bg-[#141414] cursor-pointer"
           >
             <span className="flex items-center gap-3">
               <MapPin size={20} />

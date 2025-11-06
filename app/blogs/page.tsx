@@ -90,11 +90,11 @@ export default function BlogsPage() {
                     )}
                   </div>
 
-                  {/* Read More (Unclickable, visually same) */}
+                  {/* Read More */}
                   <div className="px-6 pb-6">
-                    <div
-                      className="inline-flex items-center gap-2 bg-[#E6232D] px-4 py-2 text-sm font-medium text-white select-none"
-                      style={{ pointerEvents: 'none' }}
+                    <Link
+                      href={`/blogs/${post.slug}`}
+                      className="inline-flex items-center gap-2 bg-[#E6232D] px-4 py-2 text-sm font-medium text-white cursor-pointer"
                     >
                       Read more
                       <svg
@@ -107,7 +107,7 @@ export default function BlogsPage() {
                       >
                         <path d="M5 12h14M13 5l7 7-7 7" />
                       </svg>
-                    </div>
+                    </Link>
                   </div>
                 </div>
               ))}
