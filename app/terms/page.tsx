@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 
 const updated = "January 2025"
 
@@ -102,33 +103,31 @@ const sections = [
 
 export default function TermsPage() {
   return (
-    <main className="bg-ni-paper text-ni-ink">
+    <main className="bg-black text-white">
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-ni-accent/10 via-transparent to-ni-accent-2/10" />
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-ni-accent via-ni-accent-2 to-ni-accent" />
-        <div className="relative z-10 mx-auto max-w-4xl px-6 sm:px-10 pt-28 pb-20">
-          <Link href="/" className="inline-flex items-center text-sm font-medium text-ni-accent hover:text-ni-accent-2 transition-colors">
+        <div className="relative z-5 mx-auto max-w-6xl px-6 sm:px-10 pt-10 lg:pt-28 pb-20">
+          <Link href="/" className="inline-flex items-center text-sm font-medium text-ni-paper/60 hover:text-ni-paper transition-colors">
             ← Back to home
           </Link>
-          <h1 className="mt-10 text-4xl sm:text-5xl font-heading font-bold text-balance">Terms of Service</h1>
-          <p className="mt-5 max-w-2xl text-lg text-ni-slate/80 leading-relaxed">
+          <h1 className="mt-10 text-4xl sm:text-5xl font-heading font-bold text-white">Terms of Service</h1>
+          <p className="mt-5 max-w-2xl text-lg text-white leading-relaxed">
             Clear expectations on how we operate, what we commit to, and how we partner responsibly with clients,
             collaborators, and visitors to our digital experiences.
           </p>
-          <p className="mt-6 text-sm uppercase tracking-[0.22em] text-ni-slate/50">Last updated · {updated}</p>
+          <p className="pt-6 text-sm uppercase tracking-[0.22em] text-white/60">Last updated · {updated}</p>
         </div>
       </div>
 
       <div className="mx-auto max-w-6xl px-6 sm:px-10 pb-24">
         <div className="grid gap-10 lg:grid-cols-[260px,1fr]">
-          <nav className="top-28 hidden lg:block self-start rounded-2xl border border-ni-graphite/10 bg-white/60 p-6 backdrop-blur">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ni-slate/60">Navigate</p>
+          <nav className="top-28 hidden lg:block self-start rounded-none border border-white/40 bg-[#141414] p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white">Navigate</p>
             <ul className="mt-4 space-y-3 text-sm">
-              {sections.map((section) => (
+              {sections.map((section: any) => (
                 <li key={section.id}>
                   <a
                     href={`#${section.id}`}
-                    className="block rounded-lg px-3 py-2 text-ni-slate/70 transition-colors hover:bg-ni-accent/10 hover:text-ni-accent"
+                    className="block px-3 py-2 text-ni-paper/60 transition-colors hover:bg-transparent hover:text-ni-paper"
                   >
                     {section.title}
                   </a>
@@ -138,41 +137,70 @@ export default function TermsPage() {
           </nav>
 
           <article className="space-y-12">
-            {sections.map((section) => (
+            {sections.map((section: any) => (
               <section
                 key={section.id}
                 id={section.id}
-                className="rounded-3xl border border-ni-graphite/10 bg-white p-8 shadow-[0_20px_50px_-30px_rgba(15,98,254,0.3)]"
+                className="rounded-none border border-white/40 bg-[#141414] p-8 shadow-none"
               >
-                <h2 className="text-2xl font-heading font-semibold text-ni-ink">{section.title}</h2>
-                <div className="mt-4 space-y-4 text-base leading-relaxed text-ni-slate/80">
-                  {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                  {section.bullets && (
-                    <ul className="space-y-2 rounded-2xl border border-ni-graphite/10 bg-ni-graphite/5 p-4">
-                      {section.bullets.map((item) => (
-                        <li key={item} className="pl-5 text-sm text-ni-slate/80" style={{ textIndent: "-1.25rem" }}>
-                          <span className="mr-2 text-ni-accent">•</span>
-                          {item}
-                        </li>
+                <h2 className="text-2xl font-heading font-semibold text-white">{section.title}</h2>
+
+                {section.bullets ? (
+                  <div className="mt-4 grid gap-6 lg:grid-cols-[1fr,420px] items-start">
+                    <div className="space-y-4 text-base leading-relaxed text-white">
+                      {section.paragraphs.map((paragraph: any) => (
+                        <p key={paragraph}>{paragraph}</p>
                       ))}
-                    </ul>
-                  )}
-                  {section.actions && (
-                    <div className="flex flex-wrap gap-3">
-                      {section.actions.map((action) => (
-                        <Link
-                          key={action.href}
-                          href={action.href}
-                          className="inline-flex items-center justify-center rounded-lg border border-ni-graphite/15 px-4 py-2 text-sm font-semibold text-ni-accent transition-colors hover:border-ni-accent hover:text-ni-accent-2"
-                        >
-                          {action.label}
-                        </Link>
-                      ))}
+
+                      {section.actions && (
+                        <div className="flex flex-wrap gap-3">
+                          {section.actions.map((action: any) => (
+                            <Link
+                              key={action.href}
+                              href={action.href}
+                              className="inline-flex items-center gap-2 text-sm font-semibold text-ni-paper/60 transition-colors hover:text-ni-paper group"
+                            >
+                              <span>{action.label}</span>
+                              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1 text-ni-paper/60" />
+                            </Link>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
+
+                    <div>
+                      <ul className="space-y-2 bg-[#141414] p-4">
+                        {section.bullets.map((item: any) => (
+                          <li key={item} className="pl-5 text-sm text-white" style={{ textIndent: "-1.25rem" }}>
+                            <span className="mr-2 text-[#d52020]">•</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mt-4 space-y-4 text-base leading-relaxed text-white">
+                    {section.paragraphs.map((paragraph: any) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+
+                    {section.actions && (
+                      <div className="flex flex-wrap gap-3">
+                        {section.actions.map((action: any) => (
+                          <Link
+                            key={action.href}
+                            href={action.href}
+                            className="inline-flex items-center gap-2 text-sm font-semibold text-ni-paper/60 transition-colors hover:text-ni-paper group"
+                          >
+                            <span>{action.label}</span>
+                            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1 text-ni-paper/60" />
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
               </section>
             ))}
           </article>
