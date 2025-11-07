@@ -65,7 +65,7 @@ export default function GlobalCTA({ language, onOfficesOpen }: GlobalCTAProps) {
             </span>
           </a>
 
-          <button
+          <a
             onClick={onOfficesOpen}
             className="w-full inline-flex items-center justify-between px-6 py-4 border-2 text-base font-semibold transition-colors border-[#141414] text-[#e3e3e3] bg-[#141414] cursor-pointer"
           >

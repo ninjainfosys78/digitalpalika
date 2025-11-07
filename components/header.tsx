@@ -86,6 +86,7 @@ const DATA = {
 export default function Header({ language = "en", onLanguageChange }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openMega, setOpenMega] = useState<string | null>(null)
+  const [mobileMegaOpen, setMobileMegaOpen] = useState<string | null>(null)
   const hoverTimer = useRef<number | null>(null)
   const headerRef = useRef<HTMLElement | null>(null)
   const pathname = usePathname()
@@ -145,6 +146,7 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
   const closeAllMenus = () => {
     setOpenMega(null)
     setMobileOpen(false)
+    setMobileMegaOpen(null)
   }
 
   return (
@@ -199,7 +201,7 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
                 >
                   <button
                     type="button"
-                    className="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors font-ibm-plex-sans cursor-pointer"
+                    className="flex items-center gap-1 text-base text-white/80 hover:text-white transition-colors font-ibm-plex-sans cursor-pointer"
                     aria-haspopup="menu"
                     aria-expanded={open}
                     onClick={() => setOpenMega(open ? null : k)}
@@ -314,8 +316,25 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
 
             <button
               onClick={() => setMobileOpen((s) => !s)}
-              className="lg:hidden p-2 text-white/70 hover:text-white transition-colors cursor-pointer"
-              aria-label="Toggle menu"
+              className={`lg:hidden p-2 text-white/70 hover:text-white transition-colors cursor-pointer border border-white/10 ${mobileOpen ? "bg-white/5" : "bg-transparent"}`}
+              aria-label={
+                mobileOpen
+                  ? language === "en"
+                    ? "Close menu"
+                    : "मेनु बन्द गर्नुहोस्"
+                  : language === "en"
+                  ? "Open menu"
+                  : "मेनु खोल्नुहोस्"
+              }
+              title={
+                mobileOpen
+                  ? language === "en"
+                    ? "Close menu"
+                    : "मेनु बन्द गर्नुहोस्"
+                  : language === "en"
+                  ? "Open menu"
+                  : "मेनु खोल्नुहोस्"
+              }
               aria-expanded={mobileOpen}
             >
               {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -323,6 +342,97 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
           </div>
         </div>
       </div>
+
+      {/* Mobile menu panel */}
+      {mobileOpen && (
+        <div className="lg:hidden fixed inset-x-0 top-[80px] z-40 bg-black border-t border-white/5 shadow-lg">
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-4">
+            <nav className="flex flex-col gap-3">
+              {nav.map((item: any, idx: number) => {
+                if (item.type === "link") {
+                  return (
+                    <Link
+                      key={`${item.href}-${idx}`}
+                      href={item.href}
+                      onClick={closeAllMenus}
+                      className="block py-3 text-white/90 hover:text-white/70 font-medium"
+                    >
+                      {item.label}
+                    </Link>
+                  )
+                }
+                // collapsible dropdown for mega items in mobile
+                const k = item.key as string
+                const open = mobileMegaOpen === k
+                const exploreHref = k === "solutions" ? "/solutions" : "/services"
+                return (
+                  <div key={k} className="py-1">
+                    <button
+                      onClick={() => setMobileMegaOpen(open ? null : k)}
+                      className="w-full flex items-center justify-between py-3 text-white/90 hover:text-white font-medium relative group"
+                      aria-expanded={open}
+                      aria-controls={`mobile-mega-${k}`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">{item.label}</span>
+                        <ChevronDown size={18} className={`transition-transform ${open ? "rotate-180" : ""}`} />
+                      </div>
+                      {/* underline that animates on hover (matches other nav items) */}
+                      <span className="pointer-events-none absolute -bottom-1 left-4 w-0 h-px bg-red-600 transition-all duration-200 group-hover:w-[calc(100%-1rem)] group-hover:left-0" />
+                    </button>
+
+                    {open && (
+                      <div id={`mobile-mega-${k}`} className="pl-4 mt-2 space-y-2">
+                        <div className="grid grid-cols-1 gap-2">
+                          {item.cols.flat().map((it: any) => (
+                            <Link
+                              key={it.href}
+                              href={it.href}
+                              onClick={() => {
+                                closeAllMenus()
+                              }}
+                              className="block py-2 text-white/80 hover:text-white"
+                            >
+                              {it.label}
+                            </Link>
+                          ))}
+                        </div>
+
+                        {/* Explore all link placed before featured products in mobile dropdown */}
+                        <div className="pt-3">
+                          <Link
+                            href={exploreHref}
+                            onClick={closeAllMenus}
+                            className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white"
+                          >
+                            {language === "en" ? "Explore all" : "सबै हेर्नुहोस्"}
+                            <ArrowRight size={14} />
+                          </Link>
+                        </div>
+
+                        <div className="pt-2 border-t border-white/6 mt-2">
+                          <div className="text-xs font-semibold text-white/70 uppercase">{item.featured.title}</div>
+                          {item.featured.cards.map((c: any) => (
+                            <Link
+                              key={c.href}
+                              href={c.href}
+                              onClick={closeAllMenus}
+                              className="block mt-2 text-sm text-white/90 hover:text-white"
+                            >
+                              <div className="font-semibold leading-tight">{c.heading}</div>
+                              <p className="text-xs text-gray-400 leading-tight">{c.copy}</p>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </nav>
+          </div>
+        </div>
+      )}
     </header>
   )
 }
