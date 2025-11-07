@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 
 import Header from "@/components/header"
@@ -11,6 +11,8 @@ import SearchOverlay from "@/components/search-overlay"
 export default function ContactPage() {
   const [language, setLanguage] = useState<"en" | "ne">("en")
   const [searchOpen, setSearchOpen] = useState(false)
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const [logoOffset, setLogoOffset] = useState<number | null>(null)
 
   const t =
     language === "en"
@@ -51,6 +53,43 @@ export default function ContactPage() {
           mapCaption: "निन्जा इन्फोसिस, अनामनगर, काठमाडौं, नेपाल",
         }
 
+  useEffect(() => {
+    const computeOffset = () => {
+      if (typeof window === "undefined" || window.innerWidth < 768) {
+        setLogoOffset(null)
+        return
+      }
+
+      // try common logo selectors (adjust if your header uses a custom selector)
+      const logo = document.querySelector(
+        'header img[src*="logo"], header img, [data-site-logo] img, .site-logo img, .logo img, [data-logo]'
+      ) as HTMLElement | null
+      const container = containerRef.current
+      if (!logo || !container) {
+        setLogoOffset(null)
+        return
+      }
+
+      const logoRect = logo.getBoundingClientRect()
+      const containerRect = container.getBoundingClientRect()
+
+      // align to logo center (change to logoRect.left for left edge)
+      const logoCenter = logoRect.left + logoRect.width / 2
+      const offset = Math.round(logoCenter - containerRect.left)
+
+      setLogoOffset(Math.max(0, offset))
+    }
+
+    computeOffset()
+    window.addEventListener("resize", computeOffset)
+    const mo = new MutationObserver(computeOffset)
+    mo.observe(document.body, { childList: true, subtree: true })
+    return () => {
+      window.removeEventListener("resize", computeOffset)
+      mo.disconnect()
+    }
+  }, [])
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
@@ -71,7 +110,12 @@ export default function ContactPage() {
       <Header language={language} onLanguageChange={setLanguage} />
 
       <section className="relative min-h-screen bg-black text-[#e3e3e3] pt-16" aria-label="Contact section">
-        <div className="max-w-[1600px] mx-auto px-6 sm:px-8">
+        {/* measured container: left padding set so the form starts under the logo */}
+        <div
+          ref={containerRef}
+          className="max-w-[1600px] mx-auto px-6 sm:px-8"
+          style={logoOffset !== null ? { paddingLeft: `${logoOffset}px` } : undefined}
+        >
           <div className="grid grid-cols-1 md:grid-cols-[560px_1fr] items-stretch gap-0">
             <div className="pr-8 flex flex-col h-[620px]">
               <div className="max-w-[560px] flex flex-col h-full pt-10">
