@@ -73,7 +73,7 @@ export default function GlobalCTA({ language, onOfficesOpen }: GlobalCTAProps) {
               <MapPin size={20} />
               <span>{content.ctaOffice}</span>
             </span>
-          </a>
+          </button>
         </div>
       </div>
     </section>
