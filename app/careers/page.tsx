@@ -14,8 +14,28 @@ export default function CareersPage() {
   const [officesOpen, setOfficesOpen] = useState(false);
 
   const content = {
-    en: { hero: { kicker: "LIFE AT NINJA INFOSYS", title: "Careers" } },
-    ne: { hero: { kicker: "निन्जा इन्फोसिसमा जीवन", title: "क्यारियर" } },
+    en: {
+      hero: {
+        kicker: "LIFE AT NINJA INFOSYS",
+        title: "Careers",
+      },
+      body: {
+        noOpenings: "Currently, there are no active openings at Ninja Infosys.",
+        stayTuned: "Please stay tuned — new opportunities will be announced here soon.",
+        breadcrumbHome: "Ninja Infosys",
+      },
+    },
+    ne: {
+      hero: {
+        kicker: "निन्जा इन्फोसिसमा जीवन",
+        title: "क्यारियर",
+      },
+      body: {
+        noOpenings: "हाल निन्जा इन्फोसिसमा कुनै सक्रिय अवसरहरू छैनन्।",
+        stayTuned: "कृपया पर्खिनुहोस् — नयाँ अवसरहरू चाँडै यहाँ प्रकाशित गरिनेछ।",
+        breadcrumbHome: "निन्जा इन्फोसिस",
+      },
+    },
   } as const;
 
   const t = content[language];
@@ -24,6 +44,7 @@ export default function CareersPage() {
     <>
       <Header language={language} onLanguageChange={setLanguage} />
       <main className="relative bg-black text-white">
+        {/* HERO SECTION */}
         <section className="relative z-10">
           <div className="relative min-h-[70vh]">
             <div
@@ -33,17 +54,11 @@ export default function CareersPage() {
             <div className="absolute inset-0 bg-black/65" />
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12 flex items-center min-h-[70vh]">
               <div className="max-w-[1200px] text-left">
-                <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-white/80">
-                  {t.hero.kicker}
-                </p>
-                <h1 className="mt-3 text-4xl sm:text-6xl font-heading font-semibold text-white">
-                  {t.hero.title}
-                </h1>
-                <nav aria-label="Breadcrumb" className="mt-4 text-sm text-white/80">
+                <nav aria-label="Breadcrumb" className="mt-0 text-sm text-white/80">
                   <ol className="flex items-center gap-3">
                     <li>
                       <Link href="/" className="font-medium tracking-wide hover:text-white">
-                        Ninja Infosys
+                        {t.body.breadcrumbHome}
                       </Link>
                     </li>
                     <li aria-hidden className="inline-flex items-center">
@@ -60,11 +75,16 @@ export default function CareersPage() {
                     <li className="font-medium tracking-wide">{t.hero.title}</li>
                   </ol>
                 </nav>
+
+                <h1 className="pt-4 text-4xl sm:text-6xl font-heading font-semibold text-white">
+                  {t.hero.title}
+                </h1>
               </div>
             </div>
           </div>
         </section>
 
+        {/* BODY SECTION */}
         <section className="border-t border-white/10">
           <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
             <div className="py-12 sm:py-16">
@@ -83,12 +103,8 @@ export default function CareersPage() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-white/90">
-                      Currently, there are no active openings at Ninja Infosys.
-                    </p>
-                    <p className="mt-2 text-white/70 text-sm">
-                      Please stay tuned — new opportunities will be announced here soon.
-                    </p>
+                    <p className="text-white/90">{t.body.noOpenings}</p>
+                    <p className="mt-2 text-white/70 text-sm">{t.body.stayTuned}</p>
                   </div>
                 </div>
               </div>
@@ -112,3 +128,4 @@ export default function CareersPage() {
     </>
   );
 }
+ 

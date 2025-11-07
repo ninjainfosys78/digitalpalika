@@ -61,8 +61,9 @@ const DATA = {
         featured: {
           title: "विशेष",
           cards: [
-            { heading: "फिनटेक प्लेटफर्म", copy: "KYC, जोखिम, मिलान, PCI-रेडी।", href: "/solutions?cat=fin" },
-            { heading: "सार्वजनिक क्षेत्र", copy: "नागरिक सेवा, खुला डेटा, सुरक्षित कार्यप्रवाह।", href: "/solutions?cat=gov" },
+            { heading: "हाम्रो काम",
+              copy: "हामीले विभिन्न उद्योगहरूमा सफल परियोजनाहरू अन्वेषण गर्नुहोस्।",
+              href: "/work" },
           ],
         },
         cols: [
@@ -86,7 +87,6 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openMega, setOpenMega] = useState<string | null>(null)
   const hoverTimer = useRef<number | null>(null)
-  const [mobileMenus, setMobileMenus] = useState<Record<string, boolean>>({})
   const headerRef = useRef<HTMLElement | null>(null)
   const pathname = usePathname()
 
@@ -116,19 +116,10 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
       }`}
     >
       {label}
-      <span className="pointer-events-none absolute -bottom-1 left-1/2 w-0 h-px bg-[#d52020] transition-all duration-200 group-hover:w-full group-hover:left-0" />
+      <span className="pointer-events-none absolute -bottom-1 left-1/2 w-0 h-px bg-red-600 transition-all duration-200 group-hover:w-full group-hover:left-0" />
     </Link>
   )
 
-  const MobileLink = ({ href, label, onClick }: any) => (
-    <Link
-      href={href}
-      onClick={onClick}
-      className="text-base text-white/85 hover:text-white transition-colors py-2 font-ibm-plex-sans"
-    >
-      {label}
-    </Link>
-  )
 
   useEffect(() => {
     const onEsc = (e: KeyboardEvent) => {
@@ -165,13 +156,12 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 2xl:px-16">
         <div className="relative h-20 flex items-center flex-nowrap">
           <Link href="/" className="flex-none inline-flex items-center" aria-label="Ninja Infosys home">
-            <Image
-              src="/ninja-infosys-logo.png"
+            <img
+              src="https://cdn.ninjainfosys.com/brand/ninja-infosys/logo/ninja-infosys-logo.svg"
               alt="Ninja Infosys"
               width={48}
               height={48}
-              className="h-8 sm:h-10 w-auto"
-              priority
+              className="h-8 sm:h-10 w-auto object-contain"
             />
             <span className="sr-only">NINJA INFOSYS</span>
           </Link>
@@ -209,13 +199,13 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
                 >
                   <button
                     type="button"
-                    className="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors font-ibm-plex-sans"
+                    className="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors font-ibm-plex-sans cursor-pointer"
                     aria-haspopup="menu"
                     aria-expanded={open}
                     onClick={() => setOpenMega(open ? null : k)}
                   >
                     {item.label}
-                    <ChevronDown size={16} className={`transition-transform ${open ? "rotate-180" : ""}`} />
+                    <ChevronDown size={16} className={`transition-transform ${open ? "rotate-180" : ""} cursor-pointer`} />
                   </button>
 
                   {open && (
@@ -226,13 +216,13 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
                       onMouseLeave={() => scheduleClose()}
                     >
                       <div className="flex items-center justify-between pb-6 border-b border-white/10">
-                        <div className="text-base font-semibold tracking-wide text-white font-source-serif-pro">
+                        <div className="text-base font-semibold tracking-wide text-white font-source-serif-4">
                           {item.title}
                         </div>
                         <Link
                           href={exploreHref}
                           onClick={closeAllMenus}
-                          className="inline-flex items-center gap-2 text-sm text-[#a0a0a0] hover:text-white transition-colors font-ibm-plex-sans"
+                          className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors font-ibm-plex-sans"
                         >
                           {language === "en" ? "Explore all" : "सबै हेर्नुहोस्"}
                           <ArrowRight size={16} />
@@ -251,7 +241,7 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
                                     className="text-sm relative group inline-block text-white/95 font-ibm-plex-sans"
                                   >
                                     <span className="block">{it.label}</span>
-                                    <span className="pointer-events-none absolute -bottom-1 left-1/2 w-0 h-px bg-[#d52020] transition-all duration-200 group-hover:w-full group-hover:left-0" />
+                                    <span className="pointer-events-none absolute -bottom-1 left-1/2 w-0 h-px bg-red-600 transition-all duration-200 group-hover:w-full group-hover:left-0" />
                                   </Link>
                                 </li>
                               ))}
@@ -268,7 +258,7 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
                                     className="text-sm relative group inline-block text-white/95 font-ibm-plex-sans"
                                   >
                                     <span className="block">{it.label}</span>
-                                    <span className="pointer-events-none absolute -bottom-1 left-1/2 w-0 h-px bg-[#d52020] transition-all duration-200 group-hover:w-full group-hover:left-0" />
+                                    <span className="pointer-events-none absolute -bottom-1 left-1/2 w-0 h-px bg-red-600 transition-all duration-200 group-hover:w-full group-hover:left-0" />
                                   </Link>
                                 </li>
                               ))}
@@ -282,11 +272,16 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
                               {item.featured.title}
                             </div>
                             {item.featured.cards.map((c: any) => (
-                              <Link key={c.heading} href={c.href} onClick={closeAllMenus}>
-                                <div className="font-semibold text-white leading-tight pb-1 font-source-serif-pro">
+                              <Link
+                                key={c.heading}
+                                href={c.href}
+                                onClick={closeAllMenus}
+                                className="group inline-block"
+                              >
+                                <div className="font-semibold text-white group-hover:text-white/70 transition-colors leading-tight pb-1 font-source-serif-pro">
                                   {c.heading}
                                 </div>
-                                <p className="text-sm text-[#a0a0a0] leading-tight font-ibm-plex-sans">{c.copy}</p>
+                                <p className="text-sm text-gray-400 leading-tight font-ibm-plex-sans">{c.copy}</p>
                               </Link>
                             ))}
                           </div>
@@ -302,7 +297,7 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
           <div className="ml-auto flex items-center gap-5 flex-none">
             <button
               onClick={() => onLanguageChange?.(language === "en" ? "ne" : "en")}
-              className="w-10 h-10 flex items-center justify-center shrink-0 text-white/70 hover:text-white transition-colors"
+              className="w-10 h-10 flex items-center justify-center shrink-0 text-white/70 hover:text-white transition-colors cursor-pointer"
               aria-label={`Switch to ${language === "en" ? "Nepali" : "English"}`}
               title={language === "en" ? "Switch to Nepali" : "Switch to English"}
             >
@@ -319,7 +314,7 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
 
             <button
               onClick={() => setMobileOpen((s) => !s)}
-              className="lg:hidden p-2 text-white/70 hover:text-white transition-colors"
+              className="lg:hidden p-2 text-white/70 hover:text-white transition-colors cursor-pointer"
               aria-label="Toggle menu"
               aria-expanded={mobileOpen}
             >
