@@ -64,6 +64,9 @@ export default function InsightsRail({ language }: InsightsRailProps) {
           ],
         }
 
+  // added localized "Read more"
+  const readMoreLabel = language === "en" ? "Read more" : "थप पढ्नुहोस्"
+
   return (
     <section id="insights" className="py-16 md:py-20 bg-black" aria-labelledby="insights-title">
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
@@ -76,7 +79,7 @@ export default function InsightsRail({ language }: InsightsRailProps) {
           </h2>
           <a
             href="blogs"
-            className="hidden md:flex items-center gap-2 text-sm transition-colors flex-shrink-0 text-[#e3e3e3] hover:text-neutral-900 group"
+            className="hidden md:flex items-center gap-2 text-sm transition-colors flex-shrink-0 text-[#e3e3e3] hover:text-white/70 group"
           >
             {content.viewAll}
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
@@ -103,7 +106,7 @@ export default function InsightsRail({ language }: InsightsRailProps) {
 
                 <div className={`p-5 sm:p-6 ${idx === 0 ? "md:p-8" : ""}`}>
                   <div className="flex items-center gap-3 mb-3 sm:mb-4">
-                    <span className="flex items-center gap-1 text-xs text-[#e3e3e3]">
+                    <span className="flex items-center gap-1 text-xs text-white/70">
                       <Clock size={12} />
                       {insight.readTime}
                     </span>
@@ -118,8 +121,8 @@ export default function InsightsRail({ language }: InsightsRailProps) {
                   <p className="text-sm leading-relaxed text-pretty line-clamp-3 text-[#e3e3e3]">
                     {insight.deck}
                   </p>
-                  <div className="flex items-center gap-2 mt-3 sm:mt-4 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity text-[#e3e3e3] underline">
-                    Read more
+                  <div className="flex items-center gap-2 mt-3 sm:mt-4 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity text-white/70 underline">
+                    {readMoreLabel}
                     <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
