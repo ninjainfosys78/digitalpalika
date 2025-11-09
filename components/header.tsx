@@ -213,7 +213,7 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
                   {open && (
                     <div
                       role="menu"
-                      className="absolute left-1/2 -translate-x-1/2 top-full w-[min(90vw,1100px)] border border-white/10 bg-black text-white shadow-2xl ring-1 ring-black/5 p-10 rounded-none"
+                      className="fixed left-1/2 -translate-x-1/2 top-16 w-[min(90vw,1100px)] border border-white/10 bg-black text-white shadow-2xl ring-1 ring-black/5 p-10 rounded-none"
                       onMouseEnter={() => clearHoverTimer()}
                       onMouseLeave={() => scheduleClose()}
                     >
