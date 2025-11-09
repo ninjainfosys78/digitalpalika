@@ -8,7 +8,7 @@ export const dynamic = "force-static";
 
 export default function BlogsPage() {
   const language: "en" | "ne" = "en";
-  const posts = getAllPostsMeta().slice(0, 6);
+  const posts = getAllPostsMeta();
 
   return (
     <>
@@ -95,9 +95,9 @@ export default function BlogsPage() {
                       </div>
                     )}
 
-                    {post.deck && (
+                    {post.excerpt && (
                       <p className="mb-6 line-clamp-3 text-sm leading-relaxed text-white/70">
-                        {post.deck}
+                        {post.excerpt}
                       </p>
                     )}
                   </div>
