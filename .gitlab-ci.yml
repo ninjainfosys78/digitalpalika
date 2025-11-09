@@ -18,7 +18,7 @@ cache:
 
 build:
   stage: build
-  image: node:${NODE_VERSION}-alpine
+  image: node:${NODE_VERSION}-trixie
   tags:
     - numanode
   before_script:
