@@ -115,7 +115,7 @@ export default function SolutionsPage() {
           pageTitle: "शिक्षा",
           lead: "भर्ना देखि एलुमनाइ सम्म आधुनिक डिजिटल क्याम्पस। हामी विद्यार्थी, शिक्षक र अभिभावक पोर्टलहरू बनाउँछौं जसमा सुरक्षित भुक्तानी, उपस्थिति, LMS, परीक्षाहरू र विश्लेषणहरू हुन्छन्।",
           bulletsCol1: ["भर्ना र नामांकन (मेरिट सूची र शुल्क भुक्तानी सहित)", "विद्यार्थी, शिक्षक र अभिभावक पोर्टल (SIS एकीकरण)", "उपस्थिति, समयतालिका, र पाठ्यक्रम व्यवस्थापन"],
-          bulletsCol2: ["LMS र भर्चुअल कक्षालय, कार्य र ग्रेडिङ", "परीक्षा तालिका, मूल्यांकन र नतिजा प्रकाशन", "मान्यता र रिपोर्टिंग ड्यासबोर्ड"],
+          bulletsCol2: ["LMS र भर्चुअल कक्षालय, कार्य र ग्रेडिङ", "परीक्षा तालिका, मूल्यांकन र नतिजा प्रकाशन", "मान्यता र रिपोर्टिङ ड्यासबोर्ड"],
           solutionsTitle: "",
           solutionsLead: "",
           solutionCards: [],
@@ -277,25 +277,24 @@ export default function SolutionsPage() {
         {!active && (
           <section className="py-14 relative overflow-hidden bg-black">
             <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12">
-              <div className="grid gap-8 lg:gap-10 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-8 lg:gap-10 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
                 {cards.map(({ key, title, copy, img }) => (
                   <button
                     key={key}
                     onClick={() => activate(key)}
-                    className={`text-left group relative block select-none overflow-hidden w-full rounded-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.55)] hover:ring-8 hover:ring-white ${(["gov","edu","health","fin","corp"] as Key[]).includes(key) ? "cursor-pointer" : ""}`}
+                    className="solutions-card text-left group relative block select-none overflow-hidden w-full h-full rounded-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.55)] hover:ring-8 hover:ring-white border-b-0 flex flex-col"
                   >
-                    <div className="relative aspect-[16/10] overflow-hidden">
+                    <div className="relative aspect-[16/10] w-full flex-none overflow-hidden">
                       <img src={img} alt={title[language]} className="h-full w-full object-cover grayscale" />
                     </div>
 
-                    <div className="p-6 sm:p-7 bg-black transition-colors duration-300 group-hover:bg-white">
+                    <div className="p-6 sm:p-7 bg-black transition-colors duration-300 group-hover:bg-white overflow-hidden flex-1 flex flex-col">
                       <div className="flex items-center">
                         <h3 className="text-xl sm:text-2xl pb-2 font-semibold text-white transition-colors duration-300 group-hover:text-black">
                           {title[language]}
                         </h3>
                       </div>
-
-                      <p className="mt-3 text-base leading-relaxed text-white/85 transition-colors duration-300 group-hover:text-black/80">
+                      <p className="mt-3 text-base leading-relaxed text-white/85 transition-colors duration-300 group-hover:text-black/80 flex-1">
                         {copy[language]}
                       </p>
                     </div>
@@ -462,6 +461,21 @@ export default function SolutionsPage() {
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} language={language} />
       <OfficesModal isOpen={officesOpen} onClose={() => setOfficesOpen(false)} language={language} />
       <Footer language={language} />
+
+      <style jsx global>{`
+  /* hide any stray pseudo element that may be drawing the thick stripe */
+  .solutions-card::after,
+  .solutions-card::before {
+    display: none !important;
+    content: none !important;
+  }
+
+  /* force remove bottom border if present from other styles */
+  .solutions-card {
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+  }
+`}</style>
     </>
   )
 }
