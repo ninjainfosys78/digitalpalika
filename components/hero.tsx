@@ -57,7 +57,7 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
               <>
                 <h1
                   id="cta-title"
-                  className="text-balance mb-[5px] w-full max-w-[640px] break-words text-[64px] leading-[64px] [-letter-spacing:2px] text-[#e3e3e3]"
+                  className="text-balance mb-[5px] w-full max-w-[640px] break-words text-[46px] sm:text-[64px] leading-[48px] sm:leading-[64px] [-letter-spacing:2px] text-[#e3e3e3]"
                 >
                   {content.title}
                 </h1>
@@ -69,20 +69,17 @@ export default function Hero({ language, showContent = true, backgroundOnly = fa
                 <div className="mt-8 flex flex-wrap gap-4">
                   <Link
                     href="/contact"
-                    className="inline-flex w-auto items-center justify-between bg-[#d52020] px-8 py-4 text-[20px] font-semibold text-[#e3e3e3] shadow-[0_4px_24px_0_#d5202033]"
+                    className="group inline-flex items-center justify-center gap-3 min-w-[220px] bg-[#d52020] px-6 py-4 text-[20px] font-semibold text-[#e3e3e3]"
                   >
-                    <span className="whitespace-nowrap text-left">{content.cta}</span>
-                    <span aria-hidden className="w-5" />
+                    <span className="whitespace-nowrap">{content.cta}</span>
                   </Link>
 
                   <Link
                     href="/work"
-                    className="group inline-flex w-auto items-center justify-between bg-[#141414] px-8 py-4 text-[20px] font-semibold text-[#e3e3e3]"
+                    className="group inline-flex items-center justify-center gap-3 min-w-[220px] bg-[#141414] px-6 py-4 text-[20px] font-semibold text-[#e3e3e3]"
                   >
-                    <span className="whitespace-nowrap text-left">{content.cta2}</span>
-                    <span className="flex items-center">
-                      <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
-                    </span>
+                    <span className="whitespace-nowrap">{content.cta2}</span>
+                    <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
                   </Link>
                 </div>
               </>
