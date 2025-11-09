@@ -84,7 +84,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               <img
                 src={image}
                 alt={title}
-                className="w-full h-[300px] sm:h-[360px] object-cover rounded-none"
+                className="w-full h-[300px] sm:h-[360px] object-cover rounded-none grayscale transition duration-300"
               />
             </div>
           )}

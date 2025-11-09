@@ -152,7 +152,7 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
   return (
     <header
       ref={headerRef}
-      className="fixed top-0 left-0 right-0 z-50 bg-black transition-colors duration-200 backdrop-blur-md border-b border-black/10"
+      className="relative z-50 bg-black transition-colors duration-200 backdrop-blur-md border-b border-black/10"
       role="banner"
     >
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 2xl:px-16">
@@ -213,7 +213,7 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
                   {open && (
                     <div
                       role="menu"
-                      className="fixed left-1/2 -translate-x-1/2 top-16 w-[min(90vw,1100px)] border border-white/10 bg-black text-white shadow-2xl ring-1 ring-black/5 p-10 rounded-none"
+                      className="absolute left-1/2 -translate-x-1/2 top-full w-[min(90vw,1100px)] border border-white/10 bg-black text-white shadow-2xl ring-1 ring-black/5 p-10 rounded-none"
                       onMouseEnter={() => clearHoverTimer()}
                       onMouseLeave={() => scheduleClose()}
                     >
@@ -345,7 +345,7 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
 
       {/* Mobile menu panel */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[80px] z-40 bg-black border-t border-white/5 shadow-lg">
+        <div className="lg:hidden z-40 bg-black border-t border-white/5 shadow-lg">
           <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-4">
             <nav className="flex flex-col gap-3">
               {nav.map((item: any, idx: number) => {
