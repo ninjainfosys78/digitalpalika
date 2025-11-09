@@ -6,7 +6,7 @@ import { getAllPostsMeta, getPostSourceBySlug } from "@/lib/posts";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Link from "next/link";
-import { SafeMDX } from "@/lib/safe-mdx";
+import BlogPostBody from "@/components/blog-post-body";
 
 export async function generateStaticParams() {
   return getAllPostsMeta().map((p) => ({ slug: p.slug }));
@@ -96,9 +96,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               {date}
             </div>
           )}
-          <article className="prose prose-invert prose-lg max-w-none text-white/90 leading-relaxed mt-6">
-            <SafeMDX source={content} />
-          </article>
+          <BlogPostBody source={content} />
           <div className="mt-10">
             <Link
               href="/blogs"
