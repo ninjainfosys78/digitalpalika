@@ -4,12 +4,20 @@ import { useState } from "react"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import Link from "next/link"
-import type { PostMeta } from "@/lib/posts"
+// Use a minimal client-side post shape to avoid importing server-only modules
+type ClientPost = {
+  slug: string
+  title: string
+  image?: string
+  date?: string
+  deck?: string
+  excerpt?: string
+}
 
 type Lang = "en" | "ne"
 
 interface BlogsClientProps {
-  posts: PostMeta[]
+  posts: ClientPost[]
   initialLanguage?: Lang
 }
 

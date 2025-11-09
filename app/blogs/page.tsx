@@ -1,19 +1,14 @@
 // app/blogs/page.tsx
-import Header from "@/components/header";
-import Footer from "@/components/footer";
 import Link from "next/link";
 import { getAllPostsMeta } from "@/lib/posts";
+import BlogsClient from "@/components/blogs-client";
 
 export const dynamic = "force-static";
 
 export default function BlogsPage() {
-  const language: "en" | "ne" = "en";
   const posts = getAllPostsMeta();
 
-  return (
-    <>
-      <Header language={language} />
-      <main className="relative bg-black text-white">
+  return <BlogsClient posts={posts} />;
         {/* Hero Section */}
         <section className="relative z-10">
           <div className="relative min-h-[44vh] pt-24 lg:pt-28">
@@ -125,8 +120,4 @@ export default function BlogsPage() {
             </div>
           </div>
         </section>
-      </main>
-      <Footer language={language} />
-    </>
-  );
 }
