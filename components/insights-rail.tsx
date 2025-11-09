@@ -76,7 +76,7 @@ export default function InsightsRail({ language }: InsightsRailProps) {
           </h2>
           <a
             href="blogs"
-            className="hidden md:flex items-center gap-2 text-sm transition-colors flex-shrink-0 text-[#e3e3e3] hover:text-neutral-900 group"
+            className="hidden md:flex items-center gap-2 text-sm transition-colors flex-shrink-0 text-[#e3e3e3] hover:text-white/70 group"
           >
             {content.viewAll}
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
