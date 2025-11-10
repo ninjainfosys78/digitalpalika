@@ -1,7 +1,7 @@
 "use client";
 import { Fragment } from 'react';
 import { Header } from '@/components/header'; 
-import { Footer } from '@/components/footer'; 
+import Footer  from '@/components/footer'; 
 import { ContactSection } from '@/components/ContactSection'; 
 import { LanguageProvider, useLanguage } from '@/context/LanguageContext'; 
 import type { FullSiteContent } from '@/lib/siteData';
