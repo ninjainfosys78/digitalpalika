@@ -1,14 +1,12 @@
 "use client"
-
+import React from "react"
 import Link from "next/link"
-import Image from "next/image"
-import { Linkedin, Twitter, Facebook, Phone, Smartphone, Mail, MapPin } from "lucide-react"
+import { Mail, MapPin, Smartphone, Phone, Linkedin, Facebook, Twitter } from "lucide-react"
+import { useLanguage } from "@/components/LanguageProvider"
 
-interface FooterProps {
-  language: "en" | "ne"
-}
+export default function Footer() {
+  const { language } = useLanguage()
 
-export default function Footer({ language }: FooterProps) {
   const content =
     language === "en"
       ? {
@@ -30,7 +28,7 @@ export default function Footer({ language }: FooterProps) {
           connect: [
             { type: "address", value: "Kathmandu, Nepal" },
             { type: "email", value: "info@ninjainfosys.com" },
-            { type: "mobile", value: "+977-9800000000" },
+            { type: "mobile", value: "+977-9858042433, +977-9858042647, 01-5922361" },
           ],
           legalLinks: [
             { label: "Privacy Policy", href: "/privacy" },
@@ -56,7 +54,7 @@ export default function Footer({ language }: FooterProps) {
           connect: [
             { type: "address", value: "काठमाडौं, नेपाल" },
             { type: "email", value: "info@ninjainfosys.com" },
-            { type: "mobile", value: "+977-9800000000" },
+            { type: "mobile", value: "+977-9858042433, +977-9858042647, 01-5922361" },
           ],
           legalLinks: [
             { label: "गोपनीयता नीति", href: "/privacy" },
@@ -73,13 +71,12 @@ export default function Footer({ language }: FooterProps) {
           <div>
             <Link href="/#hero" className="inline-block">
               <div className="flex items-center gap-3 mb-3">
-                <Image
-                  src="/ninja-infosys-logo.png"
+                <img
+                  src="https://cdn.ninjainfosys.com/brand/ninja-infosys/logo/ninja-infosys-logo.svg"
                   alt="Ninja Infosys logo"
                   width={48}
                   height={48}
-                  className="h-8 sm:h-10 w-auto"
-                  priority
+                  className="h-8 sm:h-10 w-auto object-contain"
                 />
                 <h2 className="text-2xl font-bold">NINJA INFOSYS</h2>
               </div>
@@ -113,17 +110,49 @@ export default function Footer({ language }: FooterProps) {
                 <h3 className="font-semibold text-ni-paper/90 text-lg mb-4">{content.connectHeading}</h3>
               </div>
               <div className="text-ni-paper/60 hover:text-ni-paper transition-colors max-w-md font-normal">
-                {content.connect.map((c: any, i: number) => (
-                  <div className="flex items-start gap-3" key={i}>
-                    <span className="mt-1">
-                      {c.type === "phone" && <Phone size={18} />}
-                      {c.type === "mobile" && <Smartphone size={18} />}
-                      {c.type === "email" && <Mail size={18} />}
-                      {c.type === "address" && <MapPin size={18} />}
-                    </span>
-                    <div>{c.value}</div>
-                  </div>
-                ))}
+                {content.connect.map((c: any, i: number) => {
+                  if (c.type === "phone" || c.type === "mobile") {
+                    const parts = String(c.value)
+                      .split(",")
+                      .map((p: string) => p.trim())
+                      .filter(Boolean)
+
+                    const landlines = parts.filter((p: string) => p.startsWith("01"))
+                    const mobiles = parts.filter((p: string) => !p.startsWith("01"))
+
+                    return (
+                      <div key={i} className="space-y-2">
+                        {mobiles.length > 0 && (
+                          <div className="flex items-start gap-3">
+                            <span className="mt-1">
+                              <Smartphone size={18} />
+                            </span>
+                            <div>{mobiles.join(", ")}</div>
+                          </div>
+                        )}
+
+                        {landlines.map((p: string, idx: number) => (
+                          <div className="flex items-start gap-3" key={idx}>
+                            <span className="mt-1">
+                              <Phone size={18} />
+                            </span>
+                            <div>{p}</div>
+                          </div>
+                        ))}
+                      </div>
+                    )
+                  }
+
+                  return (
+                    <div className="flex items-start gap-3" key={i}>
+                      <span className="mt-1">
+                        {c.type === "email" && <Mail size={18} />}
+                        {c.type === "address" && <MapPin size={18} />}
+                      </span>
+                      <div>{c.value}</div>
+                    </div>
+                  )
+                })}
               </div>
             </div>
             <div className="w-max">

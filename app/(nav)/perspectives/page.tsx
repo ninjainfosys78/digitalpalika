@@ -2,13 +2,13 @@
 
 import { useState } from "react"
 import Header from "@/components/header"
-import AnnouncementBar from "@/components/announcement-bar"
 import Footer from "@/components/footer"
 import SearchOverlay from "@/components/search-overlay"
 import Link from "next/link"
+import { useLanguage } from "@/components/LanguageProvider"
 
 export default function PerspectivesPage() {
-  const [language, setLanguage] = useState<"en" | "ne">("en")
+  const { language } = useLanguage()
   const [searchOpen, setSearchOpen] = useState(false)
 
   const content =
@@ -100,12 +100,7 @@ export default function PerspectivesPage() {
 
   return (
     <>
-      <Header
-        language={language}
-        onLanguageChange={setLanguage}
-        
-      />
-      <AnnouncementBar language={language} />
+      <Header />
 
       <main className="bg-white text-ni-ink">
         {/* KEEP: generous spacer for fixed header */}
@@ -128,45 +123,56 @@ export default function PerspectivesPage() {
                 </div>
 
                 <div className="mt-8">
-                    <p className="text-lg leading-relaxed text-ni-ink/70">{content.intro2}</p></div>
+                  <p className="text-lg leading-relaxed text-ni-ink/70">{content.intro2}</p>
+                </div>
               </section>
 
               {/* Continuous content below; gaps preserved via space-y */}
               <section className="mt-16 lg:mt-20 space-y-16 lg:space-y-20">
                 {/* Our purpose */}
                 <div className="space-y-4">
-                  <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl">{language === 'en' ? 'Our purpose' : 'हाम्रो उद्देश्य'}</h2>
+                  <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl">{language === "en" ? "Our purpose" : "हाम्रो उद्देश्य"}</h2>
                   <div className="mt-5">
-                    <p className="text-lg text-ni-ink/80 leading-relaxed">{language === 'en' ? 'To create positive, enduring change by shipping trustworthy systems, strengthening teams, and making technology feel simple and humane.' : 'भरपर्दो प्रणालीहरू प्रदान गरेर सकारात्मक, दीर्घकालीन परिवर्तन सिर्जना गर्नु—टिमहरूलाई सक्षम बनाउनु र प्रविधिलाई सरल र मानवीय बनाउनु।'}</p>
+                    <p className="text-lg text-ni-ink/80 leading-relaxed">
+                      {language === "en"
+                        ? "To create positive, enduring change by shipping trustworthy systems, strengthening teams, and making technology feel simple and humane."
+                        : "भरपर्दो प्रणालीहरू प्रदान गरेर सकारात्मक, दीर्घकालीन परिवर्तन सिर्जना गर्नु—टिमहरूलाई सक्षम बनाउनु र प्रविधिलाई सरल र मानवीय बनाउनु।"}
+                    </p>
                   </div>
                 </div>
 
                 {/* Our mission */}
                 <div className="space-y-4">
-                  <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl">{language === 'en' ? 'Our mission' : 'हाम्रो मिशन'}</h2>
+                  <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl">{language === "en" ? "Our mission" : "हाम्रो मिशन"}</h2>
                   <div className="mt-5">
-                    <p className="text-lg text-ni-ink/80 leading-relaxed">{language === 'en' ? 'Help ambitious organizations grow intelligently, operate efficiently, and innovate responsibly. We combine data, design, and disciplined engineering so leaders can think clearly, act decisively, and perform sustainably.' : 'महत्त्वाकांक्षी संस्थाहरूलाई बुद्धिमानीपूर्वक विकास गर्न, कुशलतापूर्वक सञ्चालन गर्न, र जिम्मेवार रूपमा नवप्रवर्तन गर्न मद्दत गर्नु। हामी डेटा, डिजाइन, र अनुशासित इन्जिनियरिङ मिलाएर नेताहरूलाई स्पष्ट सोच्न, निर्णयात्मक रूपमा कार्य गर्न, र दीर्घकालीन प्रदर्शन गर्न सक्षम पार्छौं।'}</p>
+                    <p className="text-lg text-ni-ink/80 leading-relaxed">
+                      {language === "en"
+                        ? "Help ambitious organizations grow intelligently, operate efficiently, and innovate responsibly. We combine data, design, and disciplined engineering so leaders can think clearly, act decisively, and perform sustainably."
+                        : "महत्त्वाकांक्षी संस्थाहरूलाई बुद्धिमानीपूर्वक विकास गर्न, कुशलतापूर्वक सञ्चालन गर्न, र जिम्मेवार रूपमा नवप्रवर्तन गर्न मद्दत गर्नु। हामी डेटा, डिजाइन, र अनुशासित इन्जिनियरिङ मिलाएर नेताहरूलाई स्पष्ट सोच्न, निर्णयात्मक रूपमा कार्य गर्न, र दीर्घकालीन प्रदर्शन गर्न सक्षम पार्छौं।"}
+                    </p>
                   </div>
                 </div>
 
                 {/* Our values */}
                 <div className="space-y-8">
                   <div className="mb-7">
-                    <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl">{language === 'en' ? 'Our values' : 'हाम्रा मूल्यहरू'}</h2>
+                    <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl">{language === "en" ? "Our values" : "हाम्रा मूल्यहरू"}</h2>
                   </div>
 
-                    <div className="space-y-10">
-                      {content.values.map((block) => (
-                        <div key={block.heading} className="pb-5">
-                          <h3 className="font-heading text-2xl sm:text-3xl">{block.heading}</h3>
-                          <ul className="mt-8 space-y-3 text-lg text-ni-ink/60">
-                            {block.bullets.map((b) => (
-                              <li key={b} className="list-disc ml-6">{b}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="space-y-10">
+                    {content.values.map((block) => (
+                      <div key={block.heading} className="pb-5">
+                        <h3 className="font-heading text-2xl sm:text-3xl">{block.heading}</h3>
+                        <ul className="mt-8 space-y-3 text-lg text-ni-ink/60">
+                          {block.bullets.map((b) => (
+                            <li key={b} className="list-disc ml-6">
+                              {b}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </section>
             </div>
@@ -177,44 +183,60 @@ export default function PerspectivesPage() {
 
               <div className="space-y-12">
                 <section aria-labelledby="history-title" className="space-y-4">
-                 <div className="mb-5">
-                   <h3 id="history-title" className="text-xs tracking-[0.2em] text-ni-ink/70 uppercase">{language === 'en' ? 'Our history' : 'हाम्रो इतिहास'}</h3>
-                 </div>
+                  <div className="mb-5">
+                    <h3 id="history-title" className="text-xs tracking-[0.2em] text-ni-ink/70 uppercase">
+                      {language === "en" ? "Our history" : "हाम्रो इतिहास"}
+                    </h3>
+                  </div>
 
                   <div className="w-full overflow-hidden border border-ni-ink/10 shadow-sm">
-                    <img src="/History.jpg" alt={language === 'en' ? 'History of our firm' : 'हाम्रो संस्थाको इतिहास'} className="w-full h-[260px] object-cover" />
+                    <img src="/History.jpg" alt={language === "en" ? "History of our firm" : "हाम्रो संस्थाको इतिहास"} className="w-full h-[260px] object-cover" />
                   </div>
 
                   <div>
                     <div className="mt-8 mb-5">
                       <Link href={{ pathname: "/about", hash: "our-story" }} className="inline-flex items-center gap-2 text-ni-ink hover:text-ni-accent transition-colors font-semibold text-2xl leading-tight">
-                      {language === 'en' ? 'History of our firm' : 'हाम्रो संस्थाको इतिहास'}
-                      <span aria-hidden className="text-3xl leading-none">›</span>
-                    </Link>
+                        {language === "en" ? "History of our firm" : "हाम्रो संस्थाको इतिहास"}
+                        <span aria-hidden className="text-3xl leading-none">
+                          ›
+                        </span>
+                      </Link>
                     </div>
-                    <p className="mt-2 text-sm leading-relaxed text-ni-ink/70">{language === 'en' ? 'Learn how Ninja Infosys grew from an engineering studio into a partner for large-scale, human-centered transformation.' : 'जान्नुहोस् कि कसरी Ninja Infosys एउटा इन्जिनियरिङ स्टुडियोबाट ठूला, मानव-केंद्रित परिवर्तनका साझेदारमा विकास भयो।'}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-ni-ink/70">
+                      {language === "en"
+                        ? "Learn how Ninja Infosys grew from an engineering studio into a partner for large-scale, human-centered transformation."
+                        : "जान्नुहोस् कि कसरी Ninja Infosys एउटा इन्जिनियरिङ स्टुडियोबाट ठूला, मानव-केंद्रित परिवर्तनका साझेदारमा विकास भयो।"}
+                    </p>
                   </div>
                 </section>
 
                 <section aria-labelledby="coc-title" className="space-y-4">
-              <div className="mt-2 mb-5 h-px w-full bg-ni-ink/15" />
+                  <div className="mt-2 mb-5 h-px w-full bg-ni-ink/15" />
 
                   <div className="mb-5">
-                    <h3 id="coc-title" className="text-xs tracking-[0.2em] text-ni-ink/70 uppercase">{language === 'en' ? 'Our code of conduct' : 'हाम्रो आचार संहिता'}</h3>
+                    <h3 id="coc-title" className="text-xs tracking-[0.2em] text-ni-ink/70 uppercase">
+                      {language === "en" ? "Our code of conduct" : "हाम्रो आचार संहिता"}
+                    </h3>
                   </div>
 
                   <div className="w-full overflow-hidden border border-ni-ink/10 shadow-sm">
-                    <img src="/Codeofconduct.jpg" alt={language === 'en' ? 'Our code of conduct' : 'हाम्रो आचार संहिता'} className="w-full h-[260px] object-cover" />
+                    <img src="/Codeofconduct.jpg" alt={language === "en" ? "Our code of conduct" : "हाम्रो आचार संहिता"} className="w-full h-[260px] object-cover" />
                   </div>
 
                   <div>
                     <div className="mt-8 mb-5">
                       <a role="button" tabIndex={0} className="inline-flex items-center gap-2 text-ni-ink hover:text-ni-accent transition-colors font-semibold text-2xl leading-tight">
-                      {language === 'en' ? 'Our code of conduct' : 'हाम्रो आचार संहिता'}
-                      <span aria-hidden className="text-2xl leading-none">›</span>
-                    </a>
+                        {language === "en" ? "Our code of conduct" : "हाम्रो आचार संहिता"}
+                        <span aria-hidden className="text-2xl leading-none">
+                          ›
+                        </span>
+                      </a>
                     </div>
-                    <p className="mt-2 text-sm leading-relaxed text-ni-ink/70">{language === 'en' ? 'Principles that keep our work ethical, secure, inclusive, and reliable across people, process, and product.' : 'नीतिहरू जसले हाम्रो कामलाई नैतिक, सुरक्षित, समावेशी, र भरपर्दो बनाउँछन्—मानिसहरू, प्रक्रियाहरू, र उत्पादनभरि।'}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-ni-ink/70">
+                      {language === "en"
+                        ? "Principles that keep our work ethical, secure, inclusive, and reliable across people, process, and product."
+                        : "नीतिहरू जसले हाम्रो कामलाई नैतिक, सुरक्षित, समावेशी, र भरपर्दो बनाउँछन्—मानिसहरू, प्रक्रियाहरू, र उत्पादनभरि।"}
+                    </p>
                   </div>
                 </section>
               </div>
@@ -223,12 +245,8 @@ export default function PerspectivesPage() {
         </div>
       </main>
 
-      <SearchOverlay
-        isOpen={searchOpen}
-        onClose={() => setSearchOpen(false)}
-        language={language}
-      />
-      <Footer language={language} />
+      <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      <Footer />
     </>
   )
 }

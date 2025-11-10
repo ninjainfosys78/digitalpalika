@@ -1,12 +1,9 @@
 "use client"
-
 import { useState, useEffect } from "react"
+import { useLanguage } from "@/components/LanguageProvider"
 
-interface CookieBannerProps {
-  language: "en" | "ne"
-}
-
-export default function CookieBanner({ language }: CookieBannerProps) {
+export default function CookieBanner() {
+  const { language } = useLanguage()
   const [visible, setVisible] = useState(false)
 
   const content =
@@ -25,10 +22,9 @@ export default function CookieBanner({ language }: CookieBannerProps) {
         }
 
   useEffect(() => {
+    if (typeof window === "undefined") return
     const consent = localStorage.getItem("ni-cookie-consent")
-    if (!consent) {
-      setVisible(true)
-    }
+    if (!consent) setVisible(true)
   }, [])
 
   const handleAccept = () => {
@@ -45,24 +41,24 @@ export default function CookieBanner({ language }: CookieBannerProps) {
 
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-50 bg-[#000000] text-ni-paper animate-slideUp"
+      className="fixed bottom-0 left-0 right-0 z-50 bg-[#000000] text-ni-paper"
       role="region"
-      aria-label="Cookie consent"
+      aria-label={language === "en" ? "Cookie consent" : "कुकी सहमति"}
     >
-      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 py-6 flex flex-row items-center justify-between gap-4">
+      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 py-4 flex items-center justify-between gap-4">
         <p className="text-sm text-ni-paper/80 flex-1 mr-4">{content.message}</p>
         <div className="flex items-center gap-3">
           <button
             onClick={handleDecline}
-            className="px-6 py-2 border bg-[#141414] border-ni-paper/20 text-ni-paper text-sm font-medium transition-colors"
-            style={{ minHeight: "44px" }}
+            className="px-4 py-2 border bg-[#141414] border-ni-paper/20 text-ni-paper text-sm font-medium"
+            style={{ minHeight: 40 }}
           >
             {content.decline}
           </button>
           <button
             onClick={handleAccept}
-            className="px-6 py-2 bg-[#d52027] text-white text-sm font-medium transition-colors"
-            style={{ minHeight: "44px" }}
+            className="px-4 py-2 bg-[#d52027] text-white text-sm font-medium"
+            style={{ minHeight: 40 }}
           >
             {content.accept}
           </button>

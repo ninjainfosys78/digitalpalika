@@ -1,18 +1,17 @@
 "use client"
-
 import React, { useEffect, useRef, useState } from "react"
+import { useLanguage } from "@/components/LanguageProvider"
 
 interface Testimonial {
   name: string
   role: string
   quote: string
+  image?: string
 }
 
-interface TestimonialsProps {
-  language: "en" | "ne"
-}
+export default function Testimonials() {
+  const { language } = useLanguage()
 
-export default function Testimonials({ language }: TestimonialsProps) {
   const items: Testimonial[] =
     language === "en"
       ? [
@@ -21,24 +20,28 @@ export default function Testimonials({ language }: TestimonialsProps) {
             role: "Information Officer, Ministry of Land Management, Nepal",
             quote:
               "Ninja Infosys works with such determination and great sincerity in the service of software development and website designing. We highly acknowledge their commitment to delivering high-quality solutions and their responsiveness throughout every project phase.",
+            image: "/ranjish_mishra.png",
           },
           {
             name: "Balkrishna Sharma",
             role: "CEO, LB Malla & Company",
             quote:
               "Overall, the Ninja Infosys team is a group of highly motivated and professional individuals. Their mix of expertise and enthusiasm makes for reliable, exciting collaboration. We have been impressed with their technical depth and consistency in execution.",
+            image: "/balkrishna.png",
           },
           {
             name: "Bimala KC",
             role: "Former Minister, Ministry of Land Management",
             quote:
               "Ninja Infosys has made it possible for students to obtain their results directly on their mobile phones via SMS, freeing them from unnecessary hassles. Their innovative solutions are practical and impactful, especially in simplifying public access to information.",
+            image: "/bimala_kc.png",
           },
           {
             name: "Shiv Ram Adhikari",
             role: "Province Director",
             quote:
               "I am very happy with the services of Ninja Infosys. I personally liked the website they designed. The main thing is, they are always available when needed and deliver with professionalism and precision.",
+            image: "/shiv_ram_adhikari.png",
           },
         ]
       : [
@@ -47,24 +50,28 @@ export default function Testimonials({ language }: TestimonialsProps) {
             role: "सूचना अधिकारी, भूमि व्यवस्था मन्त्रालय, नेपाल",
             quote:
               "निन्जा इन्फोसिसले सफ्टवेयर विकास र वेबसाइट डिजाइन सेवामा दृढता र इमानदारीका साथ काम गर्छ। हामी तिनीहरूको उच्च गुणस्तरको समाधान र प्रत्येक परियोजना चरणमा देखाएको उत्तरदायित्वको उच्च कदर गर्छौं।",
+            image: "/ranjish_mishra.png",
           },
           {
             name: "बलकृष्ण शर्मा",
             role: "सीईओ, एलबी मल्ल एण्ड कम्पनी",
             quote:
               "समग्रमा, निन्जा इन्फोसिसको टोली अत्यन्त प्रेरित र व्यावसायिक छ। तिनीहरूको विशेषज्ञता र उत्साहको संयोजनले भरपर्दो र रोमाञ्चक सहकार्य सम्भव बनाउँछ। हामी तिनीहरूको प्राविधिक गहिराइ र कार्यान्वयनमा निरन्तरताबाट प्रभावित छौं।",
+            image: "/balkrishna.png",
           },
           {
             name: "बिमला केसी",
             role: "पूर्व मन्त्री, भूमि व्यवस्था मन्त्रालय",
             quote:
               "निन्जा इन्फोसिसले विद्यार्थीहरूलाई एसएमएसमार्फत मोबाइलमा नै नतिजा प्राप्त गर्न सक्ने बनाएको छ, जसले अनावश्यक झन्झटबाट मुक्ति दिएको छ। तिनीहरूको नवप्रवर्तनशील समाधानहरू व्यवहारिक र प्रभावकारी छन्, विशेष गरी सार्वजनिक सूचना पहुँचलाई सरल बनाउन।",
+            image: "/bimala_kc.png",
           },
           {
             name: "शिव राम अधिकारी",
             role: "प्रदेश निर्देशक",
             quote:
               "म निन्जा इन्फोसिसको सेवाबाट धेरै सन्तुष्ट छु। व्यक्तिगत रूपमा, मलाई तिनीहरूले डिजाइन गरेको वेबसाइट मन पर्यो। मुख्य कुरा, तिनीहरू सधैं आवश्यक पर्दा उपलब्ध छन् र व्यावसायिकता तथा शुद्धताका साथ डेलिभर गर्छन्।",
+            image: "/shiv_ram_adhikari.png",
           },
         ]
 
@@ -154,11 +161,19 @@ export default function Testimonials({ language }: TestimonialsProps) {
                         className="p-6 bg-transparent border border-[rgba(255,255,255,0.08)] min-h-[180px] flex gap-4 items-start"
                         aria-label={`${item.name} — ${item.role}`}
                       >
-                        {/* circular placeholder */}
+                        {/* circular placeholder or image */}
                         <div
                           aria-hidden
-                          className="w-14 h-14 rounded-full bg-gradient-to-b from-[#222] to-[#111] border border-[rgba(255,255,255,0.06)] flex-none"
-                        />
+                          className="w-14 h-14 rounded-full bg-gradient-to-b from-[#222] to-[#111] border border-[rgba(255,255,255,0.06)] flex items-center justify-center overflow-hidden flex-none"
+                        >
+                          {item.image ? (
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-full h-full object-cover rounded-full grayscale"
+                            />
+                          ) : null}
+                        </div>
 
                         <div className="flex-1">
                           <div className="flex items-start justify-between">
