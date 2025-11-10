@@ -1,13 +1,12 @@
 "use client"
-
+import React from "react"
 import Link from "next/link"
-import { Linkedin, Twitter, Facebook, Phone, Smartphone, Mail, MapPin } from "lucide-react"
+import { Mail, MapPin, Smartphone, Phone, Linkedin, Facebook, Twitter } from "lucide-react"
+import { useLanguage } from "@/components/LanguageProvider"
 
-interface FooterProps {
-  language: "en" | "ne"
-}
+export default function Footer() {
+  const { language } = useLanguage()
 
-export default function Footer({ language }: FooterProps) {
   const content =
     language === "en"
       ? {
@@ -55,7 +54,7 @@ export default function Footer({ language }: FooterProps) {
           connect: [
             { type: "address", value: "काठमाडौं, नेपाल" },
             { type: "email", value: "info@ninjainfosys.com" },
-            { type: "mobile", value: "+977-9800000000" },
+            { type: "mobile", value: "+977-9858042433, +977-9858042647, 01-5922361" },
           ],
           legalLinks: [
             { label: "गोपनीयता नीति", href: "/privacy" },

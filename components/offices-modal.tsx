@@ -1,15 +1,16 @@
 "use client"
 
-import { useEffect } from "react"
+import React, { useEffect } from "react"
+import { useLanguage } from "@/components/LanguageProvider"
 import { X, MapPin, Mail } from "lucide-react"
 
 interface OfficesModalProps {
   isOpen: boolean
   onClose: () => void
-  language: "en" | "ne"
 }
 
-export default function OfficesModal({ isOpen, onClose, language }: OfficesModalProps) {
+export default function OfficesModal({ isOpen, onClose }: OfficesModalProps) {
+  const { language } = useLanguage()
   const offices =
     language === "en"
       ? [

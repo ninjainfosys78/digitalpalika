@@ -1,6 +1,10 @@
 "use client"
-
-import { useState } from "react"
+import React, { useState } from "react"
+import dynamic from "next/dynamic"
+const Testimonials: React.ComponentType<any> = dynamic(
+  () => import("@/components/testimonials").then((m) => m.default ?? m),
+  { ssr: false }
+)
 import {
   Target,
   Handshake,
@@ -10,15 +14,14 @@ import {
   Eye,
   Heart,
 } from "lucide-react"
-
 import Link from "next/link"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
-import Testimonials from "@/components/testimonials"
 import GlobalCTA from "@/components/global-cta"
+import { useLanguage } from "@/components/LanguageProvider"
 
 export default function AboutPage() {
-  const [language, setLanguage] = useState<"en" | "ne">("en")
+  const { language } = useLanguage()
 
   const content =
     language === "en"
@@ -94,7 +97,7 @@ export default function AboutPage() {
 
   return (
     <>
-      <Header language={language} onLanguageChange={setLanguage} />
+      <Header />
 
       <main className="relative bg-black text-[#f3f3f3e6]">
         <section className="relative z-10">
@@ -143,17 +146,20 @@ export default function AboutPage() {
                  </p>
 
                 <div className="mt-6 grid grid-cols-2 gap-4">
-                  {content.features.map((f) => (
-                    <div key={f.title} className="flex items-start gap-3 bg-[#000000] p-4">
-                      <span className="inline-flex h-9 w-9 items-center justify-center bg-[#141414] text-[#f3f3f3e6]">
-                        <f.icon size={16} />
-                      </span>
-                      <div>
-                        <div className="text-sm font-semibold text-[#f3f3f3e6]">{f.title}</div>
-                        <div className="text-xs text-[#f3f3f3e6]">{f.desc}</div>
+                  {content.features.map((f) => {
+                    const Icon = f.icon
+                    return (
+                      <div key={f.title} className="flex items-start gap-3 bg-[#000000] p-4">
+                        <span className="inline-flex h-9 w-9 items-center justify-center bg-[#141414] text-[#f3f3f3e6]">
+                          <Icon size={16} />
+                        </span>
+                        <div>
+                          <div className="text-sm font-semibold text-[#f3f3f3e6]">{f.title}</div>
+                          <div className="text-xs text-[#f3f3f3e6]">{f.desc}</div>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               </div>
             </div>
@@ -182,8 +188,8 @@ export default function AboutPage() {
             </div>
           </section>
 
-        <Testimonials language={language} />
- 
+        <Testimonials />
+
          <section id="our-story" className="relative z-10 scroll-mt-28">
           <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-12 lg:py-16">
             <h2 className="text-[32px] font-heading font-semibold text-left text-[#f3f3f3e6]">
@@ -223,10 +229,10 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <GlobalCTA language={language} onOfficesOpen={() => {}} />
+        <GlobalCTA onOfficesOpen={() => {}} />
       </main>
  
-       <Footer language={language} />
+       <Footer />
      </>
    )
- }
+}

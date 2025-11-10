@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { useLanguage } from "@/components/LanguageProvider";
 
 const trustedList = {
   en: [
@@ -27,11 +28,8 @@ const trustedList = {
   ],
 };
 
-interface TrustedByProps {
-  language: "en" | "ne";
-}
-
-export default function TrustedBy({ language }: TrustedByProps) {
+export default function TrustedBy() {
+  const { language } = useLanguage()
   const list = trustedList[language]; // array of { name, img }
   const [dbg, setDbg] = useState({
     innerWidth: 0,

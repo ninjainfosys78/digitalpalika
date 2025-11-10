@@ -5,13 +5,9 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { Menu, X, ChevronDown, ArrowRight } from "lucide-react"
+import { useLanguage } from "@/components/LanguageProvider"
 
 type Lang = "en" | "ne"
-
-interface HeaderProps {
-  language: Lang
-  onLanguageChange?: (lang: Lang) => void
-}
 
 const DATA = {
   en: {
@@ -83,7 +79,8 @@ const DATA = {
   },
 }
 
-export default function Header({ language = "en", onLanguageChange }: HeaderProps) {
+export default function Header() {
+  const { language, setLanguage } = useLanguage()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openMega, setOpenMega] = useState<string | null>(null)
   const [mobileMegaOpen, setMobileMegaOpen] = useState<string | null>(null)
@@ -298,7 +295,7 @@ export default function Header({ language = "en", onLanguageChange }: HeaderProp
 
           <div className="ml-auto flex items-center gap-5 flex-none">
             <button
-              onClick={() => onLanguageChange?.(language === "en" ? "ne" : "en")}
+              onClick={() => setLanguage(language === "en" ? "ne" : "en")}
               className="w-10 h-10 flex items-center justify-center shrink-0 text-white/70 hover:text-white transition-colors cursor-pointer"
               aria-label={`Switch to ${language === "en" ? "Nepali" : "English"}`}
               title={language === "en" ? "Switch to Nepali" : "Switch to English"}

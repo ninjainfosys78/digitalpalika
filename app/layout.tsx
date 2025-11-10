@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
 import { IBM_Plex_Sans, Source_Serif_4 } from "next/font/google"
+import { LanguageProvider } from "@/components/LanguageProvider"
 
 const ibm = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -40,14 +41,12 @@ export const metadata: Metadata = {
     generator: 'v0.app'
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${ibm.variable} ${serif.variable}`}>
-      <body>{children}</body>
+    <html lang="en">
+      <body className={`${ibm.variable} ${serif.variable}`}>
+        <LanguageProvider>{children}</LanguageProvider>
+      </body>
     </html>
   )
 }

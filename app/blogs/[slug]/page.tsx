@@ -13,7 +13,6 @@ export async function generateStaticParams() {
 }
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const language: "en" | "ne" = "en";
   const source = getPostSourceBySlug(params.slug);
   if (!source) return notFound();
 
@@ -33,7 +32,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <Header language={language} />
+      <Header />
 
       <section className="relative z-10 bg-black text-white">
         <div className="relative min-h-[44vh] pt-24 lg:pt-28">
@@ -108,7 +107,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         </div>
       </main>
 
-      <Footer language={language} />
+      <Footer />
     </>
   );
 }

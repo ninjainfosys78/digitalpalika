@@ -1,13 +1,16 @@
 "use client"
 
-import { Mail, MapPin, ArrowRight } from "lucide-react"
+import React from "react"
+import { ArrowRight, Mail, MapPin } from "lucide-react"
+import { useLanguage } from "@/components/LanguageProvider"
 
 interface GlobalCTAProps {
-  language: "en" | "ne"
   onOfficesOpen: () => void
 }
 
-export default function GlobalCTA({ language, onOfficesOpen }: GlobalCTAProps) {
+export default function GlobalCTA({ onOfficesOpen }: GlobalCTAProps) {
+  const { language } = useLanguage()
+
   const content =
     language === "en"
       ? {

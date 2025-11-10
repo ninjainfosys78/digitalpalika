@@ -7,9 +7,10 @@ import SearchOverlay from "@/components/search-overlay";
 import Link from "next/link";
 import GlobalCTA from "@/components/global-cta";
 import OfficesModal from "@/components/offices-modal";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export default function CareersPage() {
-  const [language, setLanguage] = useState<"en" | "ne">("en");
+  const { language } = useLanguage();
   const [searchOpen, setSearchOpen] = useState(false);
   const [officesOpen, setOfficesOpen] = useState(false);
 
@@ -42,7 +43,7 @@ export default function CareersPage() {
 
   return (
     <>
-      <Header language={language} onLanguageChange={setLanguage} />
+      <Header />
       <main className="relative bg-black text-white">
         {/* HERO SECTION */}
         <section className="relative z-10">
@@ -113,19 +114,11 @@ export default function CareersPage() {
         </section>
       </main>
 
-      <GlobalCTA language={language} onOfficesOpen={() => setOfficesOpen(true)} />
-      <Footer language={language} />
-      <SearchOverlay
-        isOpen={searchOpen}
-        onClose={() => setSearchOpen(false)}
-        language={language}
-      />
-      <OfficesModal
-        isOpen={officesOpen}
-        onClose={() => setOfficesOpen(false)}
-        language={language}
-      />
+      <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />
+      <Footer />
+      <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      <OfficesModal isOpen={officesOpen} onClose={() => setOfficesOpen(false)} />
     </>
   );
 }
- 
+

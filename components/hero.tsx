@@ -1,16 +1,18 @@
 "use client"
-
+import React from "react"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
+import { useLanguage } from "@/components/LanguageProvider"
 
 interface HeroProps {
-  language: "en" | "ne"
   showContent?: boolean
   backgroundOnly?: boolean
   children?: React.ReactNode
 }
 
-export default function Hero({ language, showContent = true, backgroundOnly = false, children }: HeroProps) {
+export default function Hero({ showContent = true, backgroundOnly = false, children }: HeroProps) {
+  const { language } = useLanguage()
+
   const content =
     language === "en"
       ? {

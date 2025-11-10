@@ -1,19 +1,17 @@
 "use client"
-
 import React, { useEffect, useRef, useState } from "react"
+import { useLanguage } from "@/components/LanguageProvider"
 
 interface Testimonial {
   name: string
   role: string
   quote: string
-  image?: string 
+  image?: string
 }
 
-interface TestimonialsProps {
-  language: "en" | "ne"
-}
+export default function Testimonials() {
+  const { language } = useLanguage()
 
-export default function Testimonials({ language }: TestimonialsProps) {
   const items: Testimonial[] =
     language === "en"
       ? [
