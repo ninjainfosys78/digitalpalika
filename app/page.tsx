@@ -2,7 +2,7 @@
 
 import { Fragment, useState, useEffect } from 'react';
 import { Header } from '@/components/header';
-import { Footer } from '@/components/footer';
+import Footer from '@/components/footer';
 import { LanguageProvider, useLanguage } from '@/context/LanguageContext';
 
 export default function Home() {

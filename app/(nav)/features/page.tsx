@@ -4,7 +4,7 @@
 
 import { Fragment } from 'react';
 import { Header } from '@/components/header';
-import { Footer } from '@/components/footer';
+import Footer  from '@/components/footer';
 import { FeatureSection } from '@/components/FeatureSection';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { siteData, FullSiteContent } from '@/lib/siteData';
