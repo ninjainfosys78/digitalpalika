@@ -1,22 +1,20 @@
 "use client";
 import { Fragment } from 'react';
 import { Header } from '@/components/header'; 
-import Footer  from '@/components/footer'; 
+import { Footer } from '@/components/footer'; 
 import { ContactSection } from '@/components/ContactSection'; 
 import { LanguageProvider, useLanguage } from '@/context/LanguageContext'; 
 import type { FullSiteContent } from '@/lib/siteData';
 
 // --- Content for the Contact Page ---
-// Allow an additional `contactPage` key here (not part of FullSiteContent) without changing the global type.
-export const siteContent: Partial<FullSiteContent> & { contactPage?: any } = {
+export const siteContent: Partial<FullSiteContent> = {
     // Header nav items here aren’t used by <Header /> (Header reads from siteData),
     // so keep it empty to avoid type/shape mismatches.
     header: {
         navItems: [],
     },
     // Hero is not strictly needed for a contact page, keep it minimal
-    // Include subtitle to satisfy FullSiteContent type
-    hero: { title: {en:'', ne:''}, subtitle: {en:'', ne:''}, description: {en:'', ne:''}, ctaText: {en:'', ne:''}, ctaLink: '' }, 
+    hero: { title: {en:'', ne:''}, description: {en:'', ne:''}, ctaText: {en:'', ne:''}, ctaLink: '' }, 
     
     // NEW: Contact Page Content
     contactPage: {
@@ -41,7 +39,14 @@ export const siteContent: Partial<FullSiteContent> & { contactPage?: any } = {
         }
     },
 
-    // Re-use footer content from global siteData (do not override here)
+    // Re-use footer content
+    footer: {
+        copyright: { en: `© ${new Date().getFullYear()} Ninja Infosys. All rights reserved.`, ne: `© ${new Date().getFullYear()} निन्जा इन्फोसिस्। सबै अधिकार सुरक्षित।` },
+        links: [
+            { label: { en: 'Privacy Policy', ne: 'गोपनीयता नीति' }, href: '/privacy' },
+            { label: { en: 'Terms of Use', ne: 'प्रयोगका सर्तहरू' }, href: '/terms' },
+        ],
+    },
 };
 
 // --- Main Contact Page Component ---

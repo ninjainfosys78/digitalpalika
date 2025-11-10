@@ -12,7 +12,7 @@ module.exports = {
     extend: {
       colors: {
         // Mapped to CSS variables in globals.css
-        'primary': 'text-blue-900',   // Use: bg-primary, text-primary
+        'primary': 'text-blue-500',   // Use: bg-primary, text-primary
         'secondary': 'var(--color-secondary)', // Use: bg-secondary, text-secondary
         'accent': 'var(--color-accent)',     // Use: bg-accent, text-accent
         'paper': 'var(--color-paper)',       // Use: bg-paper
