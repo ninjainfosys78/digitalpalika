@@ -2,25 +2,30 @@
 
 import { useState, useEffect, useRef } from "react"
 import { Search, X } from "lucide-react"
+import React from "react"
+import { useLanguage } from "@/components/LanguageProvider"
 
 interface SearchOverlayProps {
   isOpen: boolean
   onClose: () => void
-  language: "en" | "ne"
 }
 
-export default function SearchOverlay({ isOpen, onClose, language }: SearchOverlayProps) {
+export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
   const [query, setQuery] = useState("")
   const inputRef = useRef<HTMLInputElement>(null)
+  const { language } = useLanguage()
 
-  const placeholder = language === "en" ? "Search perspectives, ideas, and cases…" : "दृष्टिकोण, विचार, केसहरू खोज्नुहोस्…"
+  const placeholder =
+    language === "en"
+      ? "Search perspectives, ideas, and cases…"
+      : "दृष्टिकोण, विचार, केसहरू खोज्नुहोस्…"
 
   useEffect(() => {
     if (isOpen) {
       inputRef.current?.focus()
-      document.body.style.overflow = "hidden"
+      if (typeof document !== "undefined") document.body.style.overflow = "hidden"
     } else {
-      document.body.style.overflow = "unset"
+      if (typeof document !== "undefined") document.body.style.overflow = "unset"
       setQuery("")
     }
   }, [isOpen])

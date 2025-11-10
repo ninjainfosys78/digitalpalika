@@ -10,6 +10,7 @@ import GlobalCTA from "@/components/global-cta"
 import SearchOverlay from "@/components/search-overlay"
 import OfficesModal from "@/components/offices-modal"
 import Footer from "@/components/footer"
+import { useLanguage } from "@/components/LanguageProvider"
 
 type Lang = "en" | "ne"
 type Key = "gov" | "edu" | "health" | "fin" | "corp"
@@ -34,7 +35,7 @@ interface WorkItem {
 }
 
 export default function SolutionsPage() {
-  const [language, setLanguage] = useState<Lang>("en")
+  const { language } = useLanguage()
   const [searchOpen, setSearchOpen] = useState(false)
   const [officesOpen, setOfficesOpen] = useState(false)
   const [active, setActive] = useState<Key | null>(null)
@@ -233,7 +234,7 @@ export default function SolutionsPage() {
 
   return (
     <>
-      <Header language={language} onLanguageChange={setLanguage} />
+      <Header />
 
       <main className="relative bg-black text-white">
         <section className="relative z-10">
@@ -455,12 +456,12 @@ export default function SolutionsPage() {
           </>
         )}
 
-        <GlobalCTA language={language} onOfficesOpen={() => setOfficesOpen(true)} />
+        <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />
       </main>
 
-      <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} language={language} />
-      <OfficesModal isOpen={officesOpen} onClose={() => setOfficesOpen(false)} language={language} />
-      <Footer language={language} />
+      <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      <OfficesModal isOpen={officesOpen} onClose={() => setOfficesOpen(false)} />
+      <Footer />
 
       <style jsx global>{`
   /* hide any stray pseudo element that may be drawing the thick stripe */

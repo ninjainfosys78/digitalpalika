@@ -2,6 +2,7 @@
 
 import { ArrowRight, Clock } from "lucide-react"
 import Link from "next/link"
+import { useLanguage } from "@/components/LanguageProvider"
 
 export type InsightCard = {
   title: string
@@ -12,11 +13,14 @@ export type InsightCard = {
 }
 
 interface InsightsRailProps {
-  language: "en" | "ne"
-  insights: InsightCard[] // pass 3 items
+  language?: "en" | "ne"
+  insights?: InsightCard[] // made optional and defaulted
 }
 
-export default function InsightsRail({ language, insights }: InsightsRailProps) {
+export default function InsightsRail({ language: propLanguage, insights = [] }: InsightsRailProps) {
+  const { language: ctxLanguage } = useLanguage()
+  const language = propLanguage ?? ctxLanguage ?? "en"
+
   const content =
     language === "en"
       ? { title: "Insights", viewAll: "View all insights", readMore: "Read more" }

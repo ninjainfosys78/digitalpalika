@@ -13,11 +13,11 @@ import Footer from "@/components/footer"
 import SearchOverlay from "@/components/search-overlay"
 import CookieBanner from "@/components/cookie-banner"
 import OfficesModal from "@/components/offices-modal"
-
-type Lang = "en" | "ne"
+import { useLanguage } from "@/components/LanguageProvider"
 
 export default function HomePageClient({ insights }: { insights: InsightCard[] }) {
-  const [language, setLanguage] = useState<Lang>("en")
+  // read language from provider (don't pass it as a prop to children)
+  const { language } = useLanguage()
   const [searchOpen, setSearchOpen] = useState(false)
   const [officesOpen, setOfficesOpen] = useState(false)
 
@@ -53,7 +53,7 @@ export default function HomePageClient({ insights }: { insights: InsightCard[] }
     },
   } as const
 
-  const currentMeta = meta[language]
+  const currentMeta = meta[(language ?? "en") as "en" | "ne"]
 
   return (
     <>
@@ -72,23 +72,25 @@ export default function HomePageClient({ insights }: { insights: InsightCard[] }
       </Head>
 
       {/* Header */}
-      <Header language={language} onLanguageChange={setLanguage} />
+      <Header />
 
       {/* Main content */}
       <main id="main-content" className="sharp-edges">
-        <Hero language={language} />
-        <TrustedBy language={language} />
-        <InsightsRail language={language} insights={insights} />
-        <GlobalCTA language={language} onOfficesOpen={() => setOfficesOpen(true)} />
+        <Hero />
+        <TrustedBy />
+        <InsightsRail insights={insights} />
+        <Testimonials />
+        <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />
       </main>
 
       {/* Footer */}
-      <Footer language={language} />
+      <Footer />
 
       {/* Overlays */}
-      <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} language={language} />
-      <OfficesModal isOpen={officesOpen} onClose={() => setOfficesOpen(false)} language={language} />
-      <CookieBanner language={language} />
+      <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      <OfficesModal isOpen={officesOpen} onClose={() => setOfficesOpen(false)} />
+
+      <CookieBanner />
 
       {/* Embedded JSON Content */}
       <script

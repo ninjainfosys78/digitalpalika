@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import Link from "next/link"
 import { Search, PenTool, Code, RefreshCw, ChevronDown } from "lucide-react"
 
@@ -9,6 +9,7 @@ import GlobalCTA from "@/components/global-cta"
 import SearchOverlay from "@/components/search-overlay"
 import OfficesModal from "@/components/offices-modal"
 import Footer from "@/components/footer"
+import { useLanguage } from "@/components/LanguageProvider"
 
 type Cat =
   | "All"
@@ -34,7 +35,7 @@ interface WorkItem {
 }
 
 export default function WorkPage() {
-  const [language, setLanguage] = useState<"en" | "ne">("en")
+  const { language } = useLanguage()
   const [searchOpen, setSearchOpen] = useState(false)
   const [officesOpen, setOfficesOpen] = useState(false)
   const [active, setActive] = useState<Cat>("All")
@@ -174,9 +175,14 @@ export default function WorkPage() {
     [active, items, t.filters, language]
   )
 
+  // when language changes, reset active to the localized "All" value
+  useEffect(() => {
+    setActive(t.filters[0])
+  }, [language])
+
   return (
     <>
-      <Header language={language} onLanguageChange={setLanguage} />
+      <Header />
 
       <main className="relative bg-[#000000] text-[#e3e3e3]">
         <section className="relative z-10">
@@ -265,12 +271,16 @@ export default function WorkPage() {
             </header>
             <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {filtered.map((c) => {
-                const fileName = c.image
-                  ? c.image
-                  : c.title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-_.-]/g, "")
-                const srcCandidates = c.image
-                  ? [`/${fileName}`, `/${fileName}.jpg`, `/${fileName}.png`, `/${fileName}.webp`]
-                  : [`/${fileName}.jpg`, `/${fileName}.png`, `/${fileName}.webp`, `/${fileName}.jpeg`]
+                // build safe image candidates (Unicode-safe slugging)
+                const raw = c.image ? c.image : c.title
+                // if raw contains an extension keep it; otherwise create a URL-safe slug
+                const slug = raw.includes(".")
+                  ? raw
+                  : encodeURIComponent(raw.toLowerCase().replace(/\s+/g, "-"))
+                const hasExt = /\.[a-z0-9]+$/i.test(slug)
+                const srcCandidates = hasExt
+                  ? [`/${slug}`]
+                  : [`/${slug}.jpg`, `/${slug}.png`, `/${slug}.webp`, `/${slug}.jpeg`]
                 const placeholder = "/placeholder.jpg"
                 return (
                   <div
@@ -402,20 +412,18 @@ export default function WorkPage() {
           </div>
         </section>
 
-        <GlobalCTA language={language} onOfficesOpen={() => setOfficesOpen(true)} />
+        <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />
       </main>
 
       <SearchOverlay
         isOpen={searchOpen}
         onClose={() => setSearchOpen(false)}
-        language={language}
       />
       <OfficesModal
         isOpen={officesOpen}
         onClose={() => setOfficesOpen(false)}
-        language={language}
       />
-      <Footer language={language} />
+      <Footer />
     </>
   )
 }

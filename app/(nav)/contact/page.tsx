@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
+import { useLanguage } from "@/components/LanguageProvider"
 import Link from "next/link"
 
 import Header from "@/components/header"
@@ -9,7 +10,7 @@ import SearchOverlay from "@/components/search-overlay"
 
 
 export default function ContactPage() {
-  const [language, setLanguage] = useState<"en" | "ne">("en")
+  const { language } = useLanguage()
   const [searchOpen, setSearchOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [logoOffset, setLogoOffset] = useState<number | null>(null)
@@ -107,7 +108,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <Header language={language} onLanguageChange={setLanguage} />
+      <Header />
 
       <section className="relative min-h-screen bg-black text-[#e3e3e3] pt-16" aria-label="Contact section">
         {/* measured container: left padding set so the form starts under the logo */}
@@ -189,7 +190,6 @@ export default function ContactPage() {
                 className="inline-flex items-center gap-2 text-sm text-white/90"
               >
                 <span>{t.getDirection}</span>
-                <span aria-hidden className="text-white/60">↗</span>
               </Link>
             </div>
 
@@ -205,8 +205,8 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} language={language} />
-      <Footer language={language} />
+      <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      <Footer />
     </>
   )
 }
