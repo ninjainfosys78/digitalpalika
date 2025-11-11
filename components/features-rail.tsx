@@ -53,23 +53,29 @@ export default function FeatureRail() {
 						: 'Simplifying local governance through a smart, connected digital platform.'}
 				</h2>
 				<div className="w-24 h-[2px] mx-auto mb-8" style={{ backgroundColor: '#003893' }}></div>
-				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 items-start mb-8">
+
+				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 items-start mb-8">
 					{features.map((f, idx) => (
-						<div key={idx} className="flex flex-col items-start text-left">
-							<div className="w-full aspect-square overflow-hidden bg-white">
-								<img
-									src={f.img}
-									alt={active === 'ne' ? f.ne : f.en}
-									className="w-full h-full object-cover"
-								/>
+						<div key={idx} className="flex flex-col items-center text-center md:items-start md:text-left">
+							<div className="w-full overflow-hidden bg-white">
+								<div className="w-full h-40 sm:h-44 md:aspect-square">
+									<img
+										src={f.img}
+										alt={active === 'ne' ? f.ne : f.en}
+										className="w-full h-full object-cover"
+									/>
+								</div>
 							</div>
-							<div className="w-10 h-[2px] mt-3 mb-3" style={{ backgroundColor: '#003893' }}></div>
+
+							<div className="w-24 sm:w-10 h-[2px] mt-3 mb-3 mx-auto md:mx-0" style={{ backgroundColor: '#003893' }}></div>
+
 							<p className="text-sm text-[#000000] leading-relaxed">
 								{active === 'ne' ? f.ne : f.en}
 							</p>
 						</div>
 					))}
 				</div>
+
 				{!isFeaturePage && (
 					<div className="mx-auto max-w-xs">
 						<a

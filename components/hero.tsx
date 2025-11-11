@@ -16,7 +16,7 @@ const HomeContent = () => {
 	// text for both languages
 	const title = {
 		en: 'Digital Municipality (ERP Software)',
-		ne: 'डिजिटल पालिका (ERP Software)',
+		ne: 'डिजिटल पालिका (ईआरपी सफ्टवेयर)',
 	};
 	const description = {
 		en:
@@ -34,38 +34,55 @@ const HomeContent = () => {
 	return (
 		<>
 			{/* Hero Section */}
-			<section className="bg-white text-[#000000] min-h-screen flex items-start pt-0 relative">
-				<div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start gap-6 sm:gap-8">
-					{/* Left text column */}
-					<div className="md:w-2/5 flex-1 pt-40">
-						{/* Title: only active language */}
-						<h1 className="text-[54px] font-extrabold mb-4 leading-tight">
+			{/* responsive heights: ~50% viewport on small screens, full-screen on lg */}
+			<section className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-screen flex items-start bg-white overflow-hidden">
+				{/* MOBILE: half-bleed background image + dark brand overlay (visible when hamburger shows) */}
+				<div className="absolute inset-0 block lg:hidden">
+					<img
+						src="/herosection.png"
+						alt="ERP Demo"
+						className="w-full h-full object-cover grayscale opacity-60"
+					/>
+					{/* dark brand overlay to make text readable */}
+					<div className="absolute inset-0 opacity-20 pointer-events-none" />
+				</div>
+
+				{/* Content container */}
+				<div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start gap-6 sm:gap-8 relative z-10">
+					{/* Left text column (reduced top padding on small screens so lower content shows up) */}
+					<div className="w-full md:w-2/5 flex-1 py-8 md:py-20 lg:py-40">
+						{/* Title */}
+						<h1 className="font-extrabold mb-4 leading-tight
+							text-3xl sm:text-4xl md:text-5xl lg:text-[54px]
+							text-black lg:text-[#000000] text-left lg:text-left">
 							<span className="block">{title[active]}</span>
 						</h1>
 
-						{/* Description: only active language */}
-						<div className="max-w-2xl">
-							<p className="text-[16px] mb-4 text-justify text-[#000000]">
+						{/* Description */}
+						<div className="md:py-10 max-w-3xl lg:mx-0">
+							<p className="mb-4
+								text-base sm:text-lg md:text-[16px]
+								text-black lg:text-[#000000] text-left lg:text-justify">
 								<span className="block">{description[active]}</span>
 							</p>
 
-							{/* CTA: only active language */}
+							{/* CTA */}
 							<a
 								href="/contact"
-								className="inline-flex items-center gap-3 bg-[#003893] hover:bg-[#002f72] text-white font-semibold px-5 py-3"
+								className="inline-flex items-center gap-3 bg-[#003893] hover:bg-[#002f72] text-white font-semibold px-5 py-3 mx-auto lg:mx-0"
+								role="button"
 							>
 								<span className="leading-none">{cta[active]}</span>
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-							<path d="M5 12h14" />
-							<path d="M12 5l7 7-7 7" />
-						</svg>
+								<svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+									<path d="M5 12h14" />
+									<path d="M12 5l7 7-7 7" />
+								</svg>
 							</a>
 						</div>
 					</div>
 
-					{/* Right image column with diagonal clip */}
-					<div className="flex-1 w-full md:w-3/5 relative flex justify-center items-start">
-						{/* make image wrapper full viewport height so bottom covers hero */}
+					{/* Right image column for large screens (keep diagonal clip) */}
+					<div className="hidden lg:flex flex-1 w-full md:w-3/5 relative justify-center items-start">
 						<div
 							className="w-full h-screen overflow-hidden"
 							style={{
@@ -76,7 +93,6 @@ const HomeContent = () => {
 								src="/herosection.png"
 								alt="ERP Demo"
 								className="w-full h-full object-cover grayscale"
-								// pull image up slightly so bottom doesn't extend too far below hero
 								style={{ transform: "translateY(-11%) translateZ(0)" }}
 							/>
 						</div>
