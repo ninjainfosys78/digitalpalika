@@ -51,14 +51,7 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // If you have controlled inputs, also reset their state here.
-    // setFormValues({ name: "", email: "", topic: "", message: "" });
-
-    // Clear uncontrolled inputs
     formRef.current?.reset();
-
-    // Show modal
     setShowModal(true);
   };
 
@@ -68,7 +61,7 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
         <div className="container mx-auto max-w-6xl">
             
             {/* Section Title */}
-            <h1 className="text-2xl md:text-5xl font-work-sans font-bold text-blue-900 text-center mb-16">
+            <h1 className="text-2xl md:text-5xl font-work-sans font-bold text-[#003893] text-center mb-16">
                 {title}
             </h1>
 
@@ -77,14 +70,14 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
                 
                 {/* Phone */}
                 <div className="flex flex-col items-center">
-                    <div className="text-blue-900 mb-4">
+                    <div className="text-[#003893] mb-4">
                         <Icon name="Phone" className="w-8 h-8"/>
                     </div>
                     <h2 className="text-lg font-work-sans font-semibold text-black mb-2">
                         {t({ en: 'Phone', ne: 'फोन' })}
                     </h2>
                     {details.phoneNumbers.map((phone, index) => (
-                        <a key={index} href={`tel:${phone}`} className="text-blue-900 font-inter transition-colors text-sm">
+                        <a key={index} href={`tel:${phone}`} className="text-[#003893] font-inter transition-colors text-sm">
                             नेपालभित्र: {phone}
                         </a>
                     ))}
@@ -92,20 +85,20 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
 
                 {/* Email */}
                 <div className="flex flex-col items-center">
-                    <div className="text-blue-900 mb-4">
+                    <div className="text-[#003893] mb-4">
                         <Icon name="Mail" className="w-8 h-8"/>
                     </div>
                     <h2 className="text-lg font-work-sans font-semibold text-black mb-2">
                         {t({ en: 'Email', ne: 'इमेल' })}
                     </h2>
-                    <a href={`mailto:${details.email}`} className="text-blue-900 hover:text-accent font-inter transition-colors">
+                    <a href={`mailto:${details.email}`} className="text-[#003893] hover:text-[#003893] font-inter transition-colors">
                         {details.email}
                     </a>
                 </div>
 
                 {/* Address */}
                 <div className="flex flex-col items-center">
-                    <div className="text-blue-900 mb-4">
+                    <div className="text-[#003893] mb-4">
                         <Icon name="MapPin" className="w-8 h-8"/>
                     </div>
                     <h2 className="text-lg font-work-sans font-semibold text-black mb-2">
@@ -118,7 +111,7 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
             </div>
 
             {/* Contact Form */}
-            <div className="bg-blue-50/60 border border-blue-100 w-full max-w-6xl mx-auto p-8 md:p-12">
+            <div className="bg-[#003893]/6 border border-[#003893]/20 w-full max-w-6xl mx-auto p-8 md:p-12">
                 <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                     
                     {/* Name and Email Row */}
@@ -135,7 +128,7 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
                                     id="fullName"
                                     placeholder={t(formLabels.fullName)}
                                     required
-                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-accent focus:border-accent font-inter text-black"
+                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black"
                                 />
                             </div>
                         </div>
@@ -152,7 +145,7 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
                                     id="email"
                                     placeholder={t(formLabels.email)}
                                     required
-                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-accent focus:border-accent font-inter text-black"
+                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black"
                                 />
                             </div>
                         </div>
@@ -172,7 +165,7 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
                                     id="contactReason"
                                     placeholder={t(formLabels.contactReason)}
                                     required
-                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-accent focus:border-accent font-inter text-black"
+                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black"
                                 />
                             </div>
                         </div>
@@ -189,7 +182,7 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
                                     id="topic"
                                     placeholder={t(formLabels.topic)}
                                     required
-                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-accent focus:border-accent font-inter text-black"
+                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black"
                                 />
                             </div>
                         </div>
@@ -207,7 +200,7 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
                                 rows={5}
                                 placeholder={t(formLabels.message)}
                                 required
-                                className="w-full pl-10 pr-4 py-3 border border-slate/20 focus:ring-accent focus:border-accent font-inter text-black"
+                                className="w-full pl-10 pr-4 py-3 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black"
                             ></textarea>
                         </div>
                     </div>
@@ -215,7 +208,7 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className="inline-flex items-center justify-center px-8 py-3 text-white font-work-sans font-semibold bg-blue-700 hover:bg-blue-700 transition-all duration-300 ease-in-out"
+                        className="inline-flex items-center justify-center px-8 py-3 text-white font-work-sans font-semibold bg-[#003893] hover:bg-[#003893]/90 transition-all duration-300 ease-in-out"
                     >
                         {t(formLabels.button)}
                     </button>
@@ -240,7 +233,7 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
               <button
                 type="button"
                 onClick={() => setShowModal(false)}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-none shadow-none hover:bg-indigo-700"
+                className="px-4 py-2 bg-[#003893] text-white rounded-none shadow-none hover:bg-[#003893]/90"
               >
                 OK
               </button>
