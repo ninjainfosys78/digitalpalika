@@ -1,129 +1,114 @@
 "use client";
-import React from 'react';
-import { useLanguage } from '@/context/LanguageContext';
-import { siteData } from '@/lib/siteData';
-import { Mail, Phone, MapPin, QrCode } from 'lucide-react'; // Lucide icons for contact details
 
-// Helper component for rendering individual link groups (Quick Links, User Support)
-const FooterLinkGroup = ({ title, links }: { title: string, links: { label: string, href: string }[] }) => {
-    return (
-        <div>
-            <h4 className="text-lg font-bold text-[#ffffff] mb-4 border-b border-[#000000] pb-1">
-                {title}
-            </h4>
-            <ul className="space-y-3">
-                {links.map((link, index) => (
-                    <li key={index}>
-                        <a 
-                            href={link.href} 
-                            className="text-[#ffffff] hover:text-[#6b6b6b] transition-colors duration-200 text-sm font-medium"
-                        >
-                            {link.label}
-                        </a>
+import Link from "next/link";
+import { useLanguage } from "@/context/LanguageContext";
+import { siteData } from "@/lib/siteData";
+import { Linkedin, Facebook, Twitter, MapPin, Mail, Smartphone, Phone } from "lucide-react";
+
+export default function Footer() {
+  const { t } = useLanguage();
+  const f = siteData.footer;
+
+  return (
+    <footer className="bg-[#003885] text-white w-full" role="contentinfo">
+      {/* remove container limit */}
+      <div className="px-4 sm:px-10 lg:px-20 2xl:px-25 pt-12 pb-5">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          {/* Left column */}
+          <div className="lg:col-span-5">
+            <h2 className="text-3xl font-semibold tracking-tight">{t(f.companyName)}</h2>
+            <p className="mt-2 text-white/90">{t(f.companyMoto)}</p>
+          </div>
+
+          {/* Right columns */}
+          <div className="lg:col-span-7">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
+              <div>
+                <h3 className="text-lg font-semibold">Quick Links</h3>
+                <ul className="mt-3 space-y-2">
+                  {f.quickLinks.links.map((l, i) => (
+                    <li key={i}>
+                      <Link href={l.href} 
+                        className="text-white hover:text-white/70 transition-colors duration-200">
+                        {t(l.label)}
+                      </Link>
                     </li>
-                ))}
-            </ul>
-        </div>
-    );
-};
+                  ))}
+                </ul>
+              </div>
 
-// Helper component for rendering individual contact details
-const ContactDetailItem = ({ label, value, icon }: { label: string, value: string, icon: React.ReactNode }) => (
-    <div className="flex items-start space-x-3">
-        {/* Primary changed from blue to black for contrast on blue background */}
-        <span className="text-[#ffffff] mt-1 flex-shrink-0">{icon}</span>
-        <div className="text-sm">
-            <span className="text-[#ffffff] font-semibold block">{label}:</span>
-            <span className="text-[#ffffff] block mt-0.5">{value}</span>
-        </div>
-    </div>
-);
+              <div>
+                <h3 className="text-lg font-semibold">{t(f.contactInfo.title)}</h3>
+                <ul className="mt-3 space-y-3">
+                  <li className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4" />
+                    <span>{t(f.contactInfo.details[0].value)}</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Mail className="h-4 w-4" />
+                    <a
+                      href={`mailto:${t(f.contactInfo.details[1].value)}`}
+                      className="hover:underline"
+                    >
+                      {t(f.contactInfo.details[1].value)}
+                    </a>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Smartphone className="h-4 w-4" />
+                    <span>{t(f.contactInfo.details[2].value)}</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Phone className="h-4 w-4" />
+                    <span>{t(f.contactInfo.details[3].value)}</span>
+                  </li>
+                </ul>
+              </div>
 
-/**
- * Footer Component: Renders the entire site footer using dynamic, translated content.
- */
-export const Footer = () => {
-    const { t } = useLanguage();
-    const footerData = siteData.footer;
-
-    const getIconForDetail = (label: string): React.ReactNode => {
-        const lowerLabel = label.toLowerCase();
-        if (lowerLabel.includes('office')) return <MapPin size={18} />;
-        if (lowerLabel.includes('phone') || lowerLabel.includes('mobile')) return <Phone size={18} />;
-        if (lowerLabel.includes('email')) return <Mail size={18} />;
-        return <MapPin size={18} />;
-    };
-
-    const copyrightText = t(footerData.copyright)
-        .replace('${new Date().getFullYear()}', new Date().getFullYear().toString());
-
-    return (
-        // Primary background set to dark blue
-        <footer className="bg-[#001841] text-[#ffffff]">
-            {/* Main Footer Content Area */}
-            <div className="container mx-auto max-w-7xl px-4 pt-16 pb-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-
-                    {/* Column 1: Company Info & Moto */}
-                    <div className="lg:col-span-2 space-y-4">
-                        <h3 className="text-3xl font-extrabold text-[#ffffff]" style={{ marginLeft: "-20px" }}>
-                            {t(footerData.companyName)}
-                        </h3>
-                        <p className="text-[#ffffff] max-w-sm" style={{ marginLeft: "-20px" }}>
-                            {t(footerData.companyMoto)}
-                        </p>
-                        <div className="pt-2">
-                            {/* Badge inverted: black bg with gray text */}
-                            <span className="inline-block px-3 py-1 text-xs font-semibold rounded-none bg-[#ffffff] text-[#001841]" style={{ marginLeft: "-20px" }}>
-                                {t(footerData.isoText)}
-                            </span>
-                        </div>
-                    </div>
-
-                    {/* Column 2: Quick Links */}
-                    <FooterLinkGroup 
-                        title={t(footerData.quickLinks.title)}
-                        links={footerData.quickLinks.links.map(l => ({ label: t(l.label), href: l.href }))}
-                    />
-
-                    {/* Column 3: User Support */}
-                    <FooterLinkGroup
-                        title={t(footerData.userSupport.title)}
-                        links={footerData.userSupport.links.map(l => ({ label: t(l.label), href: l.href }))}
-                    />
-
-                    {/* Column 4: Contact Information */}
-                    <div className="space-y-4">
-                        <h4 className="text-lg font-bold text-[#ffffff] mb-4 border-b border-[#000000] pb-1">
-                            {t(footerData.contactInfo.title)}
-                        </h4>
-                        <div className="space-y-4">
-                            {footerData.contactInfo.details.map((detail, index) => (
-                                <ContactDetailItem 
-                                    key={index}
-                                    label={t(detail.label)}
-                                    value={t(detail.value)}
-                                    icon={getIconForDetail(t(detail.label))}
-                                />
-                            ))}
-                        </div>
-                        
-                        {/* QR Code Placeholder Note */}
-                        <div className="flex items-center space-x-2 pt-2 text-sm italic">
-                            <QrCode size={18} className="text-[#ffffff]" />
-                            <span>{t(footerData.contactInfo.note)}</span>
-                        </div>
-                    </div>
-
+              <div>
+                <h3 className="text-lg font-semibold">Follow Us</h3>
+                <div className="mt-4 flex items-center gap-4">
+                  <a
+                    href="#"
+                    aria-label="LinkedIn"
+                    className="h-10 w-10 rounded-full border border-white/40 flex items-center justify-center transition hover:border-white"
+                  >
+                    <Linkedin className="h-5 w-5" />
+                  </a>
+                  <a
+                    href="#"
+                    aria-label="Facebook"
+                    className="h-10 w-10 rounded-full border border-white/40 flex items-center justify-center transition hover:border-white"
+                  >
+                    <Facebook className="h-5 w-5" />
+                  </a>
+                  <a
+                    href="#"
+                    aria-label="Twitter"
+                    className="h-10 w-10 rounded-full border border-white/40 flex items-center justify-center transition hover:border-white"
+                  >
+                    <Twitter className="h-5 w-5" />
+                  </a>
                 </div>
+              </div>
             </div>
+          </div>
+        </div>
 
-            {/* Copyright Bar */}
-            <div className="bg-[#000000] py-4">
-                <div className="container mx-auto max-w-7xl px-4 flex justify-center text-sm font-inter">
-                    {copyrightText}
-                </div>
-            </div>
-        </footer>
-    );
-};
+        <div className="mt-6 mb-4 h-px w-full bg-white/30" />
+
+        <div className="mt-2 mb-1 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
+          <div className="text-white/90">{t(f.copyright)}</div>
+          <div className="flex items-center gap-3">
+            <Link href="/privacy" className="text-white hover:text-white/70">
+              Privacy Policy
+            </Link>
+            <span className="text-white/60">|</span>
+            <Link href="/terms" className="text-white hover:text-white/70">
+              Term of Services
+            </Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
