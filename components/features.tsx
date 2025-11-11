@@ -106,9 +106,10 @@ const Icon = ({ name, className = "h-6 w-6" }: { name: string, className?: strin
  */
 export const Features = () => {
     // Get translation function and site data
-    const { t } = useLanguage();
-    const modules = siteData.modules;
-    const items = modules.items;
+        const { t } = useLanguage();
+        type ModuleItem = { id: string; iconName: string; colorClass: string; label: string; description?: string };
+        const modules = (siteData as any).modules ?? (siteData as any);
+        const items: ModuleItem[] = (modules.items as ModuleItem[]) ?? [];
 
     return (
         <section className="bg-white py-16 md:py-24 px-4">
@@ -116,10 +117,10 @@ export const Features = () => {
                 {/* Section Title and Description */}
                 <div className="text-center mb-12 md:mb-16">
                     <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
-                        {t(modules.title)}
+                        {t(modules.title as any)}
                     </h2>
                     <p className="text-lg text-gray-600 max-w-4xl mx-auto">
-                        {t(modules.description)}
+                        {t(modules.description as any)}
                     </p>
                 </div>
                 
@@ -140,13 +141,13 @@ export const Features = () => {
 
                             {/* Title (Label) */}
                             <h3 className="text-xl font-bold mb-2">
-                                {t(item.label)}
+                                {t(item.label as any)}
                             </h3>
 
                             {/* Description (If available) */}
                             {item.description && (
                                 <p className={`text-sm ${item.colorClass.includes('text-white') ? 'text-gray-200' : 'text-gray-600'}`}>
-                                    {t(item.description)}
+                                    {t(item.description as any)}
                                 </p>
                             )}
                         </div>

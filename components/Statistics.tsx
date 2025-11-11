@@ -6,10 +6,13 @@ import { siteData } from '@/lib/siteData';
  * Displays key metrics from the siteData in an impactful, easy-to-read grid.
  */
 export const Statistics = () => {
-    // 1. Get the translation function 't' from the Language Context
+    // 1. Define a type for a statistic item to avoid implicit any for 'item'
+    type StatItem = { id: string | number; value: string | number; label: string };
+
+    // 2. Get the translation function 't' from the Language Context
     const { t } = useLanguage();
-    // 2. Access the statistics data from siteData
-    const stats = siteData.statistics;
+    // 3. Access the statistics data from siteData (guarded with a fallback to avoid type errors)
+    const stats: StatItem[] = ((siteData as any).statistics ?? []) as StatItem[];
 
     return (
         <section className="py-12 md:py-24 bg-gray-50">
@@ -24,11 +27,11 @@ export const Statistics = () => {
                             {/* Statistic Value (Large, bold, and primary color) */}
                             <p className="text-4xl md:text-5xl font-extrabold text-indigo-700 tracking-tight mb-2">
                                 {/* The value is translated to show either English or Nepali numbers */}
-                                {t(item.value)}
+                                {typeof item.value === 'number' ? item.value : t(item.value as any)}
                             </p>
                             {/* Statistic Label (Translated and subdued) */}
                             <p className="text-sm md:text-base font-medium text-gray-600">
-                                {t(item.label)}
+                                {t(item.label as any)}
                             </p>
                         </div>
                     ))}
