@@ -41,31 +41,22 @@ const HomeContent = () => {
 
    return (
      <Fragment>
-       {/* Sticky Header */}
        <Header />
 
-       {/* Hero Section (imported) */}
        <Hero />
 
-       {/* --- INVISIBLE ANCHOR FOR SMOOTHER SCROLLING --- */}
        <div id="stats" style={{ position: 'relative', top: '-80px' }}></div>
 
-       {/* Stats Section (moved to component) */}
        <Stats />
 
-       {/* Features Section (moved to component) */}
        <FeatureRail />
 
-       {/* Why Digital Palika Section (moved to component) */}
        <WhyDigitalPalika />
 
-       {/* Demo Section (moved to component) */}
        <Demo />
 
-       {/* Footer */}
        <Footer />
 
-       {/* --- NEW SCROLL TO TOP BUTTON --- */}
        {showScrollTop && (
          <button
            onClick={handleScrollToTop}

@@ -1,4 +1,3 @@
-// app/(nav)/features/page.tsx
 
 "use client";
 
@@ -8,6 +7,8 @@ import Footer  from '@/components/footer';
 import { FeatureSection } from '@/components/FeatureSection';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { siteData, FullSiteContent } from '@/lib/siteData';
+import Demo from '@/components/demo';
+import FeatureRail from '@/components/features-rail';
 
 export default function FeaturesPage() {
     return (
@@ -24,13 +25,15 @@ function FeaturesContent() {
     return (
         <Fragment>
             <Header />
-            <main>
+            {/* <main>
                 <FeatureSection
                     title={featuresPage.title}
                     subtitle={featuresPage.subtitle}
                     features={featuresPage.items}
                 />
-            </main>
+            </main> */}
+            <FeatureRail />
+            <Demo />
             <Footer />
         </Fragment>
     );
