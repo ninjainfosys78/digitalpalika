@@ -20,6 +20,12 @@ export interface AboutPageSection {
     imagePosition?: 'left' | 'right';
 }
 
+export interface StatisticItem {
+  id: string;
+  label: string;
+  value: number | string;
+  // add other fields you use
+}
 
 export interface FullSiteContent {
     header: {
@@ -118,7 +124,7 @@ export const siteData: FullSiteContent = {
                         },
                         {
                             en: "Enable most services provided by municipalities to accept applications, process, and deliver services online.",
-                            ne: 'पालिकाले प्रवाह गर्ने सेवाहरू मध्ये धेरै जसो सेवालाई अनलाइन मार्फत आवेदन लिने, कार्य सम्पादन गर्ने र सेवा प्रदान गर्ने।'
+                            ne: 'पालिकाले प्रवाह गर्ने सेवाहरू मध्य धेरै जसो सेवालाई अनलाइन मार्फत आवेदन लिने, कार्य सम्पादन गर्ने र सेवा प्रदान गर्ने।'
                         },
                         {
                             en: "Save time for representatives, employees, and service recipients of municipalities.",

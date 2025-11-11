@@ -21,7 +21,7 @@ export function ClientsSection() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 
                 {/* Title and Subtitle */}
-                <h2 className="text-4xl font-work-sans font-extrabold mb-5 text-blue-900">
+                <h2 className="text-4xl font-work-sans font-extrabold mb-5 text-[#003893]">
                     {title}
                 </h2>
                 <p className="text-xl text-black max-w-3xl mx-auto mb-16">

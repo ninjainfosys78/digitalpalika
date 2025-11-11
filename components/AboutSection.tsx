@@ -39,7 +39,7 @@ const SectionRenderer = ({ section }: { section: AboutPageSection }) => {
         >
             {/* Text Block */}
             <div className={`w-full md:w-1/2 ${textOrder}`}>
-                <h2 className={`text-3xl font-work-sans font-extrabold text-primary text-blue-900 mb-4 ${(isIntroduction || isObjectives) ? 'text-3xl' : 'text-primary'}`}>
+                <h2 className={`text-3xl font-work-sans font-extrabold text-[#003893] mb-4 ${(isIntroduction || isObjectives) ? 'text-3xl' : ''}`}>
                     {t(section.title)}
                 </h2>
                 {/* Paragraphs */}
