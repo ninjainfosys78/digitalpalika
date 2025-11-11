@@ -40,8 +40,7 @@ export default function FeatureRail() {
 
 	return (
 		<section
-			className="w-full py-12 md:py-16"
-			style={{ backgroundColor: isFeaturePage ? 'transparent' : '#eef6fb' }}
+			className={`w-full py-12 md:py-16 ${isFeaturePage ? 'bg-transparent' : 'bg-[#eef6fb]'}`}
 		>
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
 				<p className="text-sm text-[#003893] font-medium mb-3">
@@ -52,7 +51,7 @@ export default function FeatureRail() {
 						? 'स्मार्ट, जडित डिजिटल प्लेटफर्म मार्फत स्थानीय शासनलाई सरल बनाउँदै।'
 						: 'Simplifying local governance through a smart, connected digital platform.'}
 				</h2>
-				<div className="w-24 h-[2px] mx-auto mb-8" style={{ backgroundColor: '#003893' }}></div>
+				<div className="w-24 h-[2px] mx-auto mb-8 bg-[#003893]" />
 
 				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 items-start mb-8">
 					{features.map((f, idx) => (
@@ -67,7 +66,7 @@ export default function FeatureRail() {
 								</div>
 							</div>
 
-							<div className="w-24 sm:w-10 h-[2px] mt-3 mb-3 mx-auto md:mx-0" style={{ backgroundColor: '#003893' }}></div>
+							<div className="w-24 sm:w-10 h-[2px] mt-3 mb-3 mx-auto md:mx-0 bg-[#003893]" />
 
 							<p className="text-sm text-[#000000] leading-relaxed">
 								{active === 'ne' ? f.ne : f.en}
@@ -84,7 +83,7 @@ export default function FeatureRail() {
 						>
 							{t({ en: 'Learn more', ne: 'थप विवरण हेर्नुहोस्' })}
 							<svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-								<path d="M5 12h14M13 5l6 7-6 7" strokeLinecap="round" strokeLinejoin="round"></path>
+								<path d="M5 12h14M13 5l6 7-6 7" strokeLinecap="round" strokeLinejoin="round" />
 							</svg>
 						</a>
 					</div>

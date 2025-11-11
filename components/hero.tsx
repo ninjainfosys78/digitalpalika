@@ -41,10 +41,10 @@ const HomeContent = () => {
 					<img
 						src="/herosection.png"
 						alt="ERP Demo"
-						className="w-full h-full object-cover grayscale opacity-60"
+						className="w-full h-full object-cover grayscale opacity-50 transform -translate-y-[12%] origin-center"
 					/>
 					{/* dark brand overlay to make text readable */}
-					<div className="absolute inset-0 opacity-20 pointer-events-none" />
+					<div className="absolute inset-0 pointer-events-none" />
 				</div>
 
 				{/* Content container */}
@@ -83,17 +83,11 @@ const HomeContent = () => {
 
 					{/* Right image column for large screens (keep diagonal clip) */}
 					<div className="hidden lg:flex flex-1 w-full md:w-3/5 relative justify-center items-start">
-						<div
-							className="w-full h-screen overflow-hidden"
-							style={{
-								clipPath: "polygon(22% 0, 100% 0, 100% 100%, 0 100%)",
-							}}
-						>
+						<div className="w-full h-screen overflow-hidden [clip-path:polygon(22%_0,100%_0,100%_100%,0_100%)]">
 							<img
 								src="/herosection.png"
 								alt="ERP Demo"
-								className="w-full h-full object-cover grayscale"
-								style={{ transform: "translateY(-11%) translateZ(0)" }}
+								className="w-full h-full object-cover grayscale transform -translate-y-[11%]"
 							/>
 						</div>
 					</div>
