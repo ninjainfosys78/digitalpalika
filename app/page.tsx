@@ -2,7 +2,7 @@
 
 import { Fragment, useState, useEffect } from 'react';
 import { Header } from '@/components/header';
-import { Footer } from '@/components/footer';
+import Footer from '@/components/footer';
 import { LanguageProvider } from '@/context/LanguageContext';
 import Hero from '@/components/hero';
 import Stats from '@/components/stats';

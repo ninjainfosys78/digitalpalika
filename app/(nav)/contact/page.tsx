@@ -1,13 +1,12 @@
 "use client";
 import { Fragment } from 'react';
 import { Header } from '@/components/header'; 
-import { Footer } from '@/components/footer'; 
+import  Footer  from '@/components/footer'; 
 import { ContactSection } from '@/components/ContactSection'; 
 import { LanguageProvider, useLanguage } from '@/context/LanguageContext'; 
-import type { FullSiteContent } from '@/lib/siteData';
 
 // --- Content for the Contact Page ---
-export const siteContent: Partial<FullSiteContent> = {
+export const siteContent = {
     // Header nav items here aren’t used by <Header /> (Header reads from siteData),
     // so keep it empty to avoid type/shape mismatches.
     header: {
