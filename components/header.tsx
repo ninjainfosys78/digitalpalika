@@ -31,13 +31,7 @@ export const Header = () => {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
                 
                 {/* Logo/Site Title: Uses the title from siteData */}
-                <Link
-                    href="/"
-                    className="text-3xl font-extrabold tracking-tight text-blue-900"
-                    style={{ marginLeft: "90px" }} 
-                >
-                    {t(siteData.hero.title)}
-                </Link>
+
 
                 {/* Main Navigation (Hidden on small screens, shown on large) */}
                 <nav className="hidden lg:flex items-center space-x-8">
@@ -115,9 +109,6 @@ export const Header = () => {
                 <div className="fixed inset-x-0 top-0 z-50 bg-white w-screen h-[75vh] flex flex-col lg:hidden shadow-md border-b border-blue-100">
                     {/* Top bar with logo and close button */}
                     <div className="flex items-center justify-between px-6 py-4 border-b border-blue-100">
-                        <Link href="/" className="text-2xl font-extrabold tracking-tight" style={{ color: "#01399A" }}>
-                            {t(siteData.hero.title)}
-                        </Link>
                         <button
                             aria-label="Close mobile menu"
                             className="p-2 text-gray-700 hover:text-[#01399A] transition-colors"
