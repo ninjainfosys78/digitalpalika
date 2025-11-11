@@ -11,8 +11,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#003885] text-white w-full" role="contentinfo">
-      {/* remove container limit */}
-      <div className="px-4 sm:px-10 lg:px-20 2xl:px-25 pt-12 pb-5">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-5">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           {/* Left column */}
           <div className="lg:col-span-5">
@@ -23,13 +22,16 @@ export default function Footer() {
           {/* Right columns */}
           <div className="lg:col-span-7">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
+              {/* Quick Links */}
               <div>
                 <h3 className="text-lg font-semibold">Quick Links</h3>
                 <ul className="mt-3 space-y-2">
                   {f.quickLinks.links.map((l, i) => (
                     <li key={i}>
-                      <Link href={l.href} 
-                        className="text-white hover:text-white/70 transition-colors duration-200">
+                      <Link
+                        href={l.href}
+                        className="text-white hover:text-white/70 transition-colors duration-200"
+                      >
                         {t(l.label)}
                       </Link>
                     </li>
@@ -37,6 +39,7 @@ export default function Footer() {
                 </ul>
               </div>
 
+              {/* Contact Info */}
               <div>
                 <h3 className="text-lg font-semibold">{t(f.contactInfo.title)}</h3>
                 <ul className="mt-3 space-y-3">
@@ -64,38 +67,44 @@ export default function Footer() {
                 </ul>
               </div>
 
-              <div>
-                <h3 className="text-lg font-semibold">Follow Us</h3>
-                <div className="mt-4 flex items-center gap-4">
-                  <a
+              {/* Follow Us — right aligned on desktop, left on mobile */}
+                <div className="flex flex-col items-start sm:items-end text-left sm:text-right">
+                {/* On large screens we offset the heading so its left edge matches icons */}
+                <h3 className="text-lg font-semibold sm:pr-[66px]">Follow Us</h3>
+
+                <div className="mt-4 flex justify-start sm:justify-end items-center gap-4">
+                    <a
                     href="#"
                     aria-label="LinkedIn"
                     className="h-10 w-10 rounded-full border border-white/40 flex items-center justify-center transition hover:border-white"
-                  >
+                    >
                     <Linkedin className="h-5 w-5" />
-                  </a>
-                  <a
+                    </a>
+                    <a
                     href="#"
                     aria-label="Facebook"
                     className="h-10 w-10 rounded-full border border-white/40 flex items-center justify-center transition hover:border-white"
-                  >
+                    >
                     <Facebook className="h-5 w-5" />
-                  </a>
-                  <a
+                    </a>
+                    <a
                     href="#"
                     aria-label="Twitter"
                     className="h-10 w-10 rounded-full border border-white/40 flex items-center justify-center transition hover:border-white"
-                  >
+                    >
                     <Twitter className="h-5 w-5" />
-                  </a>
+                    </a>
                 </div>
-              </div>
+                </div>
+
             </div>
           </div>
         </div>
 
+        {/* Divider line */}
         <div className="mt-6 mb-4 h-px w-full bg-white/30" />
 
+        {/* Bottom bar */}
         <div className="mt-2 mb-1 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
           <div className="text-white/90">{t(f.copyright)}</div>
           <div className="flex items-center gap-3">
