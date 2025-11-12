@@ -4,8 +4,8 @@ stages:
 
 variables:
   NODE_VERSION: "20"
-  PROJECT_NAME: "epalika-landing"  # Update with your Cloudflare Pages project name
-  BUILD_DIR: "out"
+  PROJECT_NAME: "epalika-landing"        # Cloudflare Pages project name
+  BUILD_DIR: "out"                       # Next.js export output
   NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"
   NEXT_TELEMETRY_DISABLED: "1"
 
@@ -16,17 +16,21 @@ cache:
     - .npm/
     - .next/cache/
 
+# =========================
+# BUILD STAGE
+# =========================
 build:
   stage: build
-  image: node:${NODE_VERSION}-alpine
+  image: node:${NODE_VERSION}-trixie
   tags:
     - numanode
   before_script:
     - echo "Installing dependencies..."
-    - npm install --cache .npm --prefer-offline --no-audit --legacy-peer-deps
+    - npm ci --cache .npm --prefer-offline --no-audit --legacy-peer-deps
   script:
     - echo "Building Next.js project..."
     - npm run build
+    - npm run export
     - ls -la ${BUILD_DIR}/
   artifacts:
     paths:
@@ -35,9 +39,12 @@ build:
   only:
     - branches
 
+# =========================
+# PREVIEW DEPLOYMENT
+# =========================
 deploy:preview:
   stage: deploy
-  image: node:${NODE_VERSION}-alpine
+  image: node:${NODE_VERSION}-trixie
   tags:
     - numanode
   dependencies:
@@ -45,15 +52,21 @@ deploy:preview:
   before_script:
     - npm install -g wrangler@latest
   script:
-    - echo "Deploying preview..."
-    - wrangler pages deploy ${BUILD_DIR} --project-name=${PROJECT_NAME} --branch=${CI_COMMIT_REF_NAME} --commit-hash=${CI_COMMIT_SHA}
-    - echo "Preview URL https://${CI_COMMIT_SHORT_SHA}.preview.ninjainfosys.com"
+    - echo "Deploying preview to Cloudflare Pages..."
+    - wrangler pages deploy ${BUILD_DIR} \
+        --project-name=${PROJECT_NAME} \
+        --branch=${CI_COMMIT_REF_NAME} \
+        --commit-hash=${CI_COMMIT_SHA}
+    - echo "Preview URL: https://${CI_COMMIT_SHORT_SHA}.preview.ninjainfosys.com"
   environment:
     name: preview/$CI_COMMIT_REF_SLUG
     url: https://${CI_COMMIT_SHORT_SHA}.preview.ninjainfosys.com
   rules:
     - if: $CI_COMMIT_BRANCH && $CI_COMMIT_BRANCH != "main" && $CI_COMMIT_BRANCH != "master"
 
+# =========================
+# PRODUCTION DEPLOYMENT
+# =========================
 deploy:production:
   stage: deploy
   image: node:${NODE_VERSION}-trixie
@@ -65,7 +78,9 @@ deploy:production:
     - npm install -g wrangler@latest
   script:
     - echo "Deploying to production..."
-    - wrangler pages deploy ${BUILD_DIR} --project-name=${PROJECT_NAME} --branch=main
+    - wrangler pages deploy ${BUILD_DIR} \
+        --project-name=${PROJECT_NAME} \
+        --branch=main
     - echo "Live at https://ninjainfosys.com"
   environment:
     name: production
