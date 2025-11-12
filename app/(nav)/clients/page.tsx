@@ -28,3 +28,5 @@ function ClientsContent() {
         </Fragment>
     );
 }
+
+export const dynamic = 'force-dynamic';
