@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Fragment } from 'react';
@@ -9,6 +8,8 @@ import { LanguageProvider } from '@/context/LanguageContext';
 import { siteData, FullSiteContent } from '@/lib/siteData';
 import Demo from '@/components/demo';
 import FeatureRail from '@/components/features-rail';
+
+export const dynamic = 'force-dynamic';
 
 export default function FeaturesPage() {
     return (

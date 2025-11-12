@@ -10,7 +10,9 @@ import FeatureRail from '@/components/features-rail';
 import WhyDigitalPalika from '@/components/why-digital-palika';
 import Demo from '@/components/demo';
 
-export default function Home() {
+export const dynamic = 'force-dynamic';
+
+export default function HomePage() {
   return (
     <LanguageProvider>
       <HomeContent />

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useLanguage, Language } from '@/context/LanguageContext';
 import { Menu, X } from 'lucide-react';
@@ -63,18 +64,23 @@ export const Header = () => {
 
         <div className="ml-auto lg:absolute lg:right-4 flex items-center space-x-3 sm:space-x-4 z-30">
           <div className="hidden lg:flex items-center">
-            <img
-              src={lang === 'en' ? 'toggle.png' : 'toggle.png'}
-              alt={lang === 'en' ? 'English' : 'नेपाली'}
-              role="button"
-              tabIndex={0}
+            {/* use public/ files with leading slash and Next/Image for correctness */}
+            <button
               onClick={() => setLang((lang === 'en' ? 'ne' : 'en') as Language)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') setLang((lang === 'en' ? 'ne' : 'en') as Language);
               }}
-              className="object-contain cursor-pointer rounded-sm transition-transform duration-150 w-8 h-8 hover:scale-105"
               aria-label={lang === 'en' ? 'Switch to Nepali' : 'Switch to English'}
-            />
+              className="p-0"
+            >
+              <Image
+                src={lang === 'en' ? '/toggle.png' : '/toggle.png'} // ensure file exists at /public/toggle.png
+                alt={lang === 'en' ? 'English' : 'नेपाली'}
+                width={32}
+                height={32}
+                className="object-contain cursor-pointer rounded-sm transition-transform duration-150 w-8 h-8 hover:scale-105"
+              />
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -134,18 +140,19 @@ export const Header = () => {
           </nav>
 
           <div className="flex justify-center items-center border-t border-white/20 py-4 gap-2">
-            <img
-              src={lang === 'en' ? 'toggle2.png' : 'toggle2.png'}
-              alt={lang === 'en' ? 'English' : 'नेपाली'}
-              role="button"
-              tabIndex={0}
+            <button
               onClick={() => setLang((lang === 'en' ? 'ne' : 'en') as Language)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') setLang((lang === 'en' ? 'ne' : 'en') as Language);
-              }}
-              className="object-contain cursor-pointer rounded-sm transition-transform duration-150 w-8 h-8 hover:scale-105"
               aria-label={lang === 'en' ? 'Switch to Nepali' : 'Switch to English'}
-            />
+              className="p-0"
+            >
+              <Image
+                src={lang === 'en' ? '/toggle2.png' : '/toggle2.png'} // ensure /public/toggle2.png exists
+                alt={lang === 'en' ? 'English' : 'नेपाली'}
+                width={32}
+                height={32}
+                className="object-contain cursor-pointer rounded-sm transition-transform duration-150 w-8 h-8 hover:scale-105"
+              />
+            </button>
           </div>
         </div>
       )}
