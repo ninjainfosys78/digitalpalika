@@ -1,19 +1,14 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import type { ReactNode } from "react"; // add this
+import type { ReactNode } from "react";
 
-// Core types for the language state
 export type Language = 'en' | 'ne';
 export interface LocalizedString {
     en: string;
     ne: string;
 }
 
-export interface NavItem {
-    label: LocalizedString;
-    href: string;
-}
 interface LanguageContextType {
     lang: Language;
     setLang: (lang: Language) => void;
@@ -33,23 +28,28 @@ interface LanguageProviderProps {
     initialLang?: Language;
 }
 
-export const LanguageProvider = ({ children, initialLang = "ne" }: LanguageProviderProps) => {
-    // Use server-provided initialLang so SSR and client match
+export const LanguageProvider = ({ children, initialLang = "en" }: LanguageProviderProps) => {
+    // default to English to avoid unexpected Nepali default on first paint
     const [lang, setLangState] = useState<Language>(initialLang);
 
-    // On mount, sync with cookie/localStorage (if present)
     useEffect(() => {
-        const cookieMatch = document.cookie.match(/(?:^|;\s*)lang=(en|ne)/);
-        const cookieLang = (cookieMatch?.[1] as Language) || null;
-        const stored = (localStorage.getItem("lang") as Language | null) || null;
-        const next = cookieLang || stored || initialLang;
-        if (next && next !== lang) setLangState(next);
+        try {
+            const cookieMatch = document.cookie.match(/(?:^|;\s*)lang=(en|ne)/);
+            const cookieLang = (cookieMatch?.[1] as Language) || null;
+            const stored = (localStorage.getItem("lang") as Language | null) || null;
+            const next = cookieLang || stored || initialLang;
+            if (next && next !== lang) setLangState(next);
+            // ensure localStorage is consistent
+            if (!stored && next) localStorage.setItem("lang", next);
+        } catch {
+            // ignore storage errors
+        }
     }, []); // run once
 
     const setLang = (l: Language) => {
         setLangState(l);
         try { localStorage.setItem("lang", l); } catch {}
-        document.cookie = `lang=${l}; Path=/; Max-Age=31536000; SameSite=Lax`;
+        try { document.cookie = `lang=${l}; Path=/; Max-Age=31536000; SameSite=Lax`; } catch {}
     };
 
     const t = (v: LocalizedString) => v[lang];
