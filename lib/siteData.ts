@@ -265,7 +265,7 @@ export const siteData: FullSiteContent = {
             title: { en: 'Get in Touch', ne: 'सम्पर्कमा रहनुहोस्' },
             details: [
                 { label: { en: 'Office', ne: 'प्रधान कार्यालय' }, value: { en: 'Ninja Infosys Pvt. Ltd., Kathmandu', ne: 'निन्जा इन्फोसिस् प्रा. लि., काठमाडौं' } },
-                { label: { en: 'Corporate Office', ne: 'कर्पोरेट कार्यालय' }, value: { en: 'Anamnagar-29, Kathmandu', ne: 'अनामनगर-२९, काठमाडौं' } },
+                { label: { en: 'Corporate Office', ne: 'कर्पोरेट कार्यालय' }, value: { en: 'marketting@ninjainfosys.com', ne: 'marketting@ninjainfosys.com' } },
                 { label: { en: 'Phone', ne: 'फोन' }, value: { en: '01-5934348', ne: '०१-५९३४३४८' } },
                 { label: { en: 'Mobile', ne: 'सम्पर्क नम्बर' }, value: { en: '9854334348', ne: '९८५४३३४३४८' } },
             ],

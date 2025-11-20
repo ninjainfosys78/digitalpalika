@@ -10,10 +10,11 @@ export interface ContactDetails {
     address: LocalizedString;
 }
 export interface ContactFormLabels {
-    fullName: LocalizedString;
+    firstName: LocalizedString;
+    lastName: LocalizedString;
     email: LocalizedString;
-    contactReason: LocalizedString;
-    topic: LocalizedString;
+    phone: LocalizedString;
+    subject: LocalizedString;
     message: LocalizedString;
     button: LocalizedString;
 }
@@ -48,11 +49,103 @@ interface ContactSectionProps {
 export function ContactSection({ title, details, formLabels, t }: ContactSectionProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [showModal, setShowModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    formRef.current?.reset();
-    setShowModal(true);
+    setIsSubmitting(true);
+    setError(null);
+
+    const formData = new FormData(e.currentTarget);
+    
+    const firstName = (formData.get('firstName') as string).trim();
+    const lastName = (formData.get('lastName') as string).trim();
+    let phoneNumber = (formData.get('phone') as string).trim();
+    
+    // Format phone number - add +977 for Nepal if not present
+    if (phoneNumber && !phoneNumber.startsWith('+')) {
+      // Remove any non-digit characters first
+      phoneNumber = phoneNumber.replace(/\D/g, '');
+      // If it's a 10-digit Nepal number, add +977
+      if (phoneNumber.length === 10) {
+        phoneNumber = '+977' + phoneNumber;
+      } else if (phoneNumber.length === 9) {
+        // If it's 9 digits (without leading 0), add +977 and 0
+        phoneNumber = '+9770' + phoneNumber;
+      } else {
+        // Otherwise just add + prefix
+        phoneNumber = '+' + phoneNumber;
+      }
+    }
+
+    // Build the API payload
+    const payload = {
+      emailAddress: (formData.get('email') as string).trim(),
+      phoneNumber: phoneNumber,
+      title: (formData.get('subject') as string).trim(),
+      description: (formData.get('message') as string).trim(),
+      salutationName: '',
+      firstName: firstName,
+      lastName: lastName,
+      middleName: ''
+    };
+
+    console.log('Submitting payload:', payload);
+
+    try {
+      const response = await fetch('https://crm.ninjainfosys.com/api/v1/LeadCapture/b2bac8ed85830056ae2f995de854ce78', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      console.log('Response status:', response.status);
+      const responseText = await response.text();
+      console.log('Response body:', responseText);
+
+      if (response.ok || response.status === 200 || response.status === 201) {
+        formRef.current?.reset();
+        setShowModal(true);
+      } else {
+        let errorMessage = 'Failed to submit form. Please try again.';
+        try {
+          const errorData = JSON.parse(responseText);
+          console.log('Error data:', errorData);
+          
+          // Handle specific validation errors
+          if (errorData.data && errorData.data.field) {
+            const field = errorData.data.field;
+            const type = errorData.data.type;
+            if (field === 'phoneNumber') {
+              errorMessage = 'Please enter a valid phone number (e.g., +977 9800000000 or 9800000000)';
+            } else {
+              errorMessage = `Invalid ${field}: ${type}`;
+            }
+          } else {
+            errorMessage = errorData.message || errorData.error || errorData.title || errorMessage;
+          }
+          
+          // Log validation errors if present
+          if (errorData.errors) {
+            console.log('Validation errors:', errorData.errors);
+            errorMessage = Object.values(errorData.errors).flat().join(', ');
+          }
+        } catch {
+          errorMessage = `Server error (${response.status}): ${responseText || 'Unknown error'}`;
+        }
+        setError(errorMessage);
+      }
+    } catch (err) {
+      console.error('Error submitting form:', err);
+      setError('Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -114,25 +207,57 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
             <div className="bg-[#003893]/6 border border-[#003893]/20 w-full max-w-6xl mx-auto p-8 md:p-12">
                 <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                     
-                    {/* Name and Email Row */}
+                    {/* Error Message */}
+                    {error && (
+                        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded">
+                            <p className="font-semibold">Error:</p>
+                            <p className="text-sm">{error}</p>
+                        </div>
+                    )}
+
+                    {/* First Name and Last Name Row */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Full Name */}
+                        {/* First Name */}
                         <div>
-                            <label htmlFor="fullName" className="block text-sm font-medium text-black mb-2">
-                                {t(formLabels.fullName)} *
+                            <label htmlFor="firstName" className="block text-sm font-medium text-black mb-2">
+                                {t(formLabels.firstName)} *
                             </label>
                             <div className="relative">
                                 <Icon name="User" className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black w-5 h-5" />
                                 <input
                                     type="text"
-                                    id="fullName"
-                                    placeholder={t(formLabels.fullName)}
+                                    id="firstName"
+                                    name="firstName"
+                                    placeholder={t(formLabels.firstName)}
                                     required
-                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black"
+                                    disabled={isSubmitting}
+                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black disabled:opacity-50 disabled:cursor-not-allowed"
                                 />
                             </div>
                         </div>
 
+                        {/* Last Name */}
+                        <div>
+                            <label htmlFor="lastName" className="block text-sm font-medium text-black mb-2">
+                                {t(formLabels.lastName)} *
+                            </label>
+                            <div className="relative">
+                                <Icon name="User" className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black w-5 h-5" />
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    name="lastName"
+                                    placeholder={t(formLabels.lastName)}
+                                    required
+                                    disabled={isSubmitting}
+                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black disabled:opacity-50 disabled:cursor-not-allowed"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Email and Phone Row */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Email */}
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-black mb-2">
@@ -143,52 +268,57 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
                                 <input
                                     type="email"
                                     id="email"
+                                    name="email"
                                     placeholder={t(formLabels.email)}
                                     required
-                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black"
+                                    disabled={isSubmitting}
+                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black disabled:opacity-50 disabled:cursor-not-allowed"
                                 />
                             </div>
                         </div>
-                    </div>
 
-                    {/* Contact Reason and Topic Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Contact Reason */}
+                        {/* Phone */}
                         <div>
-                            <label htmlFor="contactReason" className="block text-sm font-medium text-black mb-2">
-                                {t(formLabels.contactReason)} *
+                            <label htmlFor="phone" className="block text-sm font-medium text-black mb-2">
+                                {t(formLabels.phone)} *
                             </label>
                             <div className="relative">
                                 <Icon name="Phone" className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black w-5 h-5" />
                                 <input
-                                    type="text"
-                                    id="contactReason"
-                                    placeholder={t(formLabels.contactReason)}
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    placeholder={t(formLabels.phone)}
                                     required
-                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black"
-                                />
-                            </div>
-                        </div>
-
-                        {/* Topic */}
-                        <div>
-                            <label htmlFor="topic" className="block text-sm font-medium text-black mb-2">
-                                {t(formLabels.topic)} *
-                            </label>
-                            <div className="relative">
-                                <Icon name="Hash" className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black w-5 h-5" />
-                                <input
-                                    type="text"
-                                    id="topic"
-                                    placeholder={t(formLabels.topic)}
-                                    required
-                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black"
+                                    disabled={isSubmitting}
+                                    pattern="[\+]?[0-9]{10,14}"
+                                    title="Enter a valid phone number (e.g., +977 9800000000 or 9800000000)"
+                                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black disabled:opacity-50 disabled:cursor-not-allowed"
                                 />
                             </div>
                         </div>
                     </div>
 
-                    {/* Comments/Message */}
+                    {/* Subject */}
+                    <div>
+                        <label htmlFor="subject" className="block text-sm font-medium text-black mb-2">
+                            {t(formLabels.subject)} *
+                        </label>
+                        <div className="relative">
+                            <Icon name="Hash" className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black w-5 h-5" />
+                            <input
+                                type="text"
+                                id="subject"
+                                name="subject"
+                                placeholder={t(formLabels.subject)}
+                                required
+                                disabled={isSubmitting}
+                                className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black disabled:opacity-50 disabled:cursor-not-allowed"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Message */}
                     <div>
                         <label htmlFor="message" className="block text-sm font-medium text-black mb-2">
                             {t(formLabels.message)} *
@@ -197,10 +327,12 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
                             <Icon name="Hash" className="absolute left-3 top-4 text-black w-5 h-5" />
                             <textarea
                                 id="message"
+                                name="message"
                                 rows={5}
                                 placeholder={t(formLabels.message)}
                                 required
-                                className="w-full pl-10 pr-4 py-3 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black"
+                                disabled={isSubmitting}
+                                className="w-full pl-10 pr-4 py-3 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black disabled:opacity-50 disabled:cursor-not-allowed"
                             ></textarea>
                         </div>
                     </div>
@@ -208,16 +340,27 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className="inline-flex items-center justify-center px-8 py-3 text-white font-work-sans font-semibold bg-[#003893] hover:bg-[#003893]/90 transition-all duration-300 ease-in-out"
+                        disabled={isSubmitting}
+                        className="inline-flex items-center justify-center px-8 py-3 text-white font-work-sans font-semibold bg-[#003893] hover:bg-[#003893]/90 transition-all duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {t(formLabels.button)}
+                        {isSubmitting ? (
+                            <>
+                                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Sending...
+                            </>
+                        ) : (
+                            t(formLabels.button)
+                        )}
                     </button>
                 </form>
             </div>
         </div>
       </div>
 
-      {/* Modal: centered, no shadow, sharp edges */}
+      {/* Success Modal */}
       {showModal && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
@@ -227,7 +370,7 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
           <div className="w-[90%] max-w-md bg-white text-gray-900 p-6 sm:p-8 rounded-none shadow-none">
             <h2 className="text-xl font-semibold mb-2">Form submitted</h2>
             <p className="text-sm text-gray-600 mb-6">
-              Your message has been sent successfully.
+              Your message has been sent successfully. We'll get back to you soon!
             </p>
             <div className="flex justify-end gap-3">
               <button
