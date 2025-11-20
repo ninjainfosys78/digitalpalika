@@ -43,60 +43,52 @@ export default function Footer() {
               <div>
                 <h3 className="text-lg font-semibold">{t(f.contactInfo.title)}</h3>
                 <ul className="mt-3 space-y-3">
-                  <li className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4" />
-                    <span>{t(f.contactInfo.details[0].value)}</span>
+                  <li className="flex items-start gap-2">
+                    <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm">{t(f.contactInfo.details[0].value)}</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <Mail className="h-4 w-4" />
-                    <a
-                      href={`mailto:${t(f.contactInfo.details[1].value)}`}
-                      className="hover:underline"
-                    >
-                      {t(f.contactInfo.details[1].value)}
-                    </a>
+                  <li className="flex items-start gap-2">
+                    <Mail className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm">{t(f.contactInfo.details[1].value)}</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <Smartphone className="h-4 w-4" />
-                    <span>{t(f.contactInfo.details[2].value)}</span>
+                  <li className="flex items-start gap-2">
+                    <Phone className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm">{t(f.contactInfo.details[2].value)}</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <Phone className="h-4 w-4" />
-                    <span>{t(f.contactInfo.details[3].value)}</span>
+                  <li className="flex items-start gap-2">
+                    <Smartphone className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm">{t(f.contactInfo.details[3].value)}</span>
                   </li>
                 </ul>
               </div>
 
-              {/* Follow Us — right aligned on desktop, left on mobile */}
-                <div className="flex flex-col items-start sm:items-end text-left sm:text-right">
-                {/* On large screens we offset the heading so its left edge matches icons */}
+              {/* Follow Us */}
+              <div className="flex flex-col items-start sm:items-end text-left sm:text-right">
                 <h3 className="text-lg font-semibold sm:pr-[66px]">Follow Us</h3>
-
                 <div className="mt-4 flex justify-start sm:justify-end items-center gap-4">
-                    <a
+                  <a
                     href="#"
                     aria-label="LinkedIn"
                     className="h-10 w-10 rounded-full border border-white/40 flex items-center justify-center transition hover:border-white"
-                    >
+                  >
                     <Linkedin className="h-5 w-5" />
-                    </a>
-                    <a
+                  </a>
+                  <a
                     href="#"
                     aria-label="Facebook"
                     className="h-10 w-10 rounded-full border border-white/40 flex items-center justify-center transition hover:border-white"
-                    >
+                  >
                     <Facebook className="h-5 w-5" />
-                    </a>
-                    <a
+                  </a>
+                  <a
                     href="#"
                     aria-label="Twitter"
                     className="h-10 w-10 rounded-full border border-white/40 flex items-center justify-center transition hover:border-white"
-                    >
+                  >
                     <Twitter className="h-5 w-5" />
-                    </a>
+                  </a>
                 </div>
-                </div>
-
+              </div>
             </div>
           </div>
         </div>
