@@ -72,7 +72,7 @@ export default function Footer() {
             <Link href="/#hero" className="inline-block">
               <div className="flex items-center gap-3 mb-3">
                 <img
-                  src="https://cdn.ninjainfosys.com/brand/ninja-infosys/logo/ninja-infosys-logo.svg"
+                  src="/logo.png"
                   alt="Ninja Infosys logo"
                   width={48}
                   height={48}

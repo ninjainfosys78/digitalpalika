@@ -34,9 +34,9 @@ export const metadata: Metadata = {
     images: ["/assets/og/og-default.jpg"],
   },
   icons: {
-    icon: "https://cdn.ninjainfosys.com/brand/ninja-infosys/favicon/favicon.ico",
-    shortcut: "https://cdn.ninjainfosys.com/brand/ninja-infosys/favicon/favicon.ico",
-    apple: "https://cdn.ninjainfosys.com/brand/ninja-infosys/logo/ninja-infosys-logo.svg",
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/logo.png",
   },
     generator: 'v0.app'
 }

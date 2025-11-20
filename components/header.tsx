@@ -156,7 +156,7 @@ export default function Header() {
         <div className="relative h-20 flex items-center flex-nowrap">
           <Link href="/" className="flex-none inline-flex items-center" aria-label="Ninja Infosys home">
             <img
-              src="https://cdn.ninjainfosys.com/brand/ninja-infosys/logo/ninja-infosys-logo.svg"
+              src="/logo.png"
               alt="Ninja Infosys"
               width={48}
               height={48}
