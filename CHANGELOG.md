@@ -19,3 +19,8 @@ Technical notes:
 - Future work: add unit/integration tests, pre-render additional pages where beneficial, and add a small e2e smoke test for the critical path.
 
 This release captures the initial visual and content surface for the site and lays the groundwork for iterative improvements and content publishing workflows.
+
+
+## [v0.1.1] - 2025-11-20
+### Overview
+- Updated Ninja logo in header (production hotfix)
