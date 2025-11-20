@@ -9,6 +9,8 @@ import Stats from '@/components/stats';
 import FeatureRail from '@/components/features-rail';
 import WhyDigitalPalika from '@/components/why-digital-palika';
 import Demo from '@/components/demo';
+import { ModulesSection } from '@/components/ModulesSection';
+import { siteData } from '@/lib/siteData';
 
 export const dynamic = 'force-dynamic';
 
@@ -52,6 +54,12 @@ const HomeContent = () => {
        <Stats />
 
        <FeatureRail />
+
+       <ModulesSection 
+         title={siteData.modulesSection.title}
+         subtitle={siteData.modulesSection.subtitle}
+         modules={siteData.modulesSection.modules}
+       />
 
        <WhyDigitalPalika />
 

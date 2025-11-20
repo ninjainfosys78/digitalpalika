@@ -14,7 +14,7 @@ export const Header = () => {
 
   const navItems: { href: string; label: Record<Language, string> }[] = [
     { href: '/', label: { en: 'Home', ne: 'गृहपृष्ठ' } },
-    { href: '/about', label: { en: 'About Us', ne: 'हाम्रोबारे' } },
+    { href: '/module', label: { en: 'Modules', ne: 'प्रणालीहरू' } },
     { href: '/clients', label: { en: 'Our Clients', ne: 'हाम्रो ग्राहकहरू' } },
     { href: '/features', label: { en: 'Features', ne: 'विशेषताहरू' } },
     { href: '/contact', label: { en: 'Contact', ne: 'सम्पर्क' } },
@@ -64,7 +64,6 @@ export const Header = () => {
 
         <div className="ml-auto lg:absolute lg:right-4 flex items-center space-x-3 sm:space-x-4 z-30">
           <div className="hidden lg:flex items-center">
-            {/* use public/ files with leading slash and Next/Image for correctness */}
             <button
               onClick={() => setLang((lang === 'en' ? 'ne' : 'en') as Language)}
               onKeyDown={(e) => {
@@ -74,7 +73,7 @@ export const Header = () => {
               className="p-0"
             >
               <Image
-                src={lang === 'en' ? '/toggle.png' : '/toggle.png'} // ensure file exists at /public/toggle.png
+                src={lang === 'en' ? '/toggle.png' : '/toggle.png'}
                 alt={lang === 'en' ? 'English' : 'नेपाली'}
                 width={32}
                 height={32}
@@ -146,7 +145,7 @@ export const Header = () => {
               className="p-0"
             >
               <Image
-                src={lang === 'en' ? '/toggle2.png' : '/toggle2.png'} // ensure /public/toggle2.png exists
+                src={lang === 'en' ? '/toggle2.png' : '/toggle2.png'}
                 alt={lang === 'en' ? 'English' : 'नेपाली'}
                 width={32}
                 height={32}
