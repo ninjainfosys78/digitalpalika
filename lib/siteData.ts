@@ -439,7 +439,7 @@ export const siteData: FullSiteContent = {
             title: { en: 'Quick Links', ne: 'द्रुत लिंकहरू' },
             links: [
                 { label: { en: 'Home', ne: 'गृह पृष्ठ' }, href: '/' },
-                { label: { en: 'About Us', ne: 'हाम्रो बारेमा' }, href: '/about' },
+                { label: { en: 'Modules', ne: 'प्रणालीहरू' }, href: '/module' },
                 { label: { en: 'Products', ne: 'उत्पादनहरू' }, href: '/products' },
                 { label: { en: 'Features', ne: 'विशेषताहरू' }, href: '/features' },
             ],
