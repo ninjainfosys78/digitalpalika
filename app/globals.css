@@ -1,26 +1,32 @@
 @import "tailwindcss";
 
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
     --background: #ffffff;
-    --foreground: #01399A;
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
+    --foreground: #171717;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  * {
+    font-family: var(--font-body) !important;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body) !important;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading) !important;
+  }
+
+  /* Also apply to common heading classes */
+  .text-2xl, .text-3xl, .text-4xl, .text-5xl, .text-6xl {
+    font-family: var(--font-heading) !important;
+  }
+
+  /* Apply to any element with font-bold that looks like a heading */
+  .font-bold, .font-extrabold, .font-semibold {
+    font-family: var(--font-heading) !important;
+  }
 }

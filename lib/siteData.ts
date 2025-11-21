@@ -1,6 +1,13 @@
 // lib/siteData.ts
 
-import { LocalizedString, NavItem } from '../context/LanguageContext';
+import { LocalizedString } from '../context/LanguageContext';
+
+// Define NavItem interface here instead of importing it
+export interface NavItem {
+    label: LocalizedString;
+    href: string;
+}
+
 export interface FooterLinkGroup {
     title: LocalizedString;
     links: { label: LocalizedString; href: string }[];
@@ -32,15 +39,27 @@ export interface FullSiteContent {
         navItems: NavItem[];
     };
     
-    // NEW: Add aboutPage content here
     aboutPage: {
         sections: AboutPageSection[];
     };
-        featuresPage: {
+    
+    featuresPage: {
         title: LocalizedString;
         subtitle: LocalizedString;
         items: FeatureItem[];
     };
+    
+    // Add modules section
+    modulesSection: {
+        title: LocalizedString;
+        subtitle: LocalizedString;
+        modules: {
+            id: string;
+            icon: string;
+            title: LocalizedString;
+        }[];
+    };
+    
     footer: {
         companyName: LocalizedString;
         companyMoto: LocalizedString;
@@ -49,7 +68,7 @@ export interface FullSiteContent {
         contactInfo: {
             title: LocalizedString;
             details: ContactDetail[];
-            note: LocalizedString; // QR code description
+            note: LocalizedString;
         };
         copyright: LocalizedString;
         isoText: LocalizedString;
@@ -237,6 +256,179 @@ export const siteData: FullSiteContent = {
             ],
         },
 
+    modulesSection: {
+        title: {
+            en: 'Digital Palika Modules',
+            ne: 'डिजिटल पालिकामा रहेका प्रणालीहरू'
+        },
+        subtitle: {
+            en: 'Comprehensive digital solutions for modern municipalities',
+            ne: 'आधुनिक नगरपालिकाहरूको लागि व्यापक डिजिटल समाधान'
+        },
+        modules: [
+            {
+                id: 'digital-archive',
+                icon: '📄',
+                title: {
+                    en: 'Digital Archive System',
+                    ne: 'डिजिटल नागरिक बडापत्र'
+                }
+            },
+            {
+                id: 'office-automation',
+                icon: '🔄',
+                title: {
+                    en: 'Office Automation',
+                    ne: 'अफिस अटोमेसन'
+                }
+            },
+            {
+                id: 'citizen-charter',
+                icon: '🚛',
+                title: {
+                    en: 'Citizen Charter and Record Management',
+                    ne: 'पालिका लेखापरीक्षण तथा रेकर्ड व्यवस्थापन'
+                }
+            },
+            {
+                id: 'public-health',
+                icon: '📱',
+                title: {
+                    en: 'Integrated Mobile Application',
+                    ne: 'एकीकृत मोबाइल एप्लिकेशन'
+                }
+            },
+            {
+                id: 'disaster-management',
+                icon: '⚠️',
+                title: {
+                    en: 'Grant Management System',
+                    ne: 'अनुदान व्यवस्थापन प्रणाली'
+                }
+            },
+            {
+                id: 'education-management',
+                icon: '📚',
+                title: {
+                    en: 'Hospital System',
+                    ne: 'इस्पिटल'
+                }
+            },
+            {
+                id: 'revenue-collection',
+                icon: '💰',
+                title: {
+                    en: 'Digital House Mapping',
+                    ne: 'डिजिटल एन. जि. प्रोफाइल'
+                }
+            },
+            {
+                id: 'representative-management',
+                icon: '👥',
+                title: {
+                    en: 'Digital IVR Call System',
+                    ne: 'डिजिटल IVR Call System'
+                }
+            },
+            {
+                id: 'digital-record',
+                icon: '📋',
+                title: {
+                    en: 'Digital Card System',
+                    ne: 'डिजिटल कार्ड प्रणाली'
+                }
+            },
+            {
+                id: 'complaint-center',
+                icon: '📞',
+                title: {
+                    en: 'Complaint and Roster System',
+                    ne: 'गुनासो तथा रोस्टर प्रणाली'
+                }
+            },
+            {
+                id: 'court-management',
+                icon: '⚖️',
+                title: {
+                    en: 'Court (Judicial) System',
+                    ne: 'इजलास (न्यायीक) प्रणाली'
+                }
+            },
+            {
+                id: 'project-monitoring',
+                icon: '✅',
+                title: {
+                    en: 'Project Management System',
+                    ne: 'योजना व्यवस्थापन प्रणाली'
+                }
+            },
+            {
+                id: 'asset-management',
+                icon: '🏛️',
+                title: {
+                    en: 'Bank Management System',
+                    ne: 'बैठक व्यवस्थापन प्रणाली'
+                }
+            },
+            {
+                id: 'hospital-management',
+                icon: '🏥',
+                title: {
+                    en: 'Birth Registration and Mapping',
+                    ne: 'विद्युतीय घर नक्सा पास'
+                }
+            },
+            {
+                id: 'house-mapping',
+                icon: '🏠',
+                title: {
+                    en: 'Organization/Department System',
+                    ne: 'संस्था/ व्यवसाय दर्ता प्रणाली'
+                }
+            },
+            {
+                id: 'ivr-system',
+                icon: '☎️',
+                title: {
+                    en: 'Recommendation System',
+                    ne: 'सिफारिस प्रणाली'
+                }
+            },
+            {
+                id: 'gis-mapping',
+                icon: '🗺️',
+                title: {
+                    en: 'Digital Archive Record',
+                    ne: 'डिजिटल नागरिक बडापत्र'
+                }
+            },
+            {
+                id: 'palika-budget',
+                icon: '💵',
+                title: {
+                    en: 'Office Automation',
+                    ne: 'अफिस अटोमेसन'
+                }
+            },
+            {
+                id: 'health-profile',
+                icon: '📊',
+                title: {
+                    en: 'Service Fee Management System',
+                    ne: 'सेवारी शुल्क व्यवस्थापन प्रणाली'
+                }
+            },
+            {
+                id: 'digital-id',
+                icon: '🆔',
+                title: {
+                    en: 'Complaint Portal',
+                    ne: 'गुनासो पोर्टल'
+                }
+            }
+        ]
+    },
+    
     footer: {
         companyName: { en: 'Digital Palika', ne: 'डिजिटल पालिका' },
         companyMoto: { 
