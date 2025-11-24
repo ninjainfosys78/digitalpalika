@@ -171,7 +171,7 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
                     </h2>
                     {details.phoneNumbers.map((phone, index) => (
                         <a key={index} href={`tel:${phone}`} className="text-[#003893] font-inter transition-colors text-sm">
-                            नेपालभित्र: {phone}
+                          {phone}
                         </a>
                     ))}
                 </div>
@@ -292,7 +292,7 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
                                     required
                                     disabled={isSubmitting}
                                     pattern="[\+]?[0-9]{10,14}"
-                                    title="Enter a valid phone number (e.g., +977 9800000000 or 9800000000)"
+                                    title="Enter a valid phone number"
                                     className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black disabled:opacity-50 disabled:cursor-not-allowed"
                                 />
                             </div>
