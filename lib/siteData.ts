@@ -458,8 +458,8 @@ export const siteData: FullSiteContent = {
             details: [
                 { label: { en: 'Office', ne: 'प्रधान कार्यालय' }, value: { en: 'Ninja Infosys Pvt. Ltd., Kathmandu', ne: 'निन्जा इन्फोसिस् प्रा. लि., काठमाडौं' } },
                 { label: { en: 'Corporate Office', ne: 'कर्पोरेट कार्यालय' }, value: { en: 'marketting@ninjainfosys.com', ne: 'marketting@ninjainfosys.com' } },
-                { label: { en: 'Phone', ne: 'फोन' }, value: { en: '01-5934348', ne: '०१-५९३४३४८' } },
-                { label: { en: 'Mobile', ne: 'सम्पर्क नम्बर' }, value: { en: '9854334348', ne: '९८५४३३४३४८' } },
+                { label: { en: 'Mobile', ne: 'फोन' }, value: { en: '9851343348', ne: '९८५४३३४३४८' } },
+                { label: { en: 'Mobile', ne: 'सम्पर्क नम्बर' }, value: { en: '9858042433', ne: '९८५८०४२४३३' } },
             ],
             note: { en: 'Scan QR for quick contact.', ne: 'छिटो सम्पर्कको लागि QR स्क्यान गर्नुहोस्।' }
         },

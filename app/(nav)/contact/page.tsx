@@ -16,11 +16,14 @@ export const siteContent = {
         title: { en: 'Contact Us', ne: 'सम्पर्क' },
         breadcrumb: { en: 'Home / Contact', ne: 'गृह पृष्ठ / सम्पर्क' },
         details: {
-            phoneNumbers: ['०८९ ५२०३६९', '०१-५९१९२३४'],
-            email: 'sale@digitalpalika.com',
+            phoneNumbers: {
+                en: ['9854334348', '9858042433'],
+                ne: ['९८५४३३४३४८', '९८५८०४२४३३'],
+            },
+            email: 'marketting@ninjainfosys.com',
             address: {
-                en: 'Head Office: Ninja Infosys Bire-Kapokorit Office, Anamnagar-२९, Kathmandu',
-                ne: 'प्रधान कार्यालय: नेपालगञ्ज बीरे-कपोकरिट कार्यालय, अनामनगर-२९, काठमाडौं',
+                en: 'Head Office: Ninja Infosys Pvt. Ltd., Anamnagar-२९, Kathmandu',
+                ne: 'प्रधान कार्यालय: निन्जा इन्फोसिस् प्रा. लि., अनामनगर-२९, काठमाडौं',
             },
         },
         form: {
@@ -60,12 +63,15 @@ const ContactContent = () => {
             <Header />
             <main id="main-content">
                 <ContactSection
-                    title={t(contactContent.title)}
-                    breadcrumb={t(contactContent.breadcrumb)}
-                    details={contactContent.details}
-                    formLabels={contactContent.form}
-                    t={t}
-                />
+                        title={t(contactContent.title)}
+                        breadcrumb={t(contactContent.breadcrumb)}
+                        details={{
+                            ...contactContent.details,
+                            phoneNumbers: contactContent.details.phoneNumbers[lang]
+                        }}
+                        formLabels={contactContent.form}
+                        t={t}
+                    />
             </main>
             <Footer />
         </Fragment>
