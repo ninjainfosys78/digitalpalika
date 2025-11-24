@@ -1,7 +1,6 @@
 "use client";
 
-import { useLanguage } from '@/context/LanguageContext';
-import { LocalizedString } from '@/context/LanguageContext';
+import { useLanguage, LocalizedString } from '@/context/LanguageContext';
 
 interface Module {
     id: string;
@@ -111,7 +110,7 @@ const ModuleIcon = ({ name }: { name: string }) => {
         ),
         'health-profile': (
             <svg className="w-10 h-10 md:w-12 md:h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/>
+                <path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97" />
             </svg>
         ),
         'digital-id': (
@@ -128,8 +127,8 @@ export function ModulesSection({ title, subtitle, modules }: ModulesSectionProps
     const { t } = useLanguage();
 
     return (
-        <section className="bg-white py-16 md:py-24 px-4">
-            <div className="container mx-auto max-w-7xl">
+        <section className="bg-white py-16 md:py-24">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Section Header */}
                 <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-4xl font-work-sans font-bold text-[#003893] mb-4">
