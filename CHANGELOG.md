@@ -24,3 +24,9 @@ This release captures the initial visual and content surface for the site and la
 ## [v0.1.1] - 2025-11-20
 ### Overview
 - Updated Ninja logo in header (production hotfix)
+
+## [v0.1.2] - 2025-11-25
+### Overview
+
+- Added legitimate photos to increase brand value and recognition
+
