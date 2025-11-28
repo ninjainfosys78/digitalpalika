@@ -1,6 +1,7 @@
 import './globals.css'; 
 import type { Metadata } from 'next';
 import { Source_Serif_4, IBM_Plex_Sans } from "next/font/google";
+import { LanguageProvider } from '@/context/LanguageContext';
 
 const sourceSerif = Source_Serif_4({
   subsets: ['latin'],
@@ -27,7 +28,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${sourceSerif.variable} ${ibmPlex.variable}`}>
-      <body>{children}</body>
+      <body>
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
+      </body>
     </html>
   );
 }
