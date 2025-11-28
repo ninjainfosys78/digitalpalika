@@ -229,270 +229,241 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
   };
 
   return (
-    <section className="relative bg-paper py-16 md:py-24">
-      {/* MAIN CONTAINER – aligned with header & footer */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Title */}
-        <h1 className="text-2xl md:text-5xl font-work-sans font-bold text-[#003893] text-center mb-16">
-          {title}
+    <section className="relative bg-white py-12 md:py-16">
+      {/* Top Heading and Subtitle */}
+      <div className="max-w-2xl mx-auto text-center mb-8">
+        <h2 className="text-[#003893] font-semibold mb-2 text-sm">
+          {t({ en: "Contact us", ne: "सम्पर्क गर्नुहोस्" })}
+        </h2>
+        <h1 className="text-2xl md:text-3xl font-semibold mb-2">
+          {t({
+            en: "Your digital gateway to municipal services.",
+            ne: "तपाईंको नगरपालिका सेवाहरूको लागि डिजिटल गेटवे।"
+          })}
+          <br />
+          {t({
+            en: "Submit requests, track applications, and",
+            ne: "अनुरोधहरू पेश गर्नुहोस्, आवेदनहरू ट्र्याक गर्नुहोस्, र"
+          })}
+          <br />
+          {t({
+            en: "connect with ",
+            ne: "र सम्पर्क गर्नुहोस् "
+          })}
+          <span className="font-bold">
+            {t({ en: "local", ne: "स्थानीय" })}
+          </span>
+          {t({ en: " government.", ne: " सरकारसँग।" })}
         </h1>
+        <div className="mx-auto w-16 h-0.5 bg-black mb-4" />
+      </div>
 
-        {/* Contact Details Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center mb-20">
-          {/* Phone */}
-          <div className="flex flex-col items-center">
-            <div className="text-[#003893] mb-4">
-              <Icon name="Phone" className="w-8 h-8" />
-            </div>
-            <h2 className="text-lg font-work-sans font-semibold text-black mb-2">
-              {t({ en: "Phone", ne: "फोन" })}
-            </h2>
-            {details.phoneNumbers.map((phone, index) => (
-              <a
-                key={index}
-                href={`tel:${phone}`}
-                className="text-[#003893] font-inter transition-colors text-sm"
-              >
-                {phone}
-              </a>
-            ))}
-          </div>
-
-          {/* Email */}
-          <div className="flex flex-col items-center">
-            <div className="text-[#003893] mb-4">
-              <Icon name="Mail" className="w-8 h-8" />
-            </div>
-            <h2 className="text-lg font-work-sans font-semibold text-black mb-2">
-              {t({ en: "Email", ne: "इमेल" })}
-            </h2>
-            <a
-              href={`mailto:${details.email}`}
-              className="text-[#003893] hover:text-[#003893] font-inter transition-colors"
-            >
-              {details.email}
-            </a>
-          </div>
-
-          {/* Address */}
-          <div className="flex flex-col items-center">
-            <div className="text-[#003893] mb-4">
-              <Icon name="MapPin" className="w-8 h-8" />
-            </div>
-            <h2 className="text-lg font-work-sans font-semibold text-black mb-2">
-              {t({ en: "Address", ne: "ठेगाना" })}
-            </h2>
-            <p className="text-black font-inter max-w-xs">
-              {t(details.address)}
-            </p>
-          </div>
+      {/* Info Cards */}
+      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        {/* Secure & Private */}
+        <div className="bg-[#e9eff7] border border-[#B0C1DE] flex flex-col items-center justify-center py-6 min-h-[110px]">
+          {/* Shield Icon (matches your provided image) */}
+          <svg className="w-6 h-6 mb-2 text-black" viewBox="0 0 24 24" fill="none">
+            <path d="M12 21C7 18 4 14.5 4 10V5.5L12 3l8 2.5V10c0 4.5-3 8-8 11z" stroke="black" strokeWidth="2" fill="none"/>
+            <path d="M12 3v18c4.5-3 8-6.5 8-11V5.5L12 3z" fill="black"/>
+          </svg>
+          <span className="text-base font-semibold text-black">
+            {t({ en: "Secure & Private", ne: "सुरक्षित र निजी" })}
+          </span>
         </div>
+        {/* 24-48 Hour Response */}
+        <div className="bg-[#e9eff7] border border-[#B0C1DE] flex flex-col items-center justify-center py-6 min-h-[110px]">
+          {/* Clock Icon */}
+          <svg className="w-6 h-6 mb-2 text-black" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <span className="text-base font-semibold text-black">
+            {t({ en: "24-48 Hour Response", ne: "२४-४८ घण्टामा प्रतिक्रिया" })}
+          </span>
+        </div>
+        {/* Official Government Portal */}
+        <div className="bg-[#e9eff7] border border-[#B0C1DE] flex flex-col items-center justify-center py-6 min-h-[110px]">
+          {/* Calculator Icon (clean, solid display/buttons) */}
+          <svg className="w-6 h-6 mb-2 text-black" viewBox="0 0 24 24" fill="none">
+            <rect x="4" y="3" width="16" height="18" rx="2" stroke="black" strokeWidth="2" fill="none"/>
+            <rect x="7" y="6" width="10" height="2" rx="0.5" fill="black"/>
+            <rect x="7" y="10" width="2" height="2" rx="0.5" fill="black"/>
+            <rect x="11" y="10" width="2" height="2" rx="0.5" fill="black"/>
+            <rect x="15" y="10" width="2" height="2" rx="0.5" fill="black"/>
+            <rect x="7" y="14" width="2" height="2" rx="0.5" fill="black"/>
+            <rect x="11" y="14" width="2" height="2" rx="0.5" fill="black"/>
+            <rect x="15" y="14" width="2" height="2" rx="0.5" fill="black"/>
+          </svg>
+          <span className="text-base font-semibold text-black">
+            {t({ en: "Official Government Portal", ne: "आधिकारिक सरकारी पोर्टल" })}
+          </span>
+        </div>
+      </div>
 
-        {/* Contact Form – full width inside same container */}
-        <div className="bg-[#003893]/6 border border-[#003893]/20 p-8 md:p-12">
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-            {/* Error Message */}
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded">
-                <p className="font-semibold">Error:</p>
-                <p className="text-sm">{error}</p>
-              </div>
-            )}
-
-            {/* First Name and Last Name Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* First Name */}
-              <div>
-                <label
-                  htmlFor="firstName"
-                  className="block text-sm font-medium text-black mb-2"
-                >
-                  {t(formLabels.firstName)} *
-                </label>
-                <div className="relative">
-                  <Icon
-                    name="User"
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black w-5 h-5"
-                  />
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    placeholder={t(formLabels.firstName)}
-                    required
-                    disabled={isSubmitting}
-                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black disabled:opacity-50 disabled:cursor-not-allowed"
-                  />
-                </div>
-              </div>
-
-              {/* Last Name */}
-              <div>
-                <label
-                  htmlFor="lastName"
-                  className="block text-sm font-medium text-black mb-2"
-                >
-                  {t(formLabels.lastName)} *
-                </label>
-                <div className="relative">
-                  <Icon
-                    name="User"
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black w-5 h-5"
-                  />
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    placeholder={t(formLabels.lastName)}
-                    required
-                    disabled={isSubmitting}
-                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black disabled:opacity-50 disabled:cursor-not-allowed"
-                  />
-                </div>
-              </div>
+      {/* Contact Form */}
+      <div className="max-w-4xl mx-auto">
+        <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded">
+              <p className="font-semibold">Error:</p>
+              <p className="text-sm">{error}</p>
             </div>
+          )}
 
-            {/* Email and Phone Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Email */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-black mb-2"
-                >
-                  {t(formLabels.email)} *
-                </label>
-                <div className="relative">
-                  <Icon
-                    name="Mail"
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black w-5 h-5"
-                  />
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder={t(formLabels.email)}
-                    required
-                    disabled={isSubmitting}
-                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black disabled:opacity-50 disabled:cursor-not-allowed"
-                  />
-                </div>
-              </div>
-
-              {/* Phone */}
-              <div>
-                <label
-                  htmlFor="phone"
-                  className="block text-sm font-medium text-black mb-2"
-                >
-                  {t(formLabels.phone)} *
-                </label>
-                <div className="relative">
-                  <Icon
-                    name="Phone"
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black w-5 h-5"
-                  />
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    placeholder={t(formLabels.phone)}
-                    required
-                    disabled={isSubmitting}
-                    pattern="[\+]?[0-9]{10,14}"
-                    title="Enter a valid phone number"
-                    className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black disabled:opacity-50 disabled:cursor-not-allowed"
-                  />
-                </div>
-              </div>
+          {/* First Name & Last Name */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label
+                htmlFor="firstName"
+                className="block text-xs font-medium text-gray-700 mb-1"
+              >
+                {t({ en: "First Name *", ne: "पहिलो नाम *" })}
+              </label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                placeholder={t({ en: "Enter your first name", ne: "आफ्नो पहिलो नाम लेख्नुहोस्" })}
+                required
+                disabled={isSubmitting}
+                className="w-full px-3 py-2 border border-gray-300 text-sm focus:ring-[#003893] focus:border-[#003893] disabled:opacity-50"
+              />
             </div>
+            <div>
+              <label
+                htmlFor="lastName"
+                className="block text-xs font-medium text-gray-700 mb-1"
+              >
+                {t({ en: "Last Name *", ne: "थर नाम *" })}
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder={t({ en: "Enter your last name", ne: "आफ्नो थर नाम लेख्नुहोस्" })}
+                required
+                disabled={isSubmitting}
+                className="w-full px-3 py-2 border border-gray-300 text-sm focus:ring-[#003893] focus:border-[#003893] disabled:opacity-50"
+              />
+            </div>
+          </div>
 
-            {/* Subject */}
+          {/* Email & Phone */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-xs font-medium text-gray-700 mb-1"
+              >
+                {t({ en: "Email Address *", ne: "इमेल ठेगाना *" })}
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Your example@gmail.com"
+                required
+                disabled={isSubmitting}
+                className="w-full px-3 py-2 border border-gray-300 text-sm focus:ring-[#003893] focus:border-[#003893] disabled:opacity-50"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="phone"
+                className="block text-xs font-medium text-gray-700 mb-1"
+              >
+                {t({ en: "Phone *", ne: "फोन *" })}
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="98XXXXXXXX"
+                required
+                disabled={isSubmitting}
+                pattern="[\+]?[0-9]{10,14}"
+                title="Enter a valid phone number"
+                className="w-full px-3 py-2 border border-gray-300 text-sm focus:ring-[#003893] focus:border-[#003893] disabled:opacity-50"
+              />
+            </div>
+          </div>
+
+          {/* Subject & Topic */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label
                 htmlFor="subject"
-                className="block text-sm font-medium text-black mb-2"
+                className="block text-xs font-medium text-gray-700 mb-1"
               >
-                {t(formLabels.subject)} *
+                {t({ en: "Contact reason *", ne: "सम्पर्कको कारण *" })}
               </label>
-              <div className="relative">
-                <Icon
-                  name="Hash"
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black w-5 h-5"
-                />
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  placeholder={t(formLabels.subject)}
-                  required
-                  disabled={isSubmitting}
-                  className="w-full pl-10 pr-4 py-2 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black disabled:opacity-50 disabled:cursor-not-allowed"
-                />
-              </div>
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                placeholder={t({ en: "e.g., Service inquiry", ne: "जस्तै, सेवा सोधपुछ" })}
+                required
+                disabled={isSubmitting}
+                className="w-full px-3 py-2 border border-gray-300 text-sm focus:ring-[#003893] focus:border-[#003893] disabled:opacity-50"
+              />
             </div>
-
-            {/* Message */}
             <div>
               <label
-                htmlFor="message"
-                className="block text-sm font-medium text-black mb-2"
+                htmlFor="topic"
+                className="block text-xs font-medium text-gray-700 mb-1"
               >
-                {t(formLabels.message)} *
+                {t({ en: "Topic", ne: "विषय" })}
               </label>
-              <div className="relative">
-                <Icon
-                  name="Hash"
-                  className="absolute left-3 top-4 text-black w-5 h-5"
-                />
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={5}
-                  placeholder={t(formLabels.message)}
-                  required
-                  disabled={isSubmitting}
-                  className="w-full pl-10 pr-4 py-3 border border-slate/20 focus:ring-[#003893] focus:border-[#003893] font-inter text-black disabled:opacity-50 disabled:cursor-not-allowed"
-                ></textarea>
-              </div>
+              <input
+                type="text"
+                id="topic"
+                name="topic"
+                placeholder={t({ en: "e.g., Municipal services", ne: "जस्तै, नगरपालिका सेवाहरू" })}
+                disabled={isSubmitting}
+                className="w-full px-3 py-2 border border-gray-300 text-sm focus:ring-[#003893] focus:border-[#003893] disabled:opacity-50"
+              />
             </div>
+          </div>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="inline-flex items-center justify-center px-8 py-3 text-white font-work-sans font-semibold bg-[#003893] hover:bg-[#003893]/90 transition-all duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+          {/* Message */}
+          <div>
+            <label
+              htmlFor="message"
+              className="block text-xs font-medium text-gray-700 mb-1"
             >
-              {isSubmitting ? (
-                <>
-                  <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  Sending...
-                </>
-              ) : (
-                t(formLabels.button)
-              )}
-            </button>
-          </form>
-        </div>
+              {t({ en: "Comments *", ne: "टिप्पणीहरू *" })}
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows={6}
+              placeholder={t({ en: "Please describe your request in detail...", ne: "कृपया आफ्नो अनुरोधलाई विस्तारमा वर्णन गर्नुहोस्..." })}
+              required
+              disabled={isSubmitting}
+              className="w-full px-3 py-2 border border-gray-300 text-sm focus:ring-[#003893] focus:border-[#003893] disabled:opacity-50"
+            ></textarea>
+          </div>
+
+          <div className="text-xs text-gray-500 mb-2">
+            {t({ en: "Minimum 10 characters required", ne: "कम्तिमा १० अक्षर आवश्यक छ" })}
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-[#0066f6] hover:bg-[#003893] text-white font-semibold py-2 text-sm transition rounded-none"
+          >
+            {isSubmitting
+              ? t({ en: "Sending...", ne: "पठाउँदै..." })
+              : t({ en: "Submit Request", ne: "अनुरोध पठाउनुहोस्" })}
+          </button>
+          <div className="text-center text-xs text-gray-500 mt-2">
+            {t({ en: "We typically respond within 24-48 hours", ne: "हामी सामान्यतया २४-४८ घण्टामा प्रतिक्रिया दिन्छौं" })}
+          </div>
+        </form>
       </div>
 
       {/* Success Modal */}
@@ -503,9 +474,11 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
           aria-modal="true"
         >
           <div className="w-[90%] max-w-md bg-white text-gray-900 p-6 sm:p-8 rounded-none shadow-none">
-            <h2 className="text-xl font-semibold mb-2">Form submitted</h2>
+            <h2 className="text-xl font-semibold mb-2">
+              {t({ en: "Form submitted", ne: "फर्म पेश गरियो" })}
+            </h2>
             <p className="text-sm text-gray-600 mb-6">
-              Your message has been sent successfully. We'll get back to you soon!
+              {t({ en: "Your message has been sent successfully. We'll get back to you soon!", ne: "तपाईंको सन्देश सफलतापूर्वक पठाइयो। हामी चाँडै तपाईंलाई फर्कनेछौं!" })}
             </p>
             <div className="flex justify-end gap-3">
               <button
@@ -513,7 +486,7 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
                 onClick={() => setShowModal(false)}
                 className="px-4 py-2 bg-[#003893] text-white rounded-none shadow-none hover:bg-[#003893]/90"
               >
-                OK
+                {t({ en: "OK", ne: "ठीक छ" })}
               </button>
             </div>
           </div>
