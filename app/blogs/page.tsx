@@ -1,5 +1,4 @@
 // app/blogs/page.tsx
-import Link from "next/link";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import BlogsClient from "@/components/blogs-client";
@@ -14,7 +13,6 @@ export default function BlogsPage() {
     <>
       <Header />
 
-      {/* Render client wrapper (renders hero + posts) */}
       <main>
         <BlogsClient posts={posts} />
       </main>
@@ -23,3 +21,4 @@ export default function BlogsPage() {
     </>
   );
 }
+//server side blogs page rendering

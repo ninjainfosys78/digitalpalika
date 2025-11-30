@@ -123,3 +123,4 @@ export default function BlogsClient({ posts }: BlogsClientProps) {
     </main>
   )
 }
+//client side blogs page rendering

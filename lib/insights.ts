@@ -10,3 +10,4 @@ export function getTopInsights(limit = 3) {
     image: p.image || "",
   }))
 }
+// to show top 3 insights on the homepage

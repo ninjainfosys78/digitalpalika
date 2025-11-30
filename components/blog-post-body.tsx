@@ -7,3 +7,4 @@ export default function BlogPostBody({ source }: { source: string }) {
     </article>
   );
 }
+//renders the blog content inside the blog detail page.

@@ -45,3 +45,4 @@ export function SafeMDX({ source }: Props) {
     />
   );
 }
+// HTML UI components for MDX rendering

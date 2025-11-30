@@ -82,3 +82,4 @@ export function getPostSourceBySlug(slug: string): string | null {
   if (fs.existsSync(idx)) return fs.readFileSync(idx, "utf8");
   return null;
 }
+//all MDX filesystem logic

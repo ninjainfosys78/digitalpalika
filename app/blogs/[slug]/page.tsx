@@ -111,3 +111,4 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     </>
   );
 }
+// for each blogs cards page 
