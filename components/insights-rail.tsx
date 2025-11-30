@@ -14,12 +14,12 @@ export type InsightCard = {
 
 interface InsightsRailProps {
   language?: "en" | "ne";
-  insights?: InsightCard[]; // made optional and defaulted
+  insights?: InsightCard[] | null;
 }
 
 export default function InsightsRail({
   language: propLanguage,
-  insights = [],
+  insights,
 }: InsightsRailProps) {
   const { language: ctxLanguage } = useLanguage();
   const language = propLanguage ?? ctxLanguage ?? "en";
@@ -37,6 +37,8 @@ export default function InsightsRail({
           readMore: "थप पढ्नुहोस्",
         };
 
+  const safeInsights: InsightCard[] = Array.isArray(insights) ? insights : [];
+
   return (
     <section
       id="insights"
@@ -51,9 +53,10 @@ export default function InsightsRail({
           >
             {content.title}
           </h2>
+
           <Link
             href="/blogs"
-            className="hidden md:flex items-center gap-2 text-sm transition-colors flex-shrink-0 text-[#e3e3e3] hover:text-white/70 group"
+            className="hidden md:flex items-center gap-2 text-sm transition-colors flex-shrink-0 text-white hover:text-white/70 group"
           >
             {content.viewAll}
             <ArrowRight
@@ -64,7 +67,7 @@ export default function InsightsRail({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {insights.map((insight, idx) => (
+          {safeInsights.map((insight, idx) => (
             <article
               key={insight.url}
               className={`group cursor-pointer ${
@@ -75,12 +78,11 @@ export default function InsightsRail({
                 href={insight.url}
                 className="block h-full rounded-[2px] overflow-hidden transition-all duration-300 hover:-translate-y-1 bg-neutral-900 shadow-[0_2px_8px_0_rgba(20,20,20,0.13)]"
               >
-                <div className="relative overflow-hidden bg-[#CACACA]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                <div className="relative overflow-hidden bg-black">
                   <img
                     src={insight.image || "/placeholder.svg"}
                     alt={insight.title}
-                    className={`w-full object-contain transition-transform duration-500 group-hover:scale-105 grayscale ${
+                    className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 grayscale ${
                       idx === 0
                         ? "h-[280px] sm:h-[350px] md:h-[400px]"
                         : "h-[200px] sm:h-[240px]"
@@ -98,6 +100,7 @@ export default function InsightsRail({
                       </span>
                     </div>
                   )}
+
                   <h3
                     className={`font-semibold mb-2 sm:mb-3 text-balance transition-colors ${
                       idx === 0
@@ -107,9 +110,11 @@ export default function InsightsRail({
                   >
                     {insight.title}
                   </h3>
+
                   <p className="text-sm leading-relaxed text-pretty line-clamp-3 text-[#e3e3e3]">
                     {insight.deck}
                   </p>
+
                   <div className="flex items-center gap-2 mt-3 sm:mt-4 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity text-[#e3e3e3] underline">
                     {content.readMore}
                     <ArrowRight
@@ -126,7 +131,7 @@ export default function InsightsRail({
         <div className="mt-8 sm:mt-12 text-center md:hidden">
           <Link
             href="/blogs"
-            className="inline-flex items-center gap-2 text-sm transition-colors text-[#d52020] hover:text-[#782121]"
+            className="inline-flex items-center gap-2 text-sm transition-colors text-white hover:text-white/70"
           >
             {content.viewAll}
             <ArrowRight size={16} />

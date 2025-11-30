@@ -1,59 +1,67 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Head from "next/head"
+import { useState, useEffect } from "react";
+import Head from "next/head";
 
-import Header from "@/components/header"
-import Hero from "@/components/hero"
-import InsightsRail, { type InsightCard } from "@/components/insights-rail"
-import Testimonials from "@/components/testimonials"
-import TrustedBy from "@/components/trusted-by"
-import GlobalCTA from "@/components/global-cta"
-import Footer from "@/components/footer"
-import SearchOverlay from "@/components/search-overlay"
-import CookieBanner from "@/components/cookie-banner"
-import OfficesModal from "@/components/offices-modal"
-import { useLanguage } from "@/components/LanguageProvider"
+import Header from "@/components/header";
+import Hero from "@/components/hero";
+import InsightsRail, { type InsightCard } from "@/components/insights-rail";
+import Testimonials from "@/components/testimonials";
+import TrustedBy from "@/components/trusted-by";
+import GlobalCTA from "@/components/global-cta";
+import Footer from "@/components/footer";
+import SearchOverlay from "@/components/search-overlay";
+import CookieBanner from "@/components/cookie-banner";
+import OfficesModal from "@/components/offices-modal";
+import { useLanguage } from "@/components/LanguageProvider";
 
-export default function HomePageClient({ insights }: { insights: InsightCard[] }) {
-  // read language from provider (don't pass it as a prop to children)
-  const { language } = useLanguage()
-  const [searchOpen, setSearchOpen] = useState(false)
-  const [officesOpen, setOfficesOpen] = useState(false)
+interface HomePageClientProps {
+  insights: InsightCard[];
+}
+
+export default function HomePageClient({ insights }: HomePageClientProps) {
+  const { language } = useLanguage();
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [officesOpen, setOfficesOpen] = useState(false);
+
+  // ✅ Ensure safe array always
+  const safeInsights: InsightCard[] = Array.isArray(insights) ? insights : [];
 
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "/" && !searchOpen) {
-        e.preventDefault()
-        setSearchOpen(true)
+        e.preventDefault();
+        setSearchOpen(true);
       }
       if (e.key === "Escape") {
-        setSearchOpen(false)
-        setOfficesOpen(false)
+        setSearchOpen(false);
+        setOfficesOpen(false);
       }
-    }
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [searchOpen])
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [searchOpen]);
 
   // Metadata per language
   const meta = {
     en: {
       title: "Ninja Infosys — Global Consulting",
-      description: "A global consulting company shaping decisive outcomes in complex environments.",
+      description:
+        "A global consulting company shaping decisive outcomes in complex environments.",
       ogImage: "/assets/og/og-default.jpg",
       siteName: "Ninja Infosys",
     },
     ne: {
       title: "निन्जा इन्फोसिस — ग्लोबल कन्सल्टिङ",
-      description: "एक विश्वव्यापी कन्सल्टिङ कम्पनी जसले जटिल वातावरणमा निर्णायक परिणामहरू बनाउँछ।",
+      description:
+        "एक विश्वव्यापी कन्सल्टिङ कम्पनी जसले जटिल वातावरणमा निर्णायक परिणामहरू बनाउँछ।",
       ogImage: "/assets/og/og-default.jpg",
       siteName: "निन्जा इन्फोसिस",
     },
-  } as const
+  } as const;
 
-  const currentMeta = meta[(language ?? "en") as "en" | "ne"]
+  const currentMeta = meta[(language ?? "en") as "en" | "ne"];
 
   return (
     <>
@@ -71,22 +79,18 @@ export default function HomePageClient({ insights }: { insights: InsightCard[] }
         <meta name="robots" content="index, follow" />
       </Head>
 
-      {/* Header */}
       <Header />
 
-      {/* Main content */}
       <main id="main-content" className="sharp-edges">
         <Hero />
         <TrustedBy />
-        <InsightsRail insights={insights} />
+        <InsightsRail insights={safeInsights} />
         <Testimonials />
         <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />
       </main>
 
-      {/* Footer */}
       <Footer />
 
-      {/* Overlays */}
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
       <OfficesModal isOpen={officesOpen} onClose={() => setOfficesOpen(false)} />
 
@@ -98,10 +102,9 @@ export default function HomePageClient({ insights }: { insights: InsightCard[] }
         id="ni-content"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            /* your JSON blob unchanged */
           }),
         }}
       />
     </>
-  )
+  );
 }

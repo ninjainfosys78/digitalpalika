@@ -1,34 +1,25 @@
-// app/blogs/[slug]/page.tsx
 import "server-only";
 import { notFound } from "next/navigation";
-import matter from "gray-matter";
-import { getAllPostsMeta, getPostSourceBySlug } from "@/lib/posts";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Link from "next/link";
 import BlogPostBody from "@/components/blog-post-body";
+import { getAllPostsMeta, getPostBySlug } from "@/lib/posts";
 
 export async function generateStaticParams() {
-  return getAllPostsMeta().map((p) => ({ slug: p.slug }));
+  const posts = await getAllPostsMeta();
+  return posts.map((p) => ({
+    slug: encodeURIComponent(p.slug),
+  }));
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const source = getPostSourceBySlug(params.slug);
-  if (!source) return notFound();
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const decodedSlug = decodeURIComponent(params.slug);
 
-  let content = "";
-  let data: Record<string, any> = {};
-  try {
-    const parsed = matter(source);
-    content = parsed.content ?? "";
-    data = parsed.data ?? {};
-  } catch {
-    return notFound();
-  }
+  const post = await getPostBySlug(decodedSlug);
+  if (!post) return notFound();
 
-  const title = (data.title as string) || params.slug;
-  const date = (data.date as string) || "";
-  const image = (data.image as string) || "";
+  const { meta, content } = post;
 
   return (
     <>
@@ -41,6 +32,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             style={{ backgroundImage: "url('/insights.jpg')" }}
           />
           <div className="absolute inset-0 bg-black/60" />
+
           <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
             <div className="max-w-[1200px] text-left">
               <nav aria-label="Breadcrumb" className="mt-4 text-sm text-white/80">
@@ -68,6 +60,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                   </li>
                 </ol>
               </nav>
+
               <h1 className="mt-4 text-5xl font-heading font-semibold text-white sm:text-6xl">
                 Insights
               </h1>
@@ -78,24 +71,27 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
       <main className="bg-black text-white">
         <div className="mx-auto max-w-3xl px-6 py-12">
-          {image && (
+
+          {meta.image && (
             <div className="mb-8 w-full overflow-hidden bg-black">
               <img
-                src={image}
-                alt={title}
-                className="w-full h-[300px] sm:h-[360px] object-cover rounded-none grayscale transition duration-300"
+                src={meta.image}
+                alt={meta.title}
+                className="w-full h-[300px] sm:h-[360px] object-cover grayscale transition"
               />
             </div>
           )}
-          <h2 className="text-3xl sm:text-4xl font-heading font-semibold text-white">
-            {title}
+
+          <h2 className="text-3xl sm:text-4xl font-heading font-semibold mb-2">
+            {meta.title}
           </h2>
-          {date && (
-            <div className="mt-2 text-sm text-white/70 font-normal tracking-wide">
-              {date}
-            </div>
-          )}
+
+          <div className="text-sm text-white/60 mb-6">
+            {meta.date} • {meta.readTime}
+          </div>
+
           <BlogPostBody source={content} />
+
           <div className="mt-10">
             <Link
               href="/blogs"
