@@ -12,7 +12,7 @@ export type PostMeta = {
   excerpt: string;
 };
 
-const BLOGS_COLLECTION = "blogs";
+const BLOGS_COLLECTION = "Ninja_Blogs";
 
 function getImageUrl(record: any): string {
   if (!record.Image) return "";
