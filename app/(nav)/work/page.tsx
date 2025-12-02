@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Search, PenTool, Code, RefreshCw } from "lucide-react";
+import { getBannerByImgName } from "@/lib/banners";
+
 
 import Header from "@/components/header";
 import GlobalCTA from "@/components/global-cta";
@@ -16,6 +18,8 @@ export default function WorkPage() {
   const { language } = useLanguage();
   const [searchOpen, setSearchOpen] = useState(false);
   const [officesOpen, setOfficesOpen] = useState(false);
+ 
+  const [bannerUrl, setBannerUrl] = useState<string | null>(null);
 
   const t = {
     crumbSelf: language === "en" ? "OUR WORK " : "हाम्रो काम",
@@ -25,7 +29,8 @@ export default function WorkPage() {
         ? "A few projects and products we’re proud of—fast, accessible and built to last."
         : "छिटो, पहुँचयोग्य र दीर्घकालीन समाधानहरू—हाम्रा केही प्रोजेक्ट र प्रोडक्टहरू।",
     galleryTitle: language === "en" ? "Projects" : "प्रोजेक्टहरू",
-    featuredTitle: language === "en" ? "Featured case studies" : "मुख्य केस स्टडीहरू",
+    featuredTitle:
+      language === "en" ? "Featured case studies" : "मुख्य केस स्टडीहरू",
     processTitle: language === "en" ? "How we work" : "हामी कसरी काम गर्छौं",
     discover: language === "en" ? "Discover" : "पत्ता लगाउनुहोस्",
     discoverDesc:
@@ -66,7 +71,11 @@ export default function WorkPage() {
           : "नागरिक पोर्टल (Next.js + Carbon), भूमिका-आधारित ई-कार्यालय, भुक्तानी, SMS/इमेल सूचना, ड्यासबोर्ड।",
       result:
         language === "en"
-          ? ["-68% average queue time", "95% services online", "Full auditability"]
+          ? [
+              "-68% average queue time",
+              "95% services online",
+              "Full auditability",
+            ]
           : ["-६८% औसत पंक्ति समय", "९५% सेवा अनलाइन", "पूर्ण अडिट क्षमता"],
     },
     {
@@ -90,6 +99,22 @@ export default function WorkPage() {
     },
   ];
 
+useEffect(() => {
+    let mounted = true;
+    getBannerByImgName("work") 
+      .then((url) => {
+        if (mounted) setBannerUrl(url || "/services.jpg"); 
+      })
+      .catch((err) => {
+        console.error("Failed to load work banner:", err);
+        if (mounted) setBannerUrl("/services.jpg"); 
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -108,7 +133,12 @@ export default function WorkPage() {
       <main className="relative bg-[#000000] text-[#e3e3e3]">
         <section className="relative z-10">
           <div className="relative min-h-[50vh] pt-28 lg:pt-32">
-            <div className="absolute inset-0 bg-cover bg-center bg-fixed filter grayscale opacity-60 bg-[url('/services.jpg')]" />
+             <div
+              className="absolute inset-0 bg-cover bg-center bg-fixed filter grayscale opacity-60"
+              style={{
+                backgroundImage: `url('${bannerUrl || "/services.jpg"}')`,
+              }}
+            />
             <div className="absolute inset-0 bg-black/55" />
             <div className="pointer-events-none absolute inset-0" />
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
@@ -117,7 +147,10 @@ export default function WorkPage() {
                   {t.heroTitle}
                 </h1>
               </div>
-              <nav aria-label="Breadcrumb" className="mt-4 text-sm text-white/80">
+              <nav
+                aria-label="Breadcrumb"
+                className="mt-4 text-sm text-white/80"
+              >
                 <ol className="flex items-center gap-3">
                   <li>
                     <Link
@@ -127,10 +160,7 @@ export default function WorkPage() {
                       NINJA INFOSYS
                     </Link>
                   </li>
-                  <li
-                    aria-hidden
-                    className="inline-flex items-center"
-                  >
+                  <li aria-hidden className="inline-flex items-center">
                     <svg
                       viewBox="0 0 24 24"
                       className="h-5 w-5 text-white/70"
@@ -233,7 +263,9 @@ export default function WorkPage() {
                 >
                   <div className="flex items-start gap-4">
                     <div className="h-9 w-9 flex items-center justify-center bg-white/5 text-white">
-                      {s.Icon ? <s.Icon size={16} className="text-current" /> : null}
+                      {s.Icon ? (
+                        <s.Icon size={16} className="text-current" />
+                      ) : null}
                     </div>
                     <div>
                       <div className="text-sm font-semibold">{s.t}</div>
@@ -249,10 +281,7 @@ export default function WorkPage() {
         <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />
       </main>
 
-      <SearchOverlay
-        isOpen={searchOpen}
-        onClose={() => setSearchOpen(false)}
-      />
+      <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
       <OfficesModal
         isOpen={officesOpen}
         onClose={() => setOfficesOpen(false)}
