@@ -1,10 +1,10 @@
-"use client"
-import React, { useState } from "react"
-import dynamic from "next/dynamic"
+"use client";
+import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 const Testimonials: React.ComponentType<any> = dynamic(
   () => import("@/components/testimonials").then((m) => m.default ?? m),
   { ssr: false }
-)
+);
 import {
   Target,
   Handshake,
@@ -13,15 +13,17 @@ import {
   BadgeCheck,
   Eye,
   Heart,
-} from "lucide-react"
-import Link from "next/link"
-import Header from "@/components/header"
-import Footer from "@/components/footer"
-import GlobalCTA from "@/components/global-cta"
-import { useLanguage } from "@/components/LanguageProvider"
+} from "lucide-react";
+import Link from "next/link";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import GlobalCTA from "@/components/global-cta";
+import { useLanguage } from "@/components/LanguageProvider";
+import { getBannerByImgName } from "@/lib/banners";
 
 export default function AboutPage() {
-  const { language } = useLanguage()
+  const { language } = useLanguage();
+  const [bannerUrl, setBannerUrl] = useState<string | null>(null);
 
   const content =
     language === "en"
@@ -93,7 +95,18 @@ export default function AboutPage() {
             { year: "२०२३", title: "डेटा र एआई", text: "व्यावहारिक एआई—प्राप्ति, मूल्याङ्कन, सुरक्षा—उत्पादनमा।" },
             { year: "२०२५", title: "वैश्विक उपस्थिति", text: "समान सानो-टिम डीएनए र कला मानकसहित बहु-क्षेत्रीय डेलिभरी।" },
           ],
-        }
+        };
+
+  useEffect(() => {
+    let mounted = true;
+    getBannerByImgName("about").then((url) => {
+      if (!mounted) return;
+      setBannerUrl(url || null);
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <>
@@ -102,27 +115,38 @@ export default function AboutPage() {
       <main className="relative bg-black text-[#f3f3f3e6]">
         <section className="relative z-10">
           <div className="relative min-h-[50vh] pt-28 lg:pt-32">
-            <div className="absolute inset-0 bg-cover bg-center bg-fixed filter grayscale bg-[url('/about.jpg')]"></div>
+            <div
+              className="absolute inset-0 bg-center bg-fixed filter grayscale"
+              style={
+                bannerUrl
+                  ? { backgroundImage: `url('${bannerUrl}')`, backgroundSize: "cover" }
+                  : {}
+              }
+            />
             <div className="absolute inset-0 bg-black/65" />
 
-              <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
+            <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
               <div className="max-w-[1600px] text-left">
                 <nav aria-label="Breadcrumb" className="mt-0 text-sm text-[#f3f3f3e6]">
                   <ol className="flex items-center gap-3">
                     <li>
-                      <Link href="/" className="font-medium tracking-wide hover:text-[#f3f3f3e6]">{content.brand}</Link>
+                      <Link href="/" className="font-medium tracking-wide hover:text-[#f3f3f3e6]">
+                        {content.brand}
+                      </Link>
                     </li>
                     <li aria-hidden className="inline-flex items-center">
-                      <svg viewBox="0 0 24 24" className="h-5 w-5 text-[#f3f3f3e6]" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6" /></svg>
+                      <svg viewBox="0 0 24 24" className="h-5 w-5 text-[#f3f3f3e6]" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M9 18l6-6-6-6" />
+                      </svg>
                     </li>
                     <li className="font-medium tracking-wide">{content.heroTitle}</li>
                   </ol>
                 </nav>
 
                 <h1 className="pt-4 text-5xl font-heading font-semibold text-[#f3f3f3e6] sm:text-6xl text-left">
-                   {content.heroTitle}
-                 </h1>
-               </div>
+                  {content.heroTitle}
+                </h1>
+              </div>
             </div>
           </div>
         </section>
@@ -140,14 +164,16 @@ export default function AboutPage() {
                 </div>
               </div>
               <div className="md:col-span-6 md:h-[420px] flex flex-col justify-center gap-6">
-                <h2 className="text-[32px] font-heading font-semibold text-left -mt-3 lg:-mt-4 text-[#f3f3f3e6]">{content.who}</h2>
+                <h2 className="text-[32px] font-heading font-semibold text-left -mt-3 lg:-mt-4 text-[#f3f3f3e6]">
+                  {content.who}
+                </h2>
                 <p className="mt-0 leading-relaxed text-[#f3f3f3e6]">
-                   {content.whoDesc}
-                 </p>
+                  {content.whoDesc}
+                </p>
 
                 <div className="mt-6 grid grid-cols-2 gap-4">
                   {content.features.map((f) => {
-                    const Icon = f.icon
+                    const Icon = f.icon;
                     return (
                       <div key={f.title} className="flex items-start gap-3 bg-[#000000] p-4">
                         <span className="inline-flex h-9 w-9 items-center justify-center bg-[#141414] text-[#f3f3f3e6]">
@@ -158,7 +184,7 @@ export default function AboutPage() {
                           <div className="text-xs text-[#f3f3f3e6]">{f.desc}</div>
                         </div>
                       </div>
-                    )
+                    );
                   })}
                 </div>
               </div>
@@ -167,30 +193,37 @@ export default function AboutPage() {
         </section>
 
         <section className="relative z-10 bg-black">
-           <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-16">
-             <div className="mt-2 mb-3">
-               <h2 className="mt-2 text-[32px] font-heading font-semibold text-left text-[#f3f3f3e6]">{content.coreTitle}</h2>
-             </div>
-
-   <div className="mt-8 grid gap-6 md:grid-cols-12">
-    {content.core.map(({ icon: Icon, title, body }) => (
-    <article key={title} className="md:col-span-4 border bg-[#000000] p-6 shadow-sm rounded-none transition-all hover:-translate-y-0.5 hover:shadow-md">
-       <div className="flex items-center gap-3">
-         <span className="inline-flex h-10 w-10 items-center justify-center bg-[#141414] text-[#f3f3f3e6]">
-           <Icon size={18} />
-         </span>
-         <h3 className="text-lg font-heading font-semibold text-[#f3f3f3e6] text-left">{title}</h3>
-       </div>
-        <p className="mt-3 text-sm leading-6 text-[#f3f3f3e6]">{body}</p>
-      </article>
-    ))} 
-  </div>
+          <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-16">
+            <div className="mt-2 mb-3">
+              <h2 className="mt-2 text-[32px] font-heading font-semibold text-left text-[#f3f3f3e6]">
+                {content.coreTitle}
+              </h2>
             </div>
-          </section>
+
+            <div className="mt-8 grid gap-6 md:grid-cols-12">
+              {content.core.map(({ icon: Icon, title, body }) => (
+                <article
+                  key={title}
+                  className="md:col-span-4 border bg-[#000000] p-6 shadow-sm rounded-none transition-all hover:-translate-y-0.5 hover:shadow-md"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-10 w-10 items-center justify-center bg-[#141414] text-[#f3f3f3e6]">
+                      <Icon size={18} />
+                    </span>
+                    <h3 className="text-lg font-heading font-semibold text-[#f3f3f3e6] text-left">
+                      {title}
+                    </h3>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-[#f3f3f3e6]">{body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
 
         <Testimonials />
 
-         <section id="our-story" className="relative z-10 scroll-mt-28">
+        <section id="our-story" className="relative z-10 scroll-mt-28">
           <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-12 lg:py-16">
             <h2 className="text-[32px] font-heading font-semibold text-left text-[#f3f3f3e6]">
               {content.storyTitle}
@@ -218,7 +251,9 @@ export default function AboutPage() {
                         <div className="text-xs font-semibold tracking-wide text-[#f3f3f3e6]/80">
                           {t.year}
                         </div>
-                        <h3 className="mt-2 text-lg font-heading font-semibold text-[#f3f3f3e6] text-left">{t.title}</h3>
+                        <h3 className="mt-2 text-lg font-heading font-semibold text-[#f3f3f3e6] text-left">
+                          {t.title}
+                        </h3>
                         <p className="mt-3 text-sm text-[#f3f3f3e6]">{t.text}</p>
                       </div>
                     </div>
@@ -231,8 +266,8 @@ export default function AboutPage() {
 
         <GlobalCTA onOfficesOpen={() => {}} />
       </main>
- 
-       <Footer />
-     </>
-   )
+
+      <Footer />
+    </>
+  );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import SearchOverlay from "@/components/search-overlay";
@@ -8,18 +8,17 @@ import Link from "next/link";
 import GlobalCTA from "@/components/global-cta";
 import OfficesModal from "@/components/offices-modal";
 import { useLanguage } from "@/components/LanguageProvider";
+import { getBannerByImgName } from "@/lib/banners";
 
 export default function CareersPage() {
   const { language } = useLanguage();
   const [searchOpen, setSearchOpen] = useState(false);
   const [officesOpen, setOfficesOpen] = useState(false);
+  const [bannerUrl, setBannerUrl] = useState<string | null>(null);
 
   const content = {
     en: {
-      hero: {
-        kicker: "LIFE AT NINJA INFOSYS",
-        title: "Careers",
-      },
+      hero: { kicker: "LIFE AT NINJA INFOSYS", title: "Careers" },
       body: {
         noOpenings: "Currently, there are no active openings at Ninja Infosys.",
         stayTuned: "Please stay tuned — new opportunities will be announced here soon.",
@@ -27,10 +26,7 @@ export default function CareersPage() {
       },
     },
     ne: {
-      hero: {
-        kicker: "निन्जा इन्फोसिसमा जीवन",
-        title: "क्यारियर",
-      },
+      hero: { kicker: "निन्जा इन्फोसिसमा जीवन", title: "क्यारियर" },
       body: {
         noOpenings: "हाल निन्जा इन्फोसिसमा कुनै सक्रिय अवसरहरू छैनन्।",
         stayTuned: "कृपया पर्खिनुहोस् — नयाँ अवसरहरू चाँडै यहाँ प्रकाशित गरिनेछ।",
@@ -41,16 +37,37 @@ export default function CareersPage() {
 
   const t = content[language];
 
+  useEffect(() => {
+    let mounted = true;
+    getBannerByImgName("career")
+      .then((url) => {
+        if (!mounted) return;
+        if (url) setBannerUrl(url);
+        else setBannerUrl(null);
+      })
+      .catch((err) => {
+        console.error("Error loading career banner:", err);
+        if (!mounted) return;
+        setBannerUrl(null);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <>
       <Header />
       <main className="relative bg-black text-white">
-        {/* HERO SECTION */}
         <section className="relative z-10">
           <div className="relative min-h-[70vh]">
             <div
-              className="absolute inset-0 bg-cover bg-center bg-fixed grayscale"
-              style={{ backgroundImage: "url('/careers.png')" }}
+              className="absolute inset-0 bg-center bg-fixed grayscale"
+              style={
+                bannerUrl
+                  ? { backgroundImage: `url('${bannerUrl}')`, backgroundSize: "cover" }
+                  : {}
+              }
             />
             <div className="absolute inset-0 bg-black/65" />
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12 flex items-center min-h-[70vh]">
@@ -85,7 +102,6 @@ export default function CareersPage() {
           </div>
         </section>
 
-        {/* BODY SECTION */}
         <section className="border-t border-white/10">
           <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
             <div className="py-12 sm:py-16">
@@ -121,4 +137,3 @@ export default function CareersPage() {
     </>
   );
 }
-
