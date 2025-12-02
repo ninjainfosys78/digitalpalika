@@ -13,17 +13,18 @@ type ClientPost = {
   date?: string;
   deck?: string;
   excerpt?: string;
-  readTime?: string;           // ✅ added
+  readTime?: string; // ✅ added
 };
 
 type Post = ClientPost | PostMeta;
 
 interface BlogsClientProps {
   posts: Post[];
+  bannerUrl?: string;
   initialLanguage?: "en" | "ne";
 }
 
-export default function BlogsClient({ posts }: BlogsClientProps) {
+export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
   const { language } = useLanguage();
 
   const labels = {
@@ -38,13 +39,19 @@ export default function BlogsClient({ posts }: BlogsClientProps) {
       <section className="relative z-10">
         <div className="relative min-h-[44vh] pt-24 lg:pt-28">
           <div
-            className="absolute inset-0 bg-cover bg-center bg-fixed opacity-60"
-            style={{ backgroundImage: "url('/insights.jpg')" }}
+            className="absolute inset-0 bg-cover bg-center bg-fixed opacity-60 grayscale"
+            style={{
+              backgroundImage: `url('${bannerUrl || "/insights.jpg"}')`,
+            }}
           />
+
           <div className="absolute inset-0 bg-black/60" />
           <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
             <div className="max-w-[1200px] text-left">
-              <nav aria-label="Breadcrumb" className="mt-4 text-sm text-white/80">
+              <nav
+                aria-label="Breadcrumb"
+                className="mt-4 text-sm text-white/80"
+              >
                 <ol className="flex items-center gap-3">
                   <li>
                     <Link

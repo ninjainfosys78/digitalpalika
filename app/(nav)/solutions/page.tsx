@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { getBannerByImgName } from "@/lib/banners";
 
 import Header from "@/components/header";
 import GlobalCTA from "@/components/global-cta";
@@ -20,6 +21,7 @@ export default function SolutionsPage() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [officesOpen, setOfficesOpen] = useState(false);
   const [active, setActive] = useState<Key | null>(null);
+  const [bannerUrl, setBannerUrl] = useState<string | null>(null);
 
   const router = useRouter();
   const params = useSearchParams();
@@ -35,6 +37,21 @@ export default function SolutionsPage() {
     setActive(key);
     router.replace(`/solutions?cat=${key}`);
   };
+
+  useEffect(() => {
+    let mounted = true;
+    getBannerByImgName("solutions")
+      .then((url) => {
+        if (!mounted) return;
+        setBannerUrl(url || null);
+      })
+      .catch((err) => {
+        console.error("Failed to load solutions banner:", err);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -252,11 +269,17 @@ export default function SolutionsPage() {
   );
 
   const leftNav = [
-    { label: { en: "Government & Municipality", ne: "सरकार/पालिका" }, key: "gov" as Key },
+    {
+      label: { en: "Government & Municipality", ne: "सरकार/पालिका" },
+      key: "gov" as Key,
+    },
     { label: { en: "Education", ne: "शिक्षा" }, key: "edu" as Key },
     { label: { en: "Healthcare", ne: "स्वास्थ्य" }, key: "health" as Key },
     { label: { en: "FinTech", ne: "फिनटेक" }, key: "fin" as Key },
-    { label: { en: "Corporate Solutions", ne: "कर्पोरेट समाधान" }, key: "corp" as Key },
+    {
+      label: { en: "Corporate Solutions", ne: "कर्पोरेट समाधान" },
+      key: "corp" as Key,
+    },
   ];
 
   const detail = active ? content[active][language as Lang] : null;
@@ -271,8 +294,16 @@ export default function SolutionsPage() {
           <div className="relative min-h-[50vh] pt-28 lg:pt-32">
             <div
               className="absolute inset-0 bg-cover bg-center bg-fixed grayscale"
-              style={{ backgroundImage: "url('/industry.jpg')" }}
+              style={
+                bannerUrl
+                  ? {
+                      backgroundImage: `url('${bannerUrl}')`,
+                      backgroundSize: "cover",
+                    }
+                  : {}
+              }
             />
+
             <div className="absolute inset-0 bg-black/70" />
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
               <div className="max-w-[1200px] text-left">
@@ -289,10 +320,7 @@ export default function SolutionsPage() {
                         NINJA INFOSYS
                       </Link>
                     </li>
-                    <li
-                      aria-hidden
-                      className="inline-flex items-center"
-                    >
+                    <li aria-hidden className="inline-flex items-center">
                       <svg
                         viewBox="0 0 24 24"
                         className="h-5 w-5 text-white/70"
@@ -314,10 +342,7 @@ export default function SolutionsPage() {
                     </li>
                     {active && (
                       <>
-                        <li
-                          aria-hidden
-                          className="inline-flex items-center"
-                        >
+                        <li aria-hidden className="inline-flex items-center">
                           <svg
                             viewBox="0 0 24 24"
                             className="h-5 w-5 text-white/70"
@@ -486,10 +511,7 @@ export default function SolutionsPage() {
         <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />
       </main>
 
-      <SearchOverlay
-        isOpen={searchOpen}
-        onClose={() => setSearchOpen(false)}
-      />
+      <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
       <OfficesModal
         isOpen={officesOpen}
         onClose={() => setOfficesOpen(false)}
