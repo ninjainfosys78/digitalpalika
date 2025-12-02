@@ -16,6 +16,7 @@ export async function getBannerByImgName(imgName: string): Promise<string | null
       return name === target;
     });
 
+    
     if (!match) return null;
 
     const file =

@@ -24,6 +24,7 @@ import { getBannerByImgName } from "@/lib/banners";
 export default function AboutPage() {
   const { language } = useLanguage();
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
+  const [secondImageUrl, setSecondImageUrl] = useState<string | null>(null);
 
   const content =
     language === "en"
@@ -35,38 +36,71 @@ export default function AboutPage() {
             "Ninja Infosys is an IT technical solution provider. Our dedicated technical professionals offer our clients services in the field of IT Consultancy, Software Development, Web/Mobile Application Development, Project-based solutions and IT System Maintenance. Our mission from the very first day has been to establish professional relationship with our clients, to provide effective and reliable information technology solutions for their need.",
           coreTitle: "Our Core",
           features: [
-            { icon: Handshake, title: "Collaboration", desc: "Working closely with partners" },
-            { icon: Globe2, title: "Global research", desc: "Multi-region delivery" },
-            { icon: ShieldCheck, title: "Trust & Security", desc: "Secure, reliable solutions" },
-            { icon: BadgeCheck, title: "Quality", desc: "Standards & Certifications" },
+            {
+              icon: Handshake,
+              title: "Collaboration",
+              desc: "Working closely with partners",
+            },
+            {
+              icon: Globe2,
+              title: "Global research",
+              desc: "Multi-region delivery",
+            },
+            {
+              icon: ShieldCheck,
+              title: "Trust & Security",
+              desc: "Secure, reliable solutions",
+            },
+            {
+              icon: BadgeCheck,
+              title: "Quality",
+              desc: "Standards & Certifications",
+            },
           ],
           core: [
             {
               icon: Eye,
               title: "Our purpose",
-              body:
-                "Build trustworthy software that helps teams move faster, operate safely, and deliver real outcomes—without the drama.",
+              body: "Build trustworthy software that helps teams move faster, operate safely, and deliver real outcomes—without the drama.",
             },
             {
               icon: Target,
               title: "Our mission",
-              body:
-                "Enable enterprises with modern engineering practices and small, craft-focused teams—shipping measurable value, iteratively.",
+              body: "Enable enterprises with modern engineering practices and small, craft-focused teams—shipping measurable value, iteratively.",
             },
             {
               icon: Heart,
               title: "Our values",
-              body:
-                "Craft and clarity, integrity and ownership, partner mindset, accessibility and security by default, and continuous improvement.",
+              body: "Craft and clarity, integrity and ownership, partner mindset, accessibility and security by default, and continuous improvement.",
             },
           ],
           storyTitle: "Our story",
           timeline: [
-            { year: "2016", title: "Humble start", text: "Ninja Infosys began as a two-person studio focused on resilient web systems." },
-            { year: "2018", title: "First Fortune 500", text: "Scaled payment and risk platforms, bringing modern DevEx into legacy estates." },
-            { year: "2020", title: "Platform practice", text: "Launched our internal developer platform accelerators and reliability program." },
-            { year: "2023", title: "Data & AI", text: "Added pragmatic AI—retrieval, evaluation, and safety—to shipping products." },
-            { year: "2025", title: "Global footprint", text: "Multi-region delivery with the same small-team DNA and craft standards." },
+            {
+              year: "2016",
+              title: "Humble start",
+              text: "Ninja Infosys began as a two-person studio focused on resilient web systems.",
+            },
+            {
+              year: "2018",
+              title: "First Fortune 500",
+              text: "Scaled payment and risk platforms, bringing modern DevEx into legacy estates.",
+            },
+            {
+              year: "2020",
+              title: "Platform practice",
+              text: "Launched our internal developer platform accelerators and reliability program.",
+            },
+            {
+              year: "2023",
+              title: "Data & AI",
+              text: "Added pragmatic AI—retrieval, evaluation, and safety—to shipping products.",
+            },
+            {
+              year: "2025",
+              title: "Global footprint",
+              text: "Multi-region delivery with the same small-team DNA and craft standards.",
+            },
           ],
         }
       : {
@@ -76,24 +110,72 @@ export default function AboutPage() {
           whoDesc:
             "निन्जा इन्फोसिस एक आईटी प्राविधिक समाधान प्रदायक हो। हाम्रा समर्पित प्राविधिक पेशेवरहरूले ग्राहकहरूलाई आईटी परामर्श, सफ्टवेयर विकास, वेब/मोबाइल एप विकास, परियोजना-आधारित समाधान र आईटी प्रणाली मर्मतसम्भारमा सेवाहरू प्रदान गर्दछन्। सुरुदेखि नै हाम्रो लक्ष्य ग्राहकहरूसँग व्यावसायिक सम्बन्ध स्थापन गरी प्रभावकारी र भरपर्दो सूचना प्रविधि समाधानहरू उपलब्ध गराउनु हो।",
           features: [
-            { icon: Handshake, title: "सहकार्य", desc: "साझेदारहरूसँग नजिकबाट काम गरिन्छ" },
-            { icon: Globe2, title: "वैश्विक शोध", desc: "बहु-क्षेत्रीय डेलिभरी" },
-            { icon: ShieldCheck, title: "विश्वास र सुरक्षा", desc: "सुरक्षित, भरपर्दो समाधान" },
-            { icon: BadgeCheck, title: "गुणस्तर", desc: "मानक र प्रमाणपत्रहरू" },
+            {
+              icon: Handshake,
+              title: "सहकार्य",
+              desc: "साझेदारहरूसँग नजिकबाट काम गरिन्छ",
+            },
+            {
+              icon: Globe2,
+              title: "वैश्विक शोध",
+              desc: "बहु-क्षेत्रीय डेलिभरी",
+            },
+            {
+              icon: ShieldCheck,
+              title: "विश्वास र सुरक्षा",
+              desc: "सुरक्षित, भरपर्दो समाधान",
+            },
+            {
+              icon: BadgeCheck,
+              title: "गुणस्तर",
+              desc: "मानक र प्रमाणपत्रहरू",
+            },
           ],
           coreTitle: "हाम्रो मूल",
           core: [
-            { icon: Eye, title: "हाम्रो उद्देश्य", body: "विश्वासयोग्य सफ्टवेयर बनाउनु—जसले टिमलाई छिटो र सुरक्षित रूपमा काम गर्न मद्दत गर्छ र वास्तविक नतिजा दिन्छ।" },
-            { icon: Target, title: "हाम्रो मिशन", body: "आधुनिक इन्जिनियरिङ अभ्यास र साना, कौशल केन्द्रित टोलीमार्फत क्रमिक रूपमा मापनयोग्य मूल्य डेलिभर गराउने।" },
-            { icon: Heart, title: "हाम्रो मूल्यहरू", body: "कला र स्पष्टता, इमानदारी र स्वामित्व, साझेदारी सोच, पहुँचयोग्यता र सुरक्षा-पहिले, र निरन्तर सुधार।" },
+            {
+              icon: Eye,
+              title: "हाम्रो उद्देश्य",
+              body: "विश्वासयोग्य सफ्टवेयर बनाउनु—जसले टिमलाई छिटो र सुरक्षित रूपमा काम गर्न मद्दत गर्छ र वास्तविक नतिजा दिन्छ।",
+            },
+            {
+              icon: Target,
+              title: "हाम्रो मिशन",
+              body: "आधुनिक इन्जिनियरिङ अभ्यास र साना, कौशल केन्द्रित टोलीमार्फत क्रमिक रूपमा मापनयोग्य मूल्य डेलिभर गराउने।",
+            },
+            {
+              icon: Heart,
+              title: "हाम्रो मूल्यहरू",
+              body: "कला र स्पष्टता, इमानदारी र स्वामित्व, साझेदारी सोच, पहुँचयोग्यता र सुरक्षा-पहिले, र निरन्तर सुधार।",
+            },
           ],
           storyTitle: "हाम्रो कथा",
           timeline: [
-            { year: "२०१६", title: "न्यानो सुरुवात", text: "निन्जा इन्फोसिस दुई जनाबाट सुरु भयो—लचिलो वेब प्रणालीहरूमा केन्द्रित।" },
-            { year: "२०१८", title: "पहिलो फोर्च्यून ५००", text: "भुक्तानी र जोखिम प्लेटफर्म स्केल गर्दै आधुनिक डेभएक्स पुर्‍यायौँ।" },
-            { year: "२०२०", title: "प्लेटफर्म अभ्यास", text: "आन्तरिक डेभलपर प्लेटफर्म त्वरक र विश्वसनीयता कार्यक्रम सुरु।" },
-            { year: "२०२३", title: "डेटा र एआई", text: "व्यावहारिक एआई—प्राप्ति, मूल्याङ्कन, सुरक्षा—उत्पादनमा।" },
-            { year: "२०२५", title: "वैश्विक उपस्थिति", text: "समान सानो-टिम डीएनए र कला मानकसहित बहु-क्षेत्रीय डेलिभरी।" },
+            {
+              year: "२०१६",
+              title: "न्यानो सुरुवात",
+              text: "निन्जा इन्फोसिस दुई जनाबाट सुरु भयो—लचिलो वेब प्रणालीहरूमा केन्द्रित।",
+            },
+            {
+              year: "२०१८",
+              title: "पहिलो फोर्च्यून ५००",
+              text: "भुक्तानी र जोखिम प्लेटफर्म स्केल गर्दै आधुनिक डेभएक्स पुर्‍यायौँ।",
+            },
+            {
+              year: "२०२०",
+              title: "प्लेटफर्म अभ्यास",
+              text: "आन्तरिक डेभलपर प्लेटफर्म त्वरक र विश्वसनीयता कार्यक्रम सुरु।",
+            },
+            {
+              year: "२०२३",
+              title: "डेटा र एआई",
+              text: "व्यावहारिक एआई—प्राप्ति, मूल्याङ्कन, सुरक्षा—उत्पादनमा।",
+            },
+            {
+              year: "२०२५",
+              title: "वैश्विक उपस्थिति",
+              text: "समान सानो-टिम डीएनए र कला मानकसहित बहु-क्षेत्रीय डेलिभरी।",
+            },
           ],
         };
 
@@ -103,6 +185,12 @@ export default function AboutPage() {
       if (!mounted) return;
       setBannerUrl(url || null);
     });
+
+    getBannerByImgName("about-2").then((url) => {
+      if (!mounted) return;
+      setSecondImageUrl(url || null);
+    });
+
     return () => {
       mounted = false;
     };
@@ -119,7 +207,10 @@ export default function AboutPage() {
               className="absolute inset-0 bg-center bg-fixed filter grayscale"
               style={
                 bannerUrl
-                  ? { backgroundImage: `url('${bannerUrl}')`, backgroundSize: "cover" }
+                  ? {
+                      backgroundImage: `url('${bannerUrl}')`,
+                      backgroundSize: "cover",
+                    }
                   : {}
               }
             />
@@ -127,19 +218,33 @@ export default function AboutPage() {
 
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
               <div className="max-w-[1600px] text-left">
-                <nav aria-label="Breadcrumb" className="mt-0 text-sm text-[#f3f3f3e6]">
+                <nav
+                  aria-label="Breadcrumb"
+                  className="mt-0 text-sm text-[#f3f3f3e6]"
+                >
                   <ol className="flex items-center gap-3">
                     <li>
-                      <Link href="/" className="font-medium tracking-wide hover:text-[#f3f3f3e6]">
+                      <Link
+                        href="/"
+                        className="font-medium tracking-wide hover:text-[#f3f3f3e6]"
+                      >
                         {content.brand}
                       </Link>
                     </li>
                     <li aria-hidden className="inline-flex items-center">
-                      <svg viewBox="0 0 24 24" className="h-5 w-5 text-[#f3f3f3e6]" fill="none" stroke="currentColor" strokeWidth="2">
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="h-5 w-5 text-[#f3f3f3e6]"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
                         <path d="M9 18l6-6-6-6" />
                       </svg>
                     </li>
-                    <li className="font-medium tracking-wide">{content.heroTitle}</li>
+                    <li className="font-medium tracking-wide">
+                      {content.heroTitle}
+                    </li>
                   </ol>
                 </nav>
 
@@ -157,7 +262,7 @@ export default function AboutPage() {
               <div className="md:col-span-6">
                 <div className="h-[420px] overflow-hidden">
                   <img
-                    src="/about-2.png"
+                    src={secondImageUrl || "/about-2.png"}
                     alt="Who we are"
                     className="w-full h-full object-cover grayscale"
                   />
@@ -175,13 +280,20 @@ export default function AboutPage() {
                   {content.features.map((f) => {
                     const Icon = f.icon;
                     return (
-                      <div key={f.title} className="flex items-start gap-3 bg-[#000000] p-4">
+                      <div
+                        key={f.title}
+                        className="flex items-start gap-3 bg-[#000000] p-4"
+                      >
                         <span className="inline-flex h-9 w-9 items-center justify-center bg-[#141414] text-[#f3f3f3e6]">
                           <Icon size={16} />
                         </span>
                         <div>
-                          <div className="text-sm font-semibold text-[#f3f3f3e6]">{f.title}</div>
-                          <div className="text-xs text-[#f3f3f3e6]">{f.desc}</div>
+                          <div className="text-sm font-semibold text-[#f3f3f3e6]">
+                            {f.title}
+                          </div>
+                          <div className="text-xs text-[#f3f3f3e6]">
+                            {f.desc}
+                          </div>
                         </div>
                       </div>
                     );
@@ -214,7 +326,9 @@ export default function AboutPage() {
                       {title}
                     </h3>
                   </div>
-                  <p className="mt-3 text-sm leading-6 text-[#f3f3f3e6]">{body}</p>
+                  <p className="mt-3 text-sm leading-6 text-[#f3f3f3e6]">
+                    {body}
+                  </p>
                 </article>
               ))}
             </div>
@@ -254,7 +368,9 @@ export default function AboutPage() {
                         <h3 className="mt-2 text-lg font-heading font-semibold text-[#f3f3f3e6] text-left">
                           {t.title}
                         </h3>
-                        <p className="mt-3 text-sm text-[#f3f3f3e6]">{t.text}</p>
+                        <p className="mt-3 text-sm text-[#f3f3f3e6]">
+                          {t.text}
+                        </p>
                       </div>
                     </div>
                   </li>
