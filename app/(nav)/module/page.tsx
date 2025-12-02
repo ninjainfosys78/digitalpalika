@@ -6,6 +6,7 @@ import Footer from '@/components/footer';
 import { useLanguage } from '@/context/LanguageContext';
 import { siteData } from '@/lib/siteData';
 import { ModuleIcon } from '@/components/ModulesSection';
+import Demo from '@/components/demo';
 
 export default function ModulePage() {
     const { t } = useLanguage();
@@ -15,7 +16,7 @@ export default function ModulePage() {
         <Fragment>
             <Header />
             <main id="main-content" className="bg-white pt-12 min-h-screen">
-                <div className="container mx-auto px-4">
+                <div className="container mx-auto px-4 pb-16">
                     {/* Section Header */}
                     <div className="text-center mb-10">
                         <span className="block text-[#003893] font-semibold mb-2">Modules</span>
@@ -44,33 +45,8 @@ export default function ModulePage() {
                         ))}
                     </div>
                 </div>
-
-                {/* Demo Section - full width, only Tailwind */}
-                <section className="w-full bg-[#e9eff7] mt-12 py-12">
-                    <div className="max-w-3xl mx-auto text-center">
-                        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 mb-4">
-                            {t({
-                                en: "Do you want to see a Demo?",
-                                ne: "डेमो हेर्न चाहनुहुन्छ?"
-                            })}
-                        </h2>
-                        <p className="text-gray-700 max-w-2xl mx-auto mb-8">
-                            {t({
-                                en: "Hello, we are continuously campaigning to transform you and your municipality into digital. We want to understand the situation and needs of your municipality and show to demo to transform into technology-friendly municipality.",
-                                ne: "नमस्ते, हामी तपाईं र तपाईंको पालिकालाई डिजिटलमा रूपान्तरण गर्न निरन्तर अभियान सञ्चालन गर्दैछौं। हामी तपाईंको पालिकाको अवस्था र आवश्यकताहरू बुझ्न चाहन्छौं र प्रविधिमैत्री पालिकामा रूपान्तरण गर्न डेमो देखाउन चाहन्छौं।"
-                            })}
-                        </p>
-                        <a
-                            href="/contact"
-                            className="inline-flex items-center justify-center px-6 py-2 text-sm font-semibold bg-[#003893] text-white hover:bg-[#002366] transition rounded-none min-w-[120px]"
-                        >
-                            {t({ en: "See Demo", ne: "डेमो हेर्नुहोस्" })}
-                            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
-                            </svg>
-                        </a>
-                    </div>
-                </section>
+                {/* Demo Section from homepage */}
+                <Demo />
             </main>
             <Footer />
         </Fragment>
