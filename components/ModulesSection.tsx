@@ -2,150 +2,96 @@
 
 import { useLanguage, LocalizedString } from '@/context/LanguageContext';
 
-interface Module {
+// Only the first 5 modules
+export const modules: {
     id: string;
     icon: string;
     title: LocalizedString;
-}
+}[] = [
+    {
+        id: "digital-archive",
+        icon: "FileText",
+        title: {
+            en: "Digital Archive",
+            ne: "डिजिटल नागरिक बडापत्र"
+        }
+    },
+    {
+        id: "office-automation",
+        icon: "Briefcase",
+        title: {
+            en: "Office Automation",
+            ne: "अफिस अटोमेसन"
+        }
+    },
+    {
+        id: "fuel-management",
+        icon: "Fuel",
+        title: {
+            en: "Fuel Management System",
+            ne: "इन्धन व्यवस्थापन प्रणाली"
+        }
+    },
+    {
+        id: "complaint-portal",
+        icon: "MessageCircleWarning",
+        title: {
+            en: "Complaint Portal",
+            ne: "गुनासो पोर्टल"
+        }
+    },
+    {
+        id: "meeting-management",
+        icon: "Users2",
+        title: {
+            en: "Meeting Management",
+            ne: "बैठक प्रणाली"
+        }
+    }
+];
 
-interface ModulesSectionProps {
-    title: LocalizedString;
-    subtitle: LocalizedString;
-    modules: Module[];
-    onLearnMore?: () => void; // Optional handler for the button
-}
+// Only SVGs for the first 5 modules
+const LucideIcons: Record<string, React.ReactNode> = {
+    FileText: (
+        <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
+            <rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor"/>
+            <rect x="8" y="7" width="8" height="2" rx="0.5" fill="currentColor"/>
+            <rect x="8" y="11" width="8" height="2" rx="0.5" fill="currentColor"/>
+        </svg>
+    ),
+    Briefcase: (
+        <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
+            <rect x="2" y="7" width="20" height="13" rx="2" stroke="currentColor"/>
+            <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="currentColor"/>
+        </svg>
+    ),
+    Fuel: (
+        <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
+            <rect x="3" y="11" width="13" height="10" rx="2" stroke="currentColor"/>
+            <circle cx="7.5" cy="16.5" r="1.5" fill="currentColor"/>
+            <circle cx="13.5" cy="16.5" r="1.5" fill="currentColor"/>
+            <path d="M16 16v-5a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v5" stroke="currentColor"/>
+        </svg>
+    ),
+    MessageCircleWarning: (
+        <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" stroke="currentColor"/>
+            <path d="M12 8v4" stroke="currentColor" strokeLinecap="round"/>
+            <circle cx="12" cy="16" r="1" fill="currentColor"/>
+        </svg>
+    ),
+    Users2: (
+        <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
+            <circle cx="9" cy="7" r="4" stroke="currentColor"/>
+            <circle cx="17" cy="13" r="3" stroke="currentColor"/>
+            <path d="M2 21v-2a4 4 0 0 1 4-4h6" stroke="currentColor"/>
+            <path d="M17 21v-1a4 4 0 0 0-3-3.87" stroke="currentColor"/>
+        </svg>
+    ),
+};
 
-// SVG Icon Component (black icons)
-const ModuleIcon = ({ name }: { name: string }) => {
-    const icons: Record<string, React.ReactNode> = {
-        "digital-archive-system": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <rect x="6" y="3" width="12" height="18" rx="2" stroke="currentColor"/>
-                <path d="M9 9h6M9 13h6" stroke="currentColor" strokeLinecap="round"/>
-            </svg>
-        ),
-        "office-automation": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <polygon points="12 2 2 7 12 12 22 7 12 2" stroke="currentColor"/>
-                <rect x="2" y="7" width="20" height="13" rx="2" stroke="currentColor"/>
-            </svg>
-        ),
-        "citizen-charter-and-record-management": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor"/>
-                <path d="M8 8h8M8 12h8M8 16h4" stroke="currentColor" strokeLinecap="round"/>
-            </svg>
-        ),
-        "integrated-mobile-application": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <rect x="7" y="2" width="10" height="20" rx="2" stroke="currentColor"/>
-                <circle cx="12" cy="18" r="1" fill="currentColor"/>
-                <path d="M11 5h2" stroke="currentColor" strokeLinecap="round"/>
-            </svg>
-        ),
-        "grant-management-system": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path d="M12 2L2 20h20L12 2z" stroke="currentColor"/>
-                <circle cx="12" cy="16" r="1" fill="currentColor"/>
-            </svg>
-        ),
-        "hospital-system": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor"/>
-                <path d="M12 8v8M8 12h8" stroke="currentColor" strokeLinecap="round"/>
-            </svg>
-        ),
-        "digital-house-mapping": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="8" stroke="currentColor"/>
-                <path d="M12 8v4l3 3" stroke="currentColor" strokeLinecap="round"/>
-            </svg>
-        ),
-        "digital-ivr-call-system": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" stroke="currentColor"/>
-                <circle cx="8" cy="12" r="1" fill="currentColor"/>
-                <circle cx="16" cy="12" r="1" fill="currentColor"/>
-                <path d="M9 16c1.5 1 4.5 1 6 0" stroke="currentColor" strokeLinecap="round"/>
-            </svg>
-        ),
-        "digital-card-system": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <rect x="3" y="7" width="18" height="10" rx="2" stroke="currentColor"/>
-                <path d="M3 10h18" stroke="currentColor"/>
-            </svg>
-        ),
-        "complaint-and-roster-system": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path d="M21 10V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v4" stroke="currentColor"/>
-                <path d="M7 14h10M12 17v-3" stroke="currentColor" strokeLinecap="round"/>
-                <circle cx="19" cy="19" r="2" stroke="currentColor"/>
-                <circle cx="5" cy="19" r="2" stroke="currentColor"/>
-            </svg>
-        ),
-        "court-judicial-system": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path d="M12 3v18M5 21h14M3 7h18" stroke="currentColor"/>
-                <path d="M7 7v4a2 2 0 1 1-4 0V7" stroke="currentColor"/>
-                <path d="M21 7v4a2 2 0 1 1-4 0V7" stroke="currentColor"/>
-            </svg>
-        ),
-        "project-management-system": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"/>
-                <path d="M7 7h10v10H7z" stroke="currentColor"/>
-            </svg>
-        ),
-        "bank-management-system": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <polygon points="12 2 2 7 12 12 22 7 12 2" stroke="currentColor"/>
-                <rect x="2" y="7" width="20" height="13" rx="2" stroke="currentColor"/>
-            </svg>
-        ),
-        "birth-registration-and-mapping": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <circle cx="12" cy="8" r="4" stroke="currentColor"/>
-                <path d="M6 20v-2a4 4 0 0 1 8 0v2" stroke="currentColor"/>
-            </svg>
-        ),
-        "organization-department-system": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor"/>
-                <path d="M16 3v4M8 3v4" stroke="currentColor"/>
-            </svg>
-        ),
-        "recommendation-system": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" stroke="currentColor"/>
-                <path d="M8 12l2 2 4-4" stroke="currentColor" strokeLinecap="round"/>
-            </svg>
-        ),
-        "digital-archive-record": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <rect x="6" y="3" width="12" height="18" rx="2" stroke="currentColor"/>
-                <path d="M9 9h6M9 13h6" stroke="currentColor" strokeLinecap="round"/>
-            </svg>
-        ),
-        "office-automation-2": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <polygon points="12 2 2 7 12 12 22 7 12 2" stroke="currentColor"/>
-                <rect x="2" y="7" width="20" height="13" rx="2" stroke="currentColor"/>
-            </svg>
-        ),
-        "service-fee-management-system": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path d="M12 1v22M5 6h14M5 18h14" stroke="currentColor"/>
-            </svg>
-        ),
-        "complaint-portal": (
-            <svg className="w-10 h-10 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" stroke="currentColor"/>
-                <circle cx="12" cy="16" r="1" fill="currentColor"/>
-                <path d="M12 8v4" stroke="currentColor" strokeLinecap="round"/>
-            </svg>
-        ),
-    };
-    return icons[name] || (
+export const ModuleIcon = ({ name }: { name: string }) => {
+    return LucideIcons[name] || (
         <svg className="w-10 h-10 mb-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10" stroke="currentColor" />
             <path d="M8 12l2 2 4-4" stroke="currentColor" strokeLinecap="round" />
@@ -153,13 +99,22 @@ const ModuleIcon = ({ name }: { name: string }) => {
     );
 };
 
+// Add the correct type for ModulesSectionProps
+export interface ModulesSectionProps {
+    title: LocalizedString;
+    subtitle: LocalizedString;
+    modules: typeof modules;
+    onLearnMore?: () => void;
+}
+
 export function ModulesSection({ title, subtitle, modules, onLearnMore }: ModulesSectionProps) {
     const { t } = useLanguage();
 
     // Only show the first 5 modules for the homepage
     const visibleModules = modules.slice(0, 5);
 
-    console.log(modules.map(m => m.id));
+    // Fix: m should be module in the map function for clarity and correctness
+    console.log(modules.map(module => module.id));
 
     return (
         <section className="bg-white py-12 md:py-16">
@@ -176,14 +131,14 @@ export function ModulesSection({ title, subtitle, modules, onLearnMore }: Module
 
                 {/* Modules Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 justify-items-center mb-8">
-                    {visibleModules.map((module) => (
+                    {visibleModules.map(module => (
                         <div
                             key={module.id}
                             className="w-full max-w-xs bg-white border border-gray-300 p-6 flex flex-col items-center justify-center text-center hover:shadow-md transition-all duration-200"
                         >
                             {/* Icon */}
                             <div className="mb-4">
-                                <ModuleIcon name={module.id} />
+                                <ModuleIcon name={module.icon} />
                             </div>
                             {/* Title */}
                             <h3 className="text-base font-bold text-black leading-tight">
@@ -209,5 +164,3 @@ export function ModulesSection({ title, subtitle, modules, onLearnMore }: Module
         </section>
     );
 }
-
-export { ModuleIcon };
