@@ -471,237 +471,55 @@ export interface ClientItem {
     id: number;
     image: string; 
     name: LocalizedString;
+    location: string;
+    province: string;
 }
 
 export const clients: ClientItem[] = [
-    {
-        id: 1,
-        image: '/emblemofNepal.png',
-        name: { en: 'Gangadev Rural Municipality, Rolpa', ne: 'गंगादेव गाउँपालिका, रोल्पा' }
-    },
-     {
-        id: 2,
-        image: '/emblemofNepal.png',
-        name: { en: 'Kathmandu Metropolitan City, Kathmandu', ne: 'काठमाडौँ महानगरपालिका, काठमाडौँ' }
-    },
-        {
-        id: 3,
-        image: '/emblemofNepal.png',
-        name: { en: 'Rohini Rural Municipality, Rupandehi', ne: 'रोहिणी गाउँपालिका, रुपन्देही' }
-    },
-        {
-        id: 4,
-        image: '/emblemofNepal.png',
-        name: { en: 'Ghorahi Sub-Metropolitan City, Ghorahi, Dang', ne: 'घोराही उपमहानगरपालिका, घोराही, दाङ' }
-    },
-        {
-        id: 5,
-        image: '/emblemofNepal.png',
-        name: { en: 'Adanchuli Rural Municipality, Humla', ne: 'अदानचुली गाउँपालिका, हुम्ला' }
-    },
-        {
-        id: 6,
-        image: '/emblemofNepal.png',
-        name: { en: 'Gaidahawa Rural Municipality, Rupandehi, Nepal', ne: 'गैडहवा गाउँपालिका , रुपन्देही, नेपाल' }
-    },
-        {
-        id: 7,
-        image: '/emblemofNepal.png',
-        name: { en: 'Madhuwan Municipality, Madhuwan -6 Bardiya', ne: 'मधुवन नगरपालिका, मधुवन - ६ बर्दिया' }
-    },
-        {
-        id: 8,
-        image: '/emblemofNepal.png',
-        name: { en: 'Junichande Rural Municipality, Mazkot Jajarkot', ne: 'जुनीचाँदे गाउँपालिका, मजकोट जाजरकोट' }
-    },
-        {
-        id: 9,
-        image: '/emblemofNepal.png',
-        name: { en: 'Bheri Municipality, Khalanga, Jajarkot, Karnali Province, Nepal', ne: 'भेरी नगरपालिका, खलंगा, जाजरकोट, कर्णाली प्रदेश, नेपाल' }
-    },
-        {
-        id: 10,
-        image: '/emblemofNepal.png',
-        name: { en: 'Bardibas Municipality, Mohattari', ne: 'बर्दिबास नगरपालिका, मोहत्तरी' }
-    },
-        {
-        id: 11,
-        image: '/emblemofNepal.png',
-        name: { en: 'Kumakh Rural Municipality, Salyan', ne: 'कुमाख गाउँपालिका, सल्यान' }
-    },
-        {
-        id: 12,
-        image: '/emblemofNepal.png',
-        name: { en: 'Janaki Rural Municipality, Banke', ne: 'जानकी गाउँपालिका, बाँके' }
-    },
-        {
-        id: 13,
-        image: '/emblemofNepal.png',
-        name: { en: 'Dungeshwar Rural Municipality, Dailekh', ne: 'डुङ्गेश्वर गाउँपालिका, दैलेख' }
-    },
-        {
-        id: 14,
-        image: '/emblemofNepal.png',
-        name: { en: 'Baijnath Rural Municipality, Rampur, Banke', ne: 'बैजनाथ गाउँपालिका, रामपुर, बाँके' }
-    },
-        {
-        id: 15,
-        image: '/emblemofNepal.png',
-        name: { en: 'Laljhadi Rural Municipality, Sudurpashchim Province, Kanchanpur', ne: 'लालझाडी गाउँपालिका, सुदूरपश्चिम प्रदेश ,कंचनपुर' }
-    },
-        {
-        id: 16,
-        image: '/emblemofNepal.png',
-        name: { en: 'Rajpur Rural Municipality, Gangadi, Dang', ne: 'राजपुर गाउँपालिका, गंगदी, दाङ' }
-    },
-        {
-        id: 17,
-        image: '/emblemofNepal.png',
-        name: { en: 'Narainapur Rural Municipality, Narainapur, Banke', ne: 'नरैनापुर गाउँपालिका, नरैनापुर, बाँके' }
-    },
-        {
-        id: 18,
-        image: '/emblemofNepal.png',
-        name: { en: 'Putha Uttarganga Rural Municipality, Taksera, Rukum (East)', ne: 'पुथा उत्तरगंगा गाउँपालिका, तकसेरा, रुकुम (पूर्वी भाग)' }
-    },
-        {
-        id: 19,
-        image: '/emblemofNepal.png',
-        name: { en: 'Chingad Rural Municipality, Avalanching, Surkhet, Karnali Province, Nepal', ne: 'चिङ्गाड गाउँपालिका, अवलचिङ्ग, सुर्खेत, कर्णाली प्रदेश, नेपाल' }
-    },
-        {
-        id: 20,
-        image: '/emblemofNepal.png',
-        name: { en: 'Himali Rural Municipality, Bajura', ne: 'हिमाली गाउँपालिका, बाजुरा' }
-    },
-        {
-        id: 21,
-        image: '/emblemofNepal.png',
-        name: { en: 'Nepalgunj Sub-Metropolitan City, Banke', ne: 'नेपालगंज उपमहानगरपालिका , बाँके' }
-    },
-        {
-        id: 22,
-        image: '/emblemofNepal.png',
-        name: { en: 'Khajura Municipality, Khajura, Banke', ne: 'खजुरा नगरपालिका, खजुरा, बाँके' }
-    },
-        {
-        id: 23,
-        image: '/emblemofNepal.png',
-        name: { en: 'Kohalpur Municipality, Banke', ne: 'कोहलपुर नगरपालिका , बाँके' }
-    },
-        {
-        id: 24,
-        image: '/emblemofNepal.png',
-        name: { en: 'Mudkechula Rural Municipality, Dolpa', ne: 'मुड्केचुला गाउँपालिका, डोल्पा' }
-    },
-        {
-        id: 25,
-        image: '/emblemofNepal.png',
-        name: { en: 'Bagchaur Municipality, Salyan', ne: 'बागचौर नगरपालिका, सल्यान' }
-    },
-        {
-        id: 26,
-        image: '/emblemofNepal.png',
-        name: { en: 'Ministry of Land Management, Agriculture and Cooperatives, Madhesh Province', ne: 'भूमि व्यवस्था, कृषि तथा सहकारी मन्त्रालय, मधेश प्रदेश' }
-    },
-        {
-        id: 27,
-        image: '/emblemofNepal.png',
-        name: { en: 'Ministry of Agriculture and Land Management, Gandaki Province', ne: 'कृषि तथा भूमि व्यवस्था मन्त्रालय, गण्डकी प्रदेश' }
-    },
-        {
-        id: 28,
-        image: '/emblemofNepal.png',
-        name: { en: 'Ministry of Land Management, Agriculture and Cooperatives, Karnali Province', ne: 'भूमि व्यवस्था, कृषि तथा सहकारी मन्त्रालय, कर्णाली प्रदेश' }
-    },
-        {
-        id: 29,
-        image: '/emblemofNepal.png',
-        name: { en: 'Ministry of Physical Infrastructure and Urban Development, Karnali Province', ne: 'भौतिक पूर्वाधार तथा शहरी विकास मन्त्रालय, कर्णाली प्रदेश' }
-    },
-        {
-        id: 30,
-        image: '/emblemofNepal.png',
-        name: { en: 'Ministry of Industry, Tourism, Forest and Environment, Sudurpashchim Province', ne: 'उद्योग, पर्यटन, वन तथा वातावरण मन्त्रालय, सुदूरपश्चिम प्रदेश' }
-    },
-        {
-        id: 31,
-        image: '/emblemofNepal.png',
-        name: { en: 'Budhanilkantha Municipality, Hattigauda, Kathmandu', ne: 'बुढानीलकण्ठ नगरपालिका, हात्तीगौडा, काठमाण्डौ' }
-    },
-        {
-        id: 32,
-        image: '/emblemofNepal.png',
-        name: { en: 'Agriculture Research Directorate, Nepalgunj', ne: 'कृषि अनुशन्धान निर्देशनालय, नेपालगंज' }
-    },
-        {
-        id: 33,
-        image: '/emblemofNepal.png',
-        name: { en: 'Directorate of Agriculture Development, Karnali Province.', ne: 'कृषि विकास निर्देशनालय, कर्णाली प्रदेश' }
-    },
-        {
-        id: 34,
-        image: '/emblemofNepal.png',
-        name: { en: 'Directorate of Agriculture Development, Sudurpashchim Province.', ne: 'कृषि विकास निर्देशनालय, सुदूरपश्चिममा प्रदेश' }
-    },
-        {
-        id: 35,
-        image: '/emblemofNepal.png',
-        name: { en: 'Directorate of Livestock Development, Sudurpashchim Province.', ne: 'पशुपंक्षी विकास निर्देशनालय , सुदूरपश्चिममा प्रदेश' }
-    },
-        {
-        id: 36,
-        image: '/KathmanduUniversity.png',
-        name: { en: 'Kathmandu University, Dhulikhel, Kavre', ne: 'काठमाडौं विश्वविद्यालय, धुलिखेल, काभ्रे' }
-    },
-        {
-        id: 37,
-        image: '/savetheChildren.png',
-        name: { en: 'Save the Children, Kathmandu, Nepal', ne: 'सेभ द चिल्ड्रेन, काठमाडौं, नेपाल' }
-    },
-        {
-        id: 38,
-        image: '/tribhuvanUniversity.png',
-        name: { en: 'Tribhuvan University, Kirtipur, Nepal', ne: 'त्रिभुवन विश्वविद्यालय, कीर्तिपुर, नेपाल' }
-    },
-        {
-        id: 39,
-        image: '/emblemofNepal.png',
-        name: { en: 'Rajpur Rural Municipality, Gangadi, Dang', ne: 'राजपुर गाउँपालिका , गंगदी, दाङ' }
-    },
-        {
-        id: 40,
-        image: '/emblemofNepal.png',
-        name: { en: 'Madhuban Municipality, Bardiya, Nepal', ne: 'मधुवन नगरपालिका, बर्दिया, नेपाल' }
-    },
-        {
-        id: 41,
-        image: '/emblemofNepal.png',
-        name: { en: 'Department of Industry, Tripureshwor, Kathmandu', ne: 'उद्योग विभाग, त्रिपुरेश्वर, काठमाडौं' }
-    },
-    {
-        id: 42,
-        image: '/emblemofNepal.png',
-        name: { en: 'Directorate of Agricultural Development, Pokhara, Nepal', ne: 'कृषि विकास निर्देशनालय, पोखरा, नेपाल' }
-    },
-     {
-        id: 43,
-        image: '/emblemofNepal.png',
-        name: { en: 'Directorate of Health Services, Birendranagar, Surkhet', ne: 'स्वास्थ्य सेवा निर्देशनालय, वीरेन्द्रनगर, सुर्खेत' }
-    },
-     {
-        id: 44,
-        image: '/emblemofNepal.png',
-        name: { en: 'Adarsha Rural Municipality, Doti, Sudurpashchim Province', ne: 'आदर्श गाउँपालिका, डोटी सुदूरपश्चिम प्रदेश' }
-    },
-     {
-        id: 45,
-        image: '/emblemofNepal.png',
-        name: { en: 'Suryabinayak Municipality, Bhaktapur, Bagmati Province', ne: 'सूर्यविनायक नगरपालिका, भक्तपुर, बागमती प्रदेश' }
-    },
-     {
-        id: 46,
-        image: '/emblemofNepal.png',
-        name: { en: 'Lalitpur Metropolitan City, Lalitpur Bagmati Province', ne: 'ललितपुर महानगरपालिका, ललितपुर बागमती प्रदेश' }
-    },
+    { id: 1, image: '/emblemofNepal.png', name: { en: 'Gangadev Rural Municipality', ne: 'गंगादेव गाउँपालिका' }, location: 'Rolpa', province: 'Lumbini Province' },
+    { id: 2, image: '/emblemofNepal.png', name: { en: 'Kathmandu Metropolitan City', ne: 'काठमाडौँ महानगरपालिका' }, location: 'Kathmandu', province: 'Bagmati Province' },
+    { id: 3, image: '/emblemofNepal.png', name: { en: 'Rohini Rural Municipality', ne: 'रोहिणी गाउँपालिका' }, location: 'Rupandehi', province: 'Lumbini Province' },
+    { id: 4, image: '/emblemofNepal.png', name: { en: 'Ghorahi Sub-Metropolitan City', ne: 'घोराही उपमहानगरपालिका' }, location: 'Dang', province: 'Sudurpashchim Province' },
+    { id: 5, image: '/emblemofNepal.png', name: { en: 'Adanchuli Rural Municipality', ne: 'अदानचुली गाउँपालिका' }, location: 'Humla', province: 'Karnali Province' },
+    { id: 6, image: '/emblemofNepal.png', name: { en: 'Gaidahawa Rural Municipality', ne: 'गैडहवा गाउँपालिका' }, location: 'Rupandehi', province: 'Lumbini Province' },
+    { id: 7, image: '/emblemofNepal.png', name: { en: 'Madhuwan Municipality', ne: 'मधुवन नगरपालिका' }, location: 'Bardiya', province: 'Sudurpashchim Province' },
+    { id: 8, image: '/emblemofNepal.png', name: { en: 'Junichande Rural Municipality', ne: 'जुनीचाँदे गाउँपालिका' }, location: 'Jajarkot', province: 'Gandaki Province' },
+    { id: 9, image: '/emblemofNepal.png', name: { en: 'Bheri Municipality', ne: 'भेरी नगरपालिका' }, location: 'Jajarkot', province: 'Karnali Province' },
+    { id: 10, image: '/emblemofNepal.png', name: { en: 'Bardibas Municipality', ne: 'बर्दिबास नगरपालिका' }, location: 'Mohattari', province: 'Madhesh Province' },
+    { id: 11, image: '/emblemofNepal.png', name: { en: 'Kumakh Rural Municipality', ne: 'कुमाख गाउँपालिका' }, location: 'Salyan', province: 'Karnali Province' },
+    { id: 12, image: '/emblemofNepal.png', name: { en: 'Janaki Rural Municipality', ne: 'जानकी गाउँपालिका' }, location: 'Banke', province: 'Sudurpashchim Province' },
+    { id: 13, image: '/emblemofNepal.png', name: { en: 'Dungeshwar Rural Municipality', ne: 'डुङ्गेश्वर गाउँपालिका' }, location: 'Dailekh', province: 'Karnali Province' },
+    { id: 14, image: '/emblemofNepal.png', name: { en: 'Baijnath Rural Municipality', ne: 'बैजनाथ गाउँपालिका' }, location: 'Banke', province: 'Sudurpashchim Province' },
+    { id: 15, image: '/emblemofNepal.png', name: { en: 'Laljhadi Rural Municipality', ne: 'लालझाडी गाउँपालिका' }, location: 'Kanchanpur', province: 'Sudurpashchim Province' },
+    { id: 16, image: '/emblemofNepal.png', name: { en: 'Rajpur Rural Municipality', ne: 'राजपुर गाउँपालिका' }, location: 'Dang', province: 'Sudurpashchim Province' },
+    { id: 17, image: '/emblemofNepal.png', name: { en: 'Narainapur Rural Municipality', ne: 'नरैनापुर गाउँपालिका' }, location: 'Banke', province: 'Sudurpashchim Province' },
+    { id: 18, image: '/emblemofNepal.png', name: { en: 'Putha Uttarganga Rural Municipality', ne: 'पुथा उत्तरगंगा गाउँपालिका' }, location: 'Rukum', province: 'Gandaki Province' },
+    { id: 19, image: '/emblemofNepal.png', name: { en: 'Chingad Rural Municipality', ne: 'चिङ्गाड गाउँपालिका' }, location: 'Surkhet', province: 'Karnali Province' },
+    { id: 20, image: '/emblemofNepal.png', name: { en: 'Himali Rural Municipality', ne: 'हिमाली गाउँपालिका' }, location: 'Bajura', province: 'Sudurpashchim Province' },
+    { id: 21, image: '/emblemofNepal.png', name: { en: 'Nepalgunj Sub-Metropolitan City', ne: 'नेपालगंज उपमहानगरपालिका' }, location: 'Banke', province: 'Sudurpashchim Province' },
+    { id: 22, image: '/emblemofNepal.png', name: { en: 'Khajura Municipality', ne: 'खजुरा नगरपालिका' }, location: 'Banke', province: 'Sudurpashchim Province' },
+    { id: 23, image: '/emblemofNepal.png', name: { en: 'Kohalpur Municipality', ne: 'कोहलपुर नगरपालिका' }, location: 'Banke', province: 'Sudurpashchim Province' },
+    { id: 24, image: '/emblemofNepal.png', name: { en: 'Mudkechula Rural Municipality', ne: 'मुड्केचुला गाउँपालिका' }, location: 'Dolpa', province: 'Karnali Province' },
+    { id: 25, image: '/emblemofNepal.png', name: { en: 'Bagchaur Municipality', ne: 'बागचौर नगरपालिका' }, location: 'Salyan', province: 'Karnali Province' },
+    { id: 26, image: '/emblemofNepal.png', name: { en: 'Ministry of Land Management', ne: 'भूमि व्यवस्था, कृषि तथा सहकारी मन्त्रालय' }, location: 'Janakpur', province: 'Madhesh Province' },
+    { id: 27, image: '/emblemofNepal.png', name: { en: 'Ministry of Agriculture and Land Management', ne: 'कृषि तथा भूमि व्यवस्था मन्त्रालय' }, location: 'Pokhara', province: 'Gandaki Province' },
+    { id: 28, image: '/emblemofNepal.png', name: { en: 'Ministry of Land Management, Agriculture and Cooperatives', ne: 'भूमि व्यवस्था, कृषि तथा सहकारी मन्त्रालय' }, location: 'Birendranagar', province: 'Karnali Province' },
+    { id: 29, image: '/emblemofNepal.png', name: { en: 'Ministry of Physical Infrastructure and Urban Development', ne: 'भौतिक पूर्वाधार तथा शहरी विकास मन्त्रालय' }, location: 'Birendranagar', province: 'Karnali Province' },
+    { id: 30, image: '/emblemofNepal.png', name: { en: 'Ministry of Industry, Tourism, Forest and Environment', ne: 'उद्योग, पर्यटन, वन तथा वातावरण मन्त्रालय' }, location: 'Dhangadhi', province: 'Sudurpashchim Province' },
+    { id: 31, image: '/emblemofNepal.png', name: { en: 'Budhanilkantha Municipality', ne: 'बुढानीलकण्ठ नगरपालिका' }, location: 'Kathmandu', province: 'Bagmati Province' },
+    { id: 32, image: '/savetheChildren.png', name: { en: 'Save the Children', ne: 'सेभ द चिल्ड्रेन' }, location: 'Kathmandu', province: 'Bagmati Province' },
+    { id: 33, image: '/tribhuvanUniversity.png', name: { en: 'Tribhuvan University', ne: 'त्रिभुवन विश्वविद्यालय' }, location: 'Kirtipur', province: 'Bagmati Province' },
+    { id: 34, image: '/emblemofNepal.png', name: { en: 'Rajpur Rural Municipality', ne: 'राजपुर गाउँपालिका' }, location: 'Dang', province: 'Sudurpashchim Province' },
+    { id: 35, image: '/emblemofNepal.png', name: { en: 'Madhuban Municipality', ne: 'मधुवन नगरपालिका' }, location: 'Bardiya', province: 'Sudurpashchim Province' },
+    { id: 36, image: '/emblemofNepal.png', name: { en: 'Department of Industry', ne: 'उद्योग विभाग' }, location: 'Tripureshwor', province: 'Bagmati Province' },
+    { id: 37, image: '/emblemofNepal.png', name: { en: 'Directorate of Agricultural Development', ne: 'कृषि विकास निर्देशनालय' }, location: 'Pokhara', province: 'Gandaki Province' },
+    { id: 38, image: '/emblemofNepal.png', name: { en: 'Directorate of Health Services', ne: 'स्वास्थ्य सेवा निर्देशनालय' }, location: 'Birendranagar', province: 'Karnali Province' },
+    { id: 39, image: '/emblemofNepal.png', name: { en: 'Adarsha Rural Municipality', ne: 'आदर्श गाउँपालिका'}, location: 'Doti', province: 'Sudurpashchim Province' },
+    { id: 40, image: '/emblemofNepal.png', name: { en: 'Suryabinayak Municipality', ne: 'सूर्यविनायक नगरपालिका' }, location: 'Bhaktapur', province: 'Bagmati Province' },
+    { id: 41, image: '/emblemofNepal.png', name: { en: 'Lalitpur Metropolitan City', ne: 'ललितपुर महानगरपालिका' }, location: 'Lalitpur', province: 'Bagmati Province' },
+    { id: 42, image: '/emblemofNepal.png', name: { en: 'Agriculture Research Directorate', ne: 'कृषि अनुशन्धान निर्देशनालय' }, location: 'Nepalgunj', province: 'Sudurpashchim Province' },
+    { id: 43, image: '/emblemofNepal.png', name: { en: 'Directorate of Agriculture Development', ne: 'कृषि विकास निर्देशनालय' }, location: 'Birendranagar', province: 'Karnali Province' },
+    { id: 44, image: '/emblemofNepal.png', name: { en: 'Directorate of Agriculture Development', ne: 'कृषि विकास निर्देशनालय' }, location: 'Dhangadhi', province: 'Sudurpashchim Province' },
+    { id: 45, image: '/emblemofNepal.png', name: { en: 'Directorate of Livestock Development', ne: 'पशुपंक्षी विकास निर्देशनालय' }, location: 'Dhangadhi', province: 'Sudurpashchim Province' },
+    { id: 46, image: '/KathmanduUniversity.png', name: { en: 'Kathmandu University', ne: 'काठमाडौं विश्वविद्यालय' }, location: 'Dhulikhel', province: 'Bagmati Province' },
 ];
