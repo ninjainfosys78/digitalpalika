@@ -37,3 +37,17 @@ export interface Feature {
 }
 
 export type { Feature as FeatureType };
+
+// Updated Module interface to handle img as array or string
+export interface Module {
+    id: string;
+    en_name: string;
+    ne_name: string;
+    img: string | string[];
+    collectionId?: string;
+    collectionName?: string;
+    created?: string;
+    updated?: string;
+}
+
+export type { Module as ModuleType };
