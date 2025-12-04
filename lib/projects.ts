@@ -14,7 +14,7 @@ export type ProjectItem = {
   image: string;
 };
 
-const PROJECTS_COLLECTION = "Projects_card";
+const PROJECTS_COLLECTION = "NinjaLanding_ProjectsCard";
 
 export async function fetchProjects(): Promise<ProjectItem[]> {
   const records = await pb.collection(PROJECTS_COLLECTION).getFullList({
