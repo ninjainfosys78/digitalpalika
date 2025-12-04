@@ -4,33 +4,31 @@ import { Fragment } from "react";
 import { Header } from "@/components/header";
 import Footer from "@/components/footer";
 import { useLanguage } from "@/context/LanguageContext";
-import Demo from "@/components/demo"; // Import the actual Demo section
+import Demo from "@/components/demo";
 
-// 20 modules: English names and icon keys (leave content as in your screenshot)
 const modules = [
-    { name: "Digital Archive System", icon: "FileText" },
-    { name: "Office Automation", icon: "Hexagon" },
-    { name: "Citizen Charter and Record Management", icon: "Bus" },
-    { name: "Integrated Mobile Application", icon: "ShieldCheck" },
-    { name: "Grant Management System", icon: "AlertTriangle" },
-    { name: "Hospital System", icon: "Hospital" },
-    { name: "Digital House Mapping", icon: "MapPin" },
-    { name: "Digital IVR Call System", icon: "Users" },
-    { name: "Digital Card System", icon: "CreditCard" },
-    { name: "Complaint and Roster System", icon: "Phone" },
-    { name: "Court (Judicial) System", icon: "Scale" },
-    { name: "Project Management System", icon: "Project" },
-    { name: "Bank Management System", icon: "PiggyBank" },
-    { name: "Birth Registration and Mapping", icon: "UserPlus" },
-    { name: "Organization/Department System", icon: "Home" },
-    { name: "Recommendation System", icon: "Users2" },
-    { name: "Digital Archive Record", icon: "Database" },
-    { name: "Office Automation", icon: "Settings" },
-    { name: "Service Fee Management System", icon: "Zap" },
-    { name: "Complaint Portal", icon: "AlertCircle" },
+    { en: "Digital Nagarik Badapatra", ne: "डिजिटल नागरिक बडापत्र", icon: "FileText" },
+    { en: "Office Automation", ne: "अफिस अटोमेसन", icon: "Hexagon" },
+    { en: "Indhan Byabasthapan Pranali", ne: "इन्धन व्यवस्थापन प्रणाली", icon: "Calibrate" },
+    { en: "Gunaso Portal", ne: "गुनासो पोर्टल", icon: "AlertTriangle" },
+    { en: "Baithak Pranali", ne: "बैठक प्रणाली", icon: "Users" },
+    { en: "Digital House Mapping Pass", ne: "⁠विद्युतीय घर नक्सा पास", icon: "Zap" },
+    { en: "Organization/Business Registration", ne: "संस्था/व्यवसाय दर्ता", icon: "Home" },
+    { en: "Recommendation System", ne: "सिफारिस", icon: "Users2" },
+    { en: "Digital Card System", ne: "डिजिटल कार्ड प्रणाली", icon: "CreditCard" },
+    { en: "Training & Roster System", ne: "तालिम तथा रोस्टर प्रणाली", icon: "Phone" },
+    { en: "Court (Judicial)", ne: "इजलास (न्यायिक)", icon: "Scale" },
+    { en: "Project Management System", ne: "योजना व्यवस्थापन प्रणाली", icon: "Project" },
+    { en: "Grant Management", ne: "अनुदान व्यवस्थापन", icon: "PiggyBank" },
+    { en: "Estimate System", ne: "Estimate सिस्टम", icon: "Database" },
+    { en: "Digital LG Profile", ne: "डिजिटल एल. जी प्रोफाइल", icon: "Home" },
+    { en: "Digital AVR Call System", ne: "डिजिटल AVR Call System", icon: "Phone" },
+    { en: "Approval & Evaluation System", ne: "अनुमन र मूल्यांकन प्रणाली", icon: "Settings" },
+    { en: "Palika News Portal", ne: "पालिक न्युज पोर्टल", icon: "AlertCircle" },
+    { en: "Vendor Management", ne: "बेरुजू व्यवस्थापन", icon: "ShieldCheck" },
+    { en: "Mobile Application", ne: "मोबाइल अनुप्रयोग", icon: "Hospital" },
 ];
 
-// Use Lucide/heroicons or your own SVGs as needed
 const LucideIcons: Record<string, React.ReactNode> = {
     FileText: (
         <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
@@ -42,6 +40,13 @@ const LucideIcons: Record<string, React.ReactNode> = {
     Hexagon: (
         <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
             <polygon points="12 2 22 7 22 17 12 22 2 17 2 7 12 2" />
+        </svg>
+    ),
+    Calibrate: (
+        <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 2v20M2 12h20"/>
+            <circle cx="12" cy="12" r="4" fill="currentColor"/>
         </svg>
     ),
     Bus: (
@@ -145,7 +150,7 @@ const LucideIcons: Record<string, React.ReactNode> = {
     Settings: (
         <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="3"/>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
         </svg>
     ),
     Zap: (
@@ -163,7 +168,7 @@ const LucideIcons: Record<string, React.ReactNode> = {
 };
 
 export default function ModulePage() {
-    const { t } = useLanguage();
+    const { t, lang } = useLanguage();
 
     return (
         <Fragment>
@@ -193,7 +198,7 @@ export default function ModulePage() {
                             >
                                 <div className="mb-4">{LucideIcons[module.icon]}</div>
                                 <div className="text-base font-semibold text-black leading-tight">
-                                    {module.name}
+                                    {lang === "ne" ? module.ne : module.en}
                                 </div>
                             </div>
                         ))}
