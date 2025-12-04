@@ -181,15 +181,20 @@ export default function AboutPage() {
 
   useEffect(() => {
     let mounted = true;
-    getBannerByImgName("about").then((url) => {
-      if (!mounted) return;
-      setBannerUrl(url || null);
-    });
 
-    getBannerByImgName("about-2").then((url) => {
-      if (!mounted) return;
-      setSecondImageUrl(url || null);
-    });
+    getBannerByImgName("about")
+      .then((url) => {
+        if (!mounted) return;
+        setBannerUrl(url || null);
+      })
+      .catch(() => {});
+
+    getBannerByImgName("about-2")
+      .then((url) => {
+        if (!mounted) return;
+        setSecondImageUrl(url || null);
+      })
+      .catch(() => {});
 
     return () => {
       mounted = false;
@@ -260,12 +265,14 @@ export default function AboutPage() {
           <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-12 lg:py-16">
             <div className="grid gap-8 md:grid-cols-12 items-center">
               <div className="md:col-span-6">
-                <div className="h-[420px] overflow-hidden">
-                  <img
-                    src={secondImageUrl || "/about-2.png"}
-                    alt="Who we are"
-                    className="w-full h-full object-cover grayscale"
-                  />
+                <div className="h-[420px] overflow-hidden bg-black">
+                  {secondImageUrl && (
+                    <img
+                      src={secondImageUrl}
+                      alt="Who we are"
+                      className="w-full h-full object-cover grayscale"
+                    />
+                  )}
                 </div>
               </div>
               <div className="md:col-span-6 md:h-[420px] flex flex-col justify-center gap-6">

@@ -16,7 +16,6 @@ export async function getBannerByImgName(imgName: string): Promise<string | null
       return name === target;
     });
 
-    
     if (!match) return null;
 
     const file =
@@ -27,7 +26,7 @@ export async function getBannerByImgName(imgName: string): Promise<string | null
 
     if (!file) return null;
 
-    return pb.files.getUrl(match, file);
+    return pb.files.getURL(match, file);
   } catch (e) {
     console.error("Error fetching banner by ImgName:", e);
     return null;

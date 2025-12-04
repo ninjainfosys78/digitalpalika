@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getBannerByImgName } from "@/lib/banners";
+import { getSolutionsCards, SolutionCard } from "@/lib/solutions";
 
 import Header from "@/components/header";
 import GlobalCTA from "@/components/global-cta";
@@ -22,6 +23,7 @@ export default function SolutionsPage() {
   const [officesOpen, setOfficesOpen] = useState(false);
   const [active, setActive] = useState<Key | null>(null);
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
+  const [cards, setCards] = useState<SolutionCard[]>([]);
 
   const router = useRouter();
   const params = useSearchParams();
@@ -45,9 +47,20 @@ export default function SolutionsPage() {
         if (!mounted) return;
         setBannerUrl(url || null);
       })
-      .catch((err) => {
-        console.error("Failed to load solutions banner:", err);
-      });
+      .catch(() => {});
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let mounted = true;
+    getSolutionsCards()
+      .then((items) => {
+        if (!mounted) return;
+        setCards(items);
+      })
+      .catch(() => {});
     return () => {
       mounted = false;
     };
@@ -63,54 +76,6 @@ export default function SolutionsPage() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
-
-  const cards = [
-    {
-      key: "gov" as Key,
-      title: { en: "Government & Municipality", ne: "सरकार/पालिका" },
-      copy: {
-        en: "Citizen services, service workflows, billing, identity, and secure, traceable platforms.",
-        ne: "नागरिक सेवा, सेवा कार्यप्रवाह, बिलिङ, पहिचान, र सुरक्षित ट्रेसयोग्य प्लेटफर्म।",
-      },
-      img: "/goverment.jpg",
-    },
-    {
-      key: "edu" as Key,
-      title: { en: "Education", ne: "शिक्षा" },
-      copy: {
-        en: "Student information systems, learning platforms, assessments, and secure data pipelines.",
-        ne: "छात्र सूचना प्रणाली, सिकाइ प्लेटफर्म, मूल्यांकन, र सुरक्षित डेटा पाइपलाइन।",
-      },
-      img: "/education.jpg",
-    },
-    {
-      key: "health" as Key,
-      title: { en: "Healthcare", ne: "स्वास्थ्य" },
-      copy: {
-        en: "Interoperable, patient-safe software—FHIR-first integrations, auditability, and uptime by design.",
-        ne: "रोगी-केंद्रित प्रणालीहरू—FHIR-मैत्री इंटीग्रेशन, अडिटयोग्य र विश्वसनीय।",
-      },
-      img: "/healthcare.jpg",
-    },
-    {
-      key: "fin" as Key,
-      title: { en: "Fintech", ne: "फिनटेक" },
-      copy: {
-        en: "KYC, risk, reconciliation and PCI-aware architectures for modern money movement.",
-        ne: "KYC, जोखिम, मिलान र PCI-उपयुक्त आर्किटेक्चर।",
-      },
-      img: "/fintech.jpg",
-    },
-    {
-      key: "corp" as Key,
-      title: { en: "Corporate Solutions", ne: "कर्पोरेट समाधान" },
-      copy: {
-        en: "Digital commerce, analytics and data platforms that scale reliably across the enterprise.",
-        ne: "डिजिटल व्यापार, एनालिटिक्स र डेटा प्लेटफर्महरू जसले विश्वसनीय रूपमा स्केल गर्छन्।",
-      },
-      img: "/corporate.jpg",
-    },
-  ];
 
   const content = useMemo(
     () => ({
@@ -373,35 +338,44 @@ export default function SolutionsPage() {
           </div>
         </section>
 
-        {!active && (
+        {!active && cards.length > 0 && (
           <section className="py-14 relative overflow-hidden bg-black">
             <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12">
               <div className="grid gap-8 lg:gap-10 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
-                {cards.map(({ key, title, copy, img }) => (
-                  <button
-                    key={key}
-                    onClick={() => activate(key)}
-                    className="solutions-card text-left group relative block select-none overflow-hidden w-full h-full rounded-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.55)] hover:ring-8 hover:ring-white border-b-0 flex flex-col"
+                {cards.map((card) => (
+                  <div
+                    key={card.id}
+                    className="solutions-card text-left group relative block select-none overflow-hidden w-full h-full rounded-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.55)] hover:ring-8 hover:ring-white border-b-0 flex flex-col cursor-default"
                   >
                     <div className="relative aspect-[16/10] w-full flex-none overflow-hidden">
-                      <img
-                        src={img}
-                        alt={title[language as Lang]}
-                        className="h-full w-full object-cover grayscale"
-                      />
+                      {card.imageUrl && (
+                        <img
+                          src={card.imageUrl}
+                          alt={
+                            language === "en"
+                              ? card.title_en
+                              : card.title_ne || card.title_en
+                          }
+                          className="h-full w-full object-cover grayscale"
+                        />
+                      )}
                     </div>
 
                     <div className="p-6 sm:p-7 bg-black transition-colors duration-300 group-hover:bg-white overflow-hidden flex-1 flex flex-col">
                       <div className="flex items-center">
                         <h3 className="text-xl sm:text-2xl pb-2 font-semibold text-white transition-colors duration-300 group-hover:text-black">
-                          {title[language as Lang]}
+                          {language === "en"
+                            ? card.title_en
+                            : card.title_ne || card.title_en}
                         </h3>
                       </div>
                       <p className="mt-3 text-base leading-relaxed text-white/85 transition-colors duration-300 group-hover:text-black/80 flex-1">
-                        {copy[language as Lang]}
+                        {language === "en"
+                          ? card.description_en
+                          : card.description_ne || card.description_en}
                       </p>
                     </div>
-                  </button>
+                  </div>
                 ))}
               </div>
             </div>
