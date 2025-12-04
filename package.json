@@ -2,7 +2,6 @@
   "name": "my-v0-project",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@9.12.0",
   "engines": {
     "node": ">=18.18 <21"
   },
@@ -12,7 +11,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "ci": "pnpm install --frozen-lockfile && pnpm typecheck && pnpm lint && pnpm build"
+    "ci": "npm install --prefer-offline --no-audit && npm run typecheck && npm run lint && npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
