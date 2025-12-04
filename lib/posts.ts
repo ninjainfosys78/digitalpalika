@@ -1,7 +1,6 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
 import "server-only";
+import pb from "@/lib/pocketbase";
+
 export type PostMeta = {
   slug: string;
   title: string;
@@ -13,72 +12,74 @@ export type PostMeta = {
   excerpt: string;
 };
 
-const CONTENT_DIR = path.join(process.cwd(), "content", "blogs");
+const BLOGS_COLLECTION = "Ninja_Blogs";
 
-// recursively collect *.mdx files
-function walkMDXFiles(dir: string, acc: string[] = []): string[] {
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const e of entries) {
-    const full = path.join(dir, e.name);
-    if (e.isDirectory()) {
-      const idx = path.join(full, "index.mdx");
-      if (fs.existsSync(idx)) acc.push(idx);
-      else walkMDXFiles(full, acc);
-    } else if (e.isFile() && e.name.endsWith(".mdx")) {
-      acc.push(full);
-    }
-  }
-  return acc;
+function getImageUrl(record: any): string {
+  if (!record.Image) return "";
+  return pb.files.getUrl(record, record.Image);
 }
 
-function toSlug(filePath: string): string {
-  const rel = path.relative(CONTENT_DIR, filePath).replace(/\\/g, "/");
-  return rel.endsWith("/index.mdx")
-    ? rel.replace("/index.mdx", "")
-    : rel.replace(/\.mdx$/, "");
+function calculateReadTime(content: string): string {
+  if (!content) return "";
+  const words = content.trim().split(/\s+/).length;
+  const minutes = Math.max(1, Math.ceil(words / 200));
+  return `${minutes} min read`;
 }
 
-export function getAllPostsMeta(): PostMeta[] {
-  if (!fs.existsSync(CONTENT_DIR)) return [];
-  const files = walkMDXFiles(CONTENT_DIR);
+function buildExcerpt(content: string, maxLen = 220): string {
+  const plain = content.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+  if (!plain) return "";
+  if (plain.length <= maxLen) return plain;
+  return plain.slice(0, maxLen) + "...";
+}
 
-  const posts = files.map((file) => {
-    const raw = fs.readFileSync(file, "utf8");
-    const { data, content } = matter(raw);
-    const slug = toSlug(file);
-
-    // grab first non-empty paragraph
-    const firstParagraph = content
-      .split(/\n{2,}/)
-      .find((p) => p.trim().length > 0)
-      ?.replace(/[#>*_`~\[\]\(\)!-]/g, "")
-      .trim()
-      .slice(0, 220);
-
-    const excerpt = firstParagraph
-      ? firstParagraph + (firstParagraph.length >= 220 ? "..." : "")
-      : "";
-
-    return {
-      slug,
-      title: data.title ?? "",
-      deck: "",
-      readTime: data.readTime ?? "",
-      kicker: data.kicker ?? "",
-      date: data.date ?? "",
-      image: data.image ?? "",
-      excerpt,
-    } as PostMeta;
+export async function getAllPostsMeta(): Promise<PostMeta[]> {
+  const records = await pb.collection(BLOGS_COLLECTION).getFullList({
+    sort: "-Published_date",
   });
 
-  posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const posts: PostMeta[] = records.map((r: any) => {
+    const content: string = r.Content ?? "";
+
+    return {
+      slug: r.Slug,
+      title: r.Title ?? "",
+      deck: "",
+      readTime: r.ReadTime || calculateReadTime(content),
+      kicker: r.Kicker ?? "",
+      date: r.Published_date ?? "",
+      image: getImageUrl(r),
+      excerpt: buildExcerpt(content),
+    };
+  });
+
   return posts;
 }
 
-export function getPostSourceBySlug(slug: string): string | null {
-  const flat = path.join(CONTENT_DIR, `${slug}.mdx`);
-  const idx = path.join(CONTENT_DIR, slug, "index.mdx");
-  if (fs.existsSync(flat)) return fs.readFileSync(flat, "utf8");
-  if (fs.existsSync(idx)) return fs.readFileSync(idx, "utf8");
-  return null;
+export async function getPostBySlug(slug: string): Promise<{
+  meta: PostMeta;
+  content: string;
+} | null> {
+  try {
+    const record: any = await pb
+      .collection(BLOGS_COLLECTION)
+      .getFirstListItem(`Slug = "${slug}"`);
+
+    const content: string = record.Content ?? "";
+
+    const meta: PostMeta = {
+      slug: record.Slug,
+      title: record.Title ?? "",
+      deck: "",
+      readTime: record.ReadTime || calculateReadTime(content),
+      kicker: record.Kicker ?? "",
+      date: record.Published_date ?? "",
+      image: getImageUrl(record),
+      excerpt: buildExcerpt(content),
+    };
+
+    return { meta, content };
+  } catch {
+    return null;
+  }
 }

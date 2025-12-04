@@ -1,22 +1,23 @@
 // app/blogs/page.tsx
-import Link from "next/link";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import BlogsClient from "@/components/blogs-client";
 import { getAllPostsMeta } from "@/lib/posts";
 
+import { getBannerByImgName } from "@/lib/banners";
+
 export const dynamic = "force-static";
 
-export default function BlogsPage() {
-  const posts = getAllPostsMeta();
+export default async function BlogsPage() {
+  const posts = await getAllPostsMeta();
+  const bannerUrl = await getBannerByImgName("insights");
 
   return (
     <>
       <Header />
 
-      {/* Render client wrapper (renders hero + posts) */}
       <main>
-        <BlogsClient posts={posts} />
+        <BlogsClient posts={posts} bannerUrl={bannerUrl || undefined} />
       </main>
 
       <Footer />
