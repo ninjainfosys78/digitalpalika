@@ -30,7 +30,7 @@ function FeaturesContent() {
             
             if (!imageFile) return '/placeholder.png';
             
-            return pb.files.getUrl(feature, imageFile);
+            return pb.files.getURL(feature, imageFile);
         } catch (error) {
             console.error('Error loading image:', error);
             return '/placeholder.png';
