@@ -20,6 +20,9 @@ importers:
       npx:
         specifier: ^10.2.2
         version: 10.2.2
+      pocketbase:
+        specifier: ^0.26.4
+        version: 0.26.4
       react:
         specifier: 19.1.0
         version: 19.1.0
@@ -546,6 +549,9 @@ packages:
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
+  pocketbase@0.26.4:
+    resolution: {integrity: sha512-r3JL7Lq7TfMSn0cWHD6RL27HM6BXGI3He4CgdX526nPhvacIMMKHONNh2Myuf+hineoeFXGf/BnrViH9V4TzEQ==}
+
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
 
@@ -1004,6 +1010,8 @@ snapshots:
   npx@10.2.2: {}
 
   picocolors@1.1.1: {}
+
+  pocketbase@0.26.4: {}
 
   postcss-value-parser@4.2.0: {}
 
