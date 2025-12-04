@@ -23,3 +23,17 @@ export interface Client {
 }
 
 export type { Client as ClientType };
+
+// Updated Feature interface to handle img as array or string
+export interface Feature {
+    id: string;
+    en_name: string;
+    ne_name: string;
+    img: string | string[];
+    collectionId?: string;
+    collectionName?: string;
+    created?: string;
+    updated?: string;
+}
+
+export type { Feature as FeatureType };

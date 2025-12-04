@@ -4,8 +4,9 @@ import { Fragment } from 'react';
 import { Header } from '@/components/header';
 import Footer from '@/components/footer';
 import { useLanguage, LanguageProvider } from '@/context/LanguageContext';
-import { siteData, FullSiteContent } from '@/lib/siteData';
 import Demo from '@/components/demo';
+import { useFeatures } from '@/hooks/useFeatures';
+import pb, { type Feature } from '@/lib/pocketbase';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,78 +19,55 @@ export default function FeaturesPage() {
 }
 
 function FeaturesContent() {
-    const content: FullSiteContent = siteData;
-    const { featuresPage } = content;
-    const { t } = useLanguage();
+    const { t, lang } = useLanguage();
+    const { features, loading, error } = useFeatures();
 
-    const featureImages = [
-        "/feature1.png",
-        "/feature2.png",
-        "/feature3.png",
-        "/feature4.png",
-        "/feature5.png",
-        "/feature6.png",
-        "/feature7.png",
-    ];
+    const getImageUrl = (feature: Feature) => {
+        try {
+            if (!feature.img) return '/placeholder.png';
+            
+            const imageFile = Array.isArray(feature.img) ? feature.img[0] : feature.img;
+            
+            if (!imageFile) return '/placeholder.png';
+            
+            return pb.files.getUrl(feature, imageFile);
+        } catch (error) {
+            console.error('Error loading image:', error);
+            return '/placeholder.png';
+        }
+    };
 
-    const features = [
-        {
-            img: featureImages[0],
-            title: t({
-                en: "Integrated mobile and web-based system",
-                ne: "एकीकृत मोबाइल र वेब-आधारित प्रणाली"
-            }),
-            desc: "",
-        },
-        {
-            img: featureImages[1],
-            title: t({
-                en: "Online access to citizen services and information",
-                ne: "नागरिक सेवाहरू र जानकारीमा अनलाइन पहुँच"
-            }),
-            desc: "",
-        },
-        {
-            img: featureImages[2],
-            title: t({
-                en: "Online application, registration, and certificate issuance for municipal services",
-                ne: "नगरपालिका सेवाहरूको लागि अनलाइन आवेदन, दर्ता, र प्रमाणपत्र जारी"
-            }),
-            desc: "",
-        },
-        {
-            img: featureImages[3],
-            title: t({
-                en: "Personal, business, and institutional information",
-                ne: "व्यक्तिगत, व्यवसायिक, र संस्थागत जानकारी"
-            }),
-            desc: "",
-        },
-        {
-            img: featureImages[4],
-            title: t({
-                en: "Active citizen participation in daily municipal activities",
-                ne: "दैनिक नगरपालिका गतिविधिहरूमा सक्रिय नागरिक सहभागिता"
-            }),
-            desc: "",
-        },
-        {
-            img: featureImages[5],
-            title: t({
-                en: "Automating workflow for efficiency",
-                ne: "दक्षताका लागि कार्यप्रवाह स्वचालित गर्दै"
-            }),
-            desc: "",
-        },
-        {
-            img: featureImages[6],
-            title: t({
-                en: "Providing a seamless experience for citizens interacting with the municipality sitting from home",
-                ne: "घरमै बसेर पालिकासँग अन्तरक्रिया गर्ने नागरिकहरूका लागि सहज अनुभव प्रदान गर्दै"
-            }),
-            desc: "",
-        },
-    ];
+    if (loading) {
+        return (
+            <Fragment>
+                <Header />
+                <main className="bg-white pt-10 min-h-screen">
+                    <div className="max-w-7xl mx-auto px-4">
+                        <div className="text-center">
+                            <p className="text-gray-600">{t({ en: "Loading features...", ne: "विशेषताहरू लोड हुँदैछ..." })}</p>
+                        </div>
+                    </div>
+                </main>
+                <Footer />
+            </Fragment>
+        );
+    }
+
+    if (error) {
+        return (
+            <Fragment>
+                <Header />
+                <main className="bg-white pt-10 min-h-screen">
+                    <div className="max-w-7xl mx-auto px-4">
+                        <div className="text-center text-red-600">
+                            <p>{error}</p>
+                        </div>
+                    </div>
+                </main>
+                <Footer />
+            </Fragment>
+        );
+    }
 
     return (
         <Fragment>
@@ -112,23 +90,20 @@ function FeaturesContent() {
 
                     {/* Features Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                        {features.map((feature, idx) => (
-                            <div key={idx} className="flex flex-col items-center">
+                        {features.map((feature) => (
+                            <div key={feature.id} className="flex flex-col items-center">
                                 <div className="w-full aspect-[4/3] bg-gray-100 rounded overflow-hidden mb-3 flex items-center justify-center">
                                     <img
-                                        src={feature.img}
-                                        alt={feature.title}
+                                        src={getImageUrl(feature)}
+                                        alt={lang === "ne" ? feature.ne_name : feature.en_name}
                                         className="object-cover w-full h-full"
                                         draggable={false}
                                     />
                                 </div>
                                 <div className="w-full text-center">
                                     <div className="text-base font-medium text-black mb-1">
-                                        {feature.title}
+                                        {lang === "ne" ? feature.ne_name : feature.en_name}
                                     </div>
-                                    {feature.desc && (
-                                        <div className="text-sm text-gray-600">{feature.desc}</div>
-                                    )}
                                 </div>
                             </div>
                         ))}
