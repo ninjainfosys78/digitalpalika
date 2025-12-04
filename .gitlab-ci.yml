@@ -1,4 +1,4 @@
-stages:
+stages: 
   - build
   - deploy
 
@@ -21,12 +21,14 @@ build:
   image: node:${NODE_VERSION}-trixie
   tags:
     - numanode
+  variables:
+    NEXT_PUBLIC_PB_URL: $NEXT_PUBLIC_PB_URL
   before_script:
     - echo "Installing dependencies..."
-    - npm install --cache .npm --prefer-offline --no-audit --legacy-peer-deps
+    - pnpm install --cache .npm --prefer-offline
   script:
     - echo "Building Next.js project..."
-    - npm run build
+    - pnpm run build
     - ls -la ${BUILD_DIR}/
   artifacts:
     paths:
@@ -87,4 +89,3 @@ debug:env:
       fi
   rules:
     - when: always
-
