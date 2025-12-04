@@ -446,21 +446,23 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
             ></textarea>
           </div>
 
-          <div className="text-xs text-gray-500 mb-2">
-            {t({ en: "Minimum 10 characters required", ne: "कम्तिमा १० अक्षर आवश्यक छ" })}
+          {/* Submit Button - Updated to match features-rail and aligned left */}
+          <div className="flex justify-start">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="inline-flex items-center justify-center gap-2 bg-[#003893] hover:bg-[#002f72] text-white text-base px-8 py-3.5 disabled:opacity-50"
+            >
+              {isSubmitting
+                ? t({ en: "Sending...", ne: "पठाउँदै..." })
+                : t({ en: "Submit Request", ne: "अनुरोध पठाउनुहोस्" })}
+              <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path d="M5 12h14M13 5l6 7-6 7" strokeLinecap="round" strokeLinejoin="round"></path>
+              </svg>
+            </button>
           </div>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-[#0066f6] hover:bg-[#003893] text-white font-semibold py-2 text-sm transition rounded-none"
-          >
-            {isSubmitting
-              ? t({ en: "Sending...", ne: "पठाउँदै..." })
-              : t({ en: "Submit Request", ne: "अनुरोध पठाउनुहोस्" })}
-          </button>
-          <div className="text-center text-xs text-gray-500 mt-2">
+          
+          <div className="text-left text-xs text-gray-500 mt-2">
             {t({ en: "We typically respond within 24-48 hours", ne: "हामी सामान्यतया २४-४८ घण्टामा प्रतिक्रिया दिन्छौं" })}
           </div>
         </form>

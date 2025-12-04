@@ -21,17 +21,16 @@ export default function Demo() {
                     })}
                 </p>
 
-                {/* Compact centered CTA with right arrow */}
-                <div className="mx-auto w-fit">
+                {/* Compact centered CTA with right arrow - matching features-rail button */}
+                <div className="flex justify-center">
                     <a
                         href="/contact"
-                        className="inline-flex items-center gap-3 bg-[#003893] hover:bg-[#002f72] text-white text-sm px-5 py-2 transition"
+                        className="inline-flex items-center justify-center gap-2 bg-[#003893] hover:bg-[#002f72] text-white text-base px-8 py-3.5"
                         aria-label="See demo"
                     >
-                        <span>{t({ en: 'See Demo', ne: 'डेमो हेर्नुहोस्' })}</span>
-                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M5 12h14" />
-                            <path d="M12 5l7 7-7 7" />
+                        {t({ en: 'See Demo', ne: 'डेमो हेर्नुहोस्' })}
+                        <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path d="M5 12h14M13 5l6 7-6 7" strokeLinecap="round" strokeLinejoin="round"></path>
                         </svg>
                     </a>
                 </div>
