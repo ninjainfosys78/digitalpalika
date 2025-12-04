@@ -21,12 +21,43 @@ Technical notes:
 This release captures the initial visual and content surface for the site and lays the groundwork for iterative improvements and content publishing workflows.
 
 
-## [v0.1.1] - 2025-11-20
-### Overview
-- Updated Ninja logo in header (production hotfix)
-
-## [v0.1.2] - 2025-11-25
+## [v0.1.1] – 2025-12-04
 ### Overview
 
-- Added legitimate photos to increase brand value and recognition
+This release introduces full PocketBase backend integration across the Ninja Infosys website, enabling non-developer-friendly content management.
+
+Key improvements
+
+Integrated PocketBase as the backend for:
+
+Blogs (Insights)
+
+Media libraries
+
+Dynamic banners (hero + secondary banners)
+
+Solutions cards registry
+
+Implemented getBannerByImgName() and reusable PocketBase client.
+
+About page now supports dynamic second banner (about-2).
+
+Centralized API access in /lib/pocketbase.ts.
+
+Updated UI components to gracefully fallback when no PB records exist.
+
+Improved banner loading performance via PocketBase file URLs.
+
+Technical changes
+
+Added NinjaInfosys_Banner collection usage for all hero + secondary banners.
+
+Added NinjaInfosys_Solutions collection usage for Solutions Cards.
+
+Blogs now fully dynamic: title, category, description, thumbnail, long content, slug.
+
+Removed hardcoded assets for cards and banner images.
+
+Updated all pages to match the unified PocketBase data structure.
+
 
