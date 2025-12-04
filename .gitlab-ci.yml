@@ -25,10 +25,10 @@ build:
     NEXT_PUBLIC_PB_URL: $NEXT_PUBLIC_PB_URL
   before_script:
     - echo "Installing dependencies..."
-    - pnpm install --cache .npm --prefer-offline
+    - npm install --cache .npm --prefer-offline --no-audit --legacy-peer-deps
   script:
     - echo "Building Next.js project..."
-    - pnpm run build
+    - npm run build
     - ls -la ${BUILD_DIR}/
   artifacts:
     paths:
