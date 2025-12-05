@@ -30,6 +30,6 @@ export async function fetchProjects(): Promise<ProjectItem[]> {
     href: r.Href ?? "",
     category_en: r.Category_En ?? "",
     category_ne: r.Category_Ne ?? r.Category_En ?? "",
-    image: r.Image ? pb.files.getUrl(r, r.Image) : "",
+    image: r.Image ? pb.files.getURL(r, r.Image) : "",
   }));
 }

@@ -21,7 +21,7 @@ export async function fetchTrustedLogos(): Promise<TrustedLogoRecord[]> {
 
         return {
           id: r.id,
-          logo: pb.files.getUrl(r, file),
+          logo: pb.files.getURL(r, file),
           logoName: name,
         };
       })

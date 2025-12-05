@@ -21,7 +21,7 @@ export async function fetchTestimonials(): Promise<TestimonialRecord[]> {
     const quoteEn: string = r.Quote_en ?? ""
     const quoteNe: string = r.Quote_ne ?? ""
     const fileField = r.Image ?? r.image
-    const image = fileField ? pb.files.getUrl(r, fileField) : undefined
+    const image = fileField ? pb.files.getURL(r, fileField) : undefined
 
     return {
       nameEn,
