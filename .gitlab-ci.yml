@@ -25,15 +25,17 @@ build:
     - echo "Installing dependencies..."
     - npm install --cache .npm --prefer-offline --no-audit --legacy-peer-deps
   script:
-    - echo "Building Next.js project..."
+    - echo "Building Next.js static site..."
+    - echo "Using NEXT_PUBLIC_PB_URL=$NEXT_PUBLIC_PB_URL"
     - npm run build
-    - ls -la ${BUILD_DIR}/
+    - test -d ${BUILD_DIR} || (echo "${BUILD_DIR} not found" && exit 1)
+    - ls -la ${BUILD_DIR}
   artifacts:
     paths:
       - ${BUILD_DIR}/
     expire_in: 1 day
-  only:
-    - branches
+  rules:
+    - if: $CI_COMMIT_BRANCH
 
 deploy:preview:
   stage: deploy
@@ -72,19 +74,3 @@ deploy:production:
     url: https://ninjainfosys.com
   rules:
     - if: $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master"
-
-debug:env:
-  stage: deploy
-  image: alpine
-  tags:
-    - numanode
-  script:
-    - echo "Checking Cloudflare token visibility..."
-    - if [ -z "$CLOUDFLARE_API_TOKEN" ]; then 
-        echo "❌ Not found"; 
-      else 
-        echo "✅ Found token of length ${#CLOUDFLARE_API_TOKEN}"; 
-      fi
-  rules:
-    - when: always
-
