@@ -50,10 +50,10 @@ export default function FeatureRail() {
             style={{ backgroundColor: isFeaturePage ? 'transparent' : '#eef6fb' }}
         >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <p className="text-sm text-[#003893] font-medium mb-3">
+                <p className="text-[16px] text-[#003893] font-medium mb-3">
                     {active === 'ne' ? 'विशेषताहरु' : 'Features'}
                 </p>
-                <h2 className="text-2xl sm:text-3xl md:text-3xl font-bold mb-3 sm:mb-4 text-[#000000] mb-4">
+                <h2 className="text-[28px] font-bold mb-3 sm:mb-4 text-[#000000] mb-4">
                     {active === 'ne'
                         ? 'स्मार्ट, जडित डिजिटल प्लेटफर्म मार्फत स्थानीय शासनलाई सरल बनाउँदै।'
                         : 'Simplifying local governance through a smart, connected digital platform.'}

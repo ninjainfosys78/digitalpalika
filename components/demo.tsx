@@ -9,7 +9,7 @@ export default function Demo() {
         <section className="bg-[#B0C1DE] py-10 md:py-12">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 {/* Heading: slightly smaller and tighter like the image */}
-                <h2 className="text-2xl sm:text-3xl md:text-3xl font-bold mb-3 sm:mb-4 text-[#000000] mb-3">
+                <h2 className="text-[28px] font-bold mb-3 sm:mb-4 text-[#000000] mb-3">
                     {t({ en: 'Do you want to see the demo?', ne: 'डेमो हेर्न चाहनु हुन्छ ?' })}
                 </h2>
 

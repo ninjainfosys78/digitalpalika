@@ -50,10 +50,10 @@ export function ModulesSection({ title, subtitle, onLearnMore }: ModulesSectionP
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Section Header */}
                 <div className="text-center mb-10">
-                    <span className="block text-[#003893] font-semibold mb-2">
+                    <span className="block text-[#003893] text-[16px] font-semibold mb-2">
                         {t({ en: "Modules", ne: "मोड्युलहरू" })}
                     </span>
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-2">
+                    <h2 className="text-[28px] font-bold text-black mb-2">
                         {t(title)}
                     </h2>
                     <div className="mx-auto w-24 h-0.5 bg-gray-300 rounded mb-4" />

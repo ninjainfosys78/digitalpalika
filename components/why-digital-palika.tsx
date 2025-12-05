@@ -10,7 +10,7 @@ export default function WhyDigitalPalika() {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
                 <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
                     <div className="flex-1 md:pr-8">
-                        <h2 className="text-2xl sm:text-3xl md:text-3xl font-bold mb-3 sm:mb-4 text-[#000000] text-left">
+                        <h2 className="text-[28px] font-bold mb-3 sm:mb-4 text-[#000000] text-left">
                             {t({ en: 'Why Digital Palika?', ne: 'डिजिटल पालिका किन ?' })}
                         </h2>
                         <p className="mb-3 sm:mb-4 text-justify text-left text-[#000000] text-sm sm:text-base md:text-lg max-w-3xl mx-auto">

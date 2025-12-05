@@ -101,7 +101,7 @@ function ClientsContent() {
                 <span className="block text-[#003893] font-semibold mb-2">
                     {t({ en: "Our Client", ne: "हाम्रा ग्राहक" })}
                 </span>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-2">
+                <h2 className="text-[28px] font-bold text-black mb-2">
                     {t({
                         en: "Trusted by local bodies across Nepal for digital transformation",
                         ne: "डिजिटल रूपान्तरणका लागि नेपालभरका स्थानीय निकायहरूद्वारा विश्वास गरिएको।"

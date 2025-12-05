@@ -71,7 +71,7 @@ export default function FeaturesPage() {
                         <span className="block text-[#003893] font-semibold mb-2">
                             {t({ en: "Features", ne: "विशेषताहरू" })}
                         </span>
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-2">
+                        <h2 className="text-[28px] font-bold text-black mb-2">
                             {t({
                                 en: "Simplifying local governance through a smart, connected digital platform.",
                                 ne: "स्मार्ट, जडित डिजिटल प्लेटफर्ममार्फत स्थानीय शासनलाई सरल बनाउँदै।"
