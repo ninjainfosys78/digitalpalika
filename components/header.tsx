@@ -22,6 +22,14 @@ export const Header = () => {
 
   const handleNavClick = () => setMenuOpen(false);
 
+  // Helper function to check if the current path matches the nav item
+  const isActiveRoute = (href: string) => {
+    if (href === '/') {
+      return pathname === '/';
+    }
+    return pathname.startsWith(href);
+  };
+
   return (
     <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-sm transition-shadow">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-20 relative">
@@ -39,7 +47,7 @@ export const Header = () => {
           <nav className="hidden lg:flex lg:flex-1 lg:justify-center lg:absolute lg:inset-y-0 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:items-center z-20">
             <ul className="flex items-center space-x-6 lg:space-x-8">
               {navItems.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = isActiveRoute(item.href);
                 return (
                   <li key={item.href}>
                     <Link
@@ -110,7 +118,7 @@ export const Header = () => {
           <nav className="flex-1 flex flex-col justify-center items-center gap-2 overflow-y-auto">
             <ul className="w-full max-w-md mx-auto flex flex-col gap-2">
               {navItems.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = isActiveRoute(item.href);
                 return (
                   <li key={item.href}>
                     <Link
