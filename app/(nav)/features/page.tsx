@@ -3,7 +3,7 @@
 import { Fragment } from 'react';
 import { Header } from '@/components/header';
 import Footer from '@/components/footer';
-import { useLanguage, LanguageProvider } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/LanguageContext';
 import Demo from '@/components/demo';
 import { useFeatures } from '@/hooks/useFeatures';
 import pb, { type Feature } from '@/lib/pocketbase';
@@ -11,14 +11,6 @@ import pb, { type Feature } from '@/lib/pocketbase';
 export const dynamic = 'force-dynamic';
 
 export default function FeaturesPage() {
-    return (
-        <LanguageProvider>
-            <FeaturesContent />
-        </LanguageProvider>
-    );
-}
-
-function FeaturesContent() {
     const { t, lang } = useLanguage();
     const { features, loading, error } = useFeatures();
 

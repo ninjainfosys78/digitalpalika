@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import { Header } from '@/components/header'; 
 import  Footer  from '@/components/footer'; 
 import { ContactSection } from '@/components/ContactSection'; 
-import { LanguageProvider, useLanguage } from '@/context/LanguageContext'; 
+import { useLanguage } from '@/context/LanguageContext'; 
 
 // --- Content for the Contact Page ---
 export const siteContent = {
@@ -47,14 +47,6 @@ export const siteContent = {
 };
 
 export default function ContactPage() {
-    return (
-        <LanguageProvider>
-            <ContactContent />
-        </LanguageProvider>
-    );
-}
-
-const ContactContent = () => {
     const { t, lang } = useLanguage();
     const contactContent = siteContent.contactPage!;
 
@@ -63,17 +55,17 @@ const ContactContent = () => {
             <Header />
             <main id="main-content">
                 <ContactSection
-                        title={t(contactContent.title)}
-                        breadcrumb={t(contactContent.breadcrumb)}
-                        details={{
-                            ...contactContent.details,
-                            phoneNumbers: contactContent.details.phoneNumbers[lang]
-                        }}
-                        formLabels={contactContent.form}
-                        t={t}
-                    />
+                    title={t(contactContent.title)}
+                    breadcrumb={t(contactContent.breadcrumb)}
+                    details={{
+                        ...contactContent.details,
+                        phoneNumbers: contactContent.details.phoneNumbers[lang]
+                    }}
+                    formLabels={contactContent.form}
+                    t={t}
+                />
             </main>
             <Footer />
         </Fragment>
     );
-};
+}
