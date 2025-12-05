@@ -25,6 +25,7 @@ build:
     - echo "Installing dependencies..."
     - npm install --cache .npm --prefer-offline --no-audit --legacy-peer-deps
   script:
+    - echo "NEXT_PUBLIC_PB_URL at build: $NEXT_PUBLIC_PB_URL"
     - echo "Building Next.js project..."
     - npm run build
     - ls -la ${BUILD_DIR}/
@@ -85,6 +86,6 @@ debug:env:
       else 
         echo "✅ Found token of length ${#CLOUDFLARE_API_TOKEN}"; 
       fi
+    - echo "NEXT_PUBLIC_PB_URL in debug: $NEXT_PUBLIC_PB_URL"
   rules:
     - when: always
-
