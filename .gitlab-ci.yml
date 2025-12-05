@@ -27,15 +27,17 @@ build:
     - echo "Installing dependencies..."
     - npm install --cache .npm --prefer-offline --no-audit --legacy-peer-deps
   script:
-    - echo "Building Next.js project..."
+    - echo "Building Next.js static site..."
+    - echo "Using NEXT_PUBLIC_PB_URL=$NEXT_PUBLIC_PB_URL"
     - npm run build
-    - ls -la ${BUILD_DIR}/
+    - test -d ${BUILD_DIR} || (echo "${BUILD_DIR} not found" && exit 1)
+    - ls -la ${BUILD_DIR}
   artifacts:
     paths:
       - ${BUILD_DIR}/
     expire_in: 1 day
-  only:
-    - branches
+  rules:
+    - if: $CI_COMMIT_BRANCH
 
 deploy:preview:
   stage: deploy

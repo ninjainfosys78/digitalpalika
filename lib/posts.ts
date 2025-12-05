@@ -16,7 +16,7 @@ const BLOGS_COLLECTION = "Ninja_Blogs";
 
 function getImageUrl(record: any): string {
   if (!record.Image) return "";
-  return pb.files.getUrl(record, record.Image);
+  return pb.files.getURL(record, record.Image);
 }
 
 function calculateReadTime(content: string): string {

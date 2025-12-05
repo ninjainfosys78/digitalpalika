@@ -1,5 +1,5 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata } from "next";
 import "./globals.css"
 import { IBM_Plex_Sans, Source_Serif_4 } from "next/font/google"
 import { LanguageProvider } from "@/components/LanguageProvider"
