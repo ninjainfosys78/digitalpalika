@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { useEffect, useRef, useState } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { usePathname } from "next/navigation"
-import { Menu, X, ChevronDown, ArrowRight } from "lucide-react"
-import { useLanguage } from "@/components/LanguageProvider"
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { Menu, X, ChevronDown, ArrowRight } from "lucide-react";
+import { useLanguage } from "@/components/LanguageProvider";
 
-type Lang = "en" | "ne"
+type Lang = "en" | "ne";
 
 const DATA = {
   en: {
@@ -57,9 +57,11 @@ const DATA = {
         featured: {
           title: "विशेष",
           cards: [
-            { heading: "हाम्रो काम",
+            {
+              heading: "हाम्रो काम",
               copy: "हामीले विभिन्न उद्योगहरूमा सफल परियोजनाहरू अन्वेषण गर्नुहोस्।",
-              href: "/work" },
+              href: "/work",
+            },
           ],
         },
         cols: [
@@ -77,33 +79,33 @@ const DATA = {
       { type: "link", href: "/careers", label: "क्यारियर" },
     ] as const,
   },
-}
+};
 
 export default function Header() {
-  const { language, setLanguage } = useLanguage()
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const [openMega, setOpenMega] = useState<string | null>(null)
-  const [mobileMegaOpen, setMobileMegaOpen] = useState<string | null>(null)
-  const hoverTimer = useRef<number | null>(null)
-  const headerRef = useRef<HTMLElement | null>(null)
-  const pathname = usePathname()
+  const { language, setLanguage } = useLanguage();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [openMega, setOpenMega] = useState<string | null>(null);
+  const [mobileMegaOpen, setMobileMegaOpen] = useState<string | null>(null);
+  const hoverTimer = useRef<number | null>(null);
+  const headerRef = useRef<HTMLElement | null>(null);
+  const pathname = usePathname();
 
   const clearHoverTimer = () => {
     if (hoverTimer.current) {
-      window.clearTimeout(hoverTimer.current)
-      hoverTimer.current = null
+      window.clearTimeout(hoverTimer.current);
+      hoverTimer.current = null;
     }
-  }
+  };
 
   const scheduleClose = (delay = 150) => {
-    clearHoverTimer()
+    clearHoverTimer();
     hoverTimer.current = window.setTimeout(() => {
-      setOpenMega(null)
-      hoverTimer.current = null
-    }, delay)
-  }
+      setOpenMega(null);
+      hoverTimer.current = null;
+    }, delay);
+  };
 
-  const nav = DATA[language].items
+  const nav = DATA[language].items;
 
   const DesktopLink = ({ href, label, isActive, onClick }: any) => (
     <Link
@@ -116,35 +118,34 @@ export default function Header() {
       {label}
       <span className="pointer-events-none absolute -bottom-1 left-1/2 w-0 h-px bg-red-600 transition-all duration-200 group-hover:w-full group-hover:left-0" />
     </Link>
-  )
-
+  );
 
   useEffect(() => {
     const onEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setMobileOpen(false)
-        setOpenMega(null)
+        setMobileOpen(false);
+        setOpenMega(null);
       }
-    }
-    window.addEventListener("keydown", onEsc)
-    return () => window.removeEventListener("keydown", onEsc)
-  }, [])
+    };
+    window.addEventListener("keydown", onEsc);
+    return () => window.removeEventListener("keydown", onEsc);
+  }, []);
 
   useEffect(() => {
     const onDocPointerDown = (e: PointerEvent) => {
-      const root = headerRef.current
-      if (!root) return
-      if (!root.contains(e.target as Node)) setOpenMega(null)
-    }
-    document.addEventListener("pointerdown", onDocPointerDown)
-    return () => document.removeEventListener("pointerdown", onDocPointerDown)
-  }, [])
+      const root = headerRef.current;
+      if (!root) return;
+      if (!root.contains(e.target as Node)) setOpenMega(null);
+    };
+    document.addEventListener("pointerdown", onDocPointerDown);
+    return () => document.removeEventListener("pointerdown", onDocPointerDown);
+  }, []);
 
   const closeAllMenus = () => {
-    setOpenMega(null)
-    setMobileOpen(false)
-    setMobileMegaOpen(null)
-  }
+    setOpenMega(null);
+    setMobileOpen(false);
+    setMobileMegaOpen(null);
+  };
 
   return (
     <header
@@ -154,21 +155,29 @@ export default function Header() {
     >
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 2xl:px-16">
         <div className="relative h-20 flex items-center flex-nowrap">
-          <Link href="/" className="flex-none inline-flex items-center" aria-label="Ninja Infosys home">
-            <img
-              src="/logo.png"
-              alt="logo image"
+          <Link
+            href="/"
+            className="flex-none inline-flex items-center"
+            aria-label="Ninja Infosys home"
+          >
+            <Image
+              src="/logo_small.webp"
+              alt="Ninja Infosys"
               width={48}
               height={48}
+              priority // tells Next.js: this is high priority
               className="h-8 sm:h-10 w-auto object-contain"
             />
             <span className="sr-only">NINJA INFOSYS</span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-6 whitespace-nowrap ml-8" aria-label="Main navigation">
+          <nav
+            className="hidden lg:flex items-center gap-6 whitespace-nowrap ml-8"
+            aria-label="Main navigation"
+          >
             {nav.map((item: any, idx: number) => {
               if (item.type === "link") {
-                const isActive = pathname === item.href
+                const isActive = pathname === item.href;
                 return (
                   <DesktopLink
                     key={`${item.href}-${idx}`}
@@ -177,23 +186,24 @@ export default function Header() {
                     isActive={isActive}
                     onClick={closeAllMenus}
                   />
-                )
+                );
               }
 
-              const k = item.key as string
-              const open = openMega === k
-              const exploreHref = k === "solutions" ? "/solutions" : "/services"
+              const k = item.key as string;
+              const open = openMega === k;
+              const exploreHref =
+                k === "solutions" ? "/solutions" : "/services";
 
               return (
                 <div
                   key={k}
                   className="relative"
                   onMouseEnter={() => {
-                    clearHoverTimer()
-                    setOpenMega(k)
+                    clearHoverTimer();
+                    setOpenMega(k);
                   }}
                   onMouseLeave={() => {
-                    scheduleClose()
+                    scheduleClose();
                   }}
                 >
                   <button
@@ -204,7 +214,12 @@ export default function Header() {
                     onClick={() => setOpenMega(open ? null : k)}
                   >
                     {item.label}
-                    <ChevronDown size={16} className={`transition-transform ${open ? "rotate-180" : ""} cursor-pointer`} />
+                    <ChevronDown
+                      size={16}
+                      className={`transition-transform ${
+                        open ? "rotate-180" : ""
+                      } cursor-pointer`}
+                    />
                   </button>
 
                   {open && (
@@ -280,7 +295,9 @@ export default function Header() {
                                 <div className="font-semibold text-white group-hover:text-white/70 transition-colors leading-tight pb-1 font-source-serif-pro">
                                   {c.heading}
                                 </div>
-                                <p className="text-sm text-gray-400 leading-tight font-ibm-plex-sans">{c.copy}</p>
+                                <p className="text-sm text-gray-400 leading-tight font-ibm-plex-sans">
+                                  {c.copy}
+                                </p>
                               </Link>
                             ))}
                           </div>
@@ -289,7 +306,7 @@ export default function Header() {
                     </div>
                   )}
                 </div>
-              )
+              );
             })}
           </nav>
 
@@ -297,23 +314,33 @@ export default function Header() {
             <button
               onClick={() => setLanguage(language === "en" ? "ne" : "en")}
               className="w-10 h-10 flex items-center justify-center shrink-0 text-white/70 hover:text-white transition-colors cursor-pointer"
-              aria-label={`Switch to ${language === "en" ? "Nepali" : "English"}`}
-              title={language === "en" ? "Switch to Nepali" : "Switch to English"}
+              aria-label={`Switch to ${
+                language === "en" ? "Nepali" : "English"
+              }`}
+              title={
+                language === "en" ? "Switch to Nepali" : "Switch to English"
+              }
             >
               <Image
-                src="/toggle.png"
-                alt={language === "en" ? "Switch to Nepali" : "Switch to English"}
+                src="/toggle_w.webp"
+                alt={
+                  language === "en" ? "Switch to Nepali" : "Switch to English"
+                }
                 width={48}
                 height={48}
                 className="h-8 sm:h-10 w-auto object-contain"
                 priority
               />
-              <span className="sr-only">{language === "en" ? "Switch to Nepali" : "Switch to English"}</span>
+              <span className="sr-only">
+                {language === "en" ? "Switch to Nepali" : "Switch to English"}
+              </span>
             </button>
 
             <button
               onClick={() => setMobileOpen((s) => !s)}
-              className={`lg:hidden p-2 text-white/70 hover:text-white transition-colors cursor-pointer border border-white/10 ${mobileOpen ? "bg-white/5" : "bg-transparent"}`}
+              className={`lg:hidden p-2 text-white/70 hover:text-white transition-colors cursor-pointer border border-white/10 ${
+                mobileOpen ? "bg-white/5" : "bg-transparent"
+              }`}
               aria-label={
                 mobileOpen
                   ? language === "en"
@@ -356,12 +383,13 @@ export default function Header() {
                     >
                       {item.label}
                     </Link>
-                  )
+                  );
                 }
                 // collapsible dropdown for mega items in mobile
-                const k = item.key as string
-                const open = mobileMegaOpen === k
-                const exploreHref = k === "solutions" ? "/solutions" : "/services"
+                const k = item.key as string;
+                const open = mobileMegaOpen === k;
+                const exploreHref =
+                  k === "solutions" ? "/solutions" : "/services";
                 return (
                   <div key={k} className="py-1">
                     <button
@@ -372,21 +400,29 @@ export default function Header() {
                     >
                       <div className="flex items-center gap-2">
                         <span className="font-medium">{item.label}</span>
-                        <ChevronDown size={18} className={`transition-transform ${open ? "rotate-180" : ""}`} />
+                        <ChevronDown
+                          size={18}
+                          className={`transition-transform ${
+                            open ? "rotate-180" : ""
+                          }`}
+                        />
                       </div>
                       {/* underline that animates on hover (matches other nav items) */}
                       <span className="pointer-events-none absolute -bottom-1 left-4 w-0 h-px bg-red-600 transition-all duration-200 group-hover:w-[calc(100%-1rem)] group-hover:left-0" />
                     </button>
 
                     {open && (
-                      <div id={`mobile-mega-${k}`} className="pl-4 mt-2 space-y-2">
+                      <div
+                        id={`mobile-mega-${k}`}
+                        className="pl-4 mt-2 space-y-2"
+                      >
                         <div className="grid grid-cols-1 gap-2">
                           {item.cols.flat().map((it: any) => (
                             <Link
                               key={it.href}
                               href={it.href}
                               onClick={() => {
-                                closeAllMenus()
+                                closeAllMenus();
                               }}
                               className="block py-2 text-white/80 hover:text-white"
                             >
@@ -402,13 +438,17 @@ export default function Header() {
                             onClick={closeAllMenus}
                             className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white"
                           >
-                            {language === "en" ? "Explore all" : "सबै हेर्नुहोस्"}
+                            {language === "en"
+                              ? "Explore all"
+                              : "सबै हेर्नुहोस्"}
                             <ArrowRight size={14} />
                           </Link>
                         </div>
 
                         <div className="pt-2 border-t border-white/6 mt-2">
-                          <div className="text-xs font-semibold text-white/70 uppercase">{item.featured.title}</div>
+                          <div className="text-xs font-semibold text-white/70 uppercase">
+                            {item.featured.title}
+                          </div>
                           {item.featured.cards.map((c: any) => (
                             <Link
                               key={c.href}
@@ -416,20 +456,24 @@ export default function Header() {
                               onClick={closeAllMenus}
                               className="block mt-2 text-sm text-white/90 hover:text-white"
                             >
-                              <div className="font-semibold leading-tight">{c.heading}</div>
-                              <p className="text-xs text-gray-400 leading-tight">{c.copy}</p>
+                              <div className="font-semibold leading-tight">
+                                {c.heading}
+                              </div>
+                              <p className="text-xs text-gray-400 leading-tight">
+                                {c.copy}
+                              </p>
                             </Link>
                           ))}
                         </div>
                       </div>
                     )}
                   </div>
-                )
+                );
               })}
             </nav>
           </div>
         </div>
       )}
     </header>
-  )
+  );
 }
