@@ -13,9 +13,72 @@ import OfficesModal from "@/components/offices-modal";
 import Footer from "@/components/footer";
 import { useLanguage } from "@/components/LanguageProvider";
 import ProjectsGrid from "@/components/projects-grid";
+import { Metadata } from "next";
+import Image from "next/image";
 
 type Lang = "en" | "ne";
 type Key = "gov" | "edu" | "health" | "fin" | "corp";
+
+// export const metadata: Metadata = {
+//   title: "Solutions — NinjaInfosys | Custom Web & App Development",
+//   description:
+//     "NinjaInfosys delivers custom web, mobile and e-governance solutions — product development, integration, and cloud migration to scale digital services.",
+//   keywords: [
+//     "ninjainfosys",
+//     "web development",
+//     "mobile app development",
+//     "e-governance solutions",
+//     "digital transformation",
+//   ],
+//   alternates: {
+//     canonical: "https://ninjainfosys.com/solutions",
+//   },
+//   openGraph: {
+//     title: "Solutions — NinjaInfosys",
+//     description:
+//       "Custom web, mobile and e-governance solutions from NinjaInfosys.",
+//     url: "https://ninjainfosys.com/solutions",
+//     siteName: "ninjainfosys.com",
+//     locale: "en_US",
+//     // create a separate folder assets/seo inside app directory
+//     images: [
+//       {
+//         url: "https://ninjainfosys.com/assets/seo/solutions-hero-1200x630.webp",
+//         width: 1200,
+//         height: 630,
+//         alt: "NinjaInfosys Solutions — Custom web and mobile apps",
+//       },
+//     ],
+//   },
+//   twitter: {
+//     card: "summary_large_image",
+//     title: "Solutions — NinjaInfosys",
+//     description: "Custom web, mobile and e-governance solutions.",
+//     creator: "@ninjainfosys",
+//     site: "@ninjainfosys",
+//     images: [
+//       "https://ninjainfosys.com/assets/seo/solutions-hero-1200x630.webp",
+//     ],
+//   },
+//   robots: {
+//     index: true,
+//     follow: true,
+//     googleBot: {
+//       index: true,
+//       follow: true,
+//       "max-snippet": -1,
+//       "max-image-preview": "large",
+//       "max-video-preview": -1,
+//     },
+//   },
+//   icons: {
+//     icon: "/favicon.ico",
+//     apple: "/apple-touch-icon.png",
+//   },
+//   themeColor: "#0f172a",
+//   // optional authors:
+//   authors: [{ name: "NinjaInfosys", url: "https://ninjainfosys.com" }],
+// };
 
 export default function SolutionsPage() {
   const { language } = useLanguage();
@@ -257,17 +320,18 @@ export default function SolutionsPage() {
       <main className="relative bg-black text-white">
         <section className="relative z-10">
           <div className="relative min-h-[50vh] pt-28 lg:pt-32">
-            <div
-              className="absolute inset-0 bg-cover bg-center bg-fixed grayscale"
-              style={
-                bannerUrl
-                  ? {
-                      backgroundImage: `url('${bannerUrl}')`,
-                      backgroundSize: "cover",
-                    }
-                  : {}
-              }
-            />
+            <div className="absolute inset-0 grayscale">
+              {bannerUrl && (
+                <Image
+                  src={bannerUrl}
+                  alt="Banner"
+                  fill
+                  priority // <--- THIS FIXES LCP
+                  fetchPriority="high"
+                  className="object-cover object-center"
+                />
+              )}
+            </div>
 
             <div className="absolute inset-0 bg-black/70" />
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
@@ -349,14 +413,18 @@ export default function SolutionsPage() {
                   >
                     <div className="relative aspect-[16/10] w-full flex-none overflow-hidden">
                       {card.imageUrl && (
-                        <img
+                        <Image
                           src={card.imageUrl}
                           alt={
                             language === "en"
                               ? card.title_en
                               : card.title_ne || card.title_en
                           }
-                          className="h-full w-full object-cover grayscale"
+                          fill
+                          sizes="(max-width: 768px) 100vw,
+         (max-width: 1200px) 50vw,
+         33vw"
+                          className="object-cover grayscale"
                         />
                       )}
                     </div>
