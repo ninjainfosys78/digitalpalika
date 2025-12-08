@@ -1,19 +1,37 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 
 import Header from "@/components/header";
 import Hero from "@/components/hero";
-import InsightsRail, { type InsightCard } from "@/components/insights-rail";
-import Testimonials from "@/components/testimonials";
-import TrustedBy from "@/components/trusted-by";
-import GlobalCTA from "@/components/global-cta";
 import Footer from "@/components/footer";
 import SearchOverlay from "@/components/search-overlay";
 import CookieBanner from "@/components/cookie-banner";
 import OfficesModal from "@/components/offices-modal";
 import { useLanguage } from "@/components/LanguageProvider";
+import type { InsightCard } from "@/components/insights-rail";
+
+const TrustedBy = dynamic(() => import("@/components/trusted-by"), {
+  ssr: false,
+  loading: () => null,
+});
+
+const InsightsRail = dynamic(() => import("@/components/insights-rail"), {
+  ssr: false,
+  loading: () => null,
+});
+
+const Testimonials = dynamic(() => import("@/components/testimonials"), {
+  ssr: false,
+  loading: () => null,
+});
+
+const GlobalCTA = dynamic(() => import("@/components/global-cta"), {
+  ssr: false,
+  loading: () => null,
+});
 
 interface HomePageClientProps {
   insights: InsightCard[];
@@ -24,7 +42,6 @@ export default function HomePageClient({ insights }: HomePageClientProps) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [officesOpen, setOfficesOpen] = useState(false);
 
-  // ✅ Ensure safe array always
   const safeInsights: InsightCard[] = Array.isArray(insights) ? insights : [];
 
   // Keyboard shortcuts
@@ -82,7 +99,10 @@ export default function HomePageClient({ insights }: HomePageClientProps) {
       <Header />
 
       <main id="main-content" className="sharp-edges">
+        {/* Above-the-fold: keep fast */}
         <Hero />
+
+        {/* Below-the-fold: lazy-loaded sections */}
         <TrustedBy />
         <InsightsRail insights={safeInsights} />
         <Testimonials />
@@ -101,8 +121,7 @@ export default function HomePageClient({ insights }: HomePageClientProps) {
         type="application/json"
         id="ni-content"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-          }),
+          __html: JSON.stringify({}),
         }}
       />
     </>

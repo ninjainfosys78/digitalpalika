@@ -58,7 +58,7 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
             ) : showContent ? (
               <>
                 <h1
-                  id="cta-title"
+                  id="hero-title"
                   className="text-balance mb-[5px] w-full max-w-[640px] break-words text-[46px] sm:text-[64px] leading-[48px] sm:leading-[64px] [-letter-spacing:2px] text-[#e3e3e3]"
                 >
                   {content.title}

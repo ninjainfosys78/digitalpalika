@@ -157,7 +157,7 @@ export default function Header() {
           <Link href="/" className="flex-none inline-flex items-center" aria-label="Ninja Infosys home">
             <img
               src="/logo.png"
-              alt="Ninja Infosys"
+              alt="logo image"
               width={48}
               height={48}
               className="h-8 sm:h-10 w-auto object-contain"
