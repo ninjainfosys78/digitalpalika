@@ -66,7 +66,6 @@ export default function FeaturesPage() {
             <Header />
             <main className="bg-white pt-10 min-h-screen">
                 <div className="max-w-7xl mx-auto px-4">
-                    {/* Section Header */}
                     <div className="text-center mb-10">
                         <span className="block text-[#003893] font-semibold mb-2">
                             {t({ en: "Features", ne: "विशेषताहरू" })}
@@ -80,7 +79,6 @@ export default function FeaturesPage() {
                         <div className="mx-auto w-24 h-0.5 bg-gray-300 rounded mb-4" />
                     </div>
 
-                    {/* Features Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                         {features.map((feature) => (
                             <div key={feature.id} className="flex flex-col items-center">
@@ -101,7 +99,6 @@ export default function FeaturesPage() {
                         ))}
                     </div>
                 </div>
-                {/* Add margin-top above Demo, remove margin-bottom below Demo */}
                 <div className="mt-12">
                     <Demo />
                 </div>

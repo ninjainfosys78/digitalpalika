@@ -8,7 +8,6 @@ import Demo from "@/components/demo";
 import { useClients } from "@/hooks/useClients";
 import pb, { type Client } from "@/lib/pocketbase";
 
-// List of provinces for dropdown (with Nepali translation)
 const provinces = [
     { en: "Koshi Province", ne: "कोशी प्रदेश" },
     { en: "Madhesh Province", ne: "मधेश प्रदेश" },
@@ -27,7 +26,6 @@ export default function ClientsPage() {
                 <div className="max-w-7xl mx-auto px-4 py-8">
                     <ClientsContent />
                 </div>
-                {/* Demo section full width, outside container */}
                 <Demo />
             </main>
             <Footer />
@@ -40,10 +38,8 @@ function ClientsContent() {
     const [search, setSearch] = useState("");
     const [province, setProvince] = useState<string>("");
     
-    // Fetch clients from PocketBase
     const { clients, loading, error } = useClients();
 
-    // Filter clients by search and province
     const filteredClients = useMemo(() => {
         return clients.filter(client => {
             const clientName = lang === "ne" ? client.ne_name : client.en_name;
@@ -58,7 +54,6 @@ function ClientsContent() {
         });
     }, [search, province, clients, lang]);
 
-    // Helper function to get image URL
     const getImageUrl = (client: Client) => {
         try {
             if (!client.image) return '/placeholder-logo.png';
@@ -96,10 +91,9 @@ function ClientsContent() {
 
     return (
         <>
-            {/* Heading */}
             <div className="text-center mb-6">
                 <span className="block text-[#003893] font-semibold mb-2">
-                    {t({ en: "Our Client", ne: "हाम्रा ग्राहक" })}
+                    {t({ en: "Our Clients", ne: "हाम्रा ग्राहक" })}
                 </span>
                 <h2 className="text-[28px] font-bold text-black mb-2">
                     {t({
@@ -110,7 +104,6 @@ function ClientsContent() {
                 <div className="mx-auto w-24 h-0.5 bg-gray-300 rounded mb-4" />
             </div>
 
-            {/* Search and Province Filter */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-8">
                 <input
                     type="text"
@@ -133,7 +126,6 @@ function ClientsContent() {
                 </select>
             </div>
 
-            {/* Clients Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {filteredClients.map(client => (
                     <div
