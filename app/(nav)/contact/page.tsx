@@ -5,7 +5,6 @@ import  Footer  from '@/components/footer';
 import { ContactSection } from '@/components/ContactSection'; 
 import { useLanguage } from '@/context/LanguageContext'; 
 
-// --- Content for the Contact Page ---
 export const siteContent = {
     header: {
         navItems: [],
