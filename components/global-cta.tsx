@@ -1,15 +1,16 @@
-"use client"
+"use client";
 
-import React from "react"
-import { ArrowRight, Mail, MapPin } from "lucide-react"
-import { useLanguage } from "@/components/LanguageProvider"
+import React from "react";
+import { ArrowRight, Mail, MapPin } from "lucide-react";
+import { useLanguage } from "@/components/LanguageProvider";
+import Link from "next/link";
 
 interface GlobalCTAProps {
-  onOfficesOpen: () => void
+  onOfficesOpen: () => void;
 }
 
 export default function GlobalCTA({ onOfficesOpen }: GlobalCTAProps) {
-  const { language } = useLanguage()
+  const { language } = useLanguage();
 
   const content =
     language === "en"
@@ -28,7 +29,7 @@ export default function GlobalCTA({ onOfficesOpen }: GlobalCTAProps) {
           ctaPrimary: "परामर्श तालिका बनाउनुहोस्",
           ctaEmail: "उद्धरणको लागि अनुरोध गर्नुहोस्",
           ctaOffice: "हाम्रो टोलीसँग कुरा गर्नुहोस्",
-        }
+        };
 
   return (
     <section
@@ -68,7 +69,7 @@ export default function GlobalCTA({ onOfficesOpen }: GlobalCTAProps) {
             </span>
           </a>
 
-          <a
+          {/* <a
             onClick={onOfficesOpen}
             className="w-full inline-flex items-center justify-between px-6 py-4 border-2 text-base font-semibold transition-colors border-[#141414] text-[#e3e3e3] bg-[#141414] cursor-pointer"
           >
@@ -76,9 +77,21 @@ export default function GlobalCTA({ onOfficesOpen }: GlobalCTAProps) {
               <MapPin size={20} />
               <span>{content.ctaOffice}</span>
             </span>
-          </a>
+          </a> */}
+
+          <Link href="/#offices" legacyBehavior>
+            <a
+              onClick={() => onOfficesOpen()}
+              className="w-full inline-flex items-center justify-between px-6 py-4 border-2 text-base font-semibold transition-colors border-[#141414] text-[#e3e3e3] bg-[#141414] cursor-pointer"
+            >
+              <span className="flex items-center gap-3">
+                <MapPin size={20} />
+                <span>{content.ctaOffice}</span>
+              </span>
+            </a>
+          </Link>
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -62,6 +62,22 @@ export default function Footer() {
           ],
         }
 
+  // 🔊 Accessible label for icon-only social links
+  const getSocialAriaLabel = (typeOrValue: string): string => {
+    const key = typeOrValue.toLowerCase()
+    if (language === "en") {
+      if (key.includes("linkedin")) return "Visit Ninja Infosys on LinkedIn"
+      if (key.includes("facebook")) return "Visit Ninja Infosys on Facebook"
+      if (key === "x" || key.includes("twitter")) return "Visit Ninja Infosys on X (Twitter)"
+      return "Visit Ninja Infosys on social media"
+    } else {
+      if (key.includes("linkedin")) return "निन्जा इन्फोसिसको लिंक्डइन पेज खोल्नुहोस्"
+      if (key.includes("facebook")) return "निन्जा इन्फोसिसको फेसबुक पेज खोल्नुहोस्"
+      if (key === "x" || key.includes("twitter")) return "निन्जा इन्फोसिसको X (ट्विटर) पेज खोल्नुहोस्"
+      return "निन्जा इन्फोसिसको सामाजिक सञ्जाल पेज खोल्नुहोस्"
+    }
+  }
+
   return (
     <footer className="bg-[#000000] text-ni-paper" role="contentinfo">
       <div className="w-full border-t border-ni-paper/12" />
@@ -87,6 +103,7 @@ export default function Footer() {
                 : "इरादालाई पूर्वाधारमा रूपान्तरण गर्दै - आधुनिक संस्थाहरूका लागि विश्वसनीय, मापनयोग्य, र प्रभावकारी डिजिटल प्रणालीहरू निर्माण गर्दै।"}
             </p>
           </div>
+
           <div className="flex flex-col md:flex-row gap-12 mt-8 lg:mt-0">
             <div className="w-max md:mr-40">
               <div className="mb-5">
@@ -105,6 +122,7 @@ export default function Footer() {
                 ))}
               </ul>
             </div>
+
             <div className="w-max md:mr-25">
               <div className="mb-5">
                 <h3 className="font-semibold text-ni-paper/90 text-lg mb-4">{content.connectHeading}</h3>
@@ -155,36 +173,45 @@ export default function Footer() {
                 })}
               </div>
             </div>
+
             <div className="w-max">
               <div className="mb-5 text-center">
                 <h3 className="font-semibold text-ni-paper/90 text-lg">{content.socialLinks}</h3>
               </div>
               <ul className="flex flex-row items-center gap-3">
-                {(content.links || []).map((link: any, idx: number) => (
-                  <li key={String(link.label ?? link.type ?? link.value ?? idx)}>
-                    <a
-                      href={link.href || "#"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-ni-paper/10 hover:bg-[#d52020] transition-colors"
-                    >
-                      {link.type === "LinkedIn" || link.value === "LinkedIn" || link.value === "लिंक्डइन" ? (
-                        <Linkedin size={15} className="text-ni-paper" />
-                      ) : null}
-                      {link.type === "Facebook" || link.value === "Facebook" || link.value === "फेसबुक" ? (
-                        <Facebook size={15} className="text-ni-paper" />
-                      ) : null}
-                      {link.type === "X" || link.value === "X" ? (
-                        <Twitter size={15} className="text-ni-paper" />
-                      ) : null}
-                    </a>
-                  </li>
-                ))}
+                {(content.links || []).map((link: any, idx: number) => {
+                  const typeOrValue = String(link.type ?? link.value ?? "")
+                  const ariaLabel = getSocialAriaLabel(typeOrValue)
+
+                  return (
+                    <li key={String(link.label ?? link.type ?? link.value ?? idx)}>
+                      <a
+                        href={link.href || "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={ariaLabel}
+                        className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-ni-paper/10 hover:bg-[#d52020] transition-colors"
+                      >
+                        {typeOrValue === "LinkedIn" || typeOrValue === "लिंक्डइन" ? (
+                          <Linkedin size={16} className="text-ni-paper" aria-hidden="true" />
+                        ) : null}
+                        {typeOrValue === "Facebook" || typeOrValue === "फेसबुक" ? (
+                          <Facebook size={16} className="text-ni-paper" aria-hidden="true" />
+                        ) : null}
+                        {typeOrValue === "X" || typeOrValue.toLowerCase().includes("twitter") ? (
+                          <Twitter size={16} className="text-ni-paper" aria-hidden="true" />
+                        ) : null}
+                      </a>
+                    </li>
+                  )
+                })}
               </ul>
             </div>
           </div>
         </div>
+
         <div className="my-[42px]" />
+
         <div className="pt-4 pb-4 border-t-2 border-ni-paper/20">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="text-left w-full sm:w-auto">

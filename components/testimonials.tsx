@@ -192,15 +192,29 @@ export default function Testimonials() {
             <div className="flex items-center gap-3">
               {slides.map((_, i) => (
                 <button
-                  key={i}
-                  onClick={() => goTo(i)}
-                  aria-label={`Go to testimonials page ${i + 1}`}
-                  className={`rounded-full border-none cursor-pointer transition-all duration-200 ${
-                    i === page
-                      ? "bg-[var(--color-foreground,#f3f3f3)] w-3 h-3"
-                      : "bg-[rgba(255,255,255,0.12)] w-[10px] h-[10px]"
-                  }`}
-                />
+                    key={i}
+                    onClick={() => goTo(i)}
+                    aria-label={`Go to testimonials page ${i + 1}`}
+                    className={`
+                      relative
+                      inline-flex items-center justify-center
+                      rounded-full
+                      cursor-pointer border-none
+                      transition-all duration-200
+
+                      /* Minimum touch target (44×44) */
+                      w-11 h-11 sm:w-12 sm:h-12
+
+                      /* Visually small dot inside */
+                      before:absolute before:rounded-full before:transition-all before:duration-200
+                      ${i === page
+                        ? "before:bg-[var(--color-foreground,#f3f3f3)] before:w-3 before:h-3"
+                        : "before:bg-[rgba(255,255,255,0.12)] before:w-2 before:h-2"
+                      }
+                    `}
+                  >
+                  </button>
+
               ))}
             </div>
           </div>
