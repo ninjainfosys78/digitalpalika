@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { siteData } from "@/lib/siteData";
-import { Linkedin, Facebook, Twitter, MapPin, Mail, Smartphone, Phone } from "lucide-react";
+import { Linkedin, Facebook, Twitter } from "lucide-react";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -14,14 +14,16 @@ export default function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-5">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           {/* Left column */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 mb-8 lg:mb-0">
             <h2 className="text-3xl font-semibold tracking-tight">{t(f.companyName)}</h2>
-            <p className="mt-2 text-white/90">{t(f.companyMoto)}</p>
+            <p className="mt-2 text-white/90 max-w-md break-words">
+              {t(f.companyMoto)}
+            </p>
           </div>
 
           {/* Right columns */}
-          <div className="lg:col-span-7">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
+          <div className="lg:col-span-7 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {/* Quick Links */}
               <div>
                 <h3 className="text-lg font-semibold">Quick Links</h3>
@@ -42,30 +44,23 @@ export default function Footer() {
               {/* Contact Info */}
               <div>
                 <h3 className="text-lg font-semibold">{t(f.contactInfo.title)}</h3>
-                <ul className="mt-3 space-y-3">
-                  <li className="flex items-start gap-2">
-                    <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm">{t(f.contactInfo.details[0].value)}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Mail className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm">{t(f.contactInfo.details[1].value)}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Phone className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm">{t(f.contactInfo.details[2].value)}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Phone className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm">{t(f.contactInfo.details[3].value)}</span>
-                  </li>
-                </ul>
+                <div className="mt-3 space-y-2">
+                  {f.contactInfo.details.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="flex flex-wrap lg:flex-nowrap items-center gap-2 text-white/90"
+                    >
+                      <span className="font-semibold whitespace-nowrap">{t(item.label)}:</span>
+                      <span className="whitespace-nowrap">{t(item.value)}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* Follow Us */}
-              <div className="flex flex-col items-start sm:items-end text-left sm:text-right">
-                <h3 className="text-lg font-semibold sm:pr-[66px]">Follow Us</h3>
-                <div className="mt-4 flex justify-start sm:justify-end items-center gap-4">
+              <div className="flex flex-col items-start lg:items-end text-left lg:text-right mt-8 sm:mt-0">
+                <h3 className="text-lg font-semibold">Follow Us</h3>
+                <div className="mt-4 flex justify-start lg:justify-end items-center gap-4">
                   <a
                     href="#"
                     aria-label="LinkedIn"

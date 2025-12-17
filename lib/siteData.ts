@@ -456,10 +456,12 @@ export const siteData: FullSiteContent = {
         contactInfo: {
             title: { en: 'Get in Touch', ne: 'सम्पर्कमा रहनुहोस्' },
             details: [
-                { label: { en: 'Office', ne: 'प्रधान कार्यालय' }, value: { en: 'Ninja Infosys Pvt. Ltd., Kathmandu', ne: 'निन्जा इन्फोसिस् प्रा. लि., काठमाडौं' } },
-                { label: { en: 'Corporate Office', ne: 'कर्पोरेट कार्यालय' }, value: { en: 'marketting@ninjainfosys.com', ne: 'marketting@ninjainfosys.com' } },
-                { label: { en: 'Mobile', ne: 'फोन' }, value: { en: '9851343348', ne: '९८५४३३४३४८' } },
-                { label: { en: 'Mobile', ne: 'सम्पर्क नम्बर' }, value: { en: '9858042433', ne: '९८५८०४२४३३' } },
+                { label: { en: 'Address', ne: 'ठेगाना' }, value: { en: 'Baneshwor-10, Kathmandu', ne: 'बानेश्वर-१०, काठमाडौं' } },
+                { label: { en: 'Email', ne: 'इमेल' }, value: { en: 'info@ninjainfosys.com', ne: 'info@ninjainfosys.com' } },
+                { label: { en: 'Telephone', ne: 'टेलिफोन' }, value: { en: '01-5922361', ne: '०१-५९२२३६१' } },
+                { label: { en: 'Phone', ne: 'फोन' }, value: { en: '+977-9851343348', ne: '+९७७-९८५१३४३३४८' } },
+                { label: { en: 'Sales', ne: 'बिक्री' }, value: { en: '+977-9858042433', ne: '+९७७-९८५८०४२४३३' } },
+                { label: { en: 'Support', ne: 'सहयोग' }, value: { en: '9858042647', ne: '९८५८०४२६४७' } },
             ],
             note: { en: 'Scan QR for quick contact.', ne: 'छिटो सम्पर्कको लागि QR स्क्यान गर्नुहोस्।' }
         },
