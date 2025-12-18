@@ -1,6 +1,7 @@
 // lib/siteData.ts
 
 import { LocalizedString } from '../context/LanguageContext';
+import { MapPin, Mail, Phone } from "lucide-react"; // or use your preferred icon library
 
 // Define NavItem interface here instead of importing it
 export interface NavItem {
@@ -456,12 +457,10 @@ export const siteData: FullSiteContent = {
         contactInfo: {
             title: { en: 'Get in Touch', ne: 'सम्पर्कमा रहनुहोस्' },
             details: [
-                { label: { en: 'Address', ne: 'ठेगाना' }, value: { en: 'Baneshwor-10, Kathmandu', ne: 'बानेश्वर-१०, काठमाडौं' } },
+                { label: { en: '', ne: '' }, value: { en: 'Baneshwor-10, Kathmandu, Nepal', ne: 'बानेश्वर-१०, काठमाडौं' } },
                 { label: { en: 'Email', ne: 'इमेल' }, value: { en: 'info@ninjainfosys.com', ne: 'info@ninjainfosys.com' } },
                 { label: { en: 'Telephone', ne: 'टेलिफोन' }, value: { en: '01-5922361', ne: '०१-५९२२३६१' } },
-                { label: { en: 'Phone', ne: 'फोन' }, value: { en: '+977-9851343348', ne: '+९७७-९८५१३४३३४८' } },
-                { label: { en: 'Sales', ne: 'बिक्री' }, value: { en: '+977-9858042433', ne: '+९७७-९८५८०४२४३३' } },
-                { label: { en: 'Support', ne: 'सहयोग' }, value: { en: '9858042647', ne: '९८५८०४२६४७' } },
+                { label: { en: 'Phone', ne: 'फोन' }, value: { en: '+977-9851343348, +977-9858042433, +977-9858042647', ne: '+९७७-९८५१३४३३४८, +९७७-९८५८०४२४३३, +९७७-९८५८०४२६४७' } },
             ],
             note: { en: 'Scan QR for quick contact.', ne: 'छिटो सम्पर्कको लागि QR स्क्यान गर्नुहोस्।' }
         },
