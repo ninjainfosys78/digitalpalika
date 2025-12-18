@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { siteData } from "@/lib/siteData";
-import { Linkedin, Facebook, Twitter } from "lucide-react";
+import { Linkedin, Facebook, Twitter, MapPin, Mail, Phone } from "lucide-react";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -45,15 +45,50 @@ export default function Footer() {
               <div>
                 <h3 className="text-lg font-semibold">{t(f.contactInfo.title)}</h3>
                 <div className="mt-3 space-y-2">
-                  {f.contactInfo.details.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex flex-wrap lg:flex-nowrap items-center gap-2 text-white/90"
-                    >
-                      <span className="font-semibold whitespace-nowrap">{t(item.label)}:</span>
-                      <span className="whitespace-nowrap">{t(item.value)}</span>
-                    </div>
-                  ))}
+                  {/* Address */}
+                  <div className="flex items-center gap-2 text-white/90 -ml-2">
+                    <MapPin className="h-5 w-5 min-w-[20px] min-h-[20px] text-white/80" />
+                    <span>{t(f.contactInfo.details[0].value)}</span>
+                  </div>
+                  {/* Email */}
+                  <div className="flex items-center gap-2 text-white/90 -ml-2">
+                    <Mail className="h-5 w-5 min-w-[20px] min-h-[20px] text-white/80" />
+                    <span>{t(f.contactInfo.details[1].value)}</span>
+                  </div>
+                  {/* Telephone */}
+                  <div className="flex items-center gap-2 text-white/90 -ml-2">
+                    <Phone className="h-5 w-5 min-w-[20px] min-h-[20px] text-white/80" />
+                    <span>{t(f.contactInfo.details[2].value)}</span>
+                  </div>
+                  {/* Phone (first two in one row, last on new row) */}
+                  <div className="flex items-start gap-2 text-white/90 -ml-2">
+                    <Phone className="h-5 w-5 min-w-[20px] min-h-[20px] text-white/80 mt-1" />
+                    <span>
+                      {(() => {
+                        // Get language from context or fallback
+                        const { lang = (typeof navigator !== 'undefined' && navigator.language ? navigator.language.slice(0,2) : 'en') } = useLanguage();
+                        let phones: string[] = [];
+                        const phoneValue = f.contactInfo.details[3].value;
+                        if (phoneValue && typeof phoneValue === "object" && !Array.isArray(phoneValue)) {
+                          let val = (phoneValue as Record<string, any>)[lang] || (phoneValue as Record<string, any>)["en"] || "";
+                          if (Array.isArray(val)) {
+                            phones = val;
+                          } else if (typeof val === "string") {
+                            phones = val.split(",").map(p => p.trim());
+                          }
+                        } else if (typeof phoneValue === "string") {
+                          phones = (phoneValue as string).split(",").map(p => p.trim());
+                        }
+                        return (
+                          <>
+                            <span>{phones.slice(0, 2).join(", ")}</span>
+                            <br />
+                            <span>{phones[2]}</span>
+                          </>
+                        );
+                      })()}
+                    </span>
+                  </div>
                 </div>
               </div>
 
