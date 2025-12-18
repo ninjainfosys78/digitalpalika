@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #171717;
+  }
+
+  * {
+    font-family: var(--font-body) !important;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body) !important;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading) !important;
+  }
+
+  /* Also apply to common heading classes */
+  .text-2xl, .text-3xl, .text-4xl, .text-5xl, .text-6xl {
+    font-family: var(--font-heading) !important;
+  }
+
+  /* Apply to any element with font-bold that looks like a heading */
+  .font-bold, .font-extrabold, .font-semibold {
+    font-family: var(--font-heading) !important;
+  }
+}
+
+/* Add to your global CSS file */
+.slanted-top {
+  clip-path: polygon(0 3vw, 100% 0, 100% 100%, 0% 100%);
+}
