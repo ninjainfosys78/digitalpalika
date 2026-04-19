@@ -78,17 +78,23 @@ export default function InsightsRail({
                 href={insight.url}
                 className="block h-full rounded-[2px] overflow-hidden transition-all duration-300 hover:-translate-y-1 bg-neutral-900 shadow-[0_2px_8px_0_rgba(20,20,20,0.13)]"
               >
-                <div className="relative overflow-hidden bg-black">
+                <div className="relative overflow-hidden bg-muted">
                   <img
-                    src={insight.image || "/placeholder.svg"}
+                    src={insight.image || "/placeholder.jpg"}
                     alt={insight.title}
-                    className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 grayscale ${
+                    onError={(e) => {
+                      const targ = e.currentTarget as HTMLImageElement;
+                      if (!targ.src.endsWith("placeholder.jpg")) {
+                        targ.src = "/placeholder.jpg";
+                      }
+                    }}
+                    className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 ${
                       idx === 0
                         ? "h-[280px] sm:h-[350px] md:h-[400px]"
                         : "h-[200px] sm:h-[240px]"
                     }`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/50 to-transparent" />
+                  <div className="absolute inset-0 transition-colors" />
                 </div>
 
                 <div className={`p-5 sm:p-6 ${idx === 0 ? "md:p-8" : ""}`}>

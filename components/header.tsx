@@ -150,7 +150,7 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className="relative z-50 bg-black transition-colors duration-200 backdrop-blur-md border-b border-black/10"
+      className="relative z-50 bg-black transition-colors duration-200 backdrop-blur-md border-b border-white/5"
       role="banner"
     >
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 2xl:px-16">
@@ -165,7 +165,7 @@ export default function Header() {
               alt="Ninja Infosys"
               width={48}
               height={48}
-              priority // tells Next.js: this is high priority
+              priority
               className="h-8 sm:h-10 w-auto object-contain"
             />
             <span className="sr-only">NINJA INFOSYS</span>
@@ -324,7 +324,7 @@ export default function Header() {
               <Image
                 src="/toggle_w.webp"
                 alt={
-                  language === "en" ? "Switch to Nepali" : "Switch to English"
+                  language === "en" ? "नेपालीमा बदल्नुहोस्" : "Switch to English"
                 }
                 width={48}
                 height={48}
@@ -379,7 +379,7 @@ export default function Header() {
                       key={`${item.href}-${idx}`}
                       href={item.href}
                       onClick={closeAllMenus}
-                      className="block py-3 text-white/90 hover:text-white/70 font-medium"
+                      className="block py-3 text-white/90 hover:text-white/70 font-medium font-ibm-plex-sans"
                     >
                       {item.label}
                     </Link>
@@ -394,7 +394,7 @@ export default function Header() {
                   <div key={k} className="py-1">
                     <button
                       onClick={() => setMobileMegaOpen(open ? null : k)}
-                      className="w-full flex items-center justify-between py-3 text-white/90 hover:text-white font-medium relative group"
+                      className="w-full flex items-center justify-between py-3 text-white/90 hover:text-white font-medium relative group font-ibm-plex-sans"
                       aria-expanded={open}
                       aria-controls={`mobile-mega-${k}`}
                     >
@@ -407,7 +407,6 @@ export default function Header() {
                           }`}
                         />
                       </div>
-                      {/* underline that animates on hover (matches other nav items) */}
                       <span className="pointer-events-none absolute -bottom-1 left-4 w-0 h-px bg-red-600 transition-all duration-200 group-hover:w-[calc(100%-1rem)] group-hover:left-0" />
                     </button>
 
@@ -424,19 +423,19 @@ export default function Header() {
                               onClick={() => {
                                 closeAllMenus();
                               }}
-                              className="block py-2 text-white/80 hover:text-white"
+                              className="block py-2 text-white/80 hover:text-white font-ibm-plex-sans"
                             >
                               {it.label}
                             </Link>
                           ))}
                         </div>
 
-                        {/* Explore all link placed before featured products in mobile dropdown */}
+                        {/* Explore all link */}
                         <div className="pt-3">
                           <Link
                             href={exploreHref}
                             onClick={closeAllMenus}
-                            className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white"
+                            className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white font-ibm-plex-sans"
                           >
                             {language === "en"
                               ? "Explore all"
@@ -445,8 +444,8 @@ export default function Header() {
                           </Link>
                         </div>
 
-                        <div className="pt-2 border-t border-white/6 mt-2">
-                          <div className="text-xs font-semibold text-white/70 uppercase">
+                        <div className="pt-2 border-t border-white/10 mt-2">
+                          <div className="text-xs font-semibold text-white/70 uppercase font-ibm-plex-sans">
                             {item.featured.title}
                           </div>
                           {item.featured.cards.map((c: any) => (
@@ -454,7 +453,7 @@ export default function Header() {
                               key={c.href}
                               href={c.href}
                               onClick={closeAllMenus}
-                              className="block mt-2 text-sm text-white/90 hover:text-white"
+                              className="block mt-2 text-sm text-white/90 hover:text-white font-ibm-plex-sans"
                             >
                               <div className="font-semibold leading-tight">
                                 {c.heading}

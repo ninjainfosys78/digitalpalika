@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import "./globals.css"
 import { IBM_Plex_Sans, Source_Serif_4 } from "next/font/google"
 import { LanguageProvider } from "@/components/LanguageProvider"
+import { ThemeProvider } from "@/components/theme-provider"
+import CookieConsent from "@/components/cookie-consent"
 
 const ibm = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -41,11 +43,17 @@ export const metadata: Metadata = {
     generator: 'v0.app'
 }
 
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${ibm.variable} ${serif.variable}`}>
-        <LanguageProvider>{children}</LanguageProvider>
+        <ThemeProvider attribute="class" forcedTheme="dark" enableSystem={false}>
+          <LanguageProvider>
+            {children}
+            <CookieConsent />
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

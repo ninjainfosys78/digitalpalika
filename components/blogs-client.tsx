@@ -34,23 +34,23 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
   };
 
   return (
-    <main className="relative bg-black text-white">
+    <main className="relative bg-background text-foreground transition-colors duration-300">
       {/* Hero */}
       <section className="relative z-10">
         <div className="relative min-h-[44vh] pt-24 lg:pt-28">
           <div
-            className="absolute inset-0 bg-cover bg-center bg-fixed opacity-60 grayscale"
+            className="absolute inset-0 bg-cover bg-center bg-fixed opacity-60"
             style={{
               backgroundImage: `url('${bannerUrl || "/insights.jpg"}')`,
             }}
           />
 
-          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-background/60" />
           <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
             <div className="max-w-[1200px] text-left">
               <nav
                 aria-label="Breadcrumb"
-                className="mt-4 text-sm text-white/80"
+                className="mt-4 text-sm text-foreground/80"
               >
                 <ol className="flex items-center gap-3">
                   <li>
@@ -63,7 +63,7 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
                   </li>
                   <li
                     aria-hidden
-                    className="inline-flex items-center text-white/70"
+                    className="inline-flex items-center text-foreground/70"
                   >
                     <svg
                       viewBox="0 0 24 24"
@@ -80,7 +80,7 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
                   </li>
                 </ol>
               </nav>
-              <h1 className="mt-4 text-5xl font-heading font-semibold text-white sm:text-6xl">
+              <h1 className="mt-4 text-5xl font-heading font-semibold text-foreground sm:text-6xl">
                 {labels.insights}
               </h1>
             </div>
@@ -97,28 +97,34 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
               return (
                 <div
                   key={p.slug}
-                  className="group flex h-full flex-col border border-white/10 bg-[#0B0D12] transition-colors duration-200 hover:border-gray-200"
+                  className="group flex h-full flex-col border border-foreground/10 bg-card transition-all duration-300 hover:border-red-600/50 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]"
                 >
                   {/* Image */}
-                  <div className="w-full overflow-hidden bg-black">
+                  <div className="w-full overflow-hidden bg-muted">
                     {p.image && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={p.image}
                         alt={p.title}
-                        className="h-[220px] w-full object-cover grayscale transition duration-300 group-hover:grayscale"
+                        onError={(e) => {
+                          const targ = e.currentTarget as HTMLImageElement;
+                          if (!targ.src.endsWith("placeholder.jpg")) {
+                            targ.src = "/placeholder.jpg";
+                          }
+                        }}
+                        className="h-[220px] w-full object-cover transition duration-500 group-hover:scale-105"
                       />
                     )}
                   </div>
 
                   {/* Meta & Deck */}
                   <div className="flex-1 px-6 py-5">
-                    <h3 className="mb-2 line-clamp-2 font-heading text-xl font-semibold text-white hover:text-gray-200">
+                    <h3 className="mb-2 line-clamp-2 font-heading text-xl font-semibold text-foreground hover:text-red-600 transition-colors">
                       <Link href={`/blogs/${p.slug}`}>{p.title}</Link>
                     </h3>
 
                     {(p.date || p.readTime) && (
-                      <div className="pt-3 mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60 flex flex-wrap gap-2">
+                      <div className="pt-3 mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/60 flex flex-wrap gap-2">
                         {p.date && <span>{p.date}</span>}
                         {p.date && p.readTime && <span>•</span>}
                         {p.readTime && <span>{p.readTime}</span>}
@@ -126,7 +132,7 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
                     )}
 
                     {p.deck && (
-                      <p className="mb-6 line-clamp-3 text-sm leading-relaxed text-white/70">
+                      <p className="mb-6 line-clamp-3 text-sm leading-relaxed text-foreground/70">
                         {p.deck}
                       </p>
                     )}

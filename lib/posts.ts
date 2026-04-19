@@ -40,9 +40,11 @@ export async function getAllPostsMeta(): Promise<PostMeta[]> {
 
   const posts: PostMeta[] = records.map((r: any) => {
     const content: string = r.Content ?? "";
+    const rawSlug = r.Slug || r.Title || "insight";
+    const slug = rawSlug.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-");
 
     return {
-      slug: r.Slug,
+      slug: slug,
       title: r.Title ?? "",
       deck: "",
       readTime: r.ReadTime || calculateReadTime(content),
@@ -51,6 +53,36 @@ export async function getAllPostsMeta(): Promise<PostMeta[]> {
       image: getImageUrl(r),
       excerpt: buildExcerpt(content),
     };
+  });
+
+  // Ensure mandatory topics are present (fallback if not in DB)
+  const mandatorySlugs = ["from-paper-to-platform", "the-choreography-of-change"];
+  mandatorySlugs.forEach((mSlug) => {
+    if (!posts.some((p) => p.slug === mSlug)) {
+      posts.push({
+        slug: mSlug,
+        title: mSlug === "from-paper-to-platform" 
+          ? "From Paper to Platform: How Digital E-Palika Modernized Municipal Governance" 
+          : "The choreography of change",
+        deck: "",
+        readTime: mSlug === "from-paper-to-platform" ? "8 min read" : "4 min read",
+        kicker: "Insight",
+        date: "2024-12-12",
+        image: mSlug === "from-paper-to-platform" 
+          ? "/assets/insights/epalika-platform.png" 
+          : "/assets/insights/choreography-change.png",
+        excerpt: mSlug === "from-paper-to-platform" 
+          ? "Building reliable digital platforms from manual processes..." 
+          : "Understanding the delicate balance of organizational change...",
+      });
+    }
+  });
+
+  // Sort by date descending
+  posts.sort((a, b) => {
+    const dA = new Date(a.date).getTime() || 0;
+    const dB = new Date(b.date).getTime() || 0;
+    return dB - dA;
   });
 
   return posts;
@@ -80,6 +112,37 @@ export async function getPostBySlug(slug: string): Promise<{
 
     return { meta, content };
   } catch {
+    // Fallback for mandatory items if DB record is missing
+    if (slug === "from-paper-to-platform") {
+      return {
+        meta: {
+          slug: "from-paper-to-platform",
+          title: "From Paper to Platform: How Digital E-Palika Modernized Municipal Governance",
+          deck: "",
+          readTime: "8 min read",
+          kicker: "Insight",
+          date: "2025-01-14",
+          image: "/assets/insights/epalika-platform.png",
+          excerpt: "Building reliable digital platforms from manual processes...",
+        },
+        content: "Detailed case study on how E-Palika transformed municipal governance by moving from paper files to a integrated digital platform.",
+      };
+    }
+    if (slug === "the-choreography-of-change") {
+      return {
+        meta: {
+          slug: "the-choreography-of-change",
+          title: "The choreography of change",
+          deck: "",
+          readTime: "4 min read",
+          kicker: "Insight",
+          date: "2024-12-12",
+          image: "/assets/insights/choreography-change.png",
+          excerpt: "Understanding the delicate balance of organizational change...",
+        },
+        content: "Change is not just a decision, it is a dance. This insight explores how to lead teams through transition with precision and empathy.",
+      };
+    }
     return null;
   }
 }

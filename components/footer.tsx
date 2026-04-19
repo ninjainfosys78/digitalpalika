@@ -79,8 +79,8 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-[#000000] text-ni-paper" role="contentinfo">
-      <div className="w-full border-t border-ni-paper/12" />
+    <footer className="bg-background text-foreground transition-colors duration-300" role="contentinfo">
+      <div className="w-full border-t border-foreground/10" />
       <div className="mx-auto w-full max-w-screen-2xl px-6 sm:px-8 lg:px-12 2xl:px-16">
         <div className="h-10" />
         <div className="flex flex-col lg:flex-row items-start lg:items-start justify-between gap-8 mb-5 mt-8">
@@ -97,7 +97,7 @@ export default function Footer() {
                 <h2 className="text-2xl font-bold">NINJA INFOSYS</h2>
               </div>
             </Link>
-            <p className="text-ni-paper/60 max-w-md text-pretty font-normal">
+            <p className="text-foreground/60 max-w-md text-pretty font-normal">
               {language === "en"
                 ? "Turning intent into infrastructure — building reliable, scalable, and impactful digital systems for modern organizations."
                 : "इरादालाई पूर्वाधारमा रूपान्तरण गर्दै - आधुनिक संस्थाहरूका लागि विश्वसनीय, मापनयोग्य, र प्रभावकारी डिजिटल प्रणालीहरू निर्माण गर्दै।"}
@@ -107,7 +107,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row gap-12 mt-8 lg:mt-0">
             <div className="w-max md:mr-40">
               <div className="mb-5">
-                <h3 className="font-semibold text-ni-paper/90 text-lg">{content.quickHeading}</h3>
+                <h3 className="font-semibold text-foreground/90 text-lg">{content.quickHeading}</h3>
               </div>
               <ul className="space-y-2">
                 {content.quickLinks.map((link: any) => (
@@ -127,7 +127,7 @@ export default function Footer() {
               <div className="mb-5">
                 <h3 className="font-semibold text-ni-paper/90 text-lg mb-4">{content.connectHeading}</h3>
               </div>
-              <div className="text-ni-paper/60 hover:text-ni-paper transition-colors max-w-md font-normal">
+              <div className="text-foreground/60 hover:text-foreground transition-colors max-w-md font-normal">
                 {content.connect.map((c: any, i: number) => {
                   if (c.type === "phone" || c.type === "mobile") {
                     const parts = String(c.value)
@@ -212,23 +212,23 @@ export default function Footer() {
 
         <div className="my-[42px]" />
 
-        <div className="pt-4 pb-4 border-t-2 border-ni-paper/20">
+        <div className="pt-4 pb-4 border-t-2 border-foreground/10">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="text-left w-full sm:w-auto">
-              <p className="text-sm text-ni-paper/60 font-normal">{content.copyright}</p>
+              <p className="text-sm text-foreground/60 font-normal">{content.copyright}</p>
             </div>
             <div className="w-full sm:w-auto">
-              <div className="flex items-center justify-start sm:justify-end gap-3 text-sm text-ni-paper/60">
+              <div className="flex items-center justify-start sm:justify-end gap-3 text-sm text-foreground/60">
                 {content.legalLinks.map((link: any, idx: number) => (
                   <span key={String(link.label)} className="flex items-center">
                     <Link
                       href={link.href}
-                      className="text-sm text-ni-paper/60 hover:text-ni-paper transition-colors font-normal"
+                      className="text-sm text-foreground/60 hover:text-foreground transition-colors font-normal"
                     >
                       {link.label}
                     </Link>
                     {idx < content.legalLinks.length - 1 && (
-                      <span className="mx-3 text-ni-paper/30 font-normal">|</span>
+                      <span className="mx-3 text-foreground/30 font-normal">|</span>
                     )}
                   </span>
                 ))}

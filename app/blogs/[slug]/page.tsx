@@ -9,12 +9,17 @@ import { getAllPostsMeta, getPostBySlug } from "@/lib/posts";
 export async function generateStaticParams() {
   const posts = await getAllPostsMeta();
   return posts.map((p) => ({
-    slug: encodeURIComponent(p.slug),
+    slug: p.slug,
   }));
 }
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const decodedSlug = decodeURIComponent(params.slug);
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug: paramsSlug } = await params;
+  const decodedSlug = decodeURIComponent(paramsSlug);
 
   const post = await getPostBySlug(decodedSlug);
   if (!post) return notFound();
@@ -77,7 +82,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               <img
                 src={meta.image}
                 alt={meta.title}
-                className="w-full h-[300px] sm:h-[360px] object-cover grayscale transition"
+                className="w-full h-[300px] sm:h-[360px] object-cover transition"
               />
             </div>
           )}
