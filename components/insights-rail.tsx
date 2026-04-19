@@ -88,7 +88,7 @@ export default function InsightsRail({
                         targ.src = "/placeholder.jpg";
                       }
                     }}
-                    className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 ${
+                    className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 grayscale hover:grayscale-0 ${
                       idx === 0
                         ? "h-[280px] sm:h-[350px] md:h-[400px]"
                         : "h-[200px] sm:h-[240px]"

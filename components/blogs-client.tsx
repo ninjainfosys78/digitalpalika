@@ -112,7 +112,7 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
                             targ.src = "/placeholder.jpg";
                           }
                         }}
-                        className="h-[220px] w-full object-cover transition duration-500 group-hover:scale-105"
+                        className="h-[220px] w-full object-cover grayscale transition duration-500 group-hover:grayscale-0 group-hover:scale-105"
                       />
                     )}
                   </div>
