@@ -69,8 +69,8 @@ export async function getAllPostsMeta(): Promise<PostMeta[]> {
         kicker: "Insight",
         date: "2024-12-12",
         image: mSlug === "from-paper-to-platform" 
-          ? "/assets/insights/epalika-platform.png" 
-          : "/assets/insights/choreography-change.png",
+          ? "/assets/insights/newspaper.jpg" 
+          : "/assets/insights/choreography-change.jpg",
         excerpt: mSlug === "from-paper-to-platform" 
           ? "Building reliable digital platforms from manual processes..." 
           : "Understanding the delicate balance of organizational change...",
@@ -122,7 +122,7 @@ export async function getPostBySlug(slug: string): Promise<{
           readTime: "8 min read",
           kicker: "Insight",
           date: "2025-01-14",
-          image: "/assets/insights/epalika-platform.png",
+          image: "/assets/insights/newspaper.jpg",
           excerpt: "Building reliable digital platforms from manual processes...",
         },
         content: "Detailed case study on how E-Palika transformed municipal governance by moving from paper files to a integrated digital platform.",
@@ -137,7 +137,7 @@ export async function getPostBySlug(slug: string): Promise<{
           readTime: "4 min read",
           kicker: "Insight",
           date: "2024-12-12",
-          image: "/assets/insights/choreography-change.png",
+          image: "/assets/insights/choreography-change.jpg",
           excerpt: "Understanding the delicate balance of organizational change...",
         },
         content: "Change is not just a decision, it is a dance. This insight explores how to lead teams through transition with precision and empathy.",

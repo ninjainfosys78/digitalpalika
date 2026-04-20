@@ -37,37 +37,37 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
     <main className="relative bg-background text-foreground transition-colors duration-300">
       {/* Hero */}
       <section className="relative z-10">
-        <div className="relative min-h-[44vh] pt-24 lg:pt-28">
+        <div className="relative min-h-[50vh] pt-28 lg:pt-32">
           <div
-            className="absolute inset-0 bg-cover bg-center bg-fixed opacity-60"
+            className="absolute inset-0 bg-cover bg-center bg-fixed opacity-60 grayscale"
             style={{
-              backgroundImage: `url('${bannerUrl || "/insights.jpg"}')`,
+              backgroundImage: `url('${bannerUrl || "/futuristic-travel-technology-interface.jpg"}')`,
             }}
           />
 
-          <div className="absolute inset-0 bg-background/60" />
-          <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
+          <div className="absolute inset-0 bg-black/60" />
+          <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
             <div className="max-w-[1200px] text-left">
               <nav
                 aria-label="Breadcrumb"
-                className="mt-4 text-sm text-foreground/80"
+                className="mt-4 text-sm text-foreground/50"
               >
                 <ol className="flex items-center gap-3">
                   <li>
                     <Link
                       href="/"
-                      className="font-medium tracking-wide hover:text-gray-200"
+                      className="font-normal tracking-wide hover:text-white"
                     >
                       {labels.home}
                     </Link>
                   </li>
                   <li
                     aria-hidden
-                    className="inline-flex items-center text-foreground/70"
+                    className="inline-flex items-center text-foreground/30"
                   >
                     <svg
                       viewBox="0 0 24 24"
-                      className="h-5 w-5"
+                      className="h-4 w-4"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="2"
@@ -75,12 +75,12 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
                       <path d="M9 18l6-6-6-6" />
                     </svg>
                   </li>
-                  <li className="font-medium tracking-wide">
+                  <li className="font-normal tracking-wide">
                     {labels.insights}
                   </li>
                 </ol>
               </nav>
-              <h1 className="mt-4 text-5xl font-heading font-semibold text-foreground sm:text-6xl">
+              <h1 className="mt-2 text-5xl font-serif font-medium text-white sm:text-6xl">
                 {labels.insights}
               </h1>
             </div>
