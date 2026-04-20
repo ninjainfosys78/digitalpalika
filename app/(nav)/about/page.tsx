@@ -357,9 +357,9 @@ export default function AboutPage() {
                 {content.timeline.map((t, i) => (
                   <li
                     key={t.year}
-                    className="relative grid grid-cols-1 md:grid-cols-2 md:gap-10"
+                    className="group/box relative grid grid-cols-1 md:grid-cols-2 md:gap-10"
                   >
-                    <span className="absolute left-1/2 top-6 z-10 -translate-x-1/2 flex h-4 w-4 items-center justify-center rounded-full bg-[#d52020] ring-2 ring-foreground/20" />
+                    <span className="absolute left-1/2 top-6 z-10 -translate-x-1/2 flex h-4 w-4 items-center justify-center rounded-full bg-[#d52020] ring-2 ring-foreground/20 transition-transform duration-300 group-hover/box:scale-125" />
 
                     <div
                       className={
@@ -368,7 +368,7 @@ export default function AboutPage() {
                           : "md:col-start-2 md:pl-10 flex md:justify-start"
                       }
                     >
-                      <div className="max-w-[420px] w-full border border-foreground/10 bg-card p-6 rounded-none text-foreground">
+                      <div className="max-w-[420px] w-full border border-foreground/10 bg-card p-6 rounded-none text-foreground transition-all duration-300 hover:-translate-y-1 hover:border-ni-accent/50 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)]">
                         <div className="text-xs font-semibold tracking-wide text-foreground/50 group-hover/box:text-ni-accent transition-colors">
                           {t.year}
                         </div>
