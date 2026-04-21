@@ -109,7 +109,7 @@ export default function Testimonials() {
     <section
       aria-label="Testimonials"
       className="relative pt-20 pb-16"
-      style={{ backgroundColor: '#d52020', color: '#ffffff' }}
+      style={{ backgroundColor: '#000000', color: '#ffffff' }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >

@@ -102,6 +102,18 @@ export default function AboutPage() {
             text: "Multi-region delivery with the same small-team DNA and craft standards.",
           },
         ],
+        principlesTitle: "Engineering Principles",
+        principles: [
+          { title: "Automation First", body: "We eliminate toil. If a task is repeatable, it is automated. This ensures consistency and frees our engineers to solve creative problems." },
+          { title: "Security by Default", body: "Security isn't a checkbox at the end—it's woven into every line of code we write and every architectural decision we make." },
+          { title: "Pragmatic Innovation", body: "We don't chase hype. We apply new technologies like AI and Cloud-Native patterns only when they drive real business outcomes." }
+        ],
+        leadershipTitle: "Our Team",
+        leaders: [
+          { name: "Ramesh Chettri", role: "Chairman", image: "/ramesh_chairman.png" },
+          { name: "Shiv Ram Adhikari", role: "Chief Technology Officer", image: "/shiv_ram_adhikari.png" },
+          { name: "Bimala KC", role: "Principal Software Engineer", image: "/bimala_kc.png" }
+        ]
       }
       : {
         who: "हामी को हौं",
@@ -177,6 +189,18 @@ export default function AboutPage() {
             text: "समान सानो-टिम डीएनए र कला मानकसहित बहु-क्षेत्रीय डेलिभरी।",
           },
         ],
+        principlesTitle: "इन्जिनियरिङ सिद्धान्तहरू",
+        principles: [
+          { title: "स्वचालन पहिलो", body: "हामी कठिन कामहरू हटाउँछौं। यदि कुनै कार्य दोहोरिने खालको छ भने, त्यसलाई स्वचालित बनाइन्छ।" },
+          { title: "पूर्वनिर्धारित सुरक्षा", body: "सुरक्षा अन्तिममा गरिने चेकबक्स होइन—यो हामीले लेख्ने कोड र हरेक वास्तुकला निर्णयमा बुनिएको हुन्छ।" },
+          { title: "व्यावहारिक नवाचार", body: "हामी केवल चर्चाको पछि लाग्दैनौं। हामी एआई जस्ता नयाँ प्रविधिहरू प्रयोग गर्छौं जसले वास्तविक नतिजा दिन्छ।" }
+        ],
+        leadershipTitle: "हाम्रो टिम",
+        leaders: [
+          { name: "रमेश क्षेत्री", role: "अध्यक्ष (Chairman)", image: "/ramesh_chairman.png" },
+          { name: "शिव राम अधिकारी", role: "मुख्य प्राविधिक अधिकृत", image: "/shiv_ram_adhikari.png" },
+          { name: "बिमला केसी", role: "प्रमुख सफ्टवेयर इन्जिनियर", image: "/bimala_kc.png" }
+        ]
       };
 
   useEffect(() => {
@@ -323,10 +347,10 @@ export default function AboutPage() {
               {content.core.map(({ icon: Icon, title, body }) => (
                 <article
                   key={title}
-                  className="md:col-span-4 border border-foreground/10 bg-card p-6 shadow-sm rounded-none"
+                  className="md:col-span-4 border border-foreground/10 bg-card p-6 shadow-sm rounded-none transition-all duration-300 hover:-translate-y-2 hover:border-[#d52020] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] group"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="inline-flex h-10 w-10 items-center justify-center bg-foreground/5 text-foreground">
+                    <span className="inline-flex h-10 w-10 items-center justify-center bg-foreground/5 text-foreground transition-colors group-hover:bg-[#d52020] group-hover:text-white">
                       <Icon size={18} />
                     </span>
                     <h3 className="text-lg font-heading font-semibold text-foreground text-left">
@@ -342,7 +366,49 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <Testimonials />
+        {/* Principles Section */}
+        <section className="relative z-10 bg-muted">
+          <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-16">
+            <h2 className="text-[32px] font-heading font-semibold text-left text-foreground mb-12">
+              {content.principlesTitle}
+            </h2>
+            <div className="grid gap-12 md:grid-cols-3">
+              {content.principles.map((p, idx) => (
+                <div key={idx} className="border-l-2 border-[#d52020] pl-6 py-2">
+                  <h3 className="text-xl font-heading font-bold mb-4">{p.title}</h3>
+                  <p className="text-foreground/70 leading-relaxed text-sm">{p.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Leadership Section */}
+        <section className="relative z-10 bg-background">
+          <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-16 lg:py-24">
+            <div className="max-w-2xl mb-16">
+              <h2 className="text-[32px] font-heading font-semibold text-left text-foreground mb-4">
+                {content.leadershipTitle}
+              </h2>
+              <div className="h-1 w-20 bg-[#d52020]" />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">
+              {content.leaders.map((leader, idx) => (
+                <div key={idx} className="group flex flex-col items-center text-center">
+                  <div className="w-64 h-64 relative overflow-hidden rounded-full bg-muted mb-8 border-4 border-foreground/5 shadow-xl transition-all duration-500 group-hover:border-[#d52020] group-hover:scale-105">
+                    <img 
+                      src={leader.image} 
+                      alt={leader.name} 
+                      className={`w-full h-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 ${leader.name === 'Ramesh' || leader.name === 'रमेश' ? 'scale-110 object-top' : ''}`}
+                    />
+                  </div>
+                  <h3 className="text-2xl font-heading font-bold text-foreground">{leader.name}</h3>
+                  <p className="text-[#d52020] font-semibold uppercase tracking-widest text-[11px] mt-2 bg-foreground/5 px-4 py-1 rounded-full">{leader.role}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         <section id="our-story" className="relative z-10 scroll-mt-28 bg-background">
           <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-12 lg:py-16">

@@ -77,12 +77,12 @@ export default function Header() {
           className="flex items-center gap-3 group"
           aria-label="Ninja Infosys home"
         >
-          <div className="relative w-10 h-10 overflow-hidden rounded-lg bg-white p-1.5 shadow-sm transition-transform group-hover:scale-105">
+          <div className="relative w-12 h-12 transition-transform group-hover:scale-105">
             <Image
               src="/logo.png"
               alt="Ninja Infosys Logo"
-              width={40}
-              height={40}
+              width={48}
+              height={48}
               className="object-contain"
               priority
             />

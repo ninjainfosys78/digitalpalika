@@ -27,15 +27,15 @@ export default function InsightsRail({
   const content =
     language === "en"
       ? {
-          title: "Insights",
-          viewAll: "View all insights",
-          readMore: "Read more",
-        }
+        title: "Insights",
+        viewAll: "View all insights",
+        readMore: "Read more",
+      }
       : {
-          title: "इनसाइट्स",
-          viewAll: "सबै इनसाइट्स हेर्नुहोस्",
-          readMore: "थप पढ्नुहोस्",
-        };
+        title: "इनसाइट्स",
+        viewAll: "सबै इनसाइट्स हेर्नुहोस्",
+        readMore: "थप पढ्नुहोस्",
+      };
 
   const safeInsights: InsightCard[] = Array.isArray(insights) ? insights : [];
 
@@ -43,7 +43,7 @@ export default function InsightsRail({
     <section
       id="insights"
       className="py-16 md:py-24"
-      style={{ backgroundColor: '#006FB7', color: '#ffffff' }}
+      style={{ backgroundColor: '#121212ff', color: '#ffffff' }}
       aria-labelledby="insights-title"
     >
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
@@ -73,9 +73,8 @@ export default function InsightsRail({
           {safeInsights.map((insight, idx) => (
             <article
               key={insight.url}
-              className={`group cursor-pointer ${
-                idx === 0 ? "md:col-span-2 md:row-span-2" : ""
-              }`}
+              className={`group cursor-pointer ${idx === 0 ? "md:col-span-2 md:row-span-2" : ""
+                }`}
             >
               <Link
                 href={insight.url}
@@ -92,11 +91,10 @@ export default function InsightsRail({
                         targ.src = "/placeholder.jpg";
                       }
                     }}
-                    className={`w-full object-cover object-top transition-transform duration-500 group-hover:scale-105 ${
-                      idx === 0
+                    className={`w-full object-cover object-top transition-transform duration-500 group-hover:scale-105 ${idx === 0
                         ? "h-full min-h-[350px] md:min-h-[500px]"
                         : "h-[200px] sm:h-[240px]"
-                    }`}
+                      }`}
                   />
                 </div>
 
@@ -111,11 +109,10 @@ export default function InsightsRail({
                   )}
 
                   <h3
-                    className={`font-bold mb-2 sm:mb-3 text-balance transition-colors ${
-                      idx === 0
+                    className={`font-bold mb-2 sm:mb-3 text-balance transition-colors ${idx === 0
                         ? "text-xl sm:text-2xl md:text-3xl"
                         : "text-lg sm:text-xl"
-                    }`}
+                      }`}
                     style={{ color: '#ffffff' }}
                   >
                     {insight.title}

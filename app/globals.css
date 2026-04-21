@@ -128,55 +128,12 @@ p { font-family: var(--font-body); font-weight: 400; margin: 0; }
   7. Footer     — white bg, black text
 */
 
-/* Ensure Insights rail is vivid blue */
-#insights {
-  background-color: #006FB7 !important;
-  color: #ffffff;
-}
-#insights h2,
-#insights h3,
-#insights p,
-#insights a { color: #ffffff; }
-#insights .text-black\/60,
-#insights .text-\[#e3e3e3\] { color: rgba(255,255,255,0.85) !important; }
 
-/* Ensure Testimonials section is brand red */
-section[aria-label="Testimonials"] {
-  background-color: #d52020 !important;
-  color: #ffffff;
-}
-section[aria-label="Testimonials"] h3,
-section[aria-label="Testimonials"] p,
-section[aria-label="Testimonials"] .text-\[var\(--color-foreground\,\#f3f3f3\)\] {
-  color: #ffffff !important;
-}
-section[aria-label="Testimonials"] article {
-  background: rgba(255,255,255,0.12) !important;
-  border-color: rgba(255,255,255,0.2) !important;
-}
-section[aria-label="Testimonials"] article p {
-  color: rgba(255,255,255,0.95) !important;
-}
 
 /* GlobalCTA stays black */
 #contact { background-color: #0b0d12 !important; }
 
 /* Footer is white */
-footer[role="contentinfo"] {
-  background-color: #ffffff !important;
-  color: #0b0d12 !important;
-}
-footer[role="contentinfo"] h2,
-footer[role="contentinfo"] h3,
-footer[role="contentinfo"] p,
-footer[role="contentinfo"] a,
-footer[role="contentinfo"] span { color: #0b0d12; }
-footer[role="contentinfo"] p.text-foreground\/60,
-footer[role="contentinfo"] a.text-foreground\/60 { color: rgba(11,13,18,0.55) !important; }
-footer[role="contentinfo"] .border-foreground\/10 { border-color: rgba(11,13,18,0.1) !important; }
-footer[role="contentinfo"] .text-ni-paper\/90,
-footer[role="contentinfo"] .text-ni-paper\/60 { color: rgba(11,13,18,0.85) !important; }
-footer[role="contentinfo"] .text-ni-paper\/10 { background-color: rgba(11,13,18,0.08) !important; }
 
 /* ─── Focus ────────────────────────────────────────────────────────── */
 :focus-visible {
@@ -228,7 +185,7 @@ h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); }
 
 /* ─── Careers teaser band ──────────────────────────────────────────── */
 .careers-band {
-  background-color: #006FB7;
+  background-color: #242526;
   color: #ffffff;
 }
 .careers-band h2, .careers-band p, .careers-band a { color: #ffffff; }
