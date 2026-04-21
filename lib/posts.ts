@@ -56,24 +56,55 @@ export async function getAllPostsMeta(): Promise<PostMeta[]> {
   });
 
   // Ensure mandatory topics are present (fallback if not in DB)
-  const mandatorySlugs = ["from-paper-to-platform", "the-choreography-of-change"];
-  mandatorySlugs.forEach((mSlug) => {
+  const mandatorySlugs = [
+    "what-can-data-really-do-turning-numbers-into-decisions",
+    "scaling-reliability-multi-region-architecture",
+    "the-choreography-of-change",
+    "from-paper-to-platform",
+  ];
+  mandatorySlugs.forEach((mSlug, idx) => {
     if (!posts.some((p) => p.slug === mSlug)) {
+      let title = "";
+      let date = "2024-12-12";
+      let readTime = "5 min read";
+      let image = "/assets/insights/newspaper.jpg";
+      let excerpt = "...";
+
+      if (mSlug.includes("data-really-do")) {
+        title = "What Can Data Really Do: Turning Numbers Into Decisions That Matter";
+        date = "2026-10-20";
+        readTime = "5 min read";
+        image = "/assets/insights/newspaper.jpg";
+        excerpt = "Data is no longer something that lives quietly in a spreadsheet. It is the invisible signal that lets two planes change course...";
+      } else if (mSlug.includes("scaling-reliability")) {
+        title = "What Scaling Reliability: What Enterprises Forget About Multi-Region Architecture";
+        date = "2026-10-18";
+        readTime = "7 min read";
+        image = "/assets/insights/choreography-change.jpg";
+        excerpt = "Intelligent systems are transforming how we plan, book, and experience journeys.";
+      } else if (mSlug === "the-choreography-of-change") {
+        title = "The choreography of change";
+        date = "2024-12-12";
+        readTime = "4 min read";
+        image = "/assets/insights/choreography-change.jpg";
+        excerpt = "Understanding the delicate balance of organizational change...";
+      } else if (mSlug === "from-paper-to-platform") {
+        title = "From Paper to Platform: How Digital E-Palika Modernized Municipal Governance";
+        date = "2025-01-14";
+        readTime = "8 min read";
+        image = "/assets/insights/newspaper.jpg";
+        excerpt = "Building reliable digital platforms from manual processes...";
+      }
+
       posts.push({
         slug: mSlug,
-        title: mSlug === "from-paper-to-platform" 
-          ? "From Paper to Platform: How Digital E-Palika Modernized Municipal Governance" 
-          : "The choreography of change",
+        title,
         deck: "",
-        readTime: mSlug === "from-paper-to-platform" ? "8 min read" : "4 min read",
+        readTime,
         kicker: "Insight",
-        date: "2024-12-12",
-        image: mSlug === "from-paper-to-platform" 
-          ? "/assets/insights/newspaper.jpg" 
-          : "/assets/insights/choreography-change.jpg",
-        excerpt: mSlug === "from-paper-to-platform" 
-          ? "Building reliable digital platforms from manual processes..." 
-          : "Understanding the delicate balance of organizational change...",
+        date,
+        image,
+        excerpt,
       });
     }
   });
@@ -113,6 +144,36 @@ export async function getPostBySlug(slug: string): Promise<{
     return { meta, content };
   } catch {
     // Fallback for mandatory items if DB record is missing
+    if (slug.includes("data-really-do")) {
+      return {
+        meta: {
+          slug: slug,
+          title: "What Can Data Really Do: Turning Numbers Into Decisions That Matter",
+          deck: "",
+          readTime: "5 min read",
+          kicker: "Insight",
+          date: "2026-10-20",
+          image: "/assets/insights/newspaper.jpg",
+          excerpt: "Data is no longer something that lives quietly in a spreadsheet...",
+        },
+        content: "Data is no longer something that lives quietly in a spreadsheet. It is the push notification that tells you your parcel has arrived. It is the invisible signal that lets two planes change course and avoid each other in the sky. Every second, millions of such tiny events are created. When you connect them, they stop being 'data' and start becoming decisions.",
+      };
+    }
+    if (slug.includes("scaling-reliability")) {
+      return {
+        meta: {
+          slug: slug,
+          title: "What Scaling Reliability: What Enterprises Forget About Multi-Region Architecture",
+          deck: "",
+          readTime: "7 min read",
+          kicker: "Insight",
+          date: "2026-10-18",
+          image: "/assets/insights/choreography-change.jpg",
+          excerpt: "Intelligent systems are transforming how we plan, book, and experience journeys.",
+        },
+        content: "Scaling reliability is about more than just redundant servers. It is about understanding the choreography of systems across regions. This article explores why enterprises often fail at multi-region architecture and how to get it right.",
+      };
+    }
     if (slug === "from-paper-to-platform") {
       return {
         meta: {

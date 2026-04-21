@@ -1,7 +1,7 @@
 // components/blog-post-body.tsx
-import { SafeMDX } from "@/lib/safe-mdx";
 
 export default function BlogPostBody({ source }: { source: string }) {
+  if (!source) return null;
   const trimmed = source.trim();
 
   const isLikelyHtml =
