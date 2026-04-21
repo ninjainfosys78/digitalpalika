@@ -1,5 +1,5 @@
 "use client"
-import React from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 import { Mail, MapPin, Smartphone, Phone, Linkedin, Facebook, Twitter } from "lucide-react"
 import { useLanguage } from "@/components/LanguageProvider"
@@ -15,6 +15,7 @@ export default function Footer() {
           quickLinks: [
             { label: "Solutions", href: "/solutions" },
             { label: "Insights", href: "/blogs" },
+            { label: "Partners", href: "/partners" },
             { label: "Careers", href: "/careers" },
             { label: "About Us", href: "/about" },
           ],
@@ -41,6 +42,7 @@ export default function Footer() {
           quickLinks: [
             { label: "समाधानहरू", href: "/solutions" },
             { label: "इनसाइट्स", href: "/blogs" },
+            { label: "साझेदारहरू", href: "/partners" },
             { label: "क्यारियर", href: "/careers" },
             { label: "हामीबारे", href: "/about" },
           ],
@@ -78,12 +80,68 @@ export default function Footer() {
     }
   }
 
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim()) {
+      setSubmitted(true);
+      setEmail("");
+    }
+  };
+
   return (
-    <footer className="bg-background text-foreground transition-colors duration-300" role="contentinfo">
-      <div className="w-full border-t border-foreground/10" />
+    <footer
+      role="contentinfo"
+      style={{ backgroundColor: '#ffffff', color: '#0b0d12' }}
+      className="transition-colors duration-300"
+    >
+      {/* Newsletter Band */}
+      <div style={{ backgroundColor: '#0b0d12' }}>
+        <div className="mx-auto w-full max-w-screen-2xl px-6 sm:px-8 lg:px-12 2xl:px-16 py-14">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+            <div className="max-w-xl">
+              <h3 className="text-2xl sm:text-3xl font-heading font-bold text-white mb-2">
+                {language === 'en' ? 'Stay ahead of the curve.' : 'अगाडि रहनुहोस्।'}
+              </h3>
+              <p className="text-white/50 text-[15px] leading-relaxed">
+                {language === 'en'
+                  ? 'Get the latest insights on infrastructure, technology, and sustainability delivered to your inbox.'
+                  : 'पूर्वाधार, प्रविधि, र दिगोपनका नवीनतम अन्तर्दृष्टि आफ्नो इनबक्समा प्राप्त गर्नुहोस्।'}
+              </p>
+            </div>
+            {submitted ? (
+              <div className="flex items-center gap-3 text-white">
+                <div className="w-6 h-6 rounded-full bg-[#E31B23] flex items-center justify-center text-xs font-bold">✓</div>
+                <span className="font-semibold">{language === 'en' ? 'You\'re subscribed!' : 'सदस्यता लिइयो!'}</span>
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} className="flex w-full lg:w-auto gap-0">
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={language === 'en' ? 'Enter your email' : 'इमेल हाल्नुहोस्'}
+                  className="flex-1 lg:w-80 px-5 py-4 text-[15px] bg-white/10 text-white placeholder-white/30 border border-white/10 outline-none focus:border-[#E31B23] transition-colors"
+                />
+                <button
+                  type="submit"
+                  className="px-7 py-4 bg-[#E31B23] text-white font-bold text-[15px] hover:brightness-110 transition-all active:scale-95 whitespace-nowrap cursor-pointer"
+                >
+                  {language === 'en' ? 'Subscribe' : 'सदस्यता'}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full border-t" style={{ borderColor: 'rgba(11,13,18,0.1)' }} />
       <div className="mx-auto w-full max-w-screen-2xl px-6 sm:px-8 lg:px-12 2xl:px-16">
         <div className="h-10" />
-        <div className="flex flex-col lg:flex-row items-start lg:items-start justify-between gap-8 mb-5 mt-8">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-8 mb-5 mt-8">
           <div>
             <Link href="/#hero" className="inline-block">
               <div className="flex items-center gap-3 mb-3">
@@ -94,10 +152,10 @@ export default function Footer() {
                   height={48}
                   className="h-8 sm:h-10 w-auto object-contain"
                 />
-                <h2 className="text-2xl font-bold">NINJA INFOSYS</h2>
+                <h2 className="text-2xl font-bold" style={{ color: '#0b0d12' }}>NINJA INFOSYS</h2>
               </div>
             </Link>
-            <p className="text-foreground/60 max-w-md text-pretty font-normal">
+            <p className="max-w-md text-pretty font-normal" style={{ color: 'rgba(11,13,18,0.6)' }}>
               {language === "en"
                 ? "Turning intent into infrastructure — building reliable, scalable, and impactful digital systems for modern organizations."
                 : "इरादालाई पूर्वाधारमा रूपान्तरण गर्दै - आधुनिक संस्थाहरूका लागि विश्वसनीय, मापनयोग्य, र प्रभावकारी डिजिटल प्रणालीहरू निर्माण गर्दै।"}
@@ -107,14 +165,15 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row gap-12 mt-8 lg:mt-0">
             <div className="w-max md:mr-40">
               <div className="mb-5">
-                <h3 className="font-semibold text-foreground/90 text-lg">{content.quickHeading}</h3>
+                <h3 className="font-semibold text-lg" style={{ color: '#0b0d12' }}>{content.quickHeading}</h3>
               </div>
               <ul className="space-y-2">
                 {content.quickLinks.map((link: any) => (
                   <li key={String(link.label)}>
                     <Link
                       href={link.href}
-                      className="text-ni-paper/60 hover:text-ni-paper transition-colors max-w-md font-normal"
+                      className="font-normal transition-colors hover:text-[#006FB7]"
+                      style={{ color: 'rgba(11,13,18,0.6)' }}
                     >
                       {link.label}
                     </Link>
@@ -125,9 +184,9 @@ export default function Footer() {
 
             <div className="w-max md:mr-25">
               <div className="mb-5">
-                <h3 className="font-semibold text-ni-paper/90 text-lg mb-4">{content.connectHeading}</h3>
+                <h3 className="font-semibold text-lg mb-4" style={{ color: '#0b0d12' }}>{content.connectHeading}</h3>
               </div>
-              <div className="text-foreground/60 hover:text-foreground transition-colors max-w-md font-normal">
+              <div className="font-normal space-y-3" style={{ color: 'rgba(11,13,18,0.6)' }}>
                 {content.connect.map((c: any, i: number) => {
                   if (c.type === "phone" || c.type === "mobile") {
                     const parts = String(c.value)
@@ -142,18 +201,13 @@ export default function Footer() {
                       <div key={i} className="space-y-2">
                         {mobiles.length > 0 && (
                           <div className="flex items-start gap-3">
-                            <span className="mt-1">
-                              <Smartphone size={18} />
-                            </span>
+                            <span className="mt-1"><Smartphone size={18} /></span>
                             <div>{mobiles.join(", ")}</div>
                           </div>
                         )}
-
                         {landlines.map((p: string, idx: number) => (
                           <div className="flex items-start gap-3" key={idx}>
-                            <span className="mt-1">
-                              <Phone size={18} />
-                            </span>
+                            <span className="mt-1"><Phone size={18} /></span>
                             <div>{p}</div>
                           </div>
                         ))}
@@ -175,8 +229,8 @@ export default function Footer() {
             </div>
 
             <div className="w-max">
-              <div className="mb-5 text-center">
-                <h3 className="font-semibold text-ni-paper/90 text-lg">{content.socialLinks}</h3>
+              <div className="mb-5">
+                <h3 className="font-semibold text-lg" style={{ color: '#0b0d12' }}>{content.socialLinks}</h3>
               </div>
               <ul className="flex flex-row items-center gap-3">
                 {(content.links || []).map((link: any, idx: number) => {
@@ -190,16 +244,17 @@ export default function Footer() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={ariaLabel}
-                        className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-ni-paper/10 hover:bg-[#d52020] transition-colors"
+                        className="inline-flex items-center justify-center w-11 h-11 rounded-full transition-colors hover:bg-[#d52020] group"
+                        style={{ backgroundColor: 'rgba(11,13,18,0.08)' }}
                       >
                         {typeOrValue === "LinkedIn" || typeOrValue === "लिंक्डइन" ? (
-                          <Linkedin size={16} className="text-ni-paper" aria-hidden="true" />
+                          <Linkedin size={16} style={{ color: '#0b0d12' }} className="group-hover:text-white" aria-hidden="true" />
                         ) : null}
                         {typeOrValue === "Facebook" || typeOrValue === "फेसबुक" ? (
-                          <Facebook size={16} className="text-ni-paper" aria-hidden="true" />
+                          <Facebook size={16} style={{ color: '#0b0d12' }} className="group-hover:text-white" aria-hidden="true" />
                         ) : null}
                         {typeOrValue === "X" || typeOrValue.toLowerCase().includes("twitter") ? (
-                          <Twitter size={16} className="text-ni-paper" aria-hidden="true" />
+                          <Twitter size={16} style={{ color: '#0b0d12' }} className="group-hover:text-white" aria-hidden="true" />
                         ) : null}
                       </a>
                     </li>
@@ -212,23 +267,24 @@ export default function Footer() {
 
         <div className="my-[42px]" />
 
-        <div className="pt-4 pb-4 border-t-2 border-foreground/10">
+        <div className="pt-4 pb-4 border-t-2" style={{ borderColor: 'rgba(11,13,18,0.1)' }}>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="text-left w-full sm:w-auto">
-              <p className="text-sm text-foreground/60 font-normal">{content.copyright}</p>
+              <p className="text-sm font-normal" style={{ color: 'rgba(11,13,18,0.5)' }}>{content.copyright}</p>
             </div>
             <div className="w-full sm:w-auto">
-              <div className="flex items-center justify-start sm:justify-end gap-3 text-sm text-foreground/60">
+              <div className="flex items-center justify-start sm:justify-end gap-3 text-sm">
                 {content.legalLinks.map((link: any, idx: number) => (
                   <span key={String(link.label)} className="flex items-center">
                     <Link
                       href={link.href}
-                      className="text-sm text-foreground/60 hover:text-foreground transition-colors font-normal"
+                      className="text-sm font-normal transition-colors hover:text-[#006FB7]"
+                      style={{ color: 'rgba(11,13,18,0.5)' }}
                     >
                       {link.label}
                     </Link>
                     {idx < content.legalLinks.length - 1 && (
-                      <span className="mx-3 text-foreground/30 font-normal">|</span>
+                      <span className="mx-3 font-normal" style={{ color: 'rgba(11,13,18,0.2)' }}>|</span>
                     )}
                   </span>
                 ))}

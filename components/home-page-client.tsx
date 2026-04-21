@@ -33,6 +33,21 @@ const GlobalCTA = dynamic(() => import("@/components/global-cta"), {
   loading: () => null,
 });
 
+const FeaturedCarousel = dynamic(() => import("@/components/featured-carousel"), {
+  ssr: false,
+  loading: () => null,
+});
+
+const SustainabilitySection = dynamic(() => import("@/components/sustainability-section"), {
+  ssr: false,
+  loading: () => null,
+});
+
+const AboutUsSection = dynamic(() => import("@/components/about-us-section"), {
+  ssr: false,
+  loading: () => null,
+});
+
 interface HomePageClientProps {
   insights: InsightCard[];
 }
@@ -102,8 +117,19 @@ export default function HomePageClient({ insights }: HomePageClientProps) {
         {/* Above-the-fold: keep fast */}
         <Hero />
 
-        {/* Below-the-fold: lazy-loaded sections */}
+        {/* Core Identity: About Us */}
+        <AboutUsSection />
+
+        {/* Brand Initiative: Sustainability */}
+        <SustainabilitySection />
+
+        {/* Partner Ecosystem */}
         <TrustedBy />
+
+        {/* Editorial Carousel */}
+        <FeaturedCarousel />
+
+        {/* Global Insights */}
         <InsightsRail insights={safeInsights} />
         <Testimonials />
         <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />

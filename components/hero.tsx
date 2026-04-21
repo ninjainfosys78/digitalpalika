@@ -1,6 +1,5 @@
 "use client"
 import React from "react"
-import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { useLanguage } from "@/components/LanguageProvider"
 
@@ -16,183 +15,199 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
   const content =
     language === "en"
       ? {
-          title: "Turning Intent into Infrastructure",
-          deck: "We move beyond plans, designing and building the systems that make them work.",
-          cta: "Contact Us",
-          cta2: "Explore",
+          label: "ESTABLISHED VISIONARY STRATEGY",
+          titleLine1: "Turning Intent",
+          titleLine2: "into",
+          titleItalic: "Infrastructure",
+          deck: "Bridging the gap between conceptual high-stakes engineering and the physical reality of future-proof urban environments.",
+          cta: "Explore Projects",
+          cta2: "Our Methodology",
+          geo: "KATHMANDU — ANAMNAGAR",
         }
       : {
-          title: "इरादालाई पूर्वाधारमा परिणत गर्दै",
-          deck: "हामी योजनाहरू भन्दा पर जान्छौं, तिनीहरूलाई काम गर्ने प्रणालीहरू डिजाइन र निर्माण गर्दै।",
-          cta: "सम्पर्क गर्नुहोस्",
-          cta2: "अन्वेषण",
+          label: "स्थापित दूरदर्शी रणनीति",
+          titleLine1: "इरादालाई",
+          titleLine2: "रूपान्तरण",
+          titleItalic: "पूर्वाधारमा",
+          deck: "वैचारिक उच्च-जोखिम इन्जिनियरिङ र भविष्यको शहरी वातावरणको भौतिक वास्तविकताबीचको अन्तर पुर्दै।",
+          cta: "परियोजनाहरू अन्वेषण गर्नुहोस्",
+          cta2: "हाम्रो कार्यप्रणाली",
+          geo: "काठमाडौं — अनामनगर",
         }
 
   return (
     <section
       id="hero"
-      className={`relative h-screen flex items-center justify-center overflow-hidden bg-black ${
-        backgroundOnly ? "" : "text-[#e3e3e3]"
-      }`}
+      className="relative min-h-screen flex items-center overflow-hidden"
+      style={{ paddingTop: "80px", backgroundColor: "#1a0010" }}
       aria-label="Hero section"
     >
-      <div className="absolute inset-0 opacity-[0.02]">
-        <div className="h-full w-full bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] [background-size:50px_50px]" />
+      {/* Background gradient layers */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 80% at 60% 40%, #3d0020 0%, #1a0010 50%, #0d0008 100%)",
+        }}
+      />
+      {/* Subtle red glow on left */}
+      <div
+        className="absolute z-0 pointer-events-none"
+        style={{
+          left: "-5%",
+          top: "20%",
+          width: "500px",
+          height: "500px",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(200,20,40,0.18) 0%, transparent 70%)",
+          filter: "blur(60px)",
+        }}
+      />
+
+      {/* Watermark text — right side */}
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 z-0 pointer-events-none select-none pr-4 sm:pr-8 lg:pr-12 text-right leading-none">
+        <div
+          className="font-heading font-bold uppercase tracking-widest"
+          style={{ fontSize: "clamp(32px, 5vw, 60px)", color: "rgba(255,255,255,0.06)" }}
+        >
+          ARCHITEECTURE
+        </div>
+        <div
+          className="font-heading font-bold uppercase tracking-widest mt-1"
+          style={{ fontSize: "clamp(24px, 4vw, 48px)", color: "rgba(255,255,255,0.06)" }}
+        >
+          SAFE — CARE WORK
+        </div>
       </div>
 
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-0 w-1/2">
-        <div className="plasma-wrapper">
-          <div className="gradient gradient-1" />
-          <div className="gradient gradient-2" />
-          <div className="gradient gradient-3" />
-        </div>
+      {/* Botanical / architectural SVG watermark */}
+      <div
+        className="absolute right-24 top-16 z-0 pointer-events-none opacity-[0.07]"
+        style={{ width: "340px", height: "340px" }}
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* Stylised ginkgo / botanical ribs */}
+          {[0, 22, 44, 66, 88, 110, 132, 154].map((angle, i) => (
+            <g key={i} transform={`rotate(${angle} 100 160)`}>
+              <path
+                d="M100 160 Q80 80 100 20 Q120 80 100 160Z"
+                stroke="white"
+                strokeWidth="0.8"
+                fill="none"
+              />
+              <path
+                d="M100 160 Q88 100 92 40"
+                stroke="white"
+                strokeWidth="0.4"
+                strokeDasharray="2 4"
+                fill="none"
+              />
+            </g>
+          ))}
+          <circle cx="100" cy="160" r="5" fill="white" opacity="0.3" />
+        </svg>
       </div>
 
       {backgroundOnly ? (
         children
       ) : (
-        <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 text-left sm:px-8 lg:px-12 2xl:px-16 py-28 sm:py-32 lg:py-36">
-          <div className="max-w-[860px]">
-            {children ? (
-              children
-            ) : showContent ? (
-              <>
-                <h1
-                  id="hero-title"
-                  className="text-balance mb-[5px] w-full max-w-[640px] break-words text-[46px] sm:text-[64px] leading-[48px] sm:leading-[64px] [-letter-spacing:2px] text-[#e3e3e3]"
+        <div className="relative z-10 mx-auto w-full max-w-[1600px] px-6 sm:px-8 lg:px-12 2xl:px-16 py-16">
+          {children ? (
+            children
+          ) : showContent ? (
+            <div className="max-w-[680px]">
+              {/* Label */}
+              <div
+                className="mb-8 text-[11px] font-bold uppercase tracking-[0.22em]"
+                style={{ color: "#E31B23" }}
+              >
+                {content.label}
+              </div>
+
+              {/* Headline */}
+              <h1
+                id="hero-title"
+                className="mb-8 leading-[1.0]"
+                style={{ fontFamily: "'Newsreader', serif" }}
+              >
+                <span
+                  className="block font-bold text-white"
+                  style={{ fontSize: "clamp(52px, 7vw, 88px)" }}
                 >
-                  {content.title}
-                </h1>
+                  {content.titleLine1}
+                </span>
+                <span
+                  className="block font-bold text-white"
+                  style={{ fontSize: "clamp(52px, 7vw, 88px)" }}
+                >
+                  {content.titleLine2}
+                </span>
+                <span
+                  className="block italic font-bold"
+                  style={{
+                    fontSize: "clamp(52px, 7vw, 88px)",
+                    color: "#e8d5d5",
+                  }}
+                >
+                  {content.titleItalic}
+                </span>
+              </h1>
 
-                <p className="text-pretty max-w-[640px] w-full text-[24px] leading-[35.8px] text-[#e3e3e3]/80">
-                  {content.deck}
-                </p>
+              {/* Deck */}
+              <p
+                className="mb-12 leading-relaxed"
+                style={{
+                  fontSize: "clamp(15px, 1.8vw, 19px)",
+                  color: "rgba(255,255,255,0.65)",
+                  maxWidth: "440px",
+                }}
+              >
+                {content.deck}
+              </p>
 
-                <div className="mt-8 flex flex-wrap gap-4">
-                  <Link
-                    href="/contact"
-                    className="group inline-flex items-center justify-center gap-3 min-w-[220px] bg-[#d52020] px-6 py-4 text-[20px] font-semibold text-[#e3e3e3]"
-                  >
-                    <span className="whitespace-nowrap">{content.cta}</span>
-                  </Link>
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href="/work"
+                  className="inline-flex items-center justify-center px-8 py-4 text-[15px] font-bold text-white transition-all hover:brightness-110 active:scale-95"
+                  style={{ backgroundColor: "#E31B23" }}
+                >
+                  {content.cta}
+                </Link>
 
-                  <Link
-                    href="/work"
-                    className="group inline-flex items-center justify-center gap-3 min-w-[220px] bg-[#141414] px-6 py-4 text-[20px] font-semibold text-[#e3e3e3]"
-                  >
-                    <span className="whitespace-nowrap">{content.cta2}</span>
-                    <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </div>
-              </>
-            ) : null}
-          </div>
+                <Link
+                  href="/about"
+                  className="inline-flex items-center justify-center px-8 py-4 text-[15px] font-bold transition-all hover:bg-white/10"
+                  style={{
+                    color: "rgba(255,255,255,0.85)",
+                    border: "1.5px solid rgba(255,255,255,0.3)",
+                  }}
+                >
+                  {content.cta2}
+                </Link>
+              </div>
+            </div>
+          ) : null}
         </div>
       )}
 
-      <style jsx global>{`
-        .plasma-wrapper {
-          position: absolute;
-          inset: 0;
-          overflow: hidden;
-          filter: blur(150px);
-        }
-        .gradient {
-          position: absolute;
-          border-radius: 100%;
-          opacity: 0.6;
-          mix-blend-mode: screen;
-          animation-iteration-count: infinite;
-          animation-timing-function: cubic-bezier(0.1, 0, 0.9, 1);
-        }
-        .gradient-1 {
-          background: rgb(213, 32, 32);
-          width: 700px;
-          height: 700px;
-          animation-duration: 11s;
-          opacity: 0.7;
-          left: 60%;
-          top: 40%;
-          z-index: -2;
-          animation-name: animation-gradient-1;
-        }
-        .gradient-2 {
-          background: rgb(213, 32, 32);
-          width: 600px;
-          height: 600px;
-          animation-duration: 16s;
-          opacity: 0.16;
-          left: 40%;
-          top: 60%;
-          z-index: -1;
-          animation-name: animation-gradient-2;
-        }
-        .gradient-3 {
-          background: rgb(29, 27, 27);
-          width: 500px;
-          height: 500px;
-          animation-duration: 11s;
-          opacity: 0.77;
-          left: 50%;
-          top: 50%;
-          z-index: -3;
-          animation-name: animation-gradient-3;
-        }
-        @keyframes animation-gradient-1 {
-          0% {
-            transform: translateY(-50%) translateX(-50%) rotate(-20deg) translateX(20%);
-          }
-          25% {
-            transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(80deg) translateX(30%);
-          }
-          50% {
-            transform: translateY(-50%) translateX(-50%) rotate(180deg) translateX(25%);
-          }
-          75% {
-            transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(240deg) translateX(15%);
-          }
-          100% {
-            transform: translateY(-50%) translateX(-50%) rotate(340deg) translateX(20%);
-          }
-        }
-        @keyframes animation-gradient-2 {
-          0% {
-            transform: translateY(-50%) translateX(-50%) rotate(40deg) translateX(-20%);
-          }
-          25% {
-            transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(110deg) translateX(-5%);
-          }
-          50% {
-            transform: translateY(-50%) translateX(-50%) rotate(210deg) translateX(-35%);
-          }
-          75% {
-            transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(300deg) translateX(-10%);
-          }
-          100% {
-            transform: translateY(-50%) translateX(-50%) rotate(400deg) translateX(-20%);
-          }
-        }
-        @keyframes animation-gradient-3 {
-          0% {
-            transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%);
-          }
-          20% {
-            transform: translateY(-50%) translateX(-50%) translateX(20%) translateY(-30%);
-          }
-          40% {
-            transform: translateY(-50%) translateX(-50%) translateX(-25%) translateY(-15%);
-          }
-          60% {
-            transform: translateY(-50%) translateX(-50%) translateX(30%) translateY(20%);
-          }
-          80% {
-            transform: translateY(-50%) translateX(-50%) translateX(5%) translateY(35%);
-          }
-          100% {
-            transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%);
-          }
-        }
-      `}</style>
+      {/* Bottom-right geo tag */}
+      <div
+        className="absolute bottom-8 right-6 sm:right-12 z-10 pointer-events-none select-none"
+        style={{ color: "rgba(255,255,255,0.3)", fontSize: "11px", letterSpacing: "0.18em" }}
+      >
+        {content.geo}
+      </div>
+
+      {/* Bottom fade */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-24 z-10 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent, rgba(11,0,8,0.6))",
+        }}
+      />
     </section>
   )
 }

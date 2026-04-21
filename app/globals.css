@@ -1,61 +1,77 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 /* load fonts once for the whole site */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=Source+Serif+4:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,400&display=swap');
 
+/* ─── Design tokens ────────────────────────────────────────────────── */
 :root {
-  --background: #0b0d12;
-  --foreground: #f3f3f3;
-  --card: #151921;
+  /* Base palette */
+  --background:  #0b0d12;
+  --foreground:  #f3f3f3;
+  --card:        #151921;
   --card-foreground: #f3f3f3;
-  --popover: #0b0d12;
+  --popover:     #0b0d12;
   --popover-foreground: #f3f3f3;
-  --primary: #d52020;
+
+  /* Brand */
+  --primary:          #E31B23;   /* Bold Red */
   --primary-foreground: #ffffff;
-  --secondary: #1f2430;
+  --brand-blue:       #006FB7;
+  --brand-red:        #E31B23;
+  --brand-navy:       #0b0d12;
+
+  /* Supporting */
+  --secondary:        #1f2430;
   --secondary-foreground: #f3f3f3;
-  --muted: #1f2430;
+  --muted:            #1f2430;
   --muted-foreground: #a1a1aa;
-  --accent: #1f2430;
-  --accent-foreground: #f3f3f3;
-  --destructive: #7f1d1d;
+  --accent:           #1f2430;
+  --accent-foreground:#f3f3f3;
+  --destructive:      #7f1d1d;
   --destructive-foreground: #f3f3f3;
-  --border: #2c3242;
-  --input: #1f2430;
-  --ring: #d52020;
-  --radius: 0.625rem;
-  --font-heading: 'Source Serif 4';
-  --font-body: 'IBM Plex Sans';
+  --border:           #2c3242;
+  --input:            #1f2430;
+  --ring:             #d52020;
+  --radius:           0rem;
+
+  /* Fonts */
+  --font-heading: 'Newsreader', serif;
+  --font-body:    'IBM Plex Sans', sans-serif;
+
+  /* Aliases kept for old code */
+  --color-background: #0b0d12;
+  --color-foreground: #f3f3f3;
+  --color-accent:     #d52020;
 }
 
+/* Dark mode mirrors root (site is dark-first) */
 .dark {
-  --background: #0b0d12;
-  --foreground: #f3f3f3;
-  --card: #151921;
+  --background:  #0b0d12;
+  --foreground:  #f3f3f3;
+  --card:        #151921;
   --card-foreground: #f3f3f3;
-  --popover: #0b0d12;
+  --popover:     #0b0d12;
   --popover-foreground: #f3f3f3;
-  --primary: #d52020;
+  --primary:     #d52020;
   --primary-foreground: #ffffff;
-  --secondary: #1f2430;
+  --secondary:   #1f2430;
   --secondary-foreground: #f3f3f3;
-  --muted: #1f2430;
+  --muted:       #1f2430;
   --muted-foreground: #a1a1aa;
-  --accent: #1f2430;
+  --accent:      #1f2430;
   --accent-foreground: #f3f3f3;
   --destructive: #7f1d1d;
   --destructive-foreground: #f3f3f3;
-  --border: #2c3242;
-  --input: #1f2430;
-  --ring: #d52020;
+  --border:      #2c3242;
+  --input:       #1f2430;
+  --ring:        #d52020;
+  --color-background: #0b0d12;
+  --color-foreground: #f3f3f3;
+  --color-accent:     #d52020;
 }
 
-
-
-/* Base styles */
-* {
-  box-sizing: border-box;
-}
+/* ─── Base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
@@ -65,13 +81,8 @@ html {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -83,158 +94,141 @@ body {
   padding: 0;
   font-family: var(--font-body);
   letter-spacing: normal;
-  background: var(--color-background);
-  color: var(--color-foreground);
+  /* use BOTH variable names so old & new code works */
+  background: var(--background);
+  color: var(--foreground);
   font-size: 1rem;
   line-height: 1.6;
 }
 
-/* Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+/* ─── Typography ───────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: 400;      /* Use 400 as per your design token */
-  line-height: 1.2;
+  font-weight: 600;
+  line-height: 1.15;
   margin: 0;
 }
 
-p {
+p { font-family: var(--font-body); font-weight: 400; margin: 0; }
+
+.caption, .small, .text-caption {
   font-family: var(--font-body);
   font-weight: 400;
-  margin: 0;
 }
 
-.caption,
-.small,
-.text-caption {
-  font-family: var(--font-caption);
-  font-weight: 400;
+/* ─── McKinsey-style section colour bands ──────────────────────────── */
+/*
+  Section layout on homepage:
+  1. Header  — black bg, white text
+  2. Hero    — black bg, white text
+  3. TrustedBy — black bg (subtle separator)
+  4. Insights  — brand blue bg, white text
+  5. Testimonials — brand red bg, white text
+  6. GlobalCTA  — black bg, white text
+  7. Footer     — white bg, black text
+*/
+
+/* Ensure Insights rail is vivid blue */
+#insights {
+  background-color: #006FB7 !important;
+  color: #ffffff;
+}
+#insights h2,
+#insights h3,
+#insights p,
+#insights a { color: #ffffff; }
+#insights .text-black\/60,
+#insights .text-\[#e3e3e3\] { color: rgba(255,255,255,0.85) !important; }
+
+/* Ensure Testimonials section is brand red */
+section[aria-label="Testimonials"] {
+  background-color: #d52020 !important;
+  color: #ffffff;
+}
+section[aria-label="Testimonials"] h3,
+section[aria-label="Testimonials"] p,
+section[aria-label="Testimonials"] .text-\[var\(--color-foreground\,\#f3f3f3\)\] {
+  color: #ffffff !important;
+}
+section[aria-label="Testimonials"] article {
+  background: rgba(255,255,255,0.12) !important;
+  border-color: rgba(255,255,255,0.2) !important;
+}
+section[aria-label="Testimonials"] article p {
+  color: rgba(255,255,255,0.95) !important;
 }
 
-/* Focus styles */
+/* GlobalCTA stays black */
+#contact { background-color: #0b0d12 !important; }
+
+/* Footer is white */
+footer[role="contentinfo"] {
+  background-color: #ffffff !important;
+  color: #0b0d12 !important;
+}
+footer[role="contentinfo"] h2,
+footer[role="contentinfo"] h3,
+footer[role="contentinfo"] p,
+footer[role="contentinfo"] a,
+footer[role="contentinfo"] span { color: #0b0d12; }
+footer[role="contentinfo"] p.text-foreground\/60,
+footer[role="contentinfo"] a.text-foreground\/60 { color: rgba(11,13,18,0.55) !important; }
+footer[role="contentinfo"] .border-foreground\/10 { border-color: rgba(11,13,18,0.1) !important; }
+footer[role="contentinfo"] .text-ni-paper\/90,
+footer[role="contentinfo"] .text-ni-paper\/60 { color: rgba(11,13,18,0.85) !important; }
+footer[role="contentinfo"] .text-ni-paper\/10 { background-color: rgba(11,13,18,0.08) !important; }
+
+/* ─── Focus ────────────────────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--brand-blue);
   outline-offset: 2px;
 }
 
-/* Skip to content */
+/* Skip link */
 .skip-to-content {
-  position: absolute;
-  top: -100px;
-  left: 0;
-  background: var(--color-accent);
-  color: white;
-  padding: 0.75rem 1.5rem;
-  text-decoration: none;
-  z-index: 100;
-  font-weight: 500;
+  position: absolute; top: -100px; left: 0;
+  background: var(--primary); color: white;
+  padding: 0.75rem 1.5rem; text-decoration: none;
+  z-index: 100; font-weight: 500;
 }
+.skip-to-content:focus { top: 0; }
 
-.skip-to-content:focus {
-  top: 0;
-}
-
-/* Navbar font size — make nav contents 16px (override smaller defaults) */
-header nav,
-nav.main-navigation,
-.site-nav,
-.nav,
-.navbar,
-.header-nav,
-nav[role="navigation"] {
-  font-size: 16px;
-}
-
-header nav a,
-nav.main-navigation a,
-.site-nav a,
-.nav a,
-.navbar a,
-.header-nav a,
-nav[role="navigation"] a {
-  font-size: 16px;
-  line-height: 1.2;
-}
+/* Nav font-size */
+header nav, nav.main-navigation { font-size: 16px; }
+header nav a, nav.main-navigation a { font-size: 16px; line-height: 1.2; }
 
 /* Utilities */
-.text-balance {
-  text-wrap: balance;
-}
-
-.text-pretty {
-  text-wrap: pretty;
-}
+.text-balance { text-wrap: balance; }
+.text-pretty  { text-wrap: pretty; }
+.sharp-edges  { border-radius: 0 !important; }
 
 /* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
+@keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes float   { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-/* Reduced motion overrides */
 @media (prefers-reduced-motion: reduce) {
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes float {
-    0%,
-    100% {
-      transform: none;
-    }
-  }
+  @keyframes slideUp { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes float   { 0%, 100% { transform: none; } }
 }
 
-/* ensure testimonial section uses the body font reliably (override any conflicting rules) */
+/* Testimonial cards font override */
 .testimonial-card,
 .testimonial-card p,
 .testimonial-card .font-medium {
-  font-family: var(--font-body) !important; /* 'IBM Plex Sans' only */
-  font-weight: 400 !important; /* match the weight you used above */
+  font-family: var(--font-body) !important;
+  font-weight: 400 !important;
 }
 
-/* ensure site uses the token */
-html, body {
-  font-family: var(--font-body);
-}
-
-h1,h2,h3,h4,h5,h6 {
-  font-family: var(--font-heading);
-}
+html, body { font-family: var(--font-body); }
+h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); }
 
 .font-source-serif { font-family: 'Source Serif 4', serif; }
 .contact-clip { clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%); }
+
+/* ─── Careers teaser band ──────────────────────────────────────────── */
+.careers-band {
+  background-color: #006FB7;
+  color: #ffffff;
+}
+.careers-band h2, .careers-band p, .careers-band a { color: #ffffff; }

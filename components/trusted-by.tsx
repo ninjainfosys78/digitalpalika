@@ -38,11 +38,21 @@ export default function TrustedBy() {
   const list = logos;
 
   return (
-    <section className="pt-6 pb-10 bg-black -mt-0 relative z-[5]">
+    <section
+      id="partners"
+      className="py-12 relative z-[5]"
+      style={{ backgroundColor: '#0e0c0cff', borderBottom: '1px solid rgba(11,13,18,0.05)' }}
+    >
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
+        <p
+          className="text-[12px] font-bold uppercase tracking-[0.2em] text-center mb-8"
+          style={{ color: '#f3f3f3' }}
+        >
+          {language === "ne" ? "प्रमुख संस्थाहरूद्वारा विश्वास गरिएको" : "Trusted by leading organizations"}
+        </p>
         <div
           ref={marqueeRootRef as any}
-          className="marquee mt-6"
+          className="marquee"
           aria-hidden={false}
           aria-label={language === "ne" ? "विश्वास गर्ने लोगोहरू" : "Trusted logos"}
         >
@@ -62,9 +72,9 @@ export default function TrustedBy() {
                         if (fb) fb.classList.remove("hidden");
                       }
                     }}
-                    className="h-14 w-auto object-contain block"
+                    className="h-16 w-auto object-contain block brightness-[1.1] contrast-[1.1] invert opacity-80"
                   />
-                  <div className="trusted-fallback hidden text-gray-300 text-center">
+                  <div className="trusted-fallback hidden text-[#f3f3f3] text-center font-bold">
                     {item.logoName}
                   </div>
                 </div>
@@ -86,9 +96,9 @@ export default function TrustedBy() {
                         if (fb) fb.classList.remove("hidden");
                       }
                     }}
-                    className="h-14 w-auto object-contain block"
+                    className="h-16 w-auto object-contain block brightness-[1.1] contrast-[1.1] invert opacity-80"
                   />
-                  <div className="trusted-fallback hidden text-gray-300 text-center">
+                  <div className="trusted-fallback hidden text-[#f3f3f3] text-center font-bold">
                     {item.logoName}
                   </div>
                 </div>
@@ -112,8 +122,7 @@ export default function TrustedBy() {
             overflow: hidden;
             width: 100%;
             position: relative;
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
-                    mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+            padding: 20px 0;
           }
 
           .marquee__inner {
@@ -149,15 +158,15 @@ export default function TrustedBy() {
 
           .marquee__item img {
             display: block;
-            height: 56px;
+            height: 72px;
             width: auto;
             max-width: 100%;
             object-fit: contain;
-            transition: opacity 300ms ease, transform 300ms ease;
+            transition: all 300ms ease;
             will-change: opacity, transform;
-          }
-
-          .marquee:hover .marquee__inner,
+            opacity: 1;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08));
+          }.marquee:hover .marquee__inner,
           .marquee:focus-within .marquee__inner {
             animation-play-state: paused;
           }

@@ -109,11 +109,12 @@ export default function Testimonials() {
     <section
       aria-label="Testimonials"
       className="relative pt-20 pb-16"
+      style={{ backgroundColor: '#d52020', color: '#ffffff' }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
-        <h3 className="text-2xl md:text-3xl font-semibold text-left text-[var(--color-foreground,#f3f3f3)] mb-7">
+        <h3 className="text-[32px] md:text-[48px] font-bold text-left mb-10" style={{ color: '#ffffff' }}>
           {language === "en" ? "What our clients say" : "हाम्रा ग्राहकहरूले के भन्छन्"}
         </h3>
 
@@ -143,39 +144,47 @@ export default function Testimonials() {
                     {group.map((item, idx) => (
                       <article
                         key={`${slideIndex}-${idx}-${item.name}`}
-                        className="p-6 bg-transparent border border-[rgba(255,255,255,0.08)] min-h-[180px] flex gap-4 items-start"
+                        className="p-8 min-h-[200px] flex gap-5 items-start"
+                        style={{ backgroundColor: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.25)' }}
                         aria-label={item.name}
                       >
                         <div
                           aria-hidden
-                          className="w-14 h-14 rounded-full bg-gradient-to-b from-[#222] to-[#111] border border-[rgba(255,255,255,0.06)] flex items-center justify-center overflow-hidden flex-none"
+                          className="w-14 h-14 rounded-full flex items-center justify-center overflow-hidden flex-none font-bold text-lg"
+                          style={{ backgroundColor: 'rgba(255,255,255,0.25)', color: '#ffffff' }}
                         >
                           {item.image ? (
                             <img
                               src={item.image}
                               alt={item.name}
-                              className="w-full h-full object-cover rounded-full grayscale"
+                              className="w-full h-full object-cover rounded-full"
                             />
-                          ) : null}
+                          ) : (
+                            <span>{item.name[0]}</span>
+                          )}
                         </div>
 
                         <div className="flex-1">
                           <div className="flex items-start justify-between">
-                            <div>
-                              <div className="text-[var(--color-foreground,#f3f3f3)] font-semibold text-[16px]">
-                                {item.name}
-                              </div>
+                            <div
+                              className="font-bold text-[16px]"
+                              style={{ color: '#ffffff' }}
+                            >
+                              {item.name}
                             </div>
-
                             <div
                               aria-hidden
-                              className="text-[rgba(255,255,255,0.9)] text-[36px] leading-[1]"
+                              className="text-[40px] leading-[1] select-none"
+                              style={{ color: 'rgba(255,255,255,0.35)' }}
                             >
-                              ”
+                              "
                             </div>
                           </div>
 
-                          <p className="text-[rgba(243,243,243,0.9)] mt-3 text-[14px] leading-[1.7]">
+                          <p
+                            className="mt-3 text-[15px] leading-[1.75] italic"
+                            style={{ color: 'rgba(255,255,255,0.92)' }}
+                          >
                             {item.quote}
                           </p>
                         </div>

@@ -61,6 +61,9 @@ export async function getAllPostsMeta(): Promise<PostMeta[]> {
     "scaling-reliability-multi-region-architecture",
     "the-choreography-of-change",
     "from-paper-to-platform",
+    "smart-manufacturing",
+    "net-zero",
+    "metaverse-value",
   ];
   mandatorySlugs.forEach((mSlug, idx) => {
     if (!posts.some((p) => p.slug === mSlug)) {
@@ -94,6 +97,24 @@ export async function getAllPostsMeta(): Promise<PostMeta[]> {
         readTime = "8 min read";
         image = "/assets/insights/newspaper.jpg";
         excerpt = "Building reliable digital platforms from manual processes...";
+      } else if (mSlug === "smart-manufacturing") {
+        title = "The Future of Smart Manufacturing";
+        date = "2026-10-15";
+        readTime = "6 min read";
+        image = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1600";
+        excerpt = "How AI and IoT are redefining the factory floor for the next decade of production.";
+      } else if (mSlug === "net-zero") {
+        title = "Accelerating the Net-Zero Transition";
+        date = "2026-10-12";
+        readTime = "7 min read";
+        image = "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1600";
+        excerpt = "Strategic frameworks for organizations to achieve carbon neutrality while maintaining growth.";
+      } else if (mSlug === "metaverse-value") {
+        title = "Unlocking Value in the Metaverse";
+        date = "2026-10-10";
+        readTime = "8 min read";
+        image = "/assets/insights/metaverse.jpeg";
+        excerpt = "Exploring the commercial potential and social implications of persistent virtual environments.";
       }
 
       posts.push({
@@ -202,6 +223,51 @@ export async function getPostBySlug(slug: string): Promise<{
           excerpt: "Understanding the delicate balance of organizational change...",
         },
         content: "Change is not just a decision, it is a dance. This insight explores how to lead teams through transition with precision and empathy.",
+      };
+    }
+    if (slug === "smart-manufacturing") {
+      return {
+        meta: {
+          slug: "smart-manufacturing",
+          title: "The Future of Smart Manufacturing",
+          deck: "",
+          readTime: "6 min read",
+          kicker: "Insight",
+          date: "2026-10-15",
+          image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1600",
+          excerpt: "How AI and IoT are redefining the factory floor for the next decade of production.",
+        },
+        content: "Smart manufacturing is no longer a future dream. It is happening now. By integrating AI and IoT, factories can achieve unprecedented efficiency and quality control.",
+      };
+    }
+    if (slug === "net-zero") {
+      return {
+        meta: {
+          slug: "net-zero",
+          title: "Accelerating the Net-Zero Transition",
+          deck: "",
+          readTime: "7 min read",
+          kicker: "Insight",
+          date: "2026-10-12",
+          image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1600",
+          excerpt: "Strategic frameworks for organizations to achieve carbon neutrality while maintaining growth.",
+        },
+        content: "The transition to net-zero is a global imperative. This article outlines the key strategic steps organizations can take to reduce their carbon footprint while driving sustainable economic growth.",
+      };
+    }
+    if (slug === "metaverse-value") {
+      return {
+        meta: {
+          slug: "metaverse-value",
+          title: "Unlocking Value in the Metaverse",
+          deck: "",
+          readTime: "8 min read",
+          kicker: "Insight",
+          date: "2026-10-10",
+          image: "/assets/insights/metaverse.jpeg",
+          excerpt: "Exploring the commercial potential and social implications of persistent virtual environments.",
+        },
+        content: "The metaverse offers more than just games. It is a new digital frontier for commerce, collaboration, and community. Learn how to navigate its potential and challenges.",
       };
     }
     return null;
