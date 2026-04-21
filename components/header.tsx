@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight } from "lucide-react";
@@ -10,6 +11,7 @@ export default function Header() {
   const { language, setLanguage } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const headerRef = useRef<HTMLElement | null>(null);
   const lastScrollY = useRef(0);
   const pathname = usePathname();
@@ -32,6 +34,8 @@ export default function Header() {
   useEffect(() => {
     const onScroll = () => {
       const currentY = window.scrollY;
+      setIsScrolled(currentY > 20);
+      
       if (currentY < 80) {
         setHidden(false);
       } else if (currentY > lastScrollY.current + 4) {
@@ -49,138 +53,120 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className="fixed top-0 left-0 w-full z-50"
+      className="fixed top-0 left-0 w-full z-50 px-6 sm:px-8 lg:px-12 2xl:px-16 mt-4"
       style={{ 
-        transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1), background-color 0.2s',
-        transform: hidden ? 'translateY(-100%)' : 'translateY(0)',
-        backgroundColor: 'rgba(255,255,255,0.97)', 
-        backdropFilter: 'blur(12px)', 
-        borderBottom: '1px solid rgba(11,13,18,0.08)', 
-        boxShadow: '0 1px 12px 0 rgba(11,13,18,0.05)' 
+        transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
+        transform: hidden ? 'translateY(-120%)' : 'translateY(0)',
       }}
       role="banner"
     >
-      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 2xl:px-16">
-        <div className="relative h-20 flex items-center justify-between">
-          
-          {/* Logo - Serif Text */}
-          <Link
-            href="/"
-            className="flex-none inline-flex items-center"
-            aria-label="Ninja Infosys home"
-          >
-            <span className="text-2xl font-bold font-heading text-[#0b0d12] tracking-normal">
-              Ninja Infosys
-            </span>
-          </Link>
-
-          {/* Desktop Navigation - As per Screenshot */}
-          <nav
-            className="hidden lg:flex items-center gap-10 whitespace-nowrap ml-12"
-            aria-label="Main navigation"
-          >
-            <Link href="/about" className="text-[15px] font-semibold text-[#0b0d12]/60 hover:text-[#006FB7] transition-colors">{language === 'en' ? 'About Us' : 'हामीबारे'}</Link>
-            <Link 
-              href="/solutions" 
-              className="text-[15px] font-semibold text-[#0b0d12]/60 hover:text-[#006FB7] transition-colors"
-            >
-              {language === 'en' ? 'Solutions' : 'समाधान'}
-            </Link>
-            <Link 
-              href="/blogs" 
-              className="text-[15px] font-semibold text-[#0b0d12]/60 hover:text-[#006FB7] transition-colors"
-            >
-              {language === 'en' ? 'Insights' : 'अन्तर्दृष्टि'}
-            </Link>
-            <Link 
-              href="/partners" 
-              className="text-[15px] font-semibold text-[#0b0d12]/60 hover:text-[#006FB7] transition-colors"
-            >
-              {language === 'en' ? 'Partners' : 'साझेदारहरू'}
-            </Link>
-            <Link 
-              href="/contact" 
-              className="text-[15px] font-semibold text-[#0b0d12]/60 hover:text-[#006FB7] transition-colors"
-            >
-              {language === 'en' ? 'Contact' : 'सम्पर्क'}
-            </Link>
-          </nav>
-
-          {/* Right Action Bar */}
-          <div className="flex items-center gap-8">
-            <button
-              onClick={() => setLanguage(language === "en" ? "ne" : "en")}
-              className="hidden sm:block text-[13px] font-bold tracking-wider text-[#0b0d12]/40 hover:text-[#006FB7] transition-colors cursor-pointer uppercase"
-            >
-              {language === "en" ? "नेपाली" : "English"}
-            </button>
-
-            <button 
-              onClick={() => {
-                if (pathname === "/") {
-                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-                } else {
-                  window.location.href = "/contact";
-                }
-              }}
-              className="hidden lg:inline-flex items-center gap-2 bg-[#E31B23] text-white px-7 py-3 text-[15px] font-bold transition-all hover:brightness-110 active:scale-95 shadow-sm cursor-pointer"
-            >
-              <span>{language === 'en' ? 'Build with us' : 'हामीसँग निर्माण गर्नुहोस्'}</span>
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-            </button>
-
-            {/* Mobile Toggle */}
-            <button
-              onClick={() => setMobileOpen((s) => !s)}
-              className="lg:hidden p-2 text-[#0b0d12] hover:bg-[#0b0d12]/5 transition-colors"
-              aria-expanded={mobileOpen}
-              aria-label="Toggle mobile menu"
-            >
-              {mobileOpen ? <X size={26} /> : <Menu size={26} />}
-            </button>
+      <div 
+        className="max-w-[1600px] mx-auto h-20 flex items-center justify-between transition-all duration-300"
+        style={{
+          backgroundColor: isScrolled ? 'rgba(255,255,255,0.95)' : 'rgba(11,13,18,0.3)',
+          backdropFilter: 'blur(12px)',
+          padding: isScrolled ? '0 1.5rem' : '0 2rem',
+          borderRadius: isScrolled ? '0.5rem' : '1rem',
+          border: isScrolled ? '1px solid rgba(11,13,18,0.1)' : '1px solid rgba(255,255,255,0.1)',
+          boxShadow: isScrolled ? '0 10px 30px -10px rgba(0,0,0,0.1)' : 'none'
+        }}
+      >
+        {/* Logo Section */}
+        <Link
+          href="/"
+          className="flex items-center gap-3 group"
+          aria-label="Ninja Infosys home"
+        >
+          <div className="relative w-10 h-10 overflow-hidden rounded-lg bg-white p-1.5 shadow-sm transition-transform group-hover:scale-105">
+            <Image
+              src="/logo.png"
+              alt="Ninja Infosys Logo"
+              width={40}
+              height={40}
+              className="object-contain"
+              priority
+            />
           </div>
+          <span className={`text-xl font-bold font-heading transition-colors ${isScrolled ? 'text-[#0b0d12]' : 'text-white'}`}>
+            Ninja Infosys
+          </span>
+        </Link>
+
+        {/* Desktop Navigation */}
+        <nav
+          className="hidden lg:flex items-center gap-10 whitespace-nowrap ml-12"
+          aria-label="Main navigation"
+        >
+          {[
+            { label: 'About Us', href: '/about' },
+            { label: 'Solutions', href: '/solutions' },
+            { label: 'Insights', href: '/blogs' },
+            { label: 'Partners', href: '/partners' },
+            { label: 'Contact', href: '/contact' }
+          ].map((item) => (
+            <Link 
+              key={item.label}
+              href={item.href} 
+              className={`text-[15px] font-semibold transition-colors hover:text-[#E31B23] ${isScrolled ? 'text-[#0b0d12]/60' : 'text-white/70'}`}
+            >
+              {item.label === 'Insights' ? (language === 'en' ? 'Insights' : 'अन्तर्दृष्टि') : (language === 'en' ? item.label : item.label)}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Right Action Bar */}
+        <div className="flex items-center gap-8">
+          <button
+            onClick={() => setLanguage(language === "en" ? "ne" : "en")}
+            className={`hidden sm:block text-[13px] font-bold tracking-wider transition-colors uppercase ${isScrolled ? 'text-[#0b0d12]/40 hover:text-[#006FB7]' : 'text-white/40 hover:text-white'}`}
+          >
+            {language === "en" ? "नेपाली" : "English"}
+          </button>
+
+          <button 
+            onClick={() => {
+              if (pathname === "/") {
+                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+              } else {
+                window.location.href = "/contact";
+              }
+            }}
+            className="hidden lg:inline-flex items-center gap-2 bg-[#E31B23] text-white px-7 py-3 text-[15px] font-bold transition-all hover:brightness-110 active:scale-95 shadow-sm"
+          >
+            <span>{language === 'en' ? 'Build with us' : 'हामीसँग निर्माण गर्नुहोस्'}</span>
+            <ArrowRight size={16} />
+          </button>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className={`lg:hidden p-2 transition-colors ${isScrolled ? 'text-[#0b0d12]' : 'text-white'}`}
+          >
+            {mobileOpen ? <X size={26} /> : <Menu size={26} />}
+          </button>
         </div>
       </div>
 
       {/* Mobile Menu Overlay */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 top-20 bg-white z-40 overflow-y-auto animate-in slide-in-from-top duration-300">
+        <div className="lg:hidden fixed inset-0 top-20 bg-white z-40 overflow-y-auto pt-10">
            <div className="p-8 space-y-10">
              <nav className="flex flex-col gap-8 text-2xl font-bold font-heading">
-               <Link href="/about" onClick={closeAllMenus}>About Us</Link>
-               <Link href="/solutions" onClick={closeAllMenus}>Solutions</Link>
-               <Link href="/blogs" onClick={closeAllMenus}>Insights</Link>
-               <Link href="/partners" onClick={closeAllMenus}>Partners</Link>
-               <Link href="/contact" onClick={closeAllMenus}>Contact</Link>
+                {[
+                  { label: 'About Us', href: '/about' },
+                  { label: 'Solutions', href: '/solutions' },
+                  { label: 'Insights', href: '/blogs' },
+                  { label: 'Partners', href: '/partners' },
+                  { label: 'Contact', href: '/contact' }
+                ].map((item) => (
+                  <Link key={item.label} href={item.href} onClick={closeAllMenus}>
+                    {item.label}
+                  </Link>
+                ))}
              </nav>
-             <div className="pt-10 border-t border-gray-100 flex flex-col gap-5">
-               <button 
-                 onClick={() => {
-                   closeAllMenus();
-                   if (pathname === "/") {
-                     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-                   } else {
-                     window.location.href = "/contact";
-                   }
-                 }} 
-                 className="bg-[#E31B23] text-white text-center py-5 font-bold text-lg shadow-md cursor-pointer"
-               >
-                 {language === 'en' ? 'Build with us' : 'हामीसँग निर्माण गर्नुहोस्'}
-               </button>
-               <button
-                  onClick={() => { setLanguage(language === "en" ? "ne" : "en"); closeAllMenus(); }}
-                  className="text-center font-bold text-gray-400 tracking-widest text-sm uppercase p-4"
-                >
-                  {language === "en" ? "नेपाली" : "English"}
-                </button>
-             </div>
            </div>
         </div>
       )}
-
-      <style jsx global>{`
-        .font-heading { font-family: 'Newsreader', serif; }
-      `}</style>
     </header>
   );
 }

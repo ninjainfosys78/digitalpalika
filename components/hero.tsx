@@ -2,6 +2,9 @@
 import React from "react"
 import Link from "next/link"
 import { useLanguage } from "@/components/LanguageProvider"
+import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect } from "react"
+import Image from "next/image"
 
 interface HeroProps {
   showContent?: boolean
@@ -11,6 +14,20 @@ interface HeroProps {
 
 export default function Hero({ showContent = true, backgroundOnly = false, children }: HeroProps) {
   const { language } = useLanguage()
+  const [currentSlide, setCurrentSlide] = useState(0)
+  
+  const slides = [
+    "/asocio-award-1.jpg",
+    "/asocio-award-2.jpg",
+    "/asocio-award-3.jpg"
+  ]
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length)
+    }, 4000)
+    return () => clearInterval(timer)
+  }, [slides.length])
 
   const content =
     language === "en"
@@ -39,77 +56,50 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
     <section
       id="hero"
       className="relative min-h-screen flex items-center overflow-hidden"
-      style={{ paddingTop: "80px", backgroundColor: "#1a0010" }}
+      style={{ paddingTop: "80px", backgroundColor: "#0d0008" }}
       aria-label="Hero section"
     >
+      {/* Noise Texture Overlay */}
+      <div className="absolute inset-0 z-[5] opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }} />
+
       {/* Background gradient layers */}
       <div
         className="absolute inset-0 z-0"
         style={{
           background:
-            "radial-gradient(ellipse 80% 80% at 60% 40%, #3d0020 0%, #1a0010 50%, #0d0008 100%)",
+            "radial-gradient(circle at 30% 50%, #3d0020 0%, #0d0008 70%)",
         }}
       />
-      {/* Subtle red glow on left */}
-      <div
-        className="absolute z-0 pointer-events-none"
-        style={{
-          left: "-5%",
-          top: "20%",
-          width: "500px",
-          height: "500px",
-          borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(200,20,40,0.18) 0%, transparent 70%)",
-          filter: "blur(60px)",
-        }}
-      />
-
-      {/* Watermark text — right side */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 z-0 pointer-events-none select-none pr-4 sm:pr-8 lg:pr-12 text-right leading-none">
-        <div
-          className="font-heading font-bold uppercase tracking-widest"
-          style={{ fontSize: "clamp(32px, 5vw, 60px)", color: "rgba(255,255,255,0.06)" }}
-        >
-          ARCHITEECTURE
-        </div>
-        <div
-          className="font-heading font-bold uppercase tracking-widest mt-1"
-          style={{ fontSize: "clamp(24px, 4vw, 48px)", color: "rgba(255,255,255,0.06)" }}
-        >
-          SAFE — CARE WORK
-        </div>
+      
+      {/* Slideshow Area - Right Side */}
+      <div className="absolute top-0 right-0 w-full lg:w-1/2 h-full z-0 overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 0.7, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={slides[currentSlide]}
+              alt="Technology Slideshow"
+              fill
+              className="object-cover brightness-[0.8]"
+              priority
+            />
+            {/* Red Tint Overlay */}
+            <div className="absolute inset-0 bg-[#E31B23]/30 mix-blend-overlay" />
+            <div className="absolute inset-0 bg-[#0d0008]/40 mix-blend-multiply" />
+            
+            {/* Gradient Mask to blend with left side */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0d0008] via-transparent to-transparent" />
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      {/* Botanical / architectural SVG watermark */}
-      <div
-        className="absolute right-24 top-16 z-0 pointer-events-none opacity-[0.07]"
-        style={{ width: "340px", height: "340px" }}
-        aria-hidden="true"
-      >
-        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Stylised ginkgo / botanical ribs */}
-          {[0, 22, 44, 66, 88, 110, 132, 154].map((angle, i) => (
-            <g key={i} transform={`rotate(${angle} 100 160)`}>
-              <path
-                d="M100 160 Q80 80 100 20 Q120 80 100 160Z"
-                stroke="white"
-                strokeWidth="0.8"
-                fill="none"
-              />
-              <path
-                d="M100 160 Q88 100 92 40"
-                stroke="white"
-                strokeWidth="0.4"
-                strokeDasharray="2 4"
-                fill="none"
-              />
-            </g>
-          ))}
-          <circle cx="100" cy="160" r="5" fill="white" opacity="0.3" />
-        </svg>
-      </div>
-
-      {backgroundOnly ? (
+      { backgroundOnly ? (
         children
       ) : (
         <div className="relative z-10 mx-auto w-full max-w-[1600px] px-6 sm:px-8 lg:px-12 2xl:px-16 py-16">
