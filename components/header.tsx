@@ -98,18 +98,18 @@ export default function Header() {
           aria-label="Main navigation"
         >
           {[
-            { label: 'About Us', href: '/about' },
-            { label: 'Solutions', href: '/solutions' },
-            { label: 'Insights', href: '/blogs' },
-            { label: 'Partners', href: '/partners' },
-            { label: 'Contact', href: '/contact' }
+            { label: 'About Us', labelNe: 'हाम्रो बारेमा', href: '/about' },
+            { label: 'Solutions', labelNe: 'समाधानहरू', href: '/solutions' },
+            { label: 'Insights', labelNe: 'अन्तर्दृष्टि', href: '/blogs' },
+            { label: 'Partners', labelNe: 'साझेदारहरू', href: '/partners' },
+            { label: 'Contact', labelNe: 'सम्पर्क', href: '/contact' }
           ].map((item) => (
             <Link 
               key={item.label}
               href={item.href} 
               className={`text-[15px] font-semibold transition-colors hover:text-[#E31B23] ${isScrolled ? 'text-[#0b0d12]/60' : 'text-white/70'}`}
             >
-              {item.label === 'Insights' ? (language === 'en' ? 'Insights' : 'अन्तर्दृष्टि') : (language === 'en' ? item.label : item.label)}
+              {language === 'en' ? item.label : item.labelNe}
             </Link>
           ))}
         </nav>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import GlobalCTA from "@/components/global-cta";
 import dynamic from "next/dynamic";
+import { useLanguage } from "@/components/LanguageProvider";
 
 const OfficesModal = dynamic(() => import("@/components/offices-modal"), {
   ssr: false,
@@ -13,6 +14,34 @@ const OfficesModal = dynamic(() => import("@/components/offices-modal"), {
 
 export default function SolutionDetailClient({ solution, bannerUrl }: { solution: any, bannerUrl: string | null }) {
   const [officesOpen, setOfficesOpen] = useState(false);
+  const { language } = useLanguage();
+
+  const title = language === "ne" && solution.title_ne ? solution.title_ne : solution.title_en;
+  const description = language === "ne" && solution.description_ne ? solution.description_ne : solution.description_en;
+
+  const t = language === "en"
+    ? {
+        backToSolutions: "Back to Solutions",
+        deepDive: "Deep Dive",
+        engineeringFor: "Engineering for",
+        scale: "Scale",
+        approachText: `Our approach to ${solution.title_en} focuses on creating resilient, high-performance architectures that grow with your needs. We emphasize security, data integrity, and a seamless user experience across all digital touchpoints.`,
+        securityFirst: "Security First",
+        securityDesc: "End-to-end encryption and robust authentication protocols integrated into the core.",
+        cloudNative: "Cloud Native",
+        cloudDesc: "Built to scale automatically with modern cloud infrastructures and microservices.",
+      }
+    : {
+        backToSolutions: "समाधानहरूमा फर्कने",
+        deepDive: "गहन अन्वेषण",
+        engineeringFor: "इन्जिनियरिङ",
+        scale: "स्केलका लागि",
+        approachText: `${title} प्रति हाम्रो दृष्टिकोण लचिलो, उच्च-प्रदर्शन आर्किटेक्चर सिर्जना गर्नमा केन्द्रित छ जुन तपाईंको आवश्यकतासँगै बढ्छ। हामी सुरक्षा, डेटा अखण्डता र सबै डिजिटल टचपोइन्टहरूमा निर्बाध प्रयोगकर्ता अनुभवलाई जोड दिन्छौं।`,
+        securityFirst: "सुरक्षा पहिले",
+        securityDesc: "कोरमा एकीकृत एन्ड-टु-एन्ड इन्क्रिप्सन र बलियो प्रमाणीकरण प्रोटोकलहरू।",
+        cloudNative: "क्लाउड नेटिभ",
+        cloudDesc: "आधुनिक क्लाउड पूर्वाधार र माइक्रोसेवाहरूसँग स्वचालित रूपमा स्केल गर्न निर्मित।",
+      };
 
   return (
     <main className="bg-black text-white min-h-screen">
@@ -36,15 +65,15 @@ export default function SolutionDetailClient({ solution, bannerUrl }: { solution
             className="inline-flex items-center gap-2 text-white/60 hover:text-[#d52020] transition-colors mb-12 group"
           >
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-            <span className="text-xs font-bold uppercase tracking-widest">Back to Solutions</span>
+            <span className="text-xs font-bold uppercase tracking-widest">{t.backToSolutions}</span>
           </Link>
           
           <div className="max-w-4xl">
             <h1 className="text-5xl lg:text-8xl font-heading font-bold text-white leading-tight tracking-tighter mb-8">
-              {solution.title_en}
+              {title}
             </h1>
             <p className="text-xl lg:text-3xl text-white/70 font-light leading-relaxed max-w-2xl">
-              {solution.description_en}
+              {description}
             </p>
           </div>
         </div>
@@ -56,22 +85,24 @@ export default function SolutionDetailClient({ solution, bannerUrl }: { solution
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
             <div className="space-y-12">
                <div className="space-y-6">
-                 <h2 className="text-[12px] font-bold uppercase tracking-[0.4em] text-[#d52020]">Deep Dive</h2>
-                 <h3 className="text-3xl lg:text-5xl font-heading font-bold">Engineering for <span className="text-[#d52020]">Scale</span></h3>
+                 <h2 className="text-[12px] font-bold uppercase tracking-[0.4em] text-[#d52020]">{t.deepDive}</h2>
+                 <h3 className="text-3xl lg:text-5xl font-heading font-bold">
+                   {t.engineeringFor} <span className="text-[#d52020]">{t.scale}</span>
+                 </h3>
                </div>
                
                <p className="text-lg text-white/60 leading-relaxed max-w-xl">
-                 Our approach to {solution.title_en} focuses on creating resilient, high-performance architectures that grow with your needs. We emphasize security, data integrity, and a seamless user experience across all digital touchpoints.
+                 {t.approachText}
                </p>
                
                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-12">
                   <div className="p-8 border border-white/10 bg-white/5 hover:border-[#d52020]/30 transition-colors">
-                     <h4 className="text-lg font-bold mb-4">Security First</h4>
-                     <p className="text-sm text-white/50">End-to-end encryption and robust authentication protocols integrated into the core.</p>
+                     <h4 className="text-lg font-bold mb-4">{t.securityFirst}</h4>
+                     <p className="text-sm text-white/50">{t.securityDesc}</p>
                   </div>
                   <div className="p-8 border border-white/10 bg-white/5 hover:border-[#d52020]/30 transition-colors">
-                     <h4 className="text-lg font-bold mb-4">Cloud Native</h4>
-                     <p className="text-sm text-white/50">Built to scale automatically with modern cloud infrastructures and microservices.</p>
+                     <h4 className="text-lg font-bold mb-4">{t.cloudNative}</h4>
+                     <p className="text-sm text-white/50">{t.cloudDesc}</p>
                   </div>
                </div>
             </div>
@@ -80,7 +111,7 @@ export default function SolutionDetailClient({ solution, bannerUrl }: { solution
                {solution.imageUrl && (
                  <Image 
                    src={solution.imageUrl} 
-                   alt={solution.title_en} 
+                   alt={title} 
                    fill 
                    className="object-cover grayscale hover:grayscale-0 transition-all duration-1000"
                  />

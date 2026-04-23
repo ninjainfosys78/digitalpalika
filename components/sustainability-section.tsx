@@ -102,16 +102,22 @@ export default function SustainabilitySection() {
               <div className="absolute bottom-6 left-6 right-6 p-6 backdrop-blur-md bg-[#0b0d12]/40 border border-white/10 rounded-sm">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-2 h-2 rounded-full bg-[#E31B23] animate-pulse" />
-                  <div className="text-white font-bold tracking-[0.2em] text-[10px] uppercase">Operational Efficiency</div>
+                  <div className="text-white font-bold tracking-[0.2em] text-[10px] uppercase">
+                    {language === "en" ? "Operational Efficiency" : "सञ्चालन दक्षता"}
+                  </div>
                 </div>
                 <div className="flex gap-8">
                   <div>
                     <div className="text-white text-2xl font-bold mb-1">99.9%</div>
-                    <div className="text-white/40 text-[10px] uppercase">Uptime Goal</div>
+                    <div className="text-white/40 text-[10px] uppercase">
+                      {language === "en" ? "Uptime Goal" : "अपटाइम लक्ष्य"}
+                    </div>
                   </div>
                   <div className="border-l border-white/10 pl-8">
                     <div className="text-[#006FB7] text-2xl font-bold mb-1">-40%</div>
-                    <div className="text-white/40 text-[10px] uppercase">Carbon Offset</div>
+                    <div className="text-white/40 text-[10px] uppercase">
+                      {language === "en" ? "Carbon Offset" : "कार्बन अफसेट"}
+                    </div>
                   </div>
                 </div>
               </div>

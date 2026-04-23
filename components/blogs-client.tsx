@@ -28,7 +28,7 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
   const { language } = useLanguage();
 
   const labels = {
-    insights: language === "en" ? "Insights" : "इनसाइट्स",
+    insights: language === "en" ? "Insights" : "अन्तर्दृष्टि",
     readMore: language === "en" ? "Read more" : "थप पढ्नुहोस्",
     home: language === "en" ? "Ninja Infosys" : "निन्जा इन्फोसिस",
   };
@@ -94,6 +94,9 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
           <div className="grid gap-8 md:grid-cols-3">
             {posts.map((post) => {
               const p = post as any;
+              const displayTitle = language === "ne" ? (p.title_ne || p.title) : p.title;
+              const displayExcerpt = language === "ne" ? (p.excerpt_ne || p.excerpt) : p.excerpt;
+              
               return (
                 <div
                   key={p.slug}
@@ -105,7 +108,7 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={p.image}
-                        alt={p.title}
+                        alt={displayTitle}
                         onError={(e) => {
                           const targ = e.currentTarget as HTMLImageElement;
                           if (!targ.src.endsWith("placeholder.jpg")) {
@@ -120,7 +123,7 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
                   {/* Meta & Deck */}
                   <div className="flex-1 px-6 py-5">
                     <h3 className="mb-2 line-clamp-2 font-heading text-xl font-semibold text-foreground hover:text-red-600 transition-colors">
-                      <Link href={`/blogs/${p.slug}`}>{p.title}</Link>
+                      <Link href={`/blogs/${p.slug}`}>{displayTitle}</Link>
                     </h3>
 
                     {(p.date || p.readTime) && (
@@ -131,9 +134,9 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
                       </div>
                     )}
 
-                    {p.deck && (
+                    {displayExcerpt && (
                       <p className="mb-6 line-clamp-3 text-sm leading-relaxed text-foreground/70">
-                        {p.deck}
+                        {displayExcerpt}
                       </p>
                     )}
                   </div>
