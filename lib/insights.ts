@@ -7,8 +7,10 @@ export async function getTopInsights(limit = 3): Promise<InsightCard[]> {
 
   return posts.slice(0, limit).map((p) => ({
     title: p.title || p.slug,
+    title_ne: p.title_ne || p.title || p.slug,
     deck: p.excerpt || p.deck || "",
-    readTime: p.readTime || "",            
+    deck_ne: p.excerpt_ne || p.excerpt || p.deck || "",
+    readTime: p.readTime || "",
     url: `/blogs/${p.slug}`,
     image: p.image || "",
   }));

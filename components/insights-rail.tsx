@@ -6,7 +6,9 @@ import { useLanguage } from "@/components/LanguageProvider";
 
 export type InsightCard = {
   title: string;
+  title_ne: string;
   deck: string;
+  deck_ne: string;
   readTime: string;
   url: string;
   image: string;
@@ -115,11 +117,11 @@ export default function InsightsRail({
                       }`}
                     style={{ color: '#ffffff' }}
                   >
-                    {insight.title}
+                    {language === "ne" ? (insight.title_ne || insight.title) : insight.title}
                   </h3>
 
                   <p className="text-sm leading-relaxed text-pretty line-clamp-3" style={{ color: 'rgba(255,255,255,0.8)' }}>
-                    {insight.deck}
+                    {language === "ne" ? (insight.deck_ne || insight.deck) : insight.deck}
                   </p>
 
                   <div className="flex items-center gap-2 mt-4 text-sm font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: '#ffffff' }}>

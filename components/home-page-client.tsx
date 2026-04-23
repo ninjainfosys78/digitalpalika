@@ -127,7 +127,7 @@ export default function HomePageClient({ insights }: HomePageClientProps) {
         <TrustedBy />
 
         {/* Editorial Carousel */}
-        <FeaturedCarousel />
+        <FeaturedCarousel key={language} />
 
         {/* Global Insights */}
         <InsightsRail insights={safeInsights} />
