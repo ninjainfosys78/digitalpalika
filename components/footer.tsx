@@ -83,12 +83,34 @@ export default function Footer() {
 
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email.trim()) {
-      setSubmitted(true);
-      setEmail("");
+    if (!email.trim() || !email.includes("@")) return;
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("/api/subscribe/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+        setEmail("");
+      } else {
+        const data = await response.json();
+        setError(data.error || "Subscription failed.");
+      }
+    } catch (err) {
+      setError("Failed to connect.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -118,22 +140,27 @@ export default function Footer() {
                 <span className="font-semibold">{language === 'en' ? 'You\'re subscribed!' : 'सदस्यता लिइयो!'}</span>
               </div>
             ) : (
-              <form onSubmit={handleSubscribe} className="flex w-full lg:w-auto gap-0">
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder={language === 'en' ? 'Enter your email' : 'इमेल हाल्नुहोस्'}
-                  className="flex-1 lg:w-80 px-5 py-4 text-[15px] bg-white/10 text-white placeholder-white/30 border border-white/10 outline-none focus:border-[#E31B23] transition-colors"
-                />
-                <button
-                  type="submit"
-                  className="px-7 py-4 bg-[#E31B23] text-white font-bold text-[15px] hover:brightness-110 transition-all active:scale-95 whitespace-nowrap cursor-pointer"
-                >
-                  {language === 'en' ? 'Subscribe' : 'सदस्यता'}
-                </button>
-              </form>
+              <div className="flex flex-col w-full lg:w-auto">
+                <form onSubmit={handleSubscribe} className="flex w-full lg:w-auto gap-0">
+                  <input
+                    type="email"
+                    required
+                    disabled={loading}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder={language === 'en' ? 'Enter your email' : 'इमेल हाल्नुहोस्'}
+                    className="flex-1 lg:w-80 px-5 py-4 text-[15px] bg-white/10 text-white placeholder-white/30 border border-white/10 outline-none focus:border-[#E31B23] transition-colors disabled:opacity-50"
+                  />
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="px-7 py-4 bg-[#E31B23] text-white font-bold text-[15px] hover:brightness-110 transition-all active:scale-95 whitespace-nowrap cursor-pointer disabled:opacity-50"
+                  >
+                    {loading ? (language === 'en' ? 'Subscribing...' : 'पर्खनुहोस्...') : (language === 'en' ? 'Subscribe' : 'सदस्यता')}
+                  </button>
+                </form>
+                {error && <p className="text-[#f87171] text-xs mt-2">{error}</p>}
+              </div>
             )}
           </div>
         </div>

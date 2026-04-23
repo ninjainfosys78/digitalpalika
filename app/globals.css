@@ -189,3 +189,131 @@ h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); }
   color: #ffffff;
 }
 .careers-band h2, .careers-band p, .careers-band a { color: #ffffff; }
+
+/* ─── Newsletter Section ────────────────────────────────────────────── */
+.newsletter-section {
+  background-color: #2d0a0b; /* Deep dark maroon/crimson */
+  padding: 6rem 0;
+  width: 100%;
+}
+
+.newsletter-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+@media (min-width: 1024px) {
+  .newsletter-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.newsletter-content {
+  flex: 1;
+}
+
+.newsletter-title {
+  color: #ffffff;
+  font-size: 3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+  font-family: var(--font-heading);
+}
+
+@media (min-width: 640px) {
+  .newsletter-title {
+    font-size: 4rem;
+  }
+}
+
+.newsletter-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.25rem;
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+.newsletter-form {
+  flex: 1;
+  max-width: 600px;
+  width: 100%;
+}
+
+.newsletter-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .newsletter-input-group {
+    flex-direction: row;
+    gap: 0;
+  }
+}
+
+.newsletter-input {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  padding: 1.25rem 1.5rem;
+  font-size: 1rem;
+  flex: 1;
+  transition: all 0.3s ease;
+}
+
+.newsletter-input:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: var(--brand-red);
+}
+
+.newsletter-button {
+  background-color: var(--brand-red);
+  color: #ffffff;
+  padding: 1.25rem 2.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.newsletter-button:hover {
+  background-color: #ff2a34;
+  transform: translateY(-2px);
+}
+
+.newsletter-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.newsletter-message {
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  padding: 0.5rem 0;
+}
+
+.newsletter-message.success {
+  color: #4ade80;
+}
+
+.newsletter-message.error {
+  color: #f87171;
+}
+
+.newsletter-message.loading {
+  color: rgba(255, 255, 255, 0.5);
+}
