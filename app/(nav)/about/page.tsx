@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
 const Testimonials: React.ComponentType<any> = dynamic(
   () => import("@/components/testimonials").then((m) => m.default ?? m),
@@ -13,21 +13,131 @@ import {
   BadgeCheck,
   Eye,
   Heart,
+  Linkedin,
+  Mail,
+  Quote,
+  Calendar,
+  History,
+  TrendingUp,
 } from "lucide-react";
+import { motion, useScroll, useTransform, useSpring, Variants } from "framer-motion";
 import Link from "next/link";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import GlobalCTA from "@/components/global-cta";
 import { useLanguage } from "@/components/LanguageProvider";
 import { getBannerByImgName } from "@/lib/banners";
+import { getTeamMembers, TeamMember } from "../../../lib/team";
+
+function StoryItem({ t, i, scrollYProgress, language }: { t: any, i: number, scrollYProgress: any, language: string }) {
+  const y = useTransform(scrollYProgress, [0, 1], [80 * (i + 1), -80 * (i + 1)]);
+
+  const containerVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        staggerChildren: 0.15,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { 
+      opacity: 1, 
+      x: 0, 
+      transition: { duration: 0.8, ease: "easeOut" } 
+    }
+  };
+
+  return (
+    <motion.div
+      className="relative group"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-50px" }}
+      variants={containerVariants}
+    >
+      <motion.div
+        style={{ y, opacity: 0.01 }}
+        className="absolute -top-8 -left-4 lg:-left-12 text-[50px] lg:text-[100px] font-heading font-black text-foreground select-none pointer-events-none transition-colors duration-1000 group-hover:text-[#d52020] group-hover:opacity-10"
+      >
+        {t.year}
+      </motion.div>
+
+      <div className="relative z-10">
+        <motion.div variants={itemVariants} className="flex items-center gap-6 mb-8">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#d52020]/20 group-hover:border-[#d52020] text-[#d52020] font-heading text-lg transition-all duration-500 group-hover:bg-[#d52020] group-hover:text-white shadow-sm">
+            {t.year.slice(-2)}
+          </div>
+          <div className="h-px w-10 bg-[#d52020]/20 group-hover:w-20 transition-all duration-500" />
+          <span className="text-xs font-bold tracking-[0.2em] text-[#d52020] uppercase">{t.year}</span>
+        </motion.div>
+
+        <motion.h4 variants={itemVariants} className="text-xl lg:text-3xl font-heading font-semibold text-foreground mb-4 tracking-tight">
+          {t.title}
+        </motion.h4>
+
+        <motion.p variants={itemVariants} className="text-base lg:text-lg text-foreground/60 leading-relaxed max-w-2xl font-light">
+          {t.text}
+        </motion.p>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function AboutPage() {
   const { language } = useLanguage();
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
   const [secondImageUrl, setSecondImageUrl] = useState<string | null>(null);
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
 
-  const content =
-    language === "en"
+  useEffect(() => {
+    let mounted = true;
+
+    getBannerByImgName("about")
+      .then((url) => {
+        if (!mounted) return;
+        setBannerUrl(url || null);
+      })
+      .catch(() => { });
+
+    getBannerByImgName("about-2")
+      .then((url) => {
+        if (!mounted) return;
+        setSecondImageUrl(url || null);
+      })
+      .catch(() => { });
+
+    getTeamMembers()
+      .then((members: TeamMember[]) => {
+        if (!mounted) return;
+        setTeamMembers(members);
+      })
+      .catch(() => { });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const scrollY = useSpring(scrollYProgress, {
+    damping: 20,
+    stiffness: 100
+  });
+
+  const content = useMemo(() => {
+    return language === "en"
       ? {
         who: "Who we are",
         heroTitle: "ABOUT US",
@@ -79,27 +189,27 @@ export default function AboutPage() {
           {
             year: "2016",
             title: "Humble start",
-            text: "Ninja Infosys began as a two-person studio focused on resilient web systems.",
+            text: "Founded by a small group of passionate engineers, Ninja Infosys began as a specialized studio focused on building high-performance web systems. Our early focus was on establishing a foundation of technical excellence and a partner-first mindset that still drives us today.",
           },
           {
             year: "2018",
             title: "First Fortune 500",
-            text: "Scaled payment and risk platforms, bringing modern DevEx into legacy estates.",
+            text: "A significant milestone as we partnered with our first Fortune 500 client. We successfully modernized and scaled critical payment and risk platforms, introducing streamlined developer experiences and robust CI/CD pipelines into complex enterprise environments.",
           },
           {
             year: "2020",
             title: "Platform practice",
-            text: "Launched our internal developer platform accelerators and reliability program.",
+            text: "We formally launched our Platform Engineering practice, developing internal accelerators that allow clients to ship software faster and more safely. Our focus shifted towards site reliability (SRE) and automated cloud-native infrastructure at scale.",
           },
           {
             year: "2023",
             title: "Data & AI",
-            text: "Added pragmatic AI—retrieval, evaluation, and safety—to shipping products.",
+            text: "Expanding into the frontier of pragmatic AI, we integrated retrieval-augmented generation (RAG) and specialized evaluation frameworks into shipping products. We help partners navigate the complexity of AI safety and real-world implementation.",
           },
           {
             year: "2025",
             title: "Global footprint",
-            text: "Multi-region delivery with the same small-team DNA and craft standards.",
+            text: "Today, Ninja Infosys serves as a global technical partner with a presence across multiple regions. While our reach has expanded, we maintain our 'small-team' DNA—prioritizing engineering craft, deep ownership, and measurable business outcomes.",
           },
         ],
         principlesTitle: "Engineering Principles",
@@ -109,11 +219,12 @@ export default function AboutPage() {
           { title: "Pragmatic Innovation", body: "We don't chase hype. We apply new technologies like AI and Cloud-Native patterns only when they drive real business outcomes." }
         ],
         leadershipTitle: "Our Team",
-        leaders: [
-          { name: "Ramesh Chettri", role: "Chairman", image: "/ramesh_chairman.png" },
-          { name: "Shiv Ram Adhikari", role: "Chief Technology Officer", image: "/shiv_ram_adhikari.png" },
-          { name: "Bimala KC", role: "Principal Software Engineer", image: "/bimala_kc.png" }
-        ]
+        leaders: teamMembers.map(m => ({
+          name: m.name,
+          role: m.role,
+          image: m.imageUrl || "/insights.jpg",
+          bio: m.bio_en
+        }))
       }
       : {
         who: "हामी को हौं",
@@ -166,22 +277,22 @@ export default function AboutPage() {
           {
             year: "२०१६",
             title: "न्यानो सुरुवात",
-            text: "निन्जा इन्फोसिस दुई जनाबाट सुरु भयो—लचिलो वेब प्रणालीहरूमा केन्द्रित।",
+            text: "उत्साही ईन्जिनियरहरूको एउटा सानो समूहद्वारा स्थापित, निन्जा इन्फोसिसले उच्च-कार्यक्षमता वेब प्रणालीहरू निर्माणमा केन्द्रित एक विशेष स्टुडियोको रूपमा आफ्नो यात्रा सुरु गर्यो।",
           },
           {
             year: "२०१८",
             title: "पहिलो फोर्च्यून ५००",
-            text: "भुक्तानी र जोखिम प्लेटफर्म स्केल गर्दै आधुनिक डेभएक्स पुर्‍यायौँ।",
+            text: "हामीले हाम्रो पहिलो 'फोर्च्यून ५००' ग्राहकसँग साझेदारी गर्दा यो एक महत्वपूर्ण उपलब्धि थियो। हामीले जटिल उद्यम वातावरणहरूमा आधुनिक विकासकर्ता अनुभवहरू र मजबुत प्रक्रियाहरू भित्र्याउँदै महत्वपूर्ण भुक्तानी र जोखिम प्लेटफर्महरूको आधुनिकीकरण गर्यौँ।",
           },
           {
             year: "२०२०",
             title: "प्लेटफर्म अभ्यास",
-            text: "आन्तरिक डेभलपर प्लेटफर्म त्वरक र विश्वसनीयता कार्यक्रम सुरु।",
+            text: "हामीले औपचारिक रूपमा हाम्रो 'प्लेटफर्म इन्जिनियरिङ' अभ्यास सुरु गर्यौँ। हाम्रो ध्यान साइट रिलायबिलिटी (SRE) र ठूला स्वचालित क्लाउड-नेटिभ पूर्वाधार निर्माणतर्फ केन्द्रित भयो, जसले ग्राहकहरूलाई सफ्टवेयर अझ छिटो र सुरक्षित रूपमा डेलिभर गर्न मद्दत गर्यो।",
           },
           {
             year: "२०२३",
             title: "डेटा र एआई",
-            text: "व्यावहारिक एआई—प्राप्ति, मूल्याङ्कन, सुरक्षा—उत्पादनमा।",
+            text: "व्यावहारिक एआईको क्षेत्रमा पाइला चाल्दै, हामीले उत्पादनहरूमा रिट्राइभल-अगमेन्टेड जेनेरेशन (RAG) र विशेष मूल्याङ्कन ढाँचाहरू एकीकृत गर्यौँ। हामी हाम्रा साझेदारहरूलाई एआई सुरक्षा र वास्तविक कार्यान्वयनको जटिलताहरू बुझ्न मद्दत गर्छौं।",
           },
           {
             year: "२०२५",
@@ -196,34 +307,14 @@ export default function AboutPage() {
           { title: "व्यावहारिक नवाचार", body: "हामी केवल चर्चाको पछि लाग्दैनौं। हामी एआई जस्ता नयाँ प्रविधिहरू प्रयोग गर्छौं जसले वास्तविक नतिजा दिन्छ।" }
         ],
         leadershipTitle: "हाम्रो टिम",
-        leaders: [
-          { name: "रमेश क्षेत्री", role: "अध्यक्ष (Chairman)", image: "/ramesh_chairman.png" },
-          { name: "शिव राम अधिकारी", role: "मुख्य प्राविधिक अधिकृत", image: "/shiv_ram_adhikari.png" },
-          { name: "बिमला केसी", role: "प्रमुख सफ्टवेयर इन्जिनियर", image: "/bimala_kc.png" }
-        ]
+        leaders: teamMembers.map(m => ({
+          name: m.name_ne || m.name,
+          role: m.role_ne || m.role,
+          image: m.imageUrl || "/insights.jpg",
+          bio: m.bio_ne
+        }))
       };
-
-  useEffect(() => {
-    let mounted = true;
-
-    getBannerByImgName("about")
-      .then((url) => {
-        if (!mounted) return;
-        setBannerUrl(url || null);
-      })
-      .catch(() => { });
-
-    getBannerByImgName("about-2")
-      .then((url) => {
-        if (!mounted) return;
-        setSecondImageUrl(url || null);
-      })
-      .catch(() => { });
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  }, [language, teamMembers]);
 
   return (
     <>
@@ -249,13 +340,13 @@ export default function AboutPage() {
               <div className="max-w-[1600px] text-left">
                 <nav
                   aria-label="Breadcrumb"
-                  className="mt-0 text-sm text-foreground/80"
+                  className="mt-0 text-sm text-white"
                 >
                   <ol className="flex items-center gap-3">
                     <li>
                       <Link
                         href="/"
-                        className="font-medium tracking-wide hover:text-foreground"
+                        className="font-medium tracking-wide hover:text-white/80"
                       >
                         {content.brand}
                       </Link>
@@ -263,7 +354,7 @@ export default function AboutPage() {
                     <li aria-hidden className="inline-flex items-center">
                       <svg
                         viewBox="0 0 24 24"
-                        className="h-5 w-5 text-foreground/70"
+                        className="h-5 w-5 text-white/70"
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="2"
@@ -277,7 +368,7 @@ export default function AboutPage() {
                   </ol>
                 </nav>
 
-                <h1 className="pt-4 text-5xl font-heading font-semibold text-foreground sm:text-6xl text-left">
+                <h1 className="pt-4 text-5xl font-heading font-semibold text-white sm:text-6xl text-left">
                   {content.heroTitle}
                 </h1>
               </div>
@@ -366,7 +457,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Principles Section */}
         <section className="relative z-10 bg-muted">
           <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-16">
             <h2 className="text-[32px] font-heading font-semibold text-left text-foreground mb-12">
@@ -383,72 +473,156 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Leadership Section */}
-        <section className="relative z-10 bg-background">
-          <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-16 lg:py-24">
-            <div className="max-w-2xl mb-16">
-              <h2 className="text-[32px] font-heading font-semibold text-left text-foreground mb-4">
-                {content.leadershipTitle}
+        <section className="relative z-10 bg-background overflow-hidden border-t border-foreground/5">
+          <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-24 lg:py-32">
+            <div className="max-w-2xl mb-24">
+              <h2 className="text-[12px] font-bold uppercase tracking-[0.4em] text-[#d52020] mb-6">
+                {language === 'en' ? 'Leadership' : 'नेतृत्व'}
               </h2>
-              <div className="h-1 w-20 bg-[#d52020]" />
+              <motion.h3 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-5xl lg:text-7xl font-heading font-bold text-foreground leading-[1.1] tracking-tighter"
+              >
+                {language === 'en' ? 'The minds behind the' : 'हाम्रो शिल्प पछाडिका'}{' '}
+                <span className="text-[#d52020] italic">{language === 'en' ? 'craft' : 'मस्तिष्कहरू'}</span>
+              </motion.h3>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">
-              {content.leaders.map((leader, idx) => (
-                <div key={idx} className="group flex flex-col items-center text-center">
-                  <div className="w-64 h-64 relative overflow-hidden rounded-full bg-muted mb-8 border-4 border-foreground/5 shadow-xl transition-all duration-500 group-hover:border-[#d52020] group-hover:scale-105">
-                    <img 
-                      src={leader.image} 
-                      alt={leader.name} 
-                      className={`w-full h-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 ${leader.name === 'Ramesh' || leader.name === 'रमेश' ? 'scale-110 object-top' : ''}`}
-                    />
+            
+            <div className="space-y-40 lg:space-y-64">
+              {content.leaders.map((leader, idx) => {
+                const isEven = idx % 2 === 0;
+                return (
+                  <div 
+                    key={idx} 
+                    className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0 items-center group">
+                    <div className={`lg:col-span-5 flex ${isEven ? 'lg:justify-start' : 'lg:justify-end lg:order-last'}`}>
+                      <motion.div 
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 0.8 }}
+                        className="w-56 h-56 lg:w-96 lg:h-96 relative"
+                      >
+                         <div className="absolute inset-0 rounded-full border-8 border-[#d52020]/5 group-hover:border-[#d52020]/20 transition-all duration-700 -rotate-12 group-hover:rotate-0" />
+                         <div className="w-full h-full rounded-full overflow-hidden border-2 border-foreground/5 shadow-2xl relative z-10 transition-transform duration-700 group-hover:scale-105">
+                            <img 
+                              src={leader.image} 
+                              alt={leader.name} 
+                              className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-105 transition-all duration-1000 group-hover:scale-110"
+                            />
+                         </div>
+                      </motion.div>
+                    </div>
+                    
+                    <motion.div 
+                      initial={{ opacity: 0, x: isEven ? 40 : -40 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: "-100px" }}
+                      transition={{ duration: 0.8, delay: 0.2 }}
+                      className={`lg:col-span-7 flex flex-col gap-6 ${isEven ? 'lg:pl-20' : 'lg:pr-20 lg:items-end lg:text-right'}`}
+                    >
+                       <div className={`flex flex-col ${isEven ? 'items-start' : 'items-end'}`}>
+                          <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-[#d52020] mb-4">
+                             {leader.role}
+                          </span>
+                          <h4 className="text-4xl lg:text-7xl font-heading font-medium text-foreground mb-6 tracking-tight italic">
+                             {leader.name}
+                          </h4>
+                          <div className={`h-1 w-24 bg-[#d52020]/50 transition-all duration-700 group-hover:w-48 ${!isEven && 'origin-right'}`} />
+                       </div>
+                       
+                       <div className="relative pt-4">
+                          <Quote 
+                            className={`absolute text-[#d52020]/10 ${isEven ? '-left-10 -top-2 rotate-180' : '-right-10 -top-2'}`} 
+                            size={64} 
+                          />
+                          <p className="text-xl lg:text-2xl text-foreground/70 leading-relaxed max-w-xl font-light">
+                             {leader.bio}
+                          </p>
+                       </div>
+                       
+                       <div className={`flex gap-6 mt-6 items-center w-full ${!isEven && 'flex-row-reverse'}`}>
+                          <div className="flex gap-4">
+                            <div className="h-12 w-12 border border-foreground/10 flex items-center justify-center hover:border-[#d52020] transition-all cursor-pointer text-foreground/40 hover:text-[#d52020] hover:bg-[#d52020]/5">
+                               <Linkedin size={20} />
+                            </div>
+                            <div className="h-12 w-12 border border-foreground/10 flex items-center justify-center hover:border-[#d52020] transition-all cursor-pointer text-foreground/40 hover:text-[#d52020] hover:bg-[#d52020]/5">
+                               <Mail size={20} />
+                            </div>
+                          </div>
+                          <div className="h-px flex-grow bg-foreground/10" />
+                       </div>
+                    </motion.div>
                   </div>
-                  <h3 className="text-2xl font-heading font-bold text-foreground">{leader.name}</h3>
-                  <p className="text-[#d52020] font-semibold uppercase tracking-widest text-[11px] mt-2 bg-foreground/5 px-4 py-1 rounded-full">{leader.role}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
 
-        <section id="our-story" className="relative z-10 scroll-mt-28 bg-background">
-          <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-12 lg:py-16">
-            <h2 className="text-[32px] font-heading font-semibold text-left text-foreground">
-              {content.storyTitle}
-            </h2>
+        <section 
+          id="our-story" 
+          ref={sectionRef}
+          className="relative z-10 scroll-mt-28 bg-background overflow-hidden border-t border-foreground/5"
+        >
+          <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-24 lg:py-32">
+            <div className="flex flex-col lg:flex-row gap-16 lg:gap-32">
+              <div className="lg:w-1/3 lg:sticky lg:top-32 h-fit">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#d52020] mb-6">
+                    {language === 'en' ? 'The Evolution' : 'विकासक्रम'}
+                  </h2>
+                  <h3 className="text-4xl lg:text-6xl font-heading font-bold text-foreground leading-[1.1] tracking-tighter mb-8 italic">
+                    {content.storyTitle.split(' ')[0]}<br />
+                    <span className="pl-4 lg:pl-10 text-[#d52020]">{content.storyTitle.split(' ')[1]}</span>
+                  </h3>
+                  <div className="h-1 w-20 bg-[#d52020] mb-8" />
+                  <p className="text-base lg:text-lg text-foreground/50 leading-relaxed max-w-sm font-light">
+                    {language === 'en' 
+                      ? "A decade of engineering excellence, scaling from a small studio to a global technical partner."
+                      : "एक दशकको उत्कृष्ट इन्जिनियरिङ, सानो स्टुडियोबाट वैश्विक प्राविधिक साझेदारसम्मको यात्रा।"}
+                  </p>
+                  
+                  <div className="hidden lg:block mt-12 relative h-48 w-px bg-foreground/10 ml-1">
+                    <motion.div 
+                      className="absolute top-0 left-0 w-full bg-[#d52020] origin-top"
+                      style={{ scaleY: scrollYProgress }}
+                    />
+                  </div>
+                </motion.div>
+              </div>
 
-            <div className="relative mt-10">
-              <span className="pointer-events-none absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-foreground/10" />
-
-              <ol className="space-y-12">
-                {content.timeline.map((t, i) => (
-                  <li
-                    key={t.year}
-                    className="group/box relative grid grid-cols-1 md:grid-cols-2 md:gap-10"
-                  >
-                    <span className="absolute left-1/2 top-6 z-10 -translate-x-1/2 flex h-4 w-4 items-center justify-center rounded-full bg-[#d52020] ring-2 ring-foreground/20 transition-transform duration-300 group-hover/box:scale-125" />
-
-                    <div
-                      className={
-                        i % 2 === 0
-                          ? "md:col-start-1 md:pr-10 flex md:justify-end"
-                          : "md:col-start-2 md:pl-10 flex md:justify-start"
-                      }
-                    >
-                      <div className="max-w-[420px] w-full border border-foreground/10 bg-card p-6 rounded-none text-foreground transition-all duration-300 hover:-translate-y-1 hover:border-ni-accent/50 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)]">
-                        <div className="text-xs font-semibold tracking-wide text-foreground/50 group-hover/box:text-ni-accent transition-colors">
-                          {t.year}
-                        </div>
-                        <h3 className="mt-2 text-lg font-heading font-semibold text-foreground text-left">
-                          {t.title}
-                        </h3>
-                        <p className="mt-3 text-sm text-foreground/80">
-                          {t.text}
-                        </p>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              <div className="lg:w-2/3">
+                <div className="space-y-32 lg:space-y-48 pb-32 border-l border-foreground/5 lg:pl-16 ml-6 lg:ml-0">
+                  {content.timeline.map((t, i) => (
+                    <StoryItem 
+                      key={t.year} 
+                      t={t} 
+                      i={i} 
+                      scrollYProgress={scrollYProgress} 
+                      language={language} 
+                    />
+                  ))}
+                </div>
+                
+                <motion.div 
+                  className="pt-24 border-t border-foreground/5"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 1 }}
+                >
+                  <p className="text-foreground/30 font-heading italic text-xl">
+                    {language === 'en' ? 'To be continued...' : 'क्रमशः...'}
+                  </p>
+                </motion.div>
+              </div>
             </div>
           </div>
         </section>

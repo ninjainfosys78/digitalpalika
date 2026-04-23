@@ -84,3 +84,22 @@ export async function getSolutionsCards(): Promise<SolutionCard[]> {
     return FALLBACK_SOLUTIONS;
   }
 }
+
+export async function getSolutionById(id: string): Promise<SolutionCard | null> {
+  try {
+    const record = await pb.collection("NinjaLanding_Solutions").getOne<SolutionRecord>(id);
+
+    return {
+      id: record.id,
+      title_en: record.Title_en,
+      title_ne: record.Title_ne,
+      description_en: record.Description_en,
+      description_ne: record.Description_ne,
+      imageUrl: record.Image ? pb.files.getURL(record, record.Image) : "/insights.jpg",
+    };
+  } catch (e) {
+    console.error(`Error fetching solution with id ${id}:`, e);
+    return FALLBACK_SOLUTIONS.find((s) => s.id === id) || null;
+  }
+}
+
