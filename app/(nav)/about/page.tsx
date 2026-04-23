@@ -376,7 +376,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="relative isolate bg-background border-t border-foreground/10">
+        <section id="who-we-are" className="relative isolate bg-background border-t border-foreground/10">
           <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-12 lg:py-16">
             <div className="grid gap-8 md:grid-cols-12 items-center">
               <div className="md:col-span-6">
@@ -426,7 +426,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="relative z-10 bg-background">
+        <section id="our-core" className="relative z-10 bg-background">
           <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-16">
             <div className="mt-2 mb-3">
               <h2 className="mt-2 text-[32px] font-heading font-semibold text-left text-foreground">
@@ -457,7 +457,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="relative z-10 bg-muted">
+        <section id="engineering-principles" className="relative z-10 bg-muted">
           <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-16">
             <h2 className="text-[32px] font-heading font-semibold text-left text-foreground mb-12">
               {content.principlesTitle}
@@ -473,7 +473,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="relative z-10 bg-background overflow-hidden border-t border-foreground/5">
+        <section id="leadership" className="relative z-10 bg-background overflow-hidden border-t border-foreground/5">
           <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-24 lg:py-32">
             <div className="max-w-2xl mb-24">
               <h2 className="text-[12px] font-bold uppercase tracking-[0.4em] text-[#d52020] mb-6">

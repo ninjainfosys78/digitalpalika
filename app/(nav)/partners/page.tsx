@@ -107,8 +107,8 @@ export default function PartnersPage() {
                           key={p.id}
                           className="group relative bg-[#0b0d12] border border-white/5 p-8 transition-all duration-300 hover:-translate-y-2 hover:border-[#d52020]/30 hover:shadow-[0_20px_40px_-20px_rgba(213,32,32,0.15)] flex flex-col h-full"
                         >
-                          <div className="h-48 flex items-center justify-center mb-8 bg-white/[0.03] rounded-sm overflow-hidden group-hover:bg-white/[0.07] transition-all duration-500">
-                            <div className="relative h-28 w-56 transform transition-transform duration-500 group-hover:scale-110">
+                          <div className="h-48 flex items-center justify-center mb-8 bg-white/[0.02] rounded-none overflow-hidden group-hover:bg-white/[0.05] transition-all duration-500 p-10">
+                            <div className="relative w-full h-full transform transition-transform duration-700 group-hover:scale-110">
                               <Image
                                 src={p.logoUrl}
                                 alt={displayName}
