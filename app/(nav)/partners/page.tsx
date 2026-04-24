@@ -4,12 +4,19 @@ import React, { useEffect, useState } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import GlobalCTA from "@/components/global-cta";
+import ContactModals from "@/components/contact-modals";
+import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import Image from "next/image";
 import { getPartners, type Partner } from "@/lib/partners";
 
 export default function PartnersPage() {
   const { language } = useLanguage();
+  const { 
+    officesOpen, openOffices, closeOffices,
+    bookingOpen, openBooking, closeBooking,
+    quoteOpen, openQuote, closeQuote 
+  } = useContactModals();
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -137,7 +144,19 @@ export default function PartnersPage() {
 
         </div>
       </main>
-      <GlobalCTA onOfficesOpen={() => {}} />
+      <GlobalCTA 
+        onOfficesOpen={openOffices} 
+        onBookingOpen={openBooking}
+        onQuoteOpen={openQuote}
+      />
+      <ContactModals 
+        officesOpen={officesOpen}
+        onOfficesClose={closeOffices}
+        bookingOpen={bookingOpen}
+        onBookingClose={closeBooking}
+        quoteOpen={quoteOpen}
+        onQuoteClose={closeQuote}
+      />
       <Footer />
     </>
   );

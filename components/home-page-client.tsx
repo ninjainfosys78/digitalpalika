@@ -9,8 +9,9 @@ import Hero from "@/components/hero";
 import Footer from "@/components/footer";
 import SearchOverlay from "@/components/search-overlay";
 import CookieBanner from "@/components/cookie-banner";
-import OfficesModal from "@/components/offices-modal";
 import { useLanguage } from "@/components/LanguageProvider";
+import { useContactModals } from "@/lib/hooks/use-contact-modals";
+import ContactModals from "@/components/contact-modals";
 import type { InsightCard } from "@/components/insights-rail";
 
 const TrustedBy = dynamic(() => import("@/components/trusted-by"), {
@@ -59,8 +60,12 @@ interface HomePageClientProps {
 
 export default function HomePageClient({ insights }: HomePageClientProps) {
   const { language } = useLanguage();
+  const { 
+    officesOpen, openOffices, closeOffices,
+    bookingOpen, openBooking, closeBooking,
+    quoteOpen, openQuote, closeQuote 
+  } = useContactModals();
   const [searchOpen, setSearchOpen] = useState(false);
-  const [officesOpen, setOfficesOpen] = useState(false);
 
   const safeInsights: InsightCard[] = Array.isArray(insights) ? insights : [];
 
@@ -73,7 +78,9 @@ export default function HomePageClient({ insights }: HomePageClientProps) {
       }
       if (e.key === "Escape") {
         setSearchOpen(false);
-        setOfficesOpen(false);
+        closeOffices();
+        closeBooking();
+        closeQuote();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -138,13 +145,24 @@ export default function HomePageClient({ insights }: HomePageClientProps) {
         <InsightsRail insights={safeInsights} />
         <Testimonials />
         <Newsletter />
-        <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />
+        <GlobalCTA 
+          onOfficesOpen={openOffices} 
+          onBookingOpen={openBooking}
+          onQuoteOpen={openQuote}
+        />
       </main>
 
       <Footer />
 
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-      <OfficesModal isOpen={officesOpen} onClose={() => setOfficesOpen(false)} />
+      <ContactModals 
+        officesOpen={officesOpen}
+        onOfficesClose={closeOffices}
+        bookingOpen={bookingOpen}
+        onBookingClose={closeBooking}
+        quoteOpen={quoteOpen}
+        onQuoteClose={closeQuote}
+      />
 
       <CookieBanner />
 

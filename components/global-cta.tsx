@@ -7,9 +7,11 @@ import Link from "next/link";
 
 interface GlobalCTAProps {
   onOfficesOpen: () => void;
+  onBookingOpen: () => void;
+  onQuoteOpen: () => void;
 }
 
-export default function GlobalCTA({ onOfficesOpen }: GlobalCTAProps) {
+export default function GlobalCTA({ onOfficesOpen, onBookingOpen, onQuoteOpen }: GlobalCTAProps) {
   const { language } = useLanguage();
 
   const content =
@@ -23,25 +25,29 @@ export default function GlobalCTA({ onOfficesOpen }: GlobalCTAProps) {
               title: "Schedule a Consultation",
               desc: "Discuss your project goals with our lead consultants.",
               cta: "Book now",
-              href: "/contact",
-              primary: true
+              href: "#",
+              primary: true,
+              isAction: true,
+              actionType: "booking"
             },
             {
               icon: Mail,
               title: "Request a Quote",
               desc: "Get a detailed technical and financial estimate.",
               cta: "Get started",
-              href: "/contact",
-              primary: false
+              href: "#",
+              primary: false,
+              isAction: true,
+              actionType: "quote"
             },
             {
               icon: MapPin,
               title: "Talk to Our Team",
               desc: "Visit our global offices or speak to a regional lead.",
               cta: "Find a location",
-              href: "#",
+              href: "/locations",
               primary: false,
-              isAction: true
+              isAction: false
             }
           ]
         }
@@ -54,25 +60,29 @@ export default function GlobalCTA({ onOfficesOpen }: GlobalCTAProps) {
               title: "परामर्श तालिका बनाउनुहोस्",
               desc: "हाम्रा प्रमुख परामर्शदाताहरूसँग तपाईंको परियोजना लक्ष्यहरू छलफल गर्नुहोस्।",
               cta: "अहिले बुक गर्नुहोस्",
-              href: "/contact",
-              primary: true
+              href: "#",
+              primary: true,
+              isAction: true,
+              actionType: "booking"
             },
             {
               icon: Mail,
               title: "उद्धरण अनुरोध गर्नुहोस्",
               desc: "विस्तृत प्राविधिक र आर्थिक अनुमान प्राप्त गर्नुहोस्।",
               cta: "सुरु गर्नुहोस्",
-              href: "/contact",
-              primary: false
+              href: "#",
+              primary: false,
+              isAction: true,
+              actionType: "quote"
             },
             {
               icon: MapPin,
               title: "हाम्रो टोलीसँग कुरा गर्नुहोस्",
               desc: "हाम्रा विश्वव्यापी कार्यालयहरूमा जानुहोस् वा क्षेत्रीय प्रमुखसँग कुरा गर्नुहोस्।",
               cta: "स्थान खोज्नुहोस्",
-              href: "#",
+              href: "/locations",
               primary: false,
-              isAction: true
+              isAction: false
             }
           ]
         };
@@ -118,7 +128,11 @@ export default function GlobalCTA({ onOfficesOpen }: GlobalCTAProps) {
 
                 {action.isAction ? (
                   <button 
-                    onClick={() => action.title.includes("Team") && onOfficesOpen()}
+                    onClick={() => {
+                      if ((action as any).actionType === "booking") onBookingOpen();
+                      if ((action as any).actionType === "quote") onQuoteOpen();
+                      if (action.title.includes("Team") || action.title.includes("टोली")) onOfficesOpen();
+                    }}
                     className={`inline-flex items-center gap-3 font-bold group cursor-pointer ${action.primary ? 'text-white' : 'text-[#E31B23]'}`}
                   >
                     <span className="underline underline-offset-8 decoration-2">{action.cta}</span>

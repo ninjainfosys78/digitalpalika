@@ -25,6 +25,8 @@ import Link from "next/link";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import GlobalCTA from "@/components/global-cta";
+import ContactModals from "@/components/contact-modals";
+import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import { getBannerByImgName } from "@/lib/banners";
 import { getTeamMembers, TeamMember } from "../../../lib/team";
@@ -92,6 +94,11 @@ function StoryItem({ t, i, scrollYProgress, language }: { t: any, i: number, scr
 
 export default function AboutPage() {
   const { language } = useLanguage();
+  const { 
+    officesOpen, openOffices, closeOffices,
+    bookingOpen, openBooking, closeBooking,
+    quoteOpen, openQuote, closeQuote 
+  } = useContactModals();
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
   const [secondImageUrl, setSecondImageUrl] = useState<string | null>(null);
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
@@ -627,8 +634,21 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <GlobalCTA onOfficesOpen={() => { }} />
+        <GlobalCTA 
+          onOfficesOpen={openOffices} 
+          onBookingOpen={openBooking}
+          onQuoteOpen={openQuote}
+        />
       </main>
+
+      <ContactModals 
+        officesOpen={officesOpen}
+        onOfficesClose={closeOffices}
+        bookingOpen={bookingOpen}
+        onBookingClose={closeBooking}
+        quoteOpen={quoteOpen}
+        onQuoteClose={closeQuote}
+      />
 
       <Footer />
     </>

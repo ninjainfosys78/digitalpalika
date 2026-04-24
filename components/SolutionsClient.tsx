@@ -7,6 +7,8 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 
 import GlobalCTA from "@/components/global-cta";
+import ContactModals from "@/components/contact-modals";
+import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import type { SolutionCard } from "@/lib/solutions";
 
@@ -202,8 +204,12 @@ export default function SolutionsClient({
   cards,
 }: SolutionsClientProps) {
   const { language } = useLanguage();
+  const { 
+    officesOpen, openOffices, closeOffices,
+    bookingOpen, openBooking, closeBooking,
+    quoteOpen, openQuote, closeQuote 
+  } = useContactModals();
   const [searchOpen, setSearchOpen] = useState(false);
-  const [officesOpen, setOfficesOpen] = useState(false);
   const [active, setActive] = useState<Key | null>(null);
   const router = useRouter();
   const params = useSearchParams();
@@ -219,7 +225,9 @@ export default function SolutionsClient({
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setSearchOpen(false);
-        setOfficesOpen(false);
+        closeOffices();
+        closeBooking();
+        closeQuote();
       }
     };
     window.addEventListener("keydown", onKey);
@@ -483,22 +491,26 @@ export default function SolutionsClient({
           </>
         )}
 
-        <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />
+        <GlobalCTA 
+          onOfficesOpen={openOffices} 
+          onBookingOpen={openBooking}
+          onQuoteOpen={openQuote}
+        />
       </main>
 
-      {searchOpen && (
-        <SearchOverlay
-          isOpen={searchOpen}
-          onClose={() => setSearchOpen(false)}
-        />
-      )}
+      <SearchOverlay
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+      />
 
-      {officesOpen && (
-        <OfficesModal
-          isOpen={officesOpen}
-          onClose={() => setOfficesOpen(false)}
-        />
-      )}
+      <ContactModals 
+        officesOpen={officesOpen}
+        onOfficesClose={closeOffices}
+        bookingOpen={bookingOpen}
+        onBookingClose={closeBooking}
+        quoteOpen={quoteOpen}
+        onQuoteClose={closeQuote}
+      />
 
       <style jsx global>{`
         .solutions-card::after,
