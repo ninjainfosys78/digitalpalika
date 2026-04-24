@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import pb from "@/lib/pocketbase";
+import { useLanguage } from "@/components/LanguageProvider";
 
 const SERVICE_TYPES = ["Infrastructure", "Technology", "Sustainability"];
 const BUDGET_RANGES = [
@@ -15,7 +16,41 @@ const BUDGET_RANGES = [
   "Rs. 5,00,000+"
 ];
 
+const content = {
+  en: {
+    fullName: "Full Name",
+    workEmail: "Work Email",
+    companyName: "Company Name",
+    serviceType: "Service Type",
+    budgetRange: "Budget Range",
+    projectDetails: "Project Details",
+    projectPlaceholder: "Describe your requirements and timelines...",
+    submit: "Submit Quote Request",
+    processing: "Thinking...",
+    successTitle: "Quote Requested!",
+    successMsg: "Thank you! We'll review your project and get back to you shortly.",
+    requestAnother: "Request Another",
+  },
+  ne: {
+    fullName: "पूरा नाम",
+    workEmail: "कार्य इमेल",
+    companyName: "कम्पनीको नाम",
+    serviceType: "सेवाको प्रकार",
+    budgetRange: "बजेट दायरा",
+    projectDetails: "परियोजना विवरण",
+    projectPlaceholder: "तपाईंको आवश्यकता र समयसीमा वर्णन गर्नुहोस्...",
+    submit: "उद्धरण अनुरोध पेश गर्नुहोस्",
+    processing: "प्रक्रियामा...",
+    successTitle: "उद्धरण अनुरोध गरियो!",
+    successMsg: "धन्यवाद! हामी तपाईंको परियोजना समीक्षा गरी छिट्टै सम्पर्क गर्नेछौं।",
+    requestAnother: "अर्को अनुरोध गर्नुहोस्",
+  }
+};
+
 export default function QuoteForm() {
+  const { language } = useLanguage();
+  const t = content[(language ?? "en") as "en" | "ne"];
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -45,7 +80,7 @@ export default function QuoteForm() {
 
       if (response.ok) {
         setStatus("success");
-        setMessage("Thank you! We'll review your project and get back to you shortly.");
+        setMessage(t.successMsg);
         setFormData({ 
           name: "", 
           email: "", 
@@ -60,7 +95,6 @@ export default function QuoteForm() {
         setStatus("error");
         
         if (errorData.details && typeof errorData.details === 'object') {
-          // Flatten the error data to find the first message
           const fieldEntries = Object.entries(errorData.details);
           if (fieldEntries.length > 0) {
             const [field, errorObj]: [string, any] = fieldEntries[0];
@@ -87,13 +121,13 @@ export default function QuoteForm() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-2xl font-bold text-white mb-4">Quote Requested!</h3>
+        <h3 className="text-2xl font-bold text-white mb-4">{t.successTitle}</h3>
         <p className="text-white/60 mb-8">{message}</p>
         <button 
           onClick={() => setStatus("idle")}
           className="px-8 py-3 bg-[#c0152a] text-white font-bold rounded hover:bg-[#a01222] transition-colors"
         >
-          Request Another
+          {t.requestAnother}
         </button>
       </div>
     );
@@ -103,7 +137,7 @@ export default function QuoteForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">Full Name</label>
+          <label className="block text-sm font-medium text-white/70 mb-2">{t.fullName}</label>
           <input
             type="text"
             name="name"
@@ -115,7 +149,7 @@ export default function QuoteForm() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">Work Email</label>
+          <label className="block text-sm font-medium text-white/70 mb-2">{t.workEmail}</label>
           <input
             type="email"
             name="email"
@@ -130,7 +164,7 @@ export default function QuoteForm() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">Company Name</label>
+          <label className="block text-sm font-medium text-white/70 mb-2">{t.companyName}</label>
           <input
             type="text"
             name="company"
@@ -142,7 +176,7 @@ export default function QuoteForm() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">Service Type</label>
+          <label className="block text-sm font-medium text-white/70 mb-2">{t.serviceType}</label>
           <select
             name="service_type"
             value={formData.service_type}
@@ -157,7 +191,7 @@ export default function QuoteForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-white/70 mb-2">Budget Range</label>
+        <label className="block text-sm font-medium text-white/70 mb-2">{t.budgetRange}</label>
         <select
           name="budget_range"
           value={formData.budget_range}
@@ -171,7 +205,7 @@ export default function QuoteForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-white/70 mb-2">Project Details</label>
+        <label className="block text-sm font-medium text-white/70 mb-2">{t.projectDetails}</label>
         <textarea
           name="project_details"
           required
@@ -179,7 +213,7 @@ export default function QuoteForm() {
           value={formData.project_details}
           onChange={handleChange}
           className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none focus:border-[#c0152a] transition-colors resize-none"
-          placeholder="Describe your requirements and timelines..."
+          placeholder={t.projectPlaceholder}
         />
       </div>
 
@@ -190,7 +224,7 @@ export default function QuoteForm() {
         disabled={status === "loading"}
         className="w-full py-4 bg-[#c0152a] text-white font-bold rounded hover:bg-[#a01222] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {status === "loading" ? "Thinking..." : "Submit Quote Request"}
+        {status === "loading" ? t.processing : t.submit}
       </button>
     </form>
   );

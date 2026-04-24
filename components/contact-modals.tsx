@@ -3,6 +3,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import Modal from "@/components/modal";
+import { useLanguage } from "@/components/LanguageProvider";
 
 const OfficesModal = dynamic(() => import("@/components/offices-modal"), { ssr: false });
 const BookingForm = dynamic(() => import("@/components/booking-form"), { ssr: false });
@@ -17,6 +18,17 @@ export interface ContactModalsProps {
   onQuoteClose: () => void;
 }
 
+const modalTitles = {
+  en: {
+    booking: "Schedule a Consultation",
+    quote: "Request a Detailed Quote",
+  },
+  ne: {
+    booking: "परामर्श तालिका बनाउनुहोस्",
+    quote: "विस्तृत उद्धरण अनुरोध गर्नुहोस्",
+  }
+};
+
 export default function ContactModals({
   officesOpen,
   onOfficesClose,
@@ -25,6 +37,9 @@ export default function ContactModals({
   quoteOpen,
   onQuoteClose,
 }: ContactModalsProps) {
+  const { language } = useLanguage();
+  const titles = modalTitles[(language ?? "en") as "en" | "ne"];
+
   return (
     <>
       <OfficesModal isOpen={officesOpen} onClose={onOfficesClose} />
@@ -32,7 +47,7 @@ export default function ContactModals({
       <Modal 
         isOpen={bookingOpen} 
         onClose={onBookingClose} 
-        title="Schedule a Consultation"
+        title={titles.booking}
       >
         <BookingForm />
       </Modal>
@@ -40,7 +55,7 @@ export default function ContactModals({
       <Modal 
         isOpen={quoteOpen} 
         onClose={onQuoteClose} 
-        title="Request a Detailed Quote"
+        title={titles.quote}
       >
         <QuoteForm />
       </Modal>

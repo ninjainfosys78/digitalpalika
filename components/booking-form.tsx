@@ -2,8 +2,41 @@
 
 import React, { useState } from "react";
 import pb from "@/lib/pocketbase";
+import { useLanguage } from "@/components/LanguageProvider";
+
+const content = {
+  en: {
+    title: "Request Sent!",
+    successMsg: "Thank you! Your consultation has been booked.",
+    bookAnother: "Book Another",
+    fullName: "Full Name",
+    email: "Email Address",
+    phone: "Phone Number",
+    preferredDate: "Preferred Date",
+    projectDesc: "Project Description",
+    projectPlaceholder: "Tell us about your project goals...",
+    submit: "Confirm Booking",
+    processing: "Processing...",
+  },
+  ne: {
+    title: "अनुरोध पठाइयो!",
+    successMsg: "धन्यवाद! तपाईंको परामर्श बुक गरिएको छ।",
+    bookAnother: "अर्को बुक गर्नुहोस्",
+    fullName: "पूरा नाम",
+    email: "इमेल ठेगाना",
+    phone: "फोन नम्बर",
+    preferredDate: "मनपर्ने मिति",
+    projectDesc: "परियोजना विवरण",
+    projectPlaceholder: "तपाईंको परियोजनाका लक्ष्यहरू बताउनुहोस्...",
+    submit: "बुकिङ पुष्टि गर्नुहोस्",
+    processing: "प्रक्रियामा...",
+  }
+};
 
 export default function BookingForm() {
+  const { language } = useLanguage();
+  const t = content[(language ?? "en") as "en" | "ne"];
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -32,7 +65,7 @@ export default function BookingForm() {
 
       if (response.ok) {
         setStatus("success");
-        setMessage("Thank you! Your consultation has been booked.");
+        setMessage(t.successMsg);
         setFormData({ name: "", email: "", phone: "", project_description: "", preferred_date: "" });
       } else {
         const errorData = await response.json();
@@ -65,13 +98,13 @@ export default function BookingForm() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-2xl font-bold text-white mb-4">Request Sent!</h3>
+        <h3 className="text-2xl font-bold text-white mb-4">{t.title}</h3>
         <p className="text-white/60 mb-8">{message}</p>
         <button 
           onClick={() => setStatus("idle")}
           className="px-8 py-3 bg-[#c0152a] text-white font-bold rounded hover:bg-[#a01222] transition-colors"
         >
-          Book Another
+          {t.bookAnother}
         </button>
       </div>
     );
@@ -81,7 +114,7 @@ export default function BookingForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">Full Name</label>
+          <label className="block text-sm font-medium text-white/70 mb-2">{t.fullName}</label>
           <input
             type="text"
             name="name"
@@ -93,7 +126,7 @@ export default function BookingForm() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">Email Address</label>
+          <label className="block text-sm font-medium text-white/70 mb-2">{t.email}</label>
           <input
             type="email"
             name="email"
@@ -108,7 +141,7 @@ export default function BookingForm() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">Phone Number</label>
+          <label className="block text-sm font-medium text-white/70 mb-2">{t.phone}</label>
           <input
             type="tel"
             name="phone"
@@ -116,11 +149,11 @@ export default function BookingForm() {
             value={formData.phone}
             onChange={handleChange}
             className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none focus:border-[#c0152a] transition-colors"
-            placeholder="+1 (555) 000-0000"
+            placeholder="+977-98XXXXXXXX"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">Preferred Date</label>
+          <label className="block text-sm font-medium text-white/70 mb-2">{t.preferredDate}</label>
           <input
             type="date"
             name="preferred_date"
@@ -133,7 +166,7 @@ export default function BookingForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-white/70 mb-2">Project Description</label>
+        <label className="block text-sm font-medium text-white/70 mb-2">{t.projectDesc}</label>
         <textarea
           name="project_description"
           required
@@ -141,7 +174,7 @@ export default function BookingForm() {
           value={formData.project_description}
           onChange={handleChange}
           className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none focus:border-[#c0152a] transition-colors resize-none"
-          placeholder="Tell us about your project goals..."
+          placeholder={t.projectPlaceholder}
         />
       </div>
 
@@ -152,7 +185,7 @@ export default function BookingForm() {
         disabled={status === "loading"}
         className="w-full py-4 bg-[#c0152a] text-white font-bold rounded hover:bg-[#a01222] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {status === "loading" ? "Processing..." : "Confirm Booking"}
+        {status === "loading" ? t.processing : t.submit}
       </button>
     </form>
   );
