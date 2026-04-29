@@ -5,6 +5,7 @@ import { IBM_Plex_Sans, Source_Serif_4 } from "next/font/google"
 import { LanguageProvider } from "@/components/LanguageProvider"
 import { ThemeProvider } from "@/components/theme-provider"
 import CookieConsent from "@/components/cookie-consent"
+import { Toaster } from "sonner"
 
 const ibm = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
             <CookieConsent />
           </LanguageProvider>
+          <Toaster theme="dark" position="bottom-right" />
         </ThemeProvider>
       </body>
     </html>
