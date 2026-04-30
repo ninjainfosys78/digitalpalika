@@ -2,6 +2,7 @@
 
 import { ArrowRight, Clock } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useLanguage } from "@/components/LanguageProvider";
 
 export type InsightCard = {
@@ -83,20 +84,13 @@ export default function InsightsRail({
                 className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:-translate-y-1"
                 style={{ backgroundColor: 'rgba(0,0,0,0.15)', border: '1px solid rgba(255,255,255,0.1)' }}
               >
-                <div className={`relative overflow-hidden ${idx === 0 ? "flex-1" : ""}`}>
-                  <img
+                <div className={`relative overflow-hidden ${idx === 0 ? "flex-1 min-h-[350px] md:min-h-[500px]" : "h-[200px] sm:h-[240px]"}`}>
+                  <Image
                     src={insight.image || "/placeholder.jpg"}
                     alt={insight.title}
-                    onError={(e) => {
-                      const targ = e.currentTarget as HTMLImageElement;
-                      if (!targ.src.endsWith("placeholder.jpg")) {
-                        targ.src = "/placeholder.jpg";
-                      }
-                    }}
-                    className={`w-full object-cover object-top transition-transform duration-500 group-hover:scale-105 ${idx === 0
-                        ? "h-full min-h-[350px] md:min-h-[500px]"
-                        : "h-[200px] sm:h-[240px]"
-                      }`}
+                    fill
+                    sizes={idx === 0 ? "(max-width: 768px) 100vw, 66vw" : "(max-width: 768px) 100vw, 33vw"}
+                    className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
 

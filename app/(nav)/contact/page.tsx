@@ -104,6 +104,7 @@ export default function ContactPage() {
       email: String(fd.get("email") || ""),
       message: String(fd.get("message") || ""),
       consent: Boolean(fd.get("consent")),
+      website: String(fd.get("website") || ""),
     }
     
     setLoading(true)
@@ -183,6 +184,11 @@ export default function ContactPage() {
                     <input name="consent" type="checkbox" className="w-4 h-4 accent-[#d52020] mt-1" />
                     <span className="text-sm">{t.agreeLabel}</span>
                   </label>
+
+                  {/* Honeypot field - hidden from users, but bots will fill it */}
+                  <div className="hidden" aria-hidden="true">
+                    <input name="website" type="text" tabIndex={-1} autoComplete="off" />
+                  </div>
 
                   <div className="mt-auto">
                     <button disabled={loading} type="submit" className="inline-flex items-center justify-center bg-[#d52020] px-6 py-3 font-semibold text-white hover:opacity-95 transition disabled:opacity-50">

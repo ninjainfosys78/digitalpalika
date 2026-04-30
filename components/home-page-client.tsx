@@ -13,52 +13,50 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import ContactModals from "@/components/contact-modals";
 import type { InsightCard } from "@/components/insights-rail";
+import type { TrustedLogoRecord } from "@/lib/trustedby";
 
 const TrustedBy = dynamic(() => import("@/components/trusted-by"), {
-  ssr: false,
-  loading: () => null,
+  ssr: true,
+  loading: () => <div className="h-40 animate-pulse bg-white/5" />,
 });
 
 const InsightsRail = dynamic(() => import("@/components/insights-rail"), {
-  ssr: false,
-  loading: () => null,
+  ssr: true,
+  loading: () => <div className="h-80 animate-pulse bg-white/5" />,
 });
 
 const Testimonials = dynamic(() => import("@/components/testimonials"), {
-  ssr: false,
-  loading: () => null,
+  ssr: true,
+  loading: () => <div className="h-60 animate-pulse bg-white/5" />,
 });
 
 const GlobalCTA = dynamic(() => import("@/components/global-cta"), {
-  ssr: false,
-  loading: () => null,
+  ssr: true,
 });
 
 const FeaturedCarousel = dynamic(() => import("@/components/featured-carousel"), {
-  ssr: false,
-  loading: () => null,
+  ssr: true,
+  loading: () => <div className="h-[600px] animate-pulse bg-white/5" />,
 });
 
 const SustainabilitySection = dynamic(() => import("@/components/sustainability-section"), {
-  ssr: false,
-  loading: () => null,
+  ssr: true,
 });
 
 const AboutUsSection = dynamic(() => import("@/components/about-us-section"), {
-  ssr: false,
-  loading: () => null,
+  ssr: true,
 });
 
 const Newsletter = dynamic(() => import("@/components/newsletter"), {
-  ssr: false,
-  loading: () => null,
+  ssr: true,
 });
 
 interface HomePageClientProps {
   insights: InsightCard[];
+  trustedLogos: TrustedLogoRecord[];
 }
 
-export default function HomePageClient({ insights }: HomePageClientProps) {
+export default function HomePageClient({ insights, trustedLogos }: HomePageClientProps) {
   const { language } = useLanguage();
   const { 
     officesOpen, openOffices, closeOffices,
@@ -136,7 +134,7 @@ export default function HomePageClient({ insights }: HomePageClientProps) {
         <SustainabilitySection />
 
         {/* Partner Ecosystem */}
-        <TrustedBy />
+        <TrustedBy initialLogos={trustedLogos} />
 
         {/* Editorial Carousel */}
         <FeaturedCarousel key={language} />

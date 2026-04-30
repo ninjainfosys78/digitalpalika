@@ -1,25 +1,22 @@
-"use client";
-
 import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 import { useLanguage } from "@/components/LanguageProvider";
 import { fetchTrustedLogos, TrustedLogoRecord } from "@/lib/trustedby";
 
-export default function TrustedBy() {
-  const { language } = useLanguage();
-  const [logos, setLogos] = useState<TrustedLogoRecord[]>([]);
-  const [dbg, setDbg] = useState({
-    innerWidth: 0,
-    parentWidth: 0,
-    animationName: "",
-    animationPlayState: "",
-    reducedMotion: false,
-  });
+interface TrustedByProps {
+  initialLogos?: TrustedLogoRecord[];
+}
 
+export default function TrustedBy({ initialLogos = [] }: TrustedByProps) {
+  const { language } = useLanguage();
+  const [logos, setLogos] = useState<TrustedLogoRecord[]>(initialLogos);
   const marqueeRootRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
+    // Only fetch if we didn't get initialLogos (fallback)
+    if (initialLogos.length > 0) return;
 
+    let cancelled = false;
     fetchTrustedLogos()
       .then((data) => {
         if (cancelled) return;
@@ -33,7 +30,7 @@ export default function TrustedBy() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [initialLogos]);
 
   const list = logos;
 
@@ -60,18 +57,11 @@ export default function TrustedBy() {
             <div className="marquee__group" aria-hidden="true">
               {list.map((item, idx) => (
                 <div className="marquee__item" key={`g1-${item.id}-${idx}`}>
-                  <img
+                  <Image
                     src={item.logo}
                     alt={item.logoName}
-                    onError={(e) => {
-                      const el = e.currentTarget as HTMLImageElement;
-                      el.classList.add("hidden");
-                      const parent = el.parentElement;
-                      if (parent) {
-                        const fb = parent.querySelector(".trusted-fallback") as HTMLElement | null;
-                        if (fb) fb.classList.remove("hidden");
-                      }
-                    }}
+                    width={160}
+                    height={64}
                     className="h-16 w-auto object-contain block brightness-[1.1] contrast-[1.1] invert opacity-80"
                   />
                   <div className="trusted-fallback hidden text-[#f3f3f3] text-center font-bold">
@@ -84,18 +74,11 @@ export default function TrustedBy() {
             <div className="marquee__group" aria-hidden="true">
               {list.map((item, idx) => (
                 <div className="marquee__item" key={`g2-${item.id}-${idx}`}>
-                  <img
+                  <Image
                     src={item.logo}
                     alt={item.logoName}
-                    onError={(e) => {
-                      const el = e.currentTarget as HTMLImageElement;
-                      el.classList.add("hidden");
-                      const parent = el.parentElement;
-                      if (parent) {
-                        const fb = parent.querySelector(".trusted-fallback") as HTMLElement | null;
-                        if (fb) fb.classList.remove("hidden");
-                      }
-                    }}
+                    width={160}
+                    height={64}
                     className="h-16 w-auto object-contain block brightness-[1.1] contrast-[1.1] invert opacity-80"
                   />
                   <div className="trusted-fallback hidden text-[#f3f3f3] text-center font-bold">
