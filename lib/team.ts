@@ -35,16 +35,6 @@ const FALLBACK_TEAM: TeamMember[] = [
     bio_en: "He drives the company’s strategic vision and commitment to digital transformation. He focuses on delivering high-impact IT solutions and e-governance systems, bridging the gap between technical innovation and practical business needs.",
     bio_ne: "उहाँले कम्पनीको रणनीतिक दृष्टिकोण र डिजिटल रूपान्तरणप्रतिको प्रतिबद्धतालाई अगाडि बढाउनुहुन्छ। उहाँ प्राविधिक आविष्कार र व्यावहारिक व्यापारिक आवश्यकताहरूबीचको अन्तरलाई कम गर्दै उच्च-प्रभाव आईटी समाधानहरू र ई-सुशासन प्रणालीहरू प्रदान गर्नमा केन्द्रित हुनुहुन्छ।",
   },
-  {
-    id: "dh4nrwfh9uvamvv",
-    name: "Trilochan Bhusal",
-    role: "Chief Technology Officer",
-    name_ne: "त्रिलोचन भुसाल",
-    role_ne: "मुख्य प्राविधिक अधिकृत",
-    imageUrl: "/image1.jpeg",
-    bio_en: "Leading the technical vision at Ninja Infosys with over a decade of experience in building scalable enterprise systems and high-performance engineering teams.",
-    bio_ne: "निन्जा इन्फोसिसमा प्राविधिक दृष्टिको नेतृत्व गर्दै, स्केलेबल इन्टरप्राइज सिस्टम र उच्च-कार्यक्षमता इन्जिनियरिङ टोलीहरू निर्माणमा एक दशकभन्दा बढीको अनुभव।",
-  },
 ];
 
 export async function getTeamMembers(): Promise<TeamMember[]> {
@@ -78,8 +68,11 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
       };
     });
 
+    // Filter out Trilochan Bhusal if he exists in DB
+    const filteredMembers = members.filter(m => !m.name.toLowerCase().includes("trilochan"));
+
     // Ensure Ramesh Chhetri is always first
-    return members.sort((a, b) => {
+    return filteredMembers.sort((a, b) => {
       if (a.name.toLowerCase().includes("ramesh")) return -1;
       if (b.name.toLowerCase().includes("ramesh")) return 1;
       return 0;

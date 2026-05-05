@@ -10,6 +10,13 @@ interface TrustedByProps {
 export default function TrustedBy({ initialLogos = [] }: TrustedByProps) {
   const { language } = useLanguage();
   const [logos, setLogos] = useState<TrustedLogoRecord[]>(initialLogos);
+  const [dbg, setDbg] = useState<any>({
+    innerWidth: 0,
+    parentWidth: 0,
+    animationName: "",
+    animationPlayState: "",
+    reducedMotion: false,
+  });
   const marqueeRootRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
