@@ -1,96 +1,157 @@
 "use client";
 
 import React from "react";
-import { ArrowRight, Mail, MapPin } from "lucide-react";
+import { ArrowRight, Mail, MapPin, Calendar } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
 import Link from "next/link";
 
 interface GlobalCTAProps {
   onOfficesOpen: () => void;
+  onBookingOpen: () => void;
+  onQuoteOpen: () => void;
 }
 
-export default function GlobalCTA({ onOfficesOpen }: GlobalCTAProps) {
+export default function GlobalCTA({ onOfficesOpen, onBookingOpen, onQuoteOpen }: GlobalCTAProps) {
   const { language } = useLanguage();
 
   const content =
     language === "en"
       ? {
-          title: "Let’s Build What’s Next. Together.",
-          subtitle:
-            "Partner with Ninja Infosys to design, develop, and scale digital systems that work as hard as you do.",
-          ctaPrimary: "Schedule a Consultation",
-          ctaEmail: "Request a Quote",
-          ctaOffice: "Talk to Our Team",
+          title: "Let's Build What's Next. Together.",
+          subtitle: "Connect with our experts to turn your strategic intent into resilient infrastructure.",
+          actions: [
+            {
+              icon: Calendar,
+              title: "Schedule a Consultation",
+              desc: "Discuss your project goals with our lead consultants.",
+              cta: "Book now",
+              href: "#",
+              primary: true,
+              isAction: true,
+              actionType: "booking"
+            },
+            {
+              icon: Mail,
+              title: "Request a Quote",
+              desc: "Get a detailed technical and financial estimate.",
+              cta: "Get started",
+              href: "#",
+              primary: false,
+              isAction: true,
+              actionType: "quote"
+            },
+            {
+              icon: MapPin,
+              title: "Talk to Our Team",
+              desc: "Visit our global offices or speak to a regional lead.",
+              cta: "Find a location",
+              href: "/locations",
+              primary: false,
+              isAction: false
+            }
+          ]
         }
       : {
           title: "आउनुहोस्, सँगै के अगाडि छ निर्माण गरौं।",
-          subtitle:
-            "Ninja Infosys सँग साझेदारी गर्नुहोस् ताकि तपाईंको लागि काम गर्ने डिजिटल प्रणालीहरू डिजाइन, विकास र स्केल गर्न सकियोस्।",
-          ctaPrimary: "परामर्श तालिका बनाउनुहोस्",
-          ctaEmail: "उद्धरणको लागि अनुरोध गर्नुहोस्",
-          ctaOffice: "हाम्रो टोलीसँग कुरा गर्नुहोस्",
+          subtitle: "तपाईंको रणनीतिक इरादालाई लचिलो पूर्वाधारमा परिणत गर्न हाम्रा विशेषज्ञहरूसँग जोड्नुहोस्।",
+          actions: [
+            {
+              icon: Calendar,
+              title: "परामर्श तालिका बनाउनुहोस्",
+              desc: "हाम्रा प्रमुख परामर्शदाताहरूसँग तपाईंको परियोजना लक्ष्यहरू छलफल गर्नुहोस्।",
+              cta: "अहिले बुक गर्नुहोस्",
+              href: "#",
+              primary: true,
+              isAction: true,
+              actionType: "booking"
+            },
+            {
+              icon: Mail,
+              title: "उद्धरण अनुरोध गर्नुहोस्",
+              desc: "विस्तृत प्राविधिक र आर्थिक अनुमान प्राप्त गर्नुहोस्।",
+              cta: "सुरु गर्नुहोस्",
+              href: "#",
+              primary: false,
+              isAction: true,
+              actionType: "quote"
+            },
+            {
+              icon: MapPin,
+              title: "हाम्रो टोलीसँग कुरा गर्नुहोस्",
+              desc: "हाम्रा विश्वव्यापी कार्यालयहरूमा जानुहोस् वा क्षेत्रीय प्रमुखसँग कुरा गर्नुहोस्।",
+              cta: "स्थान खोज्नुहोस्",
+              href: "/locations",
+              primary: false,
+              isAction: false
+            }
+          ]
         };
 
   return (
-    <section
-      id="contact"
-      className="scroll-mt-24 pt-12 sm:pt-14 lg:pt-16 pb-6 sm:pb-8 lg:pb-10 relative overflow-hidden bg-black"
-      aria-labelledby="cta-title"
-    >
-      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 text-left relative z-10">
-        <h2
-          id="cta-title"
-          className="text-[32px] font-bold mb-4 sm:mb-6 leading-tight text-left text-[#e3e3e3] pt-7"
-        >
-          {content.title}
-        </h2>
-        <p className="text-[20px] mb-6 sm:mb-8 lg:mb-8 leading-relaxed text-left text-white/70 py-7">
-          {content.subtitle}
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 sm:mb-10">
-          <a
-            href="/contact"
-            className="w-full inline-flex items-center justify-between px-6 py-4 text-base font-semibold transition-all group shadow-lg bg-[#d52020] text-white shadow-[0_4px_24px_0_#d5202033] cursor-pointer"
-          >
-            <span className="text-left">{content.ctaPrimary}</span>
-            <ArrowRight
-              size={20}
-              className="transition-transform group-hover:translate-x-1 ml-2"
-            />
-          </a>
-
-          <a
-            href="/contact"
-            className="w-full inline-flex items-center justify-between px-6 py-4 border-2 text-base font-semibold transition-colors border-[#141414] text-[#e3e3e3] bg-[#141414] cursor-pointer"
-          >
-            <span className="flex items-center gap-3">
-              <Mail size={20} />
-              <span>{content.ctaEmail}</span>
-            </span>
-          </a>
-
-          {/* <a
-            onClick={onOfficesOpen}
-            className="w-full inline-flex items-center justify-between px-6 py-4 border-2 text-base font-semibold transition-colors border-[#141414] text-[#e3e3e3] bg-[#141414] cursor-pointer"
-          >
-            <span className="flex items-center gap-3">
-              <MapPin size={20} />
-              <span>{content.ctaOffice}</span>
-            </span>
-          </a> */}
-
-          <Link href="/#offices" legacyBehavior>
-            <a
-              onClick={() => onOfficesOpen()}
-              className="w-full inline-flex items-center justify-between px-6 py-4 border-2 text-base font-semibold transition-colors border-[#141414] text-[#e3e3e3] bg-[#141414] cursor-pointer"
-            >
-              <span className="flex items-center gap-3">
-                <MapPin size={20} />
-                <span>{content.ctaOffice}</span>
-              </span>
-            </a>
-          </Link>
+    <section id="contact" className="bg-[#0b0d12] py-24 border-t border-white/10">
+      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
+        
+        {/* Header Area */}
+        <div className="max-w-3xl mx-auto mb-20 text-center">
+          <h2 className="text-[42px] sm:text-[56px] font-heading font-bold text-white leading-[1.1] mb-6">
+            {content.title}
+          </h2>
+          <p className="text-xl text-white/60 leading-relaxed">
+            {content.subtitle}
+          </p>
         </div>
+
+        {/* 3-Column Interaction Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {content.actions.map((action, idx) => {
+            const Icon = action.icon;
+            const Wrapper = action.isAction ? 'button' : Link;
+            
+            return (
+              <div 
+                key={idx} 
+                className={`p-10 flex flex-col justify-between transition-all duration-300 border ${
+                  action.primary 
+                    ? 'bg-[#E31B23] border-[#E31B23] text-white shadow-xl shadow-[#E31B23]/10 h-full' 
+                    : 'bg-white/5 border-white/10 text-white hover:bg-white/10'
+                }`}
+              >
+                <div>
+                  <div className={`mb-6 p-3 inline-block ${action.primary ? 'bg-white/20' : 'bg-white/10'}`}>
+                    <Icon size={24} />
+                  </div>
+                  <h3 className="text-2xl font-heading font-bold mb-4">{action.title}</h3>
+                  <p className={`mb-10 text-[15px] leading-relaxed ${action.primary ? 'text-white/80' : 'text-white/60'}`}>
+                    {action.desc}
+                  </p>
+                </div>
+
+                {action.isAction ? (
+                  <button 
+                    onClick={() => {
+                      if ((action as any).actionType === "booking") onBookingOpen();
+                      if ((action as any).actionType === "quote") onQuoteOpen();
+                      if (action.title.includes("Team") || action.title.includes("टोली")) onOfficesOpen();
+                    }}
+                    className={`inline-flex items-center gap-3 font-bold group cursor-pointer ${action.primary ? 'text-white' : 'text-[#E31B23]'}`}
+                  >
+                    <span className="underline underline-offset-8 decoration-2">{action.cta}</span>
+                    <ArrowRight className="mt-1 transition-transform group-hover:translate-x-2" size={18} />
+                  </button>
+                ) : (
+                  <Link 
+                    href={action.href}
+                    className={`inline-flex items-center gap-3 font-bold group ${action.primary ? 'text-white' : 'text-[#E31B23]'}`}
+                  >
+                    <span className="underline underline-offset-8 decoration-2">{action.cta}</span>
+                    <ArrowRight className="mt-1 transition-transform group-hover:translate-x-2" size={18} />
+                  </Link>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
       </div>
     </section>
   );

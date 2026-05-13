@@ -7,6 +7,8 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 
 import GlobalCTA from "@/components/global-cta";
+import ContactModals from "@/components/contact-modals";
+import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import type { SolutionCard } from "@/lib/solutions";
 
@@ -202,8 +204,12 @@ export default function SolutionsClient({
   cards,
 }: SolutionsClientProps) {
   const { language } = useLanguage();
+  const { 
+    officesOpen, openOffices, closeOffices,
+    bookingOpen, openBooking, closeBooking,
+    quoteOpen, openQuote, closeQuote 
+  } = useContactModals();
   const [searchOpen, setSearchOpen] = useState(false);
-  const [officesOpen, setOfficesOpen] = useState(false);
   const [active, setActive] = useState<Key | null>(null);
   const router = useRouter();
   const params = useSearchParams();
@@ -219,7 +225,9 @@ export default function SolutionsClient({
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setSearchOpen(false);
-        setOfficesOpen(false);
+        closeOffices();
+        closeBooking();
+        closeQuote();
       }
     };
     window.addEventListener("keydown", onKey);
@@ -328,9 +336,10 @@ export default function SolutionsClient({
             <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12">
               <div className="grid gap-8 lg:gap-10 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
                 {cards.map((card) => (
-                  <div
+                  <Link
+                    href={`/solutions/${card.id}`}
                     key={card.id}
-                    className="solutions-card text-left group relative block select-none overflow-hidden w-full h-full rounded-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.55)] hover:ring-8 hover:ring-white border-b-0 flex flex-col cursor-default"
+                    className="solutions-card text-left group relative block select-none overflow-hidden w-full h-full rounded-none transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.8)] hover:ring-1 hover:ring-white/20 border border-white/5 flex flex-col"
                   >
                     <div className="relative aspect-[16/10] w-full flex-none overflow-hidden">
                       {card.imageUrl && (
@@ -344,26 +353,38 @@ export default function SolutionsClient({
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           quality={70}
-                          className="object-cover grayscale"
+                          className="object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110"
                         />
                       )}
+                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors" />
                     </div>
 
-                    <div className="p-6 sm:p-7 bg-black transition-colors duration-300 group-hover:bg-white overflow-hidden flex-1 flex flex-col">
-                      <div className="flex items-center">
-                        <h3 className="text-xl sm:text-2xl pb-2 font-semibold text-white transition-colors duration-300 group-hover:text-black">
+                    <div className="p-6 sm:p-7 bg-black transition-colors duration-500 group-hover:bg-[#111] overflow-hidden flex-1 flex flex-col">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl sm:text-2xl pb-2 font-heading font-semibold text-white group-hover:text-[#d52020] transition-colors">
                           {language === "en"
                             ? card.title_en
                             : card.title_ne || card.title_en}
                         </h3>
+                        <div className="h-10 w-10 border border-white/10 flex items-center justify-center -mr-2 group-hover:border-[#d52020] transition-colors">
+                          <svg viewBox="0 0 24 24" className="h-5 w-5 text-white/50 group-hover:text-[#d52020]" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                          </svg>
+                        </div>
                       </div>
-                      <p className="mt-3 text-base leading-relaxed text:white/85 transition-colors duration-300 group-hover:text-black/80 flex-1">
+                      <p className="mt-3 text-base leading-relaxed text-white/60 transition-colors duration-300 group-hover:text-white/80 flex-1">
                         {language === "en"
                           ? card.description_en
                           : card.description_ne || card.description_en}
                       </p>
+                      
+                      <div className="mt-8 flex items-center gap-2">
+                        <span className="text-xs font-bold uppercase tracking-widest text-[#d52020] opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0">
+                          {language === "en" ? "Explore Solution" : "विवरण हेर्नुहोस्"}
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -470,22 +491,26 @@ export default function SolutionsClient({
           </>
         )}
 
-        <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />
+        <GlobalCTA 
+          onOfficesOpen={openOffices} 
+          onBookingOpen={openBooking}
+          onQuoteOpen={openQuote}
+        />
       </main>
 
-      {searchOpen && (
-        <SearchOverlay
-          isOpen={searchOpen}
-          onClose={() => setSearchOpen(false)}
-        />
-      )}
+      <SearchOverlay
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+      />
 
-      {officesOpen && (
-        <OfficesModal
-          isOpen={officesOpen}
-          onClose={() => setOfficesOpen(false)}
-        />
-      )}
+      <ContactModals 
+        officesOpen={officesOpen}
+        onOfficesClose={closeOffices}
+        bookingOpen={bookingOpen}
+        onBookingClose={closeBooking}
+        quoteOpen={quoteOpen}
+        onQuoteClose={closeQuote}
+      />
 
       <style jsx global>{`
         .solutions-card::after,

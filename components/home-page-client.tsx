@@ -9,38 +9,61 @@ import Hero from "@/components/hero";
 import Footer from "@/components/footer";
 import SearchOverlay from "@/components/search-overlay";
 import CookieBanner from "@/components/cookie-banner";
-import OfficesModal from "@/components/offices-modal";
 import { useLanguage } from "@/components/LanguageProvider";
+import { useContactModals } from "@/lib/hooks/use-contact-modals";
+import ContactModals from "@/components/contact-modals";
 import type { InsightCard } from "@/components/insights-rail";
+import type { TrustedLogoRecord } from "@/lib/trustedby";
 
 const TrustedBy = dynamic(() => import("@/components/trusted-by"), {
-  ssr: false,
-  loading: () => null,
+  ssr: true,
+  loading: () => <div className="h-40 animate-pulse bg-white/5" />,
 });
 
 const InsightsRail = dynamic(() => import("@/components/insights-rail"), {
-  ssr: false,
-  loading: () => null,
+  ssr: true,
+  loading: () => <div className="h-80 animate-pulse bg-white/5" />,
 });
 
 const Testimonials = dynamic(() => import("@/components/testimonials"), {
-  ssr: false,
-  loading: () => null,
+  ssr: true,
+  loading: () => <div className="h-60 animate-pulse bg-white/5" />,
 });
 
 const GlobalCTA = dynamic(() => import("@/components/global-cta"), {
-  ssr: false,
-  loading: () => null,
+  ssr: true,
+});
+
+const FeaturedCarousel = dynamic(() => import("@/components/featured-carousel"), {
+  ssr: true,
+  loading: () => <div className="h-[600px] animate-pulse bg-white/5" />,
+});
+
+const SustainabilitySection = dynamic(() => import("@/components/sustainability-section"), {
+  ssr: true,
+});
+
+const AboutUsSection = dynamic(() => import("@/components/about-us-section"), {
+  ssr: true,
+});
+
+const Newsletter = dynamic(() => import("@/components/newsletter"), {
+  ssr: true,
 });
 
 interface HomePageClientProps {
   insights: InsightCard[];
+  trustedLogos: TrustedLogoRecord[];
 }
 
-export default function HomePageClient({ insights }: HomePageClientProps) {
+export default function HomePageClient({ insights, trustedLogos }: HomePageClientProps) {
   const { language } = useLanguage();
+  const { 
+    officesOpen, openOffices, closeOffices,
+    bookingOpen, openBooking, closeBooking,
+    quoteOpen, openQuote, closeQuote 
+  } = useContactModals();
   const [searchOpen, setSearchOpen] = useState(false);
-  const [officesOpen, setOfficesOpen] = useState(false);
 
   const safeInsights: InsightCard[] = Array.isArray(insights) ? insights : [];
 
@@ -53,7 +76,9 @@ export default function HomePageClient({ insights }: HomePageClientProps) {
       }
       if (e.key === "Escape") {
         setSearchOpen(false);
-        setOfficesOpen(false);
+        closeOffices();
+        closeBooking();
+        closeQuote();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -102,17 +127,40 @@ export default function HomePageClient({ insights }: HomePageClientProps) {
         {/* Above-the-fold: keep fast */}
         <Hero />
 
-        {/* Below-the-fold: lazy-loaded sections */}
-        <TrustedBy />
+        {/* Core Identity: About Us */}
+        <AboutUsSection />
+
+        {/* Brand Initiative: Sustainability */}
+        <SustainabilitySection />
+
+        {/* Partner Ecosystem */}
+        <TrustedBy initialLogos={trustedLogos} />
+
+        {/* Editorial Carousel */}
+        <FeaturedCarousel key={language} />
+
+        {/* Global Insights */}
         <InsightsRail insights={safeInsights} />
         <Testimonials />
-        <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />
+        <Newsletter />
+        <GlobalCTA 
+          onOfficesOpen={openOffices} 
+          onBookingOpen={openBooking}
+          onQuoteOpen={openQuote}
+        />
       </main>
 
       <Footer />
 
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-      <OfficesModal isOpen={officesOpen} onClose={() => setOfficesOpen(false)} />
+      <ContactModals 
+        officesOpen={officesOpen}
+        onOfficesClose={closeOffices}
+        bookingOpen={bookingOpen}
+        onBookingClose={closeBooking}
+        quoteOpen={quoteOpen}
+        onQuoteClose={closeQuote}
+      />
 
       <CookieBanner />
 

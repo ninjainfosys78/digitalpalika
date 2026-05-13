@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { useLanguage } from "@/components/LanguageProvider"
 import Link from "next/link"
+import { toast } from "sonner"
 
 import Header from "@/components/header"
 import Footer from "@/components/footer"
@@ -91,19 +92,41 @@ export default function ContactPage() {
     }
   }, [])
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [loading, setLoading] = useState(false)
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
+    const form = e.currentTarget
     const payload = {
       firstName: String(fd.get("firstName") || ""),
       lastName: String(fd.get("lastName") || ""),
       email: String(fd.get("email") || ""),
       message: String(fd.get("message") || ""),
       consent: Boolean(fd.get("consent")),
+      website: String(fd.get("website") || ""),
     }
-    console.log("Inquiry:", payload)
-    alert(language === "en" ? "Thanks! We’ll get back to you shortly." : "धन्यवाद! हामी छिट्टै सम्पर्क गर्नेछौं।")
-    e.currentTarget.reset()
+    
+    setLoading(true)
+    try {
+      const resp = await fetch("/api/contact/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+
+      if (resp.ok) {
+        toast.success(language === "en" ? "Thanks! We’ll get back to you shortly." : "धन्यवाद! हामी छिट्टै सम्पर्क गर्नेछौं।")
+        form.reset()
+      } else {
+        toast.error(language === "en" ? "Failed to send. Please try again." : "पठाउन असफल। कृपया फेरि प्रयास गर्नुहोस्।")
+      }
+    } catch (err: any) {
+      console.error("Fetch error:", err)
+      toast.error(language === "en" ? `Error: ${err.message || err}` : `त्रुटि: ${err.message || err}`)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -162,9 +185,14 @@ export default function ContactPage() {
                     <span className="text-sm">{t.agreeLabel}</span>
                   </label>
 
+                  {/* Honeypot field - hidden from users, but bots will fill it */}
+                  <div className="hidden" aria-hidden="true">
+                    <input name="website" type="text" tabIndex={-1} autoComplete="off" />
+                  </div>
+
                   <div className="mt-auto">
-                    <button type="submit" className="inline-flex items-center justify-center bg-[#d52020] px-6 py-3 font-semibold text-white hover:opacity-95 transition">
-                      {t.send}
+                    <button disabled={loading} type="submit" className="inline-flex items-center justify-center bg-[#d52020] px-6 py-3 font-semibold text-white hover:opacity-95 transition disabled:opacity-50">
+                      {loading ? (language === "en" ? "Sending..." : "पठाउँदै...") : t.send}
                     </button>
                   </div>
                 </form>
