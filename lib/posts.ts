@@ -36,6 +36,11 @@ function buildExcerpt(content: string, maxLen = 220): string {
   return plain.slice(0, maxLen) + "...";
 }
 
+function slugify(r: any): string {
+  const rawSlug = r.Slug || r.Title || "insight";
+  return rawSlug.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-");
+}
+
 export async function getAllPostsMeta(): Promise<PostMeta[]> {
   try {
     const records = await pb.collection(BLOGS_COLLECTION).getFullList({
@@ -45,8 +50,7 @@ export async function getAllPostsMeta(): Promise<PostMeta[]> {
     return records.map((r: any) => {
       const content: string = r.Content ?? "";
       const content_ne: string = r.Content_ne || content; // Fallback to EN if NE is empty
-      const rawSlug = r.Slug || r.Title || "insight";
-      const slug = rawSlug.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-");
+      const slug = slugify(r);
 
       return {
         slug,
@@ -73,15 +77,20 @@ export async function getPostBySlug(slug: string): Promise<{
   content_ne: string;
 } | null> {
   try {
-    const record: any = await pb
-      .collection(BLOGS_COLLECTION)
-      .getFirstListItem(`Slug = "${slug}"`);
+    // Fetch all records and find the match manually to handle hidden characters (like tabs).
+    const records = await pb.collection(BLOGS_COLLECTION).getFullList();
+    const record = records.find((r: any) => slugify(r) === slug);
+
+    if (!record) {
+      console.warn(`No record found for slug: ${slug}`);
+      return null;
+    }
 
     const content: string = record.Content ?? "";
-    const content_ne: string = record.Content_ne || content; // Fallback to EN
+    const content_ne: string = record.Content_ne || content;
 
     const meta: PostMeta = {
-      slug: record.Slug,
+      slug: slugify(record),
       title: record.Title ?? "",
       title_ne: record.Title_ne || record.Title || "",
       deck: "",

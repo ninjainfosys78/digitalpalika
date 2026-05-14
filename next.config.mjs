@@ -11,6 +11,7 @@ const nextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
+  /*
   // Security headers (Note: these apply if you move away from static export or use a host that supports them via next.config)
   async headers() {
     return [
@@ -37,6 +38,7 @@ const nextConfig = {
       },
     ];
   },
+  */
 }
 
 export default nextConfig
