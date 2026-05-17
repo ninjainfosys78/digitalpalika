@@ -12,6 +12,7 @@ import CookieBanner from "@/components/cookie-banner";
 import { useLanguage } from "@/components/LanguageProvider";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import ContactModals from "@/components/contact-modals";
+import AboutUsSection from "@/components/about-us-section";
 import type { InsightCard } from "@/components/insights-rail";
 import type { TrustedLogoRecord } from "@/lib/trustedby";
 
@@ -43,9 +44,7 @@ const SustainabilitySection = dynamic(() => import("@/components/sustainability-
   ssr: true,
 });
 
-const AboutUsSection = dynamic(() => import("@/components/about-us-section"), {
-  ssr: true,
-});
+
 
 const Newsletter = dynamic(() => import("@/components/newsletter"), {
   ssr: true,

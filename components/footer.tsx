@@ -117,11 +117,11 @@ export default function Footer() {
   return (
     <footer
       role="contentinfo"
-      style={{ backgroundColor: '#3d0020', color: '#ffffff' }}
+      style={{ backgroundColor: '#e71736ff', color: '#ffffff' }}
       className="transition-colors duration-300"
     >
       {/* Newsletter Band */}
-      <div style={{ backgroundColor: 'rgba(0,0,0,0.2)' }}>
+      <div>
         <div className="mx-auto w-full max-w-screen-2xl px-6 sm:px-8 lg:px-12 2xl:px-16 py-14">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
             <div className="max-w-xl">
@@ -279,13 +279,13 @@ export default function Footer() {
                         className="inline-flex items-center justify-center w-11 h-11 rounded-full transition-all hover:bg-white hover:scale-110 group bg-white/5 border border-white/10"
                       >
                         {typeOrValue === "LinkedIn" || typeOrValue === "लिंक्डइन" ? (
-                          <Linkedin size={16} className="text-white group-hover:text-[#3d0020]" aria-hidden="true" />
+                          <Linkedin size={16} className="text-white group-hover:text-[#0b0d12]" aria-hidden="true" />
                         ) : null}
                         {typeOrValue === "Facebook" || typeOrValue === "फेसबुक" ? (
-                          <Facebook size={16} className="text-white group-hover:text-[#3d0020]" aria-hidden="true" />
+                          <Facebook size={16} className="text-white group-hover:text-[#0b0d12]" aria-hidden="true" />
                         ) : null}
                         {typeOrValue === "X" || typeOrValue.toLowerCase().includes("twitter") ? (
-                          <Twitter size={16} className="text-white group-hover:text-[#3d0020]" aria-hidden="true" />
+                          <Twitter size={16} className="text-white group-hover:text-[#0b0d12]" aria-hidden="true" />
                         ) : null}
                       </a>
                     </li>
