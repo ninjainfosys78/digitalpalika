@@ -331,13 +331,13 @@ export default function AboutPage() {
         <section className="relative z-10">
           <div className="relative min-h-[50vh] pt-28 lg:pt-32">
             <div
-              className="absolute inset-0 bg-no-repeat mt-[100px] filter grayscale"
+              className="absolute inset-y-0 right-0 left-1/2 md:left-1/3 lg:left-1/4 bg-no-repeat mt-[100px] filter grayscale"
               style={
                 bannerUrl
                   ? {
                     backgroundImage: `url('${bannerUrl}')`,
                     backgroundSize: "contain",
-                    backgroundPosition: "top center",
+                    backgroundPosition: "center top",
                   }
                   : {}
               }
