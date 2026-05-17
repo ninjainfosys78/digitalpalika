@@ -9,7 +9,8 @@ import { getBannerByImgName } from "@/lib/banners";
 import Header from "@/components/header";
 import GlobalCTA from "@/components/global-cta";
 import SearchOverlay from "@/components/search-overlay";
-import OfficesModal from "@/components/offices-modal";
+import ContactModals from "@/components/contact-modals";
+import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import Footer from "@/components/footer";
 import { useLanguage } from "@/components/LanguageProvider";
 import ProjectsGrid from "@/components/projects-grid";
@@ -17,7 +18,11 @@ import ProjectsGrid from "@/components/projects-grid";
 export default function WorkPage() {
   const { language } = useLanguage();
   const [searchOpen, setSearchOpen] = useState(false);
-  const [officesOpen, setOfficesOpen] = useState(false);
+  const { 
+    officesOpen, openOffices, closeOffices,
+    bookingOpen, openBooking, closeBooking,
+    quoteOpen, openQuote, closeQuote 
+  } = useContactModals();
  
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
 
@@ -119,7 +124,6 @@ useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setSearchOpen(false);
-        setOfficesOpen(false);
       }
     };
     window.addEventListener("keydown", onKey);
@@ -278,13 +282,21 @@ useEffect(() => {
           </div>
         </section>
 
-        <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />
+        <GlobalCTA 
+          onOfficesOpen={openOffices} 
+          onBookingOpen={openBooking}
+          onQuoteOpen={openQuote}
+        />
       </main>
 
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-      <OfficesModal
-        isOpen={officesOpen}
-        onClose={() => setOfficesOpen(false)}
+      <ContactModals 
+        officesOpen={officesOpen}
+        onOfficesClose={closeOffices}
+        bookingOpen={bookingOpen}
+        onBookingClose={closeBooking}
+        quoteOpen={quoteOpen}
+        onQuoteClose={closeQuote}
       />
       <Footer />
     </>

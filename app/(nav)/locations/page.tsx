@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
+import { getOfficeLocations, OfficeLocation } from "@/lib/locations";
 
 const OFFICES = {
   en: [
@@ -42,7 +43,27 @@ export default function LocationsPage() {
   const { language } = useLanguage();
   const lang = (language ?? "en") as "en" | "ne";
   const t = content[lang];
-  const offices = OFFICES[lang];
+  const [offices, setOffices] = useState<OfficeLocation[]>([]);
+
+  useEffect(() => {
+    let mounted = true;
+    getOfficeLocations(lang)
+      .then((data) => {
+        if (!mounted) return;
+        if (data.length > 0) {
+          setOffices(data);
+        } else {
+          setOffices(OFFICES[lang]);
+        }
+      })
+      .catch(() => {
+        if (!mounted) return;
+        setOffices(OFFICES[lang]);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, [lang]);
 
   return (
     <>

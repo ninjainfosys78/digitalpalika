@@ -30,6 +30,17 @@ import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import { getBannerByImgName } from "@/lib/banners";
 import { getTeamMembers, TeamMember } from "../../../lib/team";
+import { getAboutGeneral, getPrinciples, getTimeline, getFeatures, getCorePillars, AboutGeneralData, PrincipleItem, TimelineEvent, FeatureItem, CorePillarItem } from "@/lib/about";
+
+const ICON_MAP: Record<string, React.ComponentType<any>> = {
+  Handshake,
+  Globe2,
+  ShieldCheck,
+  BadgeCheck,
+  Eye,
+  Target,
+  Heart,
+};
 
 function StoryItem({ t, i, scrollYProgress, language }: { t: any, i: number, scrollYProgress: any, language: string }) {
   const y = useTransform(scrollYProgress, [0, 1], [80 * (i + 1), -80 * (i + 1)]);
@@ -102,6 +113,11 @@ export default function AboutPage() {
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
   const [secondImageUrl, setSecondImageUrl] = useState<string | null>(null);
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [generalData, setGeneralData] = useState<AboutGeneralData | null>(null);
+  const [principles, setPrinciples] = useState<PrincipleItem[]>([]);
+  const [timelineEvents, setTimelineEvents] = useState<TimelineEvent[]>([]);
+  const [features, setFeatures] = useState<FeatureItem[]>([]);
+  const [corePillars, setCorePillars] = useState<CorePillarItem[]>([]);
 
   useEffect(() => {
     let mounted = true;
@@ -132,6 +148,49 @@ export default function AboutPage() {
     };
   }, []);
 
+  useEffect(() => {
+    let mounted = true;
+
+    getAboutGeneral(language)
+      .then((data) => {
+        if (!mounted) return;
+        setGeneralData(data);
+      })
+      .catch(() => {});
+
+    getPrinciples(language)
+      .then((items) => {
+        if (!mounted) return;
+        setPrinciples(items);
+      })
+      .catch(() => {});
+
+    getTimeline(language)
+      .then((events) => {
+        if (!mounted) return;
+        setTimelineEvents(events);
+      })
+      .catch(() => {});
+
+    getFeatures(language)
+      .then((items) => {
+        if (!mounted) return;
+        setFeatures(items);
+      })
+      .catch(() => {});
+
+    getCorePillars(language)
+      .then((items) => {
+        if (!mounted) return;
+        setCorePillars(items);
+      })
+      .catch(() => {});
+
+    return () => {
+      mounted = false;
+    };
+  }, [language]);
+
   const sectionRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -146,13 +205,17 @@ export default function AboutPage() {
   const content = useMemo(() => {
     return language === "en"
       ? {
-        who: "Who we are",
+        who: generalData?.whoTitle || "Who we are",
         heroTitle: "ABOUT US",
         brand: "NINJA INFOSYS",
         whoDesc:
-          "Ninja Infosys is an IT technical solution provider. Our dedicated technical professionals offer our clients services in the field of IT Consultancy, Software Development, Web/Mobile Application Development, Project-based solutions and IT System Maintenance. Our mission from the very first day has been to establish professional relationship with our clients, to provide effective and reliable information technology solutions for their need.",
-        coreTitle: "Our Core",
-        features: [
+          generalData?.whoDesc || "Ninja Infosys is an IT technical solution provider. Our dedicated technical professionals offer our clients services in the field of IT Consultancy, Software Development, Web/Mobile Application Development, Project-based solutions and IT System Maintenance. Our mission from the very first day has been to establish professional relationship with our clients, to provide effective and reliable information technology solutions for their need.",
+        coreTitle: generalData?.coreTitle || "Our Core",
+        features: features.length > 0 ? features.map(f => ({
+          icon: ICON_MAP[f.icon] || Handshake,
+          title: f.title,
+          desc: f.desc,
+        })) : [
           {
             icon: Handshake,
             title: "Collaboration",
@@ -174,7 +237,11 @@ export default function AboutPage() {
             desc: "Standards & Certifications",
           },
         ],
-        core: [
+        core: corePillars.length > 0 ? corePillars.map(c => ({
+          icon: ICON_MAP[c.icon] || Eye,
+          title: c.title,
+          body: c.body,
+        })) : [
           {
             icon: Eye,
             title: "Our purpose",
@@ -191,8 +258,8 @@ export default function AboutPage() {
             body: "Craft and clarity, integrity and ownership, partner mindset, accessibility and security by default, and continuous improvement.",
           },
         ],
-        storyTitle: "Our story",
-        timeline: [
+        storyTitle: generalData?.storyTitle || "Our story",
+        timeline: timelineEvents.length > 0 ? timelineEvents : [
           {
             year: "2016",
             title: "Humble start",
@@ -219,8 +286,8 @@ export default function AboutPage() {
             text: "Today, Ninja Infosys serves as a global technical partner with a presence across multiple regions. While our reach has expanded, we maintain our 'small-team' DNA—prioritizing engineering craft, deep ownership, and measurable business outcomes.",
           },
         ],
-        principlesTitle: "Engineering Principles",
-        principles: [
+        principlesTitle: generalData?.principlesTitle || "Engineering Principles",
+        principles: principles.length > 0 ? principles : [
           { title: "Automation First", body: "We eliminate toil. If a task is repeatable, it is automated. This ensures consistency and frees our engineers to solve creative problems." },
           { title: "Security by Default", body: "Security isn't a checkbox at the end—it's woven into every line of code we write and every architectural decision we make." },
           { title: "Pragmatic Innovation", body: "We don't chase hype. We apply new technologies like AI and Cloud-Native patterns only when they drive real business outcomes." }
@@ -234,12 +301,16 @@ export default function AboutPage() {
         }))
       }
       : {
-        who: "हामी को हौं",
+        who: generalData?.whoTitle || "हामी को हौं",
         heroTitle: "हाम्रो बारेमा",
         brand: "निन्जा इन्फोसिस",
         whoDesc:
-          "निन्जा इन्फोसिस एक आईटी प्राविधिक समाधान प्रदायक हो। हाम्रा समर्पित प्राविधिक पेशेवरहरूले ग्राहकहरूलाई आईटी परामर्श, सफ्टवेयर विकास, वेब/मोबाइल एप विकास, परियोजना-आधारित समाधान र आईटी प्रणाली मर्मतसम्भारमा सेवाहरू प्रदान गर्दछन्। सुरुदेखि नै हाम्रो लक्ष्य ग्राहकहरूसँग व्यावसायिक सम्बन्ध स्थापन गरी प्रभावकारी र भरपर्दो सूचना प्रविधि समाधानहरू उपलब्ध गराउनु हो।",
-        features: [
+          generalData?.whoDesc || "निन्जा इन्फोसिस एक आईटी प्राविधिक समाधान प्रदायक हो। हाम्रा समर्पित प्राविधिक पेशेवरहरूले ग्राहकहरूलाई आईटी परामर्श, सफ्टवेयर विकास, वेब/मोबाइल एप विकास, परियोजना-आधारित समाधान र आईटी प्रणाली मर्मतसम्भारमा सेवाहरू प्रदान गर्दछन्। सुरुदेखि नै हाम्रो लक्ष्य ग्राहकहरूसँग व्यावसायिक सम्बन्ध स्थापन गरी प्रभावकारी र भरपर्दो सूचना प्रविधि समाधानहरू उपलब्ध गराउनु हो।",
+        features: features.length > 0 ? features.map(f => ({
+          icon: ICON_MAP[f.icon] || Handshake,
+          title: f.title,
+          desc: f.desc,
+        })) : [
           {
             icon: Handshake,
             title: "सहकार्य",
@@ -261,8 +332,12 @@ export default function AboutPage() {
             desc: "मानक र प्रमाणपत्रहरू",
           },
         ],
-        coreTitle: "हाम्रो मूल",
-        core: [
+        coreTitle: generalData?.coreTitle || "हाम्रो मूल",
+        core: corePillars.length > 0 ? corePillars.map(c => ({
+          icon: ICON_MAP[c.icon] || Eye,
+          title: c.title,
+          body: c.body,
+        })) : [
           {
             icon: Eye,
             title: "हाम्रो उद्देश्य",
@@ -279,8 +354,8 @@ export default function AboutPage() {
             body: "कला र स्पष्टता, इमानदारी र स्वामित्व, साझेदारी सोच, पहुँचयोग्यता र सुरक्षा-पहिले, र निरन्तर सुधार।",
           },
         ],
-        storyTitle: "हाम्रो कथा",
-        timeline: [
+        storyTitle: generalData?.storyTitle || "हाम्रो कथा",
+        timeline: timelineEvents.length > 0 ? timelineEvents : [
           {
             year: "२०१६",
             title: "न्यानो सुरुवात",
@@ -289,7 +364,7 @@ export default function AboutPage() {
           {
             year: "२०१८",
             title: "पहिलो फोर्च्यून ५००",
-            text: "हामीले हाम्रो पहिलो 'फोर्च्यून ५००' ग्राहकसँग साझेदारी गर्दा यो एक महत्वपूर्ण उपलब्धि थियो। हामीले जटिल उद्यम वातावरणहरूमा आधुनिक विकासकर्ता अनुभवहरू र मजबुत प्रक्रियाहरू भित्र्याउँदै महत्वपूर्ण भुक्तानी र जोखिम प्लेटफर्महरूको आधुनिकीकरण गर्यौँ।",
+            text: "हामीले हाम्रो पहिलो 'फोर्च्यून ५००' ग्राहकसँग साझेदारी गर्दा यो एक महत्वपूर्ण उपलब्धि थियो। हामीे जटिल उद्यम वातावरणहरूमा आधुनिक विकासकर्ता अनुभवहरू र मजबुत प्रक्रियाहरू भित्र्याउँदै महत्वपूर्ण भुक्तानी र जोखिम प्लेटफर्महरूको आधुनिकीकरण गर्यौँ।",
           },
           {
             year: "२०२०",
@@ -307,8 +382,8 @@ export default function AboutPage() {
             text: "समान सानो-टिम डीएनए र कला मानकसहित बहु-क्षेत्रीय डेलिभरी।",
           },
         ],
-        principlesTitle: "इन्जिनियरिङ सिद्धान्तहरू",
-        principles: [
+        principlesTitle: generalData?.principlesTitle || "इन्जिनियरिङ सिद्धान्तहरू",
+        principles: principles.length > 0 ? principles : [
           { title: "स्वचालन पहिलो", body: "हामी कठिन कामहरू हटाउँछौं। यदि कुनै कार्य दोहोरिने खालको छ भने, त्यसलाई स्वचालित बनाइन्छ।" },
           { title: "पूर्वनिर्धारित सुरक्षा", body: "सुरक्षा अन्तिममा गरिने चेकबक्स होइन—यो हामीले लेख्ने कोड र हरेक वास्तुकला निर्णयमा बुनिएको हुन्छ।" },
           { title: "व्यावहारिक नवाचार", body: "हामी केवल चर्चाको पछि लाग्दैनौं। हामी एआई जस्ता नयाँ प्रविधिहरू प्रयोग गर्छौं जसले वास्तविक नतिजा दिन्छ।" }
@@ -321,7 +396,7 @@ export default function AboutPage() {
           bio: m.bio_ne
         }))
       };
-  }, [language, teamMembers]);
+  }, [language, teamMembers, generalData, principles, timelineEvents, features, corePillars]);
 
   return (
     <>
@@ -485,7 +560,7 @@ export default function AboutPage() {
           <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-24 lg:py-32">
             <div className="max-w-2xl mb-24">
               <h2 className="text-[12px] font-bold uppercase tracking-[0.4em] text-[#d52020] mb-6">
-                {language === 'en' ? 'Leadership' : 'नेतृत्व'}
+                {generalData?.leadershipSubtitle || (language === 'en' ? 'Leadership' : 'नेतृत्व')}
               </h2>
               <motion.h3 
                 initial={{ opacity: 0, y: 20 }}
@@ -493,8 +568,10 @@ export default function AboutPage() {
                 viewport={{ once: true }}
                 className="text-5xl lg:text-7xl font-heading font-bold text-foreground leading-[1.1] tracking-tighter"
               >
-                {language === 'en' ? 'The minds behind the' : 'हाम्रो शिल्प पछाडिका'}{' '}
-                <span className="text-[#d52020] italic">{language === 'en' ? 'craft' : 'मस्तिष्कहरू'}</span>
+                {generalData?.leadershipTitle || (language === 'en' ? 'The minds behind the' : 'हाम्रो शिल्प पछाडिका')}{' '}
+                <span className="text-[#d52020] italic">
+                  {generalData?.leadershipHighlight || (language === 'en' ? 'craft' : 'मस्तिष्कहरू')}
+                </span>
               </motion.h3>
             </div>
             
@@ -585,7 +662,7 @@ export default function AboutPage() {
                   transition={{ duration: 0.8 }}
                 >
                   <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#d52020] mb-6">
-                    {language === 'en' ? 'The Evolution' : 'विकासक्रम'}
+                    {generalData?.storySubtitle || (language === 'en' ? 'The Evolution' : 'विकासक्रम')}
                   </h2>
                   <h3 className="text-4xl lg:text-6xl font-heading font-bold text-foreground leading-[1.1] tracking-tighter mb-8 italic">
                     {content.storyTitle.split(' ')[0]}<br />
@@ -593,9 +670,9 @@ export default function AboutPage() {
                   </h3>
                   <div className="h-1 w-20 bg-[#d52020] mb-8" />
                   <p className="text-base lg:text-lg text-foreground/50 leading-relaxed max-w-sm font-light">
-                    {language === 'en' 
+                    {generalData?.storyDesc || (language === 'en' 
                       ? "A decade of engineering excellence, scaling from a small studio to a global technical partner."
-                      : "एक दशकको उत्कृष्ट इन्जिनियरिङ, सानो स्टुडियोबाट वैश्विक प्राविधिक साझेदारसम्मको यात्रा।"}
+                      : "एक दशकको उत्कृष्ट इन्जिनियरिङ, सानो स्टुडियोबाट वैश्विक प्राविधिक साझेदारसम्मको यात्रा।")}
                   </p>
                   
                   <div className="hidden lg:block mt-12 relative h-48 w-px bg-foreground/10 ml-1">
@@ -627,7 +704,7 @@ export default function AboutPage() {
                   transition={{ duration: 1 }}
                 >
                   <p className="text-foreground/30 font-heading italic text-xl">
-                    {language === 'en' ? 'To be continued...' : 'क्रमशः...'}
+                    {generalData?.storyFooter || (language === 'en' ? 'To be continued...' : 'क्रमशः...')}
                   </p>
                 </motion.div>
               </div>
