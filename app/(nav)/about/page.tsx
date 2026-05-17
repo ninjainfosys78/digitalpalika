@@ -331,17 +331,18 @@ export default function AboutPage() {
         <section className="relative z-10">
           <div className="relative min-h-[50vh] pt-28 lg:pt-32">
             <div
-              className="absolute inset-0 bg-center bg-fixed filter grayscale"
+              className="absolute inset-0 bg-no-repeat mt-[100px] filter grayscale"
               style={
                 bannerUrl
                   ? {
                     backgroundImage: `url('${bannerUrl}')`,
-                    backgroundSize: "cover",
+                    backgroundSize: "contain",
+                    backgroundPosition: "top center",
                   }
                   : {}
               }
             />
-            <div className="absolute inset-0 bg-background/80" />
+            {/* Removed dark overlay so banner is visible */}
 
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
               <div className="max-w-[1600px] text-left">

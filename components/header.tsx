@@ -182,7 +182,7 @@ export default function Header() {
         <div className="flex items-center gap-8">
           <button
             onClick={() => setLanguage(language === "en" ? "ne" : "en")}
-            className={`hidden sm:block text-[13px] font-bold tracking-wider transition-colors uppercase ${isScrolled ? 'text-[#0b0d12]/40 hover:text-[#006FB7]' : 'text-white/40 hover:text-white'}`}
+            className="hidden"
           >
             {language === "en" ? "नेपाली" : "English"}
           </button>

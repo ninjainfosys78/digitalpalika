@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { useLanguage } from "@/components/LanguageProvider"
+import pb from "@/lib/pocketbase"
 import Link from "next/link"
 import { toast } from "sonner"
 
@@ -9,12 +10,12 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import SearchOverlay from "@/components/search-overlay"
 
-
 export default function ContactPage() {
   const { language } = useLanguage()
   const [searchOpen, setSearchOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [logoOffset, setLogoOffset] = useState<number | null>(null)
+  const [bannerUrl, setBannerUrl] = useState<string | null>(null)
 
   const t =
     language === "en"
@@ -86,9 +87,26 @@ export default function ContactPage() {
     window.addEventListener("resize", computeOffset)
     const mo = new MutationObserver(computeOffset)
     mo.observe(document.body, { childList: true, subtree: true })
+    
+    let mounted = true
+    const fetchContactImage = async () => {
+      try {
+        const record = await pb.collection("Ninja_Contacts").getFirstListItem('image_name="contactimage"');
+        if (record && record.image) {
+          const url = pb.files.getURL(record, record.image);
+          if (mounted) setBannerUrl(url);
+        }
+      } catch (e) {
+        console.error("Error fetching contact image:", e);
+      }
+    };
+    
+    fetchContactImage();
+
     return () => {
       window.removeEventListener("resize", computeOffset)
       mo.disconnect()
+      mounted = false
     }
   }, [])
 
@@ -140,8 +158,8 @@ export default function ContactPage() {
           className="max-w-[1600px] mx-auto px-6 sm:px-8"
           style={logoOffset !== null ? { paddingLeft: `${logoOffset}px` } : undefined}
         >
-          <div className="grid grid-cols-1 md:grid-cols-[560px_1fr] items-stretch gap-0">
-            <div className="pr-8 flex flex-col h-[620px]">
+          <div className="grid grid-cols-1 md:grid-cols-[560px_1fr] items-stretch gap-12 lg:gap-16">
+            <div className="flex flex-col h-[620px]">
               <div className="max-w-[560px] flex flex-col h-full pt-10">
                 <div className="mb-6 text-[20px] leading-[1] text-[--color-foreground]">
                   {t.title}
@@ -191,7 +209,7 @@ export default function ContactPage() {
                   </div>
 
                   <div className="mt-auto">
-                    <button disabled={loading} type="submit" className="inline-flex items-center justify-center bg-[#d52020] px-6 py-3 font-semibold text-white hover:opacity-95 transition disabled:opacity-50">
+                    <button disabled={loading} type="submit" className="inline-flex items-center justify-center bg-[#d52020] px-6 py-3 font-semibold text-white hover:opacity-95 transition disabled:opacity-50 shadow-lg shadow-[#d52020]/20 rounded-md">
                       {loading ? (language === "en" ? "Sending..." : "पठाउँदै...") : t.send}
                     </button>
                   </div>
@@ -199,11 +217,17 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="hidden md:block">
-              <div className="h-[620px] w-full overflow-hidden" aria-hidden>
-                <div className="h-full w-full contact-clip">
-                  <img src="/contact.png" alt="" className="w-full h-full object-cover object-right" />
-                </div>
+            <div className="hidden md:block pt-10">
+              <div className="h-[620px] w-full flex items-center justify-start relative group" aria-hidden>
+                {/* Decorative background glow */}
+                <div className="absolute inset-y-4 left-4 right-1/4 bg-[#d52020]/5 rounded-3xl blur-3xl group-hover:bg-[#d52020]/15 transition-colors duration-700 -z-10"></div>
+                
+                {/* The Image */}
+                <img 
+                  src={bannerUrl || "/contact.png"} 
+                  alt="" 
+                  className="w-full h-full object-contain object-left filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 ease-out rounded-2xl" 
+                />
               </div>
             </div>
           </div>
