@@ -52,8 +52,8 @@ export const Header = () => {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className={`text-base transition-colors relative group py-2 ${
-                        isActive ? 'text-[#003893] font-semibold' : 'text-black'
+                      className={`text-base font-[400] transition-colors relative group py-2 ${
+                        isActive ? 'text-[#003893] font-[600]' : 'text-black'
                       }`}
                     >
                       {item.label[lang]}

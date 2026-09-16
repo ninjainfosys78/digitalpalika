@@ -5,8 +5,7 @@ import { Header } from "@/components/header";
 import Footer from "@/components/footer";
 import { useLanguage } from "@/context/LanguageContext";
 import Demo from "@/components/demo";
-import { useClients } from "@/hooks/useClients";
-import pb, { type Client } from "@/lib/pocketbase";
+import { clients } from "@/lib/siteData";
 
 const provinces = [
     { en: "Koshi Province", ne: "कोशी प्रदेश" },
@@ -34,74 +33,35 @@ export default function ClientsPage() {
 }
 
 function ClientsContent() {
-    const { t, lang } = useLanguage();
+    const { t } = useLanguage();
     const [search, setSearch] = useState("");
     const [province, setProvince] = useState<string>("");
-    
-    const { clients, loading, error } = useClients();
 
     const filteredClients = useMemo(() => {
         return clients.filter(client => {
-            const clientName = lang === "ne" ? client.ne_name : client.en_name;
-            const clientLocation = lang === "ne" ? client.ne_location : client.en_location;
-            const clientProvince = lang === "ne" ? client.ne_province : client.en_province;
-            
-            const matchesProvince = province ? clientProvince === province : true;
+            const clientName = t(client.name);
+
+            const matchesProvince = province ? client.province === province : true;
             const matchesSearch =
                 clientName.toLowerCase().includes(search.toLowerCase()) ||
-                clientLocation.toLowerCase().includes(search.toLowerCase());
+                client.location.toLowerCase().includes(search.toLowerCase());
             return matchesProvince && matchesSearch;
         });
-    }, [search, province, clients, lang]);
-
-    const getImageUrl = (client: Client) => {
-        try {
-            if (!client.image) return '/placeholder-logo.png';
-            
-            const imageFile = Array.isArray(client.image) ? client.image[0] : client.image;
-            
-            if (!imageFile) return '/placeholder-logo.png';
-            
-            return pb.files.getURL(client, imageFile, { thumb: '100x100' });
-        } catch (error) {
-            console.error('Error loading image:', error);
-            return '/placeholder-logo.png';
-        }
-    };
-
-    if (loading) {
-        return (
-            <div className="max-w-7xl mx-auto px-4 py-8">
-                <div className="text-center">
-                    <p className="text-gray-600">{t({ en: "Loading clients...", ne: "ग्राहकहरू लोड हुँदैछ..." })}</p>
-                </div>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="max-w-7xl mx-auto px-4 py-8">
-                <div className="text-center text-red-600">
-                    <p>{error}</p>
-                </div>
-            </div>
-        );
-    }
+    }, [search, province, t]);
 
     return (
         <>
-            <div className="text-center mb-6">
-                <span className="block text-[#003893] font-semibold mb-2">
-                    {t({ en: "Our Clients", ne: "हाम्रा ग्राहक" })}
-                </span>
-                <h2 className="text-[28px] font-bold text-black mb-2">
-                    {t({
-                        en: "Trusted by local bodies across Nepal for digital transformation",
-                        ne: "डिजिटल रूपान्तरणका लागि नेपालभरका स्थानीय निकायहरूद्वारा विश्वास गरिएको।"
-                    })}
+            <div className="text-center mb-10">
+                <h2 className="text-[28px] font-bold mb-2 text-[#003893]">
+                    {t({ en: "Our Esteemed Clients and Partners", ne: "हाम्रा आदरणीय ग्राहक र साझेदारहरू" })}
                 </h2>
                 <div className="mx-auto w-24 h-0.5 bg-gray-300 rounded mb-4" />
+                <p className="text-black max-w-3xl mx-auto">
+                    {t({
+                        en: "Trusted by local bodies across Nepal for digital transformation.",
+                        ne: "डिजिटल रूपान्तरणका लागि नेपालभरका स्थानीय निकायहरूद्वारा विश्वास गरिएको।"
+                    })}
+                </p>
             </div>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-8">
@@ -119,36 +79,31 @@ function ClientsContent() {
                 >
                     <option value="">{t({ en: "Choose Province", ne: "प्रदेश छान्नुहोस्" })}</option>
                     {provinces.map(p => (
-                        <option key={p.en} value={lang === "ne" ? p.ne : p.en}>
-                            {lang === "ne" ? p.ne : p.en}
+                        <option key={p.en} value={p.en}>
+                            {t(p)}
                         </option>
                     ))}
                 </select>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
                 {filteredClients.map(client => (
                     <div
                         key={client.id}
-                        className="border border-blue-100 bg-white rounded-none p-4 flex flex-col items-start hover:shadow transition min-h-[220px] max-h-[240px] justify-between"
+                        className="
+                            p-4 flex flex-col items-center justify-center h-42
+                            bg-white border border-slate-300 rounded-none
+                            transform transition-transform duration-200 ease-out
+                            hover:scale-105
+                        "
                     >
                         <img
-                            src={getImageUrl(client)}
-                            alt={lang === "ne" ? client.ne_name : client.en_name}
-                            className="w-16 h-16 object-contain mb-3"
+                            src={client.image}
+                            alt={t(client.name)}
+                            className="w-12 h-12 object-contain mb-2"
                         />
-                        <div className="font-semibold text-black text-base mb-1 text-left w-full">
-                            {lang === "ne" ? client.ne_name : client.en_name}
-                        </div>
-                        <div className="flex items-center text-gray-500 text-sm mb-2 w-full">
-                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                                <circle cx="12" cy="9" r="2.5"/>
-                            </svg>
-                            {lang === "ne" ? client.ne_location : client.en_location}
-                        </div>
-                        <span className="inline-block bg-blue-100 text-[#003893] text-xs font-medium px-3 py-1 rounded w-fit text-left">
-                            {lang === "ne" ? client.ne_province : client.en_province}
+                        <span className="text-black font-inter text-sm text-center">
+                            {t(client.name)}, {client.location}
                         </span>
                     </div>
                 ))}

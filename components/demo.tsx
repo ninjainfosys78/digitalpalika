@@ -6,33 +6,32 @@ export default function Demo() {
     const { t } = useLanguage();
 
     return (
-        <section className="bg-[#B0C1DE] py-10 md:py-12">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                {/* Heading: slightly smaller and tighter like the image */}
-                <h2 className="text-[28px] font-bold mb-3 sm:mb-4 text-[#000000] mb-3">
-                    {t({ en: 'Do you want to see the demo?', ne: 'डेमो हेर्न चाहनु हुन्छ ?' })}
-                </h2>
+        <section className="relative overflow-hidden bg-white py-14 md:py-20">
+            <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-5xl bg-gradient-to-br from-[#f2f7fd] to-white shadow-md shadow-[#003893]/10 px-6 py-10 sm:px-12 sm:py-14 text-center">
+                    <h2 className="text-black text-[28px] sm:text-3xl font-bold mb-4">
+                        {t({ en: 'Do you want to see the demo?', ne: 'डेमो हेर्न चाहनु हुन्छ ?' })}
+                    </h2>
 
-                {/* Narrow, centered paragraph to match line breaks in image */}
-                <p className="mx-auto max-w-[620px] text-xs sm:text-sm md:text-base text-[#374151] mb-6 leading-relaxed">
-                    {t({
-                        en: "Hello, we are continuously campaigning to transform you and your municipality into digital. We want to understand the situation and needs of your municipality and show a demo to transform it into a technology-friendly digital municipality.",
-                        ne: 'नमस्कार, हामी तपाई र तपाईको पालिका डिजिटलमा रूपान्तरणको लागि निरन्तर अभियानमा छौं । हामी तपाईको पालिकाको अवस्था र आवश्यकताहरु बुझेर प्रबिधि मेत्री डिजिटल पालिकाको रूपमा रूपान्तरण गर्न डेमो देखाउन चाहन्छौं ।'
-                    })}
-                </p>
+                    <p className="mx-auto max-w-[620px] text-sm sm:text-base text-gray-700 mb-8 leading-relaxed">
+                        {t({
+                            en: "We're on a mission to help your municipality go digital. Let us understand your needs and show you a demo tailored to you.",
+                            ne: 'हामी तपाईंको पालिकालाई डिजिटल बनाउने अभियानमा छौं । तपाईंको आवश्यकता बुझेर उपयुक्त डेमो देखाउन चाहन्छौं ।'
+                        })}
+                    </p>
 
-                {/* Compact centered CTA with right arrow - matching features-rail button */}
-                <div className="flex justify-center">
-                    <a
-                        href="/contact"
-                        className="inline-flex items-center justify-center gap-2 bg-[#003893] hover:bg-[#002f72] text-white text-base px-8 py-3.5"
-                        aria-label="See demo"
-                    >
-                        {t({ en: 'See Demo', ne: 'डेमो हेर्नुहोस्' })}
-                        <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                            <path d="M5 12h14M13 5l6 7-6 7" strokeLinecap="round" strokeLinejoin="round"></path>
-                        </svg>
-                    </a>
+                    <div className="flex justify-center">
+                        <a
+                            href="/contact"
+                            className="group inline-flex items-center justify-center gap-2 bg-[#003893] hover:bg-[#002f72] text-white font-semibold text-base px-8 py-3.5 shadow-lg shadow-[#003893]/20 transition-all duration-200 hover:-translate-y-0.5"
+                            aria-label="See demo"
+                        >
+                            {t({ en: 'See Demo', ne: 'डेमो हेर्नुहोस्' })}
+                            <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" className="transition-transform duration-200 group-hover:translate-x-1">
+                                <path d="M5 12h14M13 5l6 7-6 7" strokeLinecap="round" strokeLinejoin="round"></path>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
