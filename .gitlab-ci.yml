@@ -19,8 +19,8 @@ cache:
 build:
   stage: build
   image: node:${NODE_VERSION}-alpine
-  tags:
-    - numanode
+  # tags:
+  #   - numanode
   before_script:
     - echo "Installing dependencies..."
     - npm install --cache .npm --prefer-offline --no-audit --legacy-peer-deps
