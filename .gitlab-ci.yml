@@ -38,8 +38,8 @@ build:
 deploy:preview:
   stage: deploy
   image: node:${NODE_VERSION}-alpine
-  tags:
-    - numanode
+  # tags:
+  #   - numanode
   dependencies:
     - build
   before_script:
@@ -57,8 +57,8 @@ deploy:preview:
 deploy:production:
   stage: deploy
   image: node:${NODE_VERSION}-trixie
-  tags:
-    - numanode
+  # tags:
+  # - numanode
   dependencies:
     - build
   before_script:
