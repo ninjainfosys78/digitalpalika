@@ -3,7 +3,7 @@ stages:
   - deploy
 
 variables:
-  NODE_VERSION: "20"
+  NODE_VERSION: "22"
   PROJECT_NAME: "epalika-landing"  # Update with your Cloudflare Pages project name
   BUILD_DIR: "out"
   NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"
