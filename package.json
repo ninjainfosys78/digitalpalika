@@ -29,5 +29,13 @@
     "tailwindcss": "^4.1.14",
     "typescript": "^5",
     "wrangler": "^4.136.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@tailwindcss/oxide",
+      "esbuild",
+      "sharp",
+      "workerd"
+    ]
   }
 }
