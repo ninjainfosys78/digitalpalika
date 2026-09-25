@@ -19,6 +19,8 @@ export interface ContactFormLabels {
   button: LocalizedString;
 }
 
+const CONTACT_API_URL = "/api/contact/";
+
 // Define the icons using lucide-react names for better reusability
 const Icon = ({ name, className = "" }: { name: string; className?: string }) => {
   const defaultClasses = `w-6 h-6 ${className}`;
@@ -150,75 +152,40 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
       }
     }
 
-    // Build the API payload
+    const topic = (formData.get("topic") as string).trim();
+    const subject = (formData.get("subject") as string).trim();
+    const message = (formData.get("message") as string).trim();
+
+    // The DCM contact endpoint has no subject/topic fields, so they are folded into the message.
     const payload = {
-      emailAddress: (formData.get("email") as string).trim(),
-      phoneNumber: phoneNumber,
-      title: (formData.get("subject") as string).trim(),
-      description: (formData.get("message") as string).trim(),
-      salutationName: "",
-      firstName: firstName,
-      lastName: lastName,
-      middleName: "",
+      full_name: `${firstName} ${lastName}`.trim(),
+      email: (formData.get("email") as string).trim(),
+      phone_number: phoneNumber,
+      message: [`Reason: ${subject}`, topic ? `Topic: ${topic}` : "", "", message]
+        .filter((line, i) => line || i === 2)
+        .join("\n"),
     };
 
-    console.log("Submitting payload:", payload);
-
     try {
-      const response = await fetch(
-        "https://crm.ninjainfosys.com/api/v1/LeadCapture/b2bac8ed85830056ae2f995de854ce78",
-        {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      const response = await fetch(CONTACT_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
-      console.log("Response status:", response.status);
-      const responseText = await response.text();
-      console.log("Response body:", responseText);
-
-      if (response.ok || response.status === 200 || response.status === 201) {
+      if (response.ok) {
         formRef.current?.reset();
         setShowModal(true);
       } else {
-        let errorMessage = "Failed to submit form. Please try again.";
-        try {
-          const errorData = JSON.parse(responseText);
-          console.log("Error data:", errorData);
-
-          // Handle specific validation errors
-          if (errorData.data && errorData.data.field) {
-            const field = errorData.data.field;
-            const type = errorData.data.type;
-            if (field === "phoneNumber") {
-              errorMessage =
-                "Please enter a valid phone number (e.g., +977 9800000000 or 9800000000)";
-            } else {
-              errorMessage = `Invalid ${field}: ${type}`;
-            }
-          } else {
-            errorMessage =
-              errorData.message || errorData.error || errorData.title || errorMessage;
-          }
-
-          // Log validation errors if present
-          if (errorData.errors) {
-            console.log("Validation errors:", errorData.errors);
-            errorMessage = (Object.values(errorData.errors) as string[][])
-              .flat()
-              .join(", ");
-          }
-        } catch {
-          errorMessage = `Server error (${response.status}): ${
-            responseText || "Unknown error"
-          }`;
-        }
-        setError(errorMessage);
+        const errorData = await response.json().catch(() => null);
+        setError(
+          errorData?.message ||
+            errorData?.error ||
+            `Failed to submit form (${response.status}). Please try again.`
+        );
       }
     } catch (err) {
       console.error("Error submitting form:", err);
