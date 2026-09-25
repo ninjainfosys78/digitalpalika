@@ -1,23 +1,21 @@
 import { useEffect, useState } from 'react';
-import pb, { type Client } from '@/lib/pocketbase';
+import type { ClientItem } from '@/lib/siteData';
+
+const CLIENTS_API_URL = '/api/clients/';
 
 export function useClients() {
-    const [clients, setClients] = useState<Client[]>([]);
+    const [clients, setClients] = useState<ClientItem[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         async function fetchClients() {
             try {
-                setLoading(true);
-                const records = await pb.collection('Digital_palika_Clients').getFullList<Client>({
-                    sort: '-created',
-                });
-                setClients(records);
-                setError(null);
+                const response = await fetch(CLIENTS_API_URL);
+                if (!response.ok) throw new Error(`Status ${response.status}`);
+                const items: ClientItem[] = await response.json();
+                setClients(items);
             } catch (err) {
                 console.error('Error fetching clients:', err);
-                setError('Failed to load clients');
             } finally {
                 setLoading(false);
             }
@@ -26,5 +24,5 @@ export function useClients() {
         fetchClients();
     }, []);
 
-    return { clients, loading, error };
+    return { clients, loading };
 }

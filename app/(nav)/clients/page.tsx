@@ -5,7 +5,7 @@ import { Header } from "@/components/header";
 import Footer from "@/components/footer";
 import { useLanguage } from "@/context/LanguageContext";
 import Demo from "@/components/demo";
-import { clients } from "@/lib/siteData";
+import { useClients } from "@/hooks/useClients";
 
 const provinces = [
     { en: "Koshi Province", ne: "कोशी प्रदेश" },
@@ -34,6 +34,7 @@ export default function ClientsPage() {
 
 function ClientsContent() {
     const { t } = useLanguage();
+    const { clients } = useClients();
     const [search, setSearch] = useState("");
     const [province, setProvince] = useState<string>("");
 
@@ -47,7 +48,7 @@ function ClientsContent() {
                 client.location.toLowerCase().includes(search.toLowerCase());
             return matchesProvince && matchesSearch;
         });
-    }, [search, province, t]);
+    }, [clients, search, province, t]);
 
     return (
         <>

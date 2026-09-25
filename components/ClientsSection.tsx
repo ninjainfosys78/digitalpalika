@@ -1,10 +1,11 @@
 "use client";
 
-import { clients } from "@/lib/siteData";
+import { useClients } from "@/hooks/useClients";
 import { useLanguage } from "@/context/LanguageContext";
 
 export function ClientsSection() {
   const { t } = useLanguage();
+  const { clients } = useClients();
 
   // Localized titles
   const title = t({
