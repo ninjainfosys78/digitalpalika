@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { usePathname } from 'next/navigation';
 import { useFeatures } from '@/hooks/useFeatures';
@@ -64,11 +65,13 @@ export default function FeatureRail() {
                     {displayFeatures.map((feature) => (
                         <div key={feature.id} className="flex flex-col items-center text-center md:items-start md:text-left">
                             <div className="w-full overflow-hidden bg-white">
-                                <div className="w-full h-40 sm:h-44 md:aspect-square">
-                                    <img
+                                <div className="relative w-full h-40 sm:h-44 md:aspect-square">
+                                    <Image
                                         src={getImageUrl(feature)}
                                         alt={active === 'ne' ? feature.ne_name : feature.en_name}
-                                        className="w-full h-full object-cover"
+                                        fill
+                                        sizes="(min-width: 1024px) 20vw, (min-width: 768px) 33vw, 50vw"
+                                        className="object-cover"
                                     />
                                 </div>
                             </div>

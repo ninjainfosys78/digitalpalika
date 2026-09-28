@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function WhyDigitalPalika() {
@@ -42,9 +43,11 @@ export default function WhyDigitalPalika() {
                     </div>
 
                     <div className="flex-1 flex justify-center md:justify-end">
-                        <img
+                        <Image
                             src="/WhyPalika.png"
                             alt="Why Digital Palika Illustration"
+                            width={637}
+                            height={392}
                             className="max-w-full h-auto object-contain w-full sm:w-3/4 md:w-2/3 lg:w-[60%]"
                         />
                     </div>

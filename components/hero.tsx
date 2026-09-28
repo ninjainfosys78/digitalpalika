@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function Hero() {
@@ -36,11 +37,14 @@ const HomeContent = () => {
                         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[35%] h-7 bg-black rounded-b-3xl z-10"></div>
                         
                         {/* Screen */}
-                        <div className="bg-white rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden aspect-[9/19]">
-                            <img
+                        <div className="relative bg-white rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden aspect-[9/19]">
+                            <Image
                                 src="/herosection.png"
                                 alt="Digital Palika Mobile App"
-                                className="w-full h-full object-cover"
+                                fill
+                                priority
+                                sizes="(min-width: 1536px) 300px, (min-width: 1280px) 280px, 260px"
+                                className="object-cover"
                             />
                         </div>
                     </div>

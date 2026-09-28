@@ -199,9 +199,9 @@ export function ContactSection({ title, details, formLabels, t }: ContactSection
     <section className="relative bg-white py-12 md:py-16">
       {/* Top Heading and Subtitle */}
       <div className="max-w-2xl mx-auto text-center mb-8">
-        <h2 className="text-[#003893] font-semibold mb-2 text-[16px]">
+        <span className="block text-[#003893] font-semibold mb-2 text-[16px]">
           {t({ en: "Contact us", ne: "सम्पर्क गर्नुहोस्" })}
-        </h2>
+        </span>
         <h1 className="text-[28px] font-semibold mb-2">
           {t({
             en: "Your digital gateway to municipal services.",
