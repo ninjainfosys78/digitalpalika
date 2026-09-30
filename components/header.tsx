@@ -17,6 +17,7 @@ export const Header = () => {
     { href: '/module', label: { en: 'Modules', ne: 'प्रणालीहरू' } },
     { href: '/clients', label: { en: 'Our Clients', ne: 'हाम्रो ग्राहकहरू' } },
     { href: '/features', label: { en: 'Features', ne: 'विशेषताहरू' } },
+    { href: '/blogs', label: { en: 'Blogs', ne: 'ब्लगहरू' } },
     { href: '/contact', label: { en: 'Contact', ne: 'सम्पर्क' } },
   ];
 
