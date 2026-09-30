@@ -61,7 +61,7 @@ export const modulesData: StaticModule[] = [
     { id: "integrated-mobile-apps", name: { en: "Integrated Mobile Apps", ne: "मोबाइल एप (Integrated Mobile apps)" }, icon: Smartphone },
     { id: "integration-digital-signature", name: { en: "Integration Digital Signature", ne: "Integration Digital Signature" }, icon: PenLine },
     { id: "airfone-ivr", name: { en: "AIRfone (Digital IVR Call System)", ne: "AIRfone (डिजिटल IVR Call System)" }, icon: Radio },
-    { id: "ia-chatbot", name: { en: "IA ChatBot", ne: "IA ChatBot" }, icon: Bot },
-    { id: "ia-call-system", name: { en: "IA Call System", ne: "IA Call सिस्टम" }, icon: PhoneCall },
+    { id: "ai-chatbot", name: { en: "AI ChatBot", ne: "AI ChatBot" }, icon: Bot },
+    { id: "ai-call-system", name: { en: "AI Call System", ne: "AI Call सिस्टम" }, icon: PhoneCall },
     { id: "icms-portal", name: { en: "Integrated Content Management System (iCMS) Portal", ne: "एकिकृत कन्टेन्ट व्यवस्थापन प्रणाली (iCMS) पोर्टल" }, icon: Newspaper },
 ];
